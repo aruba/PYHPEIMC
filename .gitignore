@@ -1,0 +1,8 @@
+
+*.xml
+
+*.pyc
+
+.idea/.name
+
+.idea/HP-Intelligent-Management-Center.iml
