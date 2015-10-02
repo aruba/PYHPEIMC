@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#author: @netmanchris
+# author: @netmanchris
 
 ''' Copyright 2015 Hewlett Packard Enterprise Development LP
 
@@ -163,7 +163,11 @@ def get_dev_asset_details(ipaddress):
     # r.status_code
     if r.status_code == 200:
         dev_asset_info = (json.loads(r.text))
-        return dev_asset_info['netAsset']
+        if len(dev_asset_info) > 0:
+            dev_asset_info = dev_asset_info['netAsset']
+        if type(dev_asset_info) == list:
+            dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') == ipaddress]
+        return dev_asset_info
     else:
         print("get_dev_asset_details:  An Error has occured")
 
@@ -197,7 +201,7 @@ def get_trunk_interfaces(devId):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    #r.status_code
+    # r.status_code
     if r.status_code == 200:
         dev_trunk_interfaces = (json.loads(r.text))
         if len(dev_trunk_interfaces) == 2:
@@ -221,7 +225,7 @@ def get_device_access_interfaces(devId):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    #r.status_code
+    # r.status_code
     if r.status_code == 200:
         dev_access_interfaces = (json.loads(r.text))
         if len(dev_access_interfaces) == 2:
@@ -240,6 +244,7 @@ def get_access_interface_vlan(ifIndex, accessinterfacelist):
         else:
             return "Not an Access Port"
 
+
 def get_interface_details(devId, ifIndex):
     # checks to see if the imc credentials are already available
     if auth == None or url == None:
@@ -250,7 +255,7 @@ def get_interface_details(devId, ifIndex):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    #r.status_code
+    # r.status_code
     if r.status_code == 200:
         dev_details = (json.loads(r.text))
         return dev_details
@@ -262,6 +267,13 @@ def get_dev_details(ip_address):
     """Takes string input of IP address to issue RESTUL call to HP IMC
     :param ip_address: string object of dotted decimal notation of IPv4 address
     :return: dictionary of device details
+
+    >>> get_dev_details('10.101.0.1')
+    {'symbolLevel': '2', 'typeName': 'Cisco 2811', 'location': 'changed this too', 'status': '1', 'sysName': 'Cisco2811.haw.int', 'id': '30', 'symbolType': '3', 'symbolId': '1032', 'sysDescription': '', 'symbolName': 'Cisco2811.haw.int', 'mask': '255.255.255.0', 'label': 'Cisco2811.haw.int', 'symbolDesc': '', 'sysOid': '1.3.6.1.4.1.9.1.576', 'contact': 'changed this too', 'statusDesc': 'Normal', 'parentId': '1', 'categoryId': '0', 'topoIconName': 'iconroute', 'mac': '00:1b:d4:47:1e:68', 'devCategoryImgSrc': 'router', 'link': {'@rel': 'self', '@href': 'http://10.101.0.202:8080/imcrs/plat/res/device/30', '@op': 'GET'}, 'ip': '10.101.0.1'}
+    
+    >>> get_dev_details('8.8.8.8')
+    Device not found
+    'Device not found'
     """
     # checks to see if the imc credentials are already available
     if auth == None or url == None:
@@ -273,10 +285,13 @@ def get_dev_details(ip_address):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    #r.status_code
+    # r.status_code
     if r.status_code == 200:
         dev_details = (json.loads(r.text))
-        if type(dev_details['device']) == list:
+        if len(dev_details) == 0:
+            print("Device not found")
+            return "Device not found"
+        elif type(dev_details['device']) == list:
             for i in dev_details['device']:
                 if i['ip'] == ip_address:
                     dev_details = i
@@ -302,7 +317,7 @@ def get_dev_vlans(devId):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    #r.status_code
+    # r.status_code
     if r.status_code == 200:
         dev_details = (json.loads(r.text))
         return dev_details
@@ -328,7 +343,7 @@ def get_dev_interface(devid):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    #r.status_code
+    # r.status_code
     if r.status_code == 200:
         int_list = (json.loads(r.text))['interface']
         return int_list
@@ -346,7 +361,7 @@ def get_dev_run_config(devId):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    #print (r.status_code)
+    # print (r.status_code)
     if r.status_code == 200:
         run_conf = (json.loads(r.text))['content']
         type(run_conf)
@@ -356,8 +371,6 @@ def get_dev_run_config(devId):
             return run_conf
     else:
         return "This features is not supported on this device"
-
-
 
 
 def get_dev_start_config(devId):
@@ -375,7 +388,7 @@ def get_dev_start_config(devId):
         start_conf = (json.loads(r.text))['content']
         return start_conf
     else:
-        #print (r.status_code)
+        # print (r.status_code)
         return "This feature is not supported on this device"
 
 
@@ -436,7 +449,7 @@ def create_dev_vlan(devid, vlanid, vlan_name):
         set_imc_creds()
     create_dev_vlan_url = "/imcrs/vlan?devId=" + str(devid)
     f_url = url + create_dev_vlan_url
-    payload = '''{ "vlanId": "''' + str(vlanid)+ '''", "vlanName" : "''' + str(vlan_name) + '''"}'''
+    payload = '''{ "vlanId": "''' + str(vlanid) + '''", "vlanName" : "''' + str(vlan_name) + '''"}'''
     r = requests.post(f_url, data=payload, auth=auth,
                       headers=headers)  # creates the URL using the payload variable as the contents
     print(r.status_code)
@@ -500,13 +513,15 @@ def get_vm_host_info(hostId):
     payload = None
     r = requests.get(f_url, auth=auth,
                      headers=headers)  # creates the URL using the payload variable as the contents
-    print(r.status_code)
+    # print(r.status_code)
     if r.status_code == 200:
         if len(r.text) > 0:
-            print(i)
             return json.loads(r.text)
+    elif r.status_code == 204:
+        print("Device is not a supported Hypervisor")
+        return "Device is not a supported Hypervisor"
     else:
-        print(i)
+        print
         print("An Error has occured")
 
 
@@ -521,8 +536,10 @@ def get_host_info(hostId):
                      headers=headers)  # creates the URL using the payload variable as the contents
     print(r.status_code)
     if r.status_code == 200:
-        if len(r.text) > 0:
-            return json.loads(r.text)
+        if len(json.loads(r.text)) > 1:
+            return json.loads(r.text)['vmDevice']
+        else:
+            return "Device is not a supported Hypervisor"
     else:
         print(r.text)
         print("An Error has occured")
