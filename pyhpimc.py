@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # author: @netmanchris
 
-''' Copyright 2015 Hewlett Packard Enterprise Development LP
+""" Copyright 2015 Hewlett Packard Enterprise Development LP
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 
-   '''
+   """
 
 # This section imports required libraries
 import requests
@@ -36,7 +36,7 @@ cmdGen = cmdgen.CommandGenerator()
 
 # IMC Device Class
 
-class IMCDev():
+class IMCDev:
     """
     imc_dev class takes in the ip_address which is used as the primary key to gather the following attributes
          for a device which as been previously discovered in the HP IMC Network Management platform.
@@ -48,7 +48,7 @@ class IMCDev():
          contact: returns the contact of the device as discovered in HP IMC
          type: returns the type of the device as discovered in HP IMC
          name: returns the name of the device as discovered in HP IMC
-         status: returs the current alarm status as discovered in HP IMC
+         status: returns the current alarm status as discovered in HP IMC
          devid: returns the current devid used to internally identify the device as discovered in HP IMC
          interfacelist: returns the current list of interfaces for the device as discovered in HP IMC
          numinterface: returns a count of the number of interfaces in the interfacelist attribute
@@ -59,12 +59,12 @@ class IMCDev():
          trunkinterfaces: returns the device interfaces configured as trunk interfaces. Device must be supported in the
                 HP IMC Platform VLAN manager module.
          alarm: returns the current unrecovered alarms as known by HP IMC.
-         num alarms: returns a count of the number of alars as returned by the alarm attribute
+         num alarms: returns a count of the number of alarms as returned by the alarm attribute
          serial: returns the network assets, including serial numbers for the device as discovered by HP IMC. The device
                 must support the ENTITY MIB ( rfc 4133 ) for this value to be returned.
-         runconfig: returns the most recent running configuration for the device as knwon by HP IMC. The device must be
+         runconfig: returns the most recent running configuration for the device as known by HP IMC. The device must be
                 be supported in the HP IMC platform ICC module.
-         startconfig: returns the most recent startup configuration for the device as knwon by HP IMC. The device must be
+         startconfig: returns the most recent startup configuration for the device as known by HP IMC. The device must be
                 be supported in the HP IMC platform ICC module.
          ipmacarp: returns the current device maciparp table as discovered by HP IMC.
 
@@ -92,7 +92,8 @@ class IMCDev():
         self.trunkinterfaces = get_trunk_interfaces(self.devid)
         self.alarm = get_dev_alarms(self.devid)
         self.numalarm = len(get_dev_alarms(self.devid))
-        self.serial = get_serial_numbers(get_dev_asset_details(self.ip))
+        self.serials = get_serial_numbers(get_dev_asset_details(self.ip))
+        self.assets = get_dev_asset_details(self.ip)
         self.runconfig = get_dev_run_config(self.devid)
         self.startconfig = get_dev_start_config(self.devid)
         self.ipmacarp = get_ip_mac_arp_list(self.devid)
@@ -104,7 +105,7 @@ class IMCDev():
         delete_dev_vlans(self.devid, vlanid)
 
 
-class IMCInterface():
+class IMCInterface:
     def __init__(self, ip_address, ifIndex):
         self.ip = get_dev_details(ip_address)['ip']
         self.devid = get_dev_details(ip_address)['id']
@@ -147,12 +148,12 @@ class Hypervisor(IMCDev):
 
 
 def get_dev_asset_details(ipaddress):
-    '''Takes in ipaddress as input to fetch device assett details from HP IMC RESTFUL API
-    :param ipAddress: IP address of the device you wish to gather the asset details
+    """Takes in ipaddress as input to fetch device assett details from HP IMC RESTFUL API
+    :param ipaddress: IP address of the device you wish to gather the asset details
     :return: object of type dictionary or list containing the device asset details
-    '''
+    """
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_dev_asset_url = "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
@@ -173,11 +174,11 @@ def get_dev_asset_details(ipaddress):
 
 
 def get_serial_numbers(assetList):
-    '''
+    """
     Helper function: Uses return of get_dev_asset_details function to evaluate to evaluate for multipe serial objects.
     :param assetList: output of get_dev_asset_details function
     :return: the serial_list object of list type which contains one or more dictionaries of the asset details
-    '''
+    """
     serial_list = []
     if type(assetList) == list:
         for i in assetList:
@@ -193,7 +194,7 @@ def get_trunk_interfaces(devId):
     """
 
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_trunk_interfaces_url = "/imcrs/vlan/trunk?devId=" + str(devId) + "&start=1&size=5000&total=false"
@@ -217,7 +218,7 @@ def get_device_access_interfaces(devId):
     :return: list of dictionaries containing interfaces configured as access ports
     """
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_access_interface_vlan_url = "/imcrs/vlan/access?devId=" + str(devId) + "&start=1&size=500&total=false"
@@ -247,7 +248,7 @@ def get_access_interface_vlan(ifIndex, accessinterfacelist):
 
 def get_interface_details(devId, ifIndex):
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_interface_details_url = "/imcrs/plat/res/device/" + str(devId) + "/interface/" + str(ifIndex)
@@ -276,7 +277,7 @@ def get_dev_details(ip_address):
     'Device not found'
     """
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_dev_details_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
@@ -304,12 +305,12 @@ def get_dev_details(ip_address):
 
 def get_dev_vlans(devId):
     """Function takes input of devID to issue RESTUL call to HP IMC
-    :param requires devId as the only input parameter
+    :param devId: requires devId as the only input parameter
     :return: dictionary of existing vlans on the devices. Device must be supported in HP IMC platform VLAN manager module
     """
 
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_dev_vlans_url = "/imcrs/vlan?devId=" + str(devId) + "&start=0&size=5000&total=false"
@@ -330,11 +331,11 @@ def get_dev_vlans(devId):
 def get_dev_interface(devid):
     """
     Function takes devid as input to RESTFUL call to HP IMC platform
-    :param dev_id: requires devid as the only input
+    :param devid: requires devid as the only input
     :return: list object which contains a dictionary per interface
     """
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_dev_interface_url = "/imcrs/plat/res/device/" + str(devid) + \
@@ -353,7 +354,7 @@ def get_dev_interface(devid):
 
 def get_dev_run_config(devId):
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devId) + "/currentRun"
@@ -365,7 +366,7 @@ def get_dev_run_config(devId):
     if r.status_code == 200:
         run_conf = (json.loads(r.text))['content']
         type(run_conf)
-        if run_conf == None:
+        if run_conf is None:
             return "This features is no supported on this device"
         else:
             return run_conf
@@ -375,7 +376,7 @@ def get_dev_run_config(devId):
 
 def get_dev_start_config(devId):
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devId) + "/currentStart"
@@ -383,7 +384,6 @@ def get_dev_start_config(devId):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    r.status_code
     if r.status_code == 200:
         start_conf = (json.loads(r.text))['content']
         return start_conf
@@ -394,7 +394,7 @@ def get_dev_start_config(devId):
 
 def get_dev_alarms(devId):
     # checks to see if the imc credentials are already available
-    if auth == None or url == None:
+    if auth is None or url is None:
         set_imc_creds()
     global r
     get_dev_alarm_url = "/imcrs/fault/alarm?operatorName=admin&deviceId=" + \
@@ -403,7 +403,6 @@ def get_dev_alarms(devId):
     payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
-    r.status_code
     if r.status_code == 200:
         dev_alarm = (json.loads(r.text))
         if 'alarm' in dev_alarm:
@@ -413,13 +412,13 @@ def get_dev_alarms(devId):
 
 
 def get_real_time_locate(ipAddress):
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     real_time_locate_url = "/imcrs/res/access/realtimeLocate?type=2&value=" + str(ipAddress) + "&total=false"
     f_url = url + real_time_locate_url
     r = requests.get(f_url, auth=auth, headers=headers)  # creates the URL using the payload variable as the contents
     if r.status_code == 200:
-        return (json.loads(r.text)['realtimeLocation'])
+        return json.loads(r.text)['realtimeLocation']
 
     else:
         print(r.status_code)
@@ -427,7 +426,7 @@ def get_real_time_locate(ipAddress):
 
 
 def get_ip_mac_arp_list(devId):
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     ip_mac_arp_list_url = "/imcrs/res/access/ipMacArp/" + str(devId)
     f_url = url + ip_mac_arp_list_url
@@ -437,7 +436,7 @@ def get_ip_mac_arp_list(devId):
         if len(macarplist) > 1:
             return macarplist['ipMacArp']
         else:
-            return ('this function is unsupported')
+            return 'this function is unsupported'
 
     else:
         print(r.status_code)
@@ -445,7 +444,7 @@ def get_ip_mac_arp_list(devId):
 
 
 def create_dev_vlan(devid, vlanid, vlan_name):
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     create_dev_vlan_url = "/imcrs/vlan?devId=" + str(devid)
     f_url = url + create_dev_vlan_url
@@ -460,7 +459,7 @@ def create_dev_vlan(devid, vlanid, vlan_name):
 
 
 def delete_dev_vlans(devid, vlanid):
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     remove_dev_vlan_url = "/imcrs/vlan/delvlan?devId=" + str(devid) + "&vlanId=" + str(vlanid)
     f_url = url + remove_dev_vlan_url
@@ -475,9 +474,9 @@ def delete_dev_vlans(devid, vlanid):
 
 
 def set_inteface_down(devid, ifindex):
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
-    set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + (ifindex) + "/down"
+    set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/down"
     f_url = url + set_int_down_url
     payload = None
     r = requests.put(f_url, auth=auth,
@@ -490,9 +489,9 @@ def set_inteface_down(devid, ifindex):
 
 
 def set_inteface_up(devid, ifindex):
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
-    set_int_up_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + (ifindex) + "/up"
+    set_int_up_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/up"
     f_url = url + set_int_up_url
     payload = None
     r = requests.put(f_url, auth=auth,
@@ -506,7 +505,7 @@ def set_inteface_up(devid, ifindex):
 
 def get_vm_host_info(hostId):
     global r
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     get_vm_host_info_url = "/imcrs/vrm/host?hostId=" + str(hostId)
     f_url = url + get_vm_host_info_url
@@ -521,13 +520,12 @@ def get_vm_host_info(hostId):
         print("Device is not a supported Hypervisor")
         return "Device is not a supported Hypervisor"
     else:
-        print
         print("An Error has occured")
 
 
 def get_host_info(hostId):
     global r
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     get_host_info_url = "/imcrs/vrm/host/vm?hostId=" + str(hostId)
     f_url = url + get_host_info_url
@@ -552,7 +550,7 @@ def get_host_vm_guest(hostId):
     :return: list of dictionaries containing the VM Guest information for the specific hypervisor
     """
     global r
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     get_host_vm_guest_url = "/imcrs/vrm/host/vm?hostId=" + str(hostId)
     f_url = url + get_host_vm_guest_url
@@ -575,7 +573,7 @@ def get_host_vm_nic(hostId):
     :return: list of dictionaries containing the NIC information for the specific hypervisor
     """
     global r
-    if auth == None or url == None:  # checks to see if the imc credentials are already available
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     get_host_vm_nic_url = "/imcrs/vrm/host/vnic?hostDevId=" + str(hostId)
     f_url = url + get_host_vm_nic_url
@@ -604,8 +602,8 @@ headers = {'Accept': 'application/json', 'Content-Type':
 
 
 def set_imc_creds():
-    ''' This function prompts user for IMC server information and credentuials and stores
-    values in url and auth global variables'''
+    """ This function prompts user for IMC server information and credentuials and stores
+    values in url and auth global variables"""
     global url, auth, r
     imc_protocol = input(
         "What protocol would you like to use to connect to the IMC server: \n Press 1 for HTTP: \n Press 2 for HTTPS:")
@@ -633,3 +631,4 @@ def set_imc_creds():
         set_imc_creds()
     else:
         print("You've successfully access the IMC eAPI")
+
