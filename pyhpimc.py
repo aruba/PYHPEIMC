@@ -353,6 +353,14 @@ def get_dev_interface(devid):
 
 
 def get_dev_run_config(devId):
+    """
+    function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
+    file as known by the HP IMC Base Platform ICC module for the target device.
+    :param devId:  int or str value of the target device
+    :return: str which contains the entire content of the target device running configuration. If the device is not
+    currently supported in the HP IMC Base Platform ICC module, this call returns a string of "This feature is not
+    supported on this device"
+    """
     # checks to see if the imc credentials are already available
     if auth is None or url is None:
         set_imc_creds()
@@ -375,6 +383,14 @@ def get_dev_run_config(devId):
 
 
 def get_dev_start_config(devId):
+    """
+    function takes the devId of a specific device and issues a RESTFUL call to get the most current startup config
+    file as known by the HP IMC Base Platform ICC module for the target device.
+    :param devId:  int or str value of the target device
+    :return: str which contains the entire content of the target device startup configuration. If the device is not
+    currently supported in the HP IMC Base Platform ICC module, this call returns a string of "This feature is not
+    supported on this device"
+    """
     # checks to see if the imc credentials are already available
     if auth is None or url is None:
         set_imc_creds()
@@ -393,6 +409,12 @@ def get_dev_start_config(devId):
 
 
 def get_dev_alarms(devId):
+    """
+    function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
+    device.
+    :param devId: int or str value of the target device
+    :return:list of dictionaries containing the alarms for this device
+    """
     # checks to see if the imc credentials are already available
     if auth is None or url is None:
         set_imc_creds()
@@ -410,8 +432,17 @@ def get_dev_alarms(devId):
         else:
             return "Device has no alarms"
 
+"""
+This section deals with functions to access the HP IMC Base Platform Terminal Access Specific API calls
+"""
 
 def get_real_time_locate(ipAddress):
+    """
+    function takes the ipAddress of a specific host and issues a RESTFUL call to get the device and interface that the
+    target host is currently connected to.
+    :param ipAddress: str value valid IPv4 IP address
+    :return: dictionary containing hostIp, devId, deviceIP, ifDesc, ifIndex
+    """
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     real_time_locate_url = "/imcrs/res/access/realtimeLocate?type=2&value=" + str(ipAddress) + "&total=false"
@@ -426,6 +457,11 @@ def get_real_time_locate(ipAddress):
 
 
 def get_ip_mac_arp_list(devId):
+    """
+    function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list from the target device.
+    :param devId: int or str value of the target device.
+    :return: list of dictionaries containing the IP/MAC/ARP list of the target device.
+    """
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     ip_mac_arp_list_url = "/imcrs/res/access/ipMacArp/" + str(devId)
@@ -442,8 +478,19 @@ def get_ip_mac_arp_list(devId):
         print(r.status_code)
         print("An Error has occured")
 
+"""
+This section contains functions which access the HP IMC Base Platform VLAN Manager specific API calls
+ """
 
 def create_dev_vlan(devid, vlanid, vlan_name):
+    """
+    function takes devid and vlanid vlan_name of specific device and 802.1q VLAN tag and issues a RESTFUL call to add the
+    specified VLAN from the target device. VLAN Name MUST be valid on target device.
+    :param devid: int or str value of the target device
+    :param vlanid:int or str value of target 802.1q VLAN
+    :param vlan_name: str value of the target 802.1q VLAN name. MUST be valid name on target device.
+    :return:HTTP Status code of 204 with no values.
+    """
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     create_dev_vlan_url = "/imcrs/vlan?devId=" + str(devid)
@@ -459,6 +506,13 @@ def create_dev_vlan(devid, vlanid, vlan_name):
 
 
 def delete_dev_vlans(devid, vlanid):
+    """
+    function takes devid and vlanid of specific device and 802.1q VLAN tag and issues a RESTFUL call to remove the
+    specified VLAN from the target device.
+    :param devid: int or str value of the target device
+    :param vlanid:
+    :return:HTTP Status code of 204 with no values.
+    """
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     remove_dev_vlan_url = "/imcrs/vlan/delvlan?devId=" + str(devid) + "&vlanId=" + str(vlanid)
@@ -472,8 +526,18 @@ def delete_dev_vlans(devid, vlanid):
     else:
         print("An Error has occured")
 
+"""
+This section deals with functions which access the HP IMC Base Platform Device Resource specific API calls.
+"""
 
 def set_inteface_down(devid, ifindex):
+    """
+    function takest devid and ifindex of specific device and interface and issues a RESTFUL call to " shut" the specifie
+    d interface on the target device.
+    :param devid: int or str value of the target device
+    :param ifindex: int or str value of the target interface
+    :return: HTTP status code 204 with no values.
+    """
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/down"
@@ -489,6 +553,13 @@ def set_inteface_down(devid, ifindex):
 
 
 def set_inteface_up(devid, ifindex):
+    """
+    function takest devid and ifindex of specific device and interface and issues a RESTFUL call to "undo shut" the spec
+    ified interface on the target device.
+    :param devid: int or str value of the target device
+    :param ifindex: int or str value of the target interface
+    :return: HTTP status code 204 with no values.
+    """
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
     set_int_up_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/up"
@@ -504,6 +575,11 @@ def set_inteface_up(devid, ifindex):
 
 
 def get_vm_host_info(hostId):
+    """
+    function takes hostId as input to RESTFUL call to HP IMC
+    :param hostId: int or string of HostId of Hypervisor host
+    :return:list of dictionatires contraining the VM Host information for the target hypervisor
+    """
     global r
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
@@ -524,6 +600,11 @@ def get_vm_host_info(hostId):
 
 
 def get_host_info(hostId):
+    """
+    function takes hostId as input to RESTFUL call to HP IMC
+    :param hostId: int or string of HostId of Hypervisor host
+    :return: list of dictionaries containing the host information for the target hypervisor
+    """
     global r
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
@@ -547,7 +628,7 @@ def get_host_vm_guest(hostId):
     """
     function takes hostId as input to RESTFUL call to HP IMC
     :param hostId: HostId of Hypervisor host.
-    :return: list of dictionaries containing the VM Guest information for the specific hypervisor
+    :return: list of dictionaries containing the VM Guest information for the target hypervisor
     """
     global r
     if auth is None or url is None:  # checks to see if the imc credentials are already available
@@ -570,7 +651,7 @@ def get_host_vm_nic(hostId):
     """
     function takes hostId as input to RESTFUL call to HP IMC
     :param hostId: hostID of Hypervisor host.
-    :return: list of dictionaries containing the NIC information for the specific hypervisor
+    :return: list of dictionaries containing the NIC information for the target hypervisor
     """
     global r
     if auth is None or url is None:  # checks to see if the imc credentials are already available
@@ -588,6 +669,9 @@ def get_host_vm_nic(hostId):
         print(r.text)
         print("An Error has occured")
 
+"""
+next section specifies the HP IMC authentication handler
+"""
 
 # url header to preprend on all IMC eAPI calls
 url = None
