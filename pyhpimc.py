@@ -480,6 +480,62 @@ def get_ip_mac_arp_list(devId):
         print(r.status_code)
         print("An Error has occured")
 
+
+"""
+This section contains functions to work with the various custom views available within HPE IMC Base Platform
+"""
+
+def get_custom_views(name=None):
+    """
+    function takes no input and issues a RESTFUL call to get a list of custom views from HPE IMC. Optioanl Name input
+    will return only the specified view.
+    :param name: string containg the name of the desired custom view
+    :return: list of dictionaries containing attributes of the custom views.
+    """
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
+        set_imc_creds()
+    if name is None:
+        get_custom_views_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&desc=false&total=false'
+    elif name is not None:
+        get_custom_views_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&name='+ name + '&desc=false&total=false'
+    f_url = url + get_custom_views_url
+    r = requests.get(f_url, auth=auth, headers=headers)  # creates the URL using the payload variable as the contents
+    if r.status_code == 200:
+        customviewlist = (json.loads(r.text))['customView']
+        if type(customviewlist) is dict:
+            customviewlist = [customviewlist]
+            return customviewlist
+        else:
+            return customviewlist
+    else:
+        print(r.status_code)
+        print("An Error has occured")
+
+def create_custom_views(name=None, upperview=None):
+    """
+    function takes no input and issues a RESTFUL call to get a list of custom views from HPE IMC. Optioanl Name input
+    will return only the specified view.
+    :param name: string containg the name of the desired custom view
+    :return: list of dictionaries containing attributes of the custom views.
+    """
+    if auth is None or url is None:  # checks to see if the imc credentials are already available
+        set_imc_creds()
+    create_custom_views_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&desc=false&total=falsee'
+    f_url = url + create_custom_views_url
+    if upperview is None:
+        payload = '''{ "name": "''' + name + '''",
+         "upLevelSymbolId" : ""}'''
+    else:
+        parentviewid = get_custom_views(upperview)[0]['symbolId']
+        payload = '''{
+                         "name": "'''+name+ '''"upperview" : "'''+str(parentviewid)+'''"}'''
+        print (payload)
+    r = requests.post(f_url, data = payload, auth=auth, headers=headers)  # creates the URL using the payload variable as the contents
+    if r.status_code == 201:
+        return 'View ' + name +' created successfully'
+    else:
+        print(r.status_code)
+        print("An Error has occured")
 """
 This section contains functions which access the HP IMC Base Platform VLAN Manager specific API calls
  """
@@ -670,6 +726,33 @@ def get_host_vm_nic(hostId):
     else:
         print(r.text)
         print("An Error has occured")
+"""
+System Level Functions
+"""
+
+
+def get_trap_definitions():
+    """Takes in no param as input to fetch SNMP TRAP definitions from HP IMC RESTFUL API
+    :param None
+    :return: object of type list containing the device asset details
+    """
+    # checks to see if the imc credentials are already available
+    if auth is None or url is None:
+        set_imc_creds()
+    global r
+    get_trap_def_url = "/imcrs/fault/trapDefine/sync/query?enterpriseId=1.3.6.1.4.1.11&size=10000"
+    f_url = url + get_trap_def_url
+    payload = None
+    # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=headers)
+    # r.status_code
+    if r.status_code == 200:
+        trap_def_list = (json.loads(r.text))
+        return trap_def_list['trapDefine']
+    else:
+        print("get_dev_asset_details:  An Error has occured")
+
+
 
 """
 next section specifies the HP IMC authentication handler
@@ -685,6 +768,7 @@ auth = None
 # the default
 headers = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
+
 
 
 
@@ -708,6 +792,17 @@ def print_to_file(object):
         if type (object) is str:
             x = object
         fh.write(x)
+
+def print_to_csv(list_of_dicts):
+    with open('file.csv', 'w') as output:
+        w = csv.DictWriter(output, list_of_dicts[0].keys())
+        w = w.writeheader()
+        w = w.writerows(list_of_dicts)
+
+
+
+
+
 
 def set_imc_creds():
     """ This function prompts user for IMC server information and credentuials and stores
