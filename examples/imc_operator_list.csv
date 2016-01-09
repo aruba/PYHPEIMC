@@ -1,0 +1,12 @@
+fullName,sessionTimeout,password,operatorGroupId,name,desc,defaultAcl,authType
+Christopher Young,10,access4chris,1,cyoung,Chris account,0,0
+Les Stuart,10,access4les,1,lstuart,admin account,0,0
+Ken Gott,10,access4ken,1,kgott,admin account,0,0
+Rick Kauffman,10,access4rick,1,rkauffman,admin account,0,0
+Leonard Knapp,10,access4leonard,1,lknapp,admin account,0,0
+Chris Linzell,10,access4chris,1,clinzell,admin account,0,0
+Dwayne Wenger,10,access4dwayne,1,dwenger,admin account,0,0
+James Macdonald,10,access4jim,1,jmacdonald,admin account,0,0
+Tomas Kubica,10,access4tomas,1,tkubica,admin account,0,0
+Michael Breen,10,access4michael,1,mbreen,admin account,0,0
+Marius Venter,10,access4marius,1,mventer,marius admin account,0,0

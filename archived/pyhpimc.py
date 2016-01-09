@@ -87,7 +87,7 @@ class IMCDev:
 
         self.interfacelist = get_dev_interface(self.devid)
         self.numinterface = len(get_dev_interface(self.devid))
-        self.vlans = get_dev_vlans(self.devid)['vlan']
+        self.vlans = get_dev_vlans(self.devid)
         self.accessinterfaces = get_device_access_interfaces(self.devid)
         self.trunkinterfaces = get_trunk_interfaces(self.devid)
         self.alarm = get_dev_alarms(self.devid)
@@ -308,7 +308,7 @@ def get_dev_details(ip_address):
 def get_dev_vlans(devId):
     """Function takes input of devID to issue RESTUL call to HP IMC
     :param devId: requires devId as the only input parameter
-    :return: dictionary of existing vlans on the devices. Device must be supported in HP IMC platform VLAN manager module
+    :return: list dictionaries of existing vlans on the devices. Device must be supported in HP IMC platform VLAN manager module
     """
 
     # checks to see if the imc credentials are already available
@@ -322,10 +322,10 @@ def get_dev_vlans(devId):
     r = requests.get(f_url, auth=auth, headers=headers)
     # r.status_code
     if r.status_code == 200:
-        dev_details = (json.loads(r.text))
+        dev_details = (json.loads(r.text))['vlan']
         return dev_details
     elif r.status_code == 409:
-        return {'vlan': 'no vlans'}
+        return [{'vlan': 'None'}]
     else:
         print("get_dev_vlans: An Error has occured")
 
@@ -474,7 +474,7 @@ def get_ip_mac_arp_list(devId):
         if len(macarplist) > 1:
             return macarplist['ipMacArp']
         else:
-            return 'this function is unsupported'
+            return ['this function is unsupported']
 
     else:
         print(r.status_code)
@@ -547,7 +547,7 @@ def create_dev_vlan(devid, vlanid, vlan_name):
     :param devid: int or str value of the target device
     :param vlanid:int or str value of target 802.1q VLAN
     :param vlan_name: str value of the target 802.1q VLAN name. MUST be valid name on target device.
-    :return:HTTP Status code of 204 with no values.
+    :return:HTTP Status code of 201 with no values.
     """
     if auth is None or url is None:  # checks to see if the imc credentials are already available
         set_imc_creds()
@@ -556,9 +556,12 @@ def create_dev_vlan(devid, vlanid, vlan_name):
     payload = '''{ "vlanId": "''' + str(vlanid) + '''", "vlanName" : "''' + str(vlan_name) + '''"}'''
     r = requests.post(f_url, data=payload, auth=auth,
                       headers=headers)  # creates the URL using the payload variable as the contents
-    print(r.status_code)
+    print (r.status_code)
     if r.status_code == 201:
+        print ('Vlan Created')
         return r.status_code
+    elif r.status_code == 409:
+        return '''Unable to create VLAN.\nVLAN Already Exists\nDevice does not support VLAN function'''
     else:
         print("An Error has occured")
 
@@ -578,8 +581,12 @@ def delete_dev_vlans(devid, vlanid):
     payload = None
     r = requests.delete(f_url, auth=auth,
                         headers=headers)  # creates the URL using the payload variable as the contents
-    print(r.status_code)
+    print (r.status_code)
     if r.status_code == 204:
+        print ('Vlan deleted')
+        return r.status_code
+    elif r.status_code == 409:
+        print ('Unable to delete VLAN.\nVLAN does not Exist\nDevice does not support VLAN function')
         return r.status_code
     else:
         print("An Error has occured")
@@ -778,7 +785,7 @@ Helper Functions
 ==========================="""
 
 def print_to_file(object):
-    '''
+    """
     Function takes in object of type str, list, or dict and prints out to current working directory as pyoutput.txt
     :param:  Object: object of type str, list, or dict
     :return: No return. Just prints out to file handler and save to current working directory as pyoutput.txt
