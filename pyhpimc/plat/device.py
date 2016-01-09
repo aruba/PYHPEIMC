@@ -179,7 +179,7 @@ def set_inteface_down(devid, ifindex, auth, url):
         print(r.status_code)
         if r.status_code == 204:
             return r.status_code
-   except requests.exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " set_inteface_down: An Error has occured"
 
 
