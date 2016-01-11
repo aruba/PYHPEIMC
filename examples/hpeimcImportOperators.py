@@ -1,6 +1,6 @@
 import csv
-from pyhpimc.auth import *
-from pyhpimc.plat.operator import *
+from pyhpeimc.auth import *
+from pyhpeimc.plat.operator import *
 
 
 

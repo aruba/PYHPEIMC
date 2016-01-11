@@ -30,42 +30,35 @@ import pysnmp
 from requests.auth import HTTPDigestAuth
 from pysnmp.entity.rfc3413.oneliner import cmdgen
 from pysnmp.proto import rfc1902
-from pyhpimc.auth import IMCAuth
-
+from pyhpeimc.auth import IMCAuth
+from __main__ import *
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
 
-auth = None #IMCAuth('http://','10.101.0.201','8080', 'admin','admin')
+auth = IMCAuth('http://','10.101.0.201','8080', 'admin','admin')
 
-def get_dev_asset_details(ipaddress, auth=auth.creds, url=auth.url):
-    """Takes in ipaddress as input to fetch device assett details from HP IMC RESTFUL API
-    :param ipaddress: IP address of the device you wish to gather the asset details
-    :return: object of type list containing the device asset details
 
-    Example:
-        auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
-        get_dev_asset_details("10.101.0.1", auth.creds, auth.url)
 
+def get_dev_alarms(devId, auth=auth.creds, url=auth.url):
+    """
+    function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
+    device.
+    :param devId: int or str value of the target device
+    :return:list of dictionaries containing the alarms for this device
     """
     # checks to see if the imc credentials are already available
-    auth= None
-    url = None
-    get_dev_asset_url = "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
-    f_url = url + get_dev_asset_url
+    get_dev_alarm_url = "/imcrs/fault/alarm?operatorName=admin&deviceId=" + \
+                        str(devId) + "&desc=false"
+    f_url = url + get_dev_alarm_url
     # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    r = requests.get(f_url, auth=auth, headers=headers)
     try:
         if r.status_code == 200:
-            dev_asset_info = (json.loads(r.text))
-            if len(dev_asset_info) > 0:
-                dev_asset_info = dev_asset_info['netAsset']
-            if type(dev_asset_info) == dict:
-                dev_asset_info = [dev_asset_info]
-            if type(dev_asset_info) == list:
-                dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') == ipaddress]
-            return dev_asset_info
+            dev_alarm = (json.loads(r.text))
+            if 'alarm' in dev_alarm:
+                return dev_alarm['alarm']
+            else:
+                return "Device has no alarms"
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
-
+            return "Error:\n" + str(e) + ' get_dev_alarms: An Error has occured'

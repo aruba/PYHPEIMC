@@ -1,6 +1,6 @@
 __author__ = 'christopheryoung'
 
-from pyhpimc import *
+from pyhpeimc import *
 
 switchlist = ['10.101.0.221'],  '10.101.0.233','10.254.0.101']
 switch_count = 1

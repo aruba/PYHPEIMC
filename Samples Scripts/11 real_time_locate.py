@@ -30,7 +30,7 @@
 #and can be added to the standard edition through the purchase of the eAPI addon license.
 
 #This section imports required libraries
-import requests, json, sys, time, subprocess, csv, os, ipaddress, pyhpimc
+import requests, json, sys, time, subprocess, csv, os, ipaddress, pyhpeimc
 from requests.auth import HTTPDigestAuth
 
 

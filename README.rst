@@ -15,3 +15,4 @@ What's Changed:
 
 Fixed Readme File
 Fixed setup.py to remove unnecessary data directory
+Issue with plat.device.set_interface_down function. fixed
