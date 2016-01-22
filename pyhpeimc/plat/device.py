@@ -200,3 +200,66 @@ def set_inteface_up(devid, ifindex, auth, url):
             return r.status_code
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " set_inteface_up: An Error has occured"
+
+
+def get_dev_mac_learn(devid, auth, url):
+    '''
+    function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
+    the target device.
+    :param devid: int value of the target device
+    :param auth:
+    :param url:
+    :return:
+    '''
+    get_dev_mac_learn_url='/imcrs/res/access/ipMacLearn/'+str(devid)
+    f_url = url+get_dev_mac_learn_url
+    print(f_url)
+    try:
+        r = requests.get(f_url, auth=auth, headers=HEADERS)
+        if r.status_code == 200:
+            if len(r.text) < 1:
+                mac_learn_query = {}
+                return mac_learn_query
+            else:
+                mac_learn_query = (json.loads(r.text))['ipMacLearnResult']
+                return mac_learn_query
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " get_dev_mac_learn: An Error has occured"
+
+
+
+def run_dev_cmd(devid, cmd_list, auth, url):
+    '''
+    Function takes devid of target device and a sequential list of strings which define the specific commands to be run
+    on the target device and returns a str object containing the output of the commands.
+    :param devid: int devid of the target device
+    :param cmd_list: list of strings
+    :return: str containing the response of the commands
+    '''
+    run_dev_cmd_url = '/imcrs/icc/confFile/executeCmd'
+    f_url = url + run_dev_cmd_url
+    cmd_list = _make_cmd_list(cmd_list)
+    payload = '''{ "deviceId" : "'''+str(devid) + '''",
+                   "cmdlist" : { "cmd" :
+                   ['''+ cmd_list + ''']
+
+                   }
+                   }'''
+    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
+    if r.status_code == 200:
+        if len(r.text) < 1:
+            return ''
+        else:
+            return json.loads(r.text)
+
+def _make_cmd_list(cmd_list):
+    '''
+    Helper function to easily create the proper json formated string from a list of strs
+    :param cmd_list: list of strings
+    :return: str json formatted
+    '''
+    cmd = ''
+    for i in cmd_list:
+         cmd= cmd+ '"' + i + '",'
+    cmd = cmd[:-1]
+    return cmd

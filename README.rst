@@ -13,6 +13,17 @@ For more information, please visit the project home page at `GITHub.com <https:/
 
 What's Changed:
 
-Fixed Readme File
-Fixed setup.py to remove unnecessary data directory
-Issue with plat.device.set_interface_down function. fixed
+1.0.1 Fixed Readme File
+1.0.2 Fixed setup.py to remove unnecessary data directory
+1.0.3 Issue with plat.device.set_interface_down function. fixed
+1.0.4/5 - Changed library name for HP branding
+1.0.6 - Added get_dev_mac_learn function to pyhpeimc.plat.device
+1.0.7 - Added run_dev_cmd function to pyhpeimc.plat.device
+1.0.8 - Squashed bugs
+1.0.9 - Squashed more bugs
+1.0.10 - And yet more bugs
+1.0.11 - And yet more bugs
+1.0.12 - Changed output of pyhpeimc.plat.device.run_dev_cmd to include full response
+1.0.13 - Added plat.auth.test_imc_creds function
+1.0.14 - Removed Jupyter dependency
+1.0.15 - Added icc module under plat. Added various configuration template functions to icc module

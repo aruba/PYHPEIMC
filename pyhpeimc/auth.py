@@ -73,6 +73,17 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
             set_imc_creds()
 
 
+def test_imc_creds(auth, url):
+    test_url = '/imcrs'
+    f_url = url + test_url
+    try:
+        r = requests.get(f_url, auth=auth, headers=headers, verify=False)
+        if r.status_code == 200:
+            return True
+        else:
+            return False
+    except requests.exceptions.RequestException as e:
+        return "Error:\n" + str(e) + " test_imc_creds: An Error has occured"
 
 
 def set_imc_creds(h_url=None, imc_server=None, imc_port=None, imc_user=None,imc_pw=None):
