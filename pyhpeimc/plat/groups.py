@@ -76,12 +76,12 @@ def create_custom_views(auth, url,name=None, upperview=None):
     if upperview is None:
         payload = '''{ "name": "''' + name + '''",
          "upLevelSymbolId" : ""}'''
-        print (payload)
+        #print (payload)
     else:
         parentviewid = get_custom_views(auth, url, upperview)[0]['symbolId']
         payload = '''{ "name": "'''+name+ '''",
         "upLevelSymbolId" : "'''+str(parentviewid)+'''"}'''
-        print (payload)
+        #print (payload)
     r = requests.post(f_url, data = payload, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
         if r.status_code == 201:

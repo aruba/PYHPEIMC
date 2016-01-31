@@ -27,3 +27,4 @@ What's Changed:
 1.0.13 - Added plat.auth.test_imc_creds function
 1.0.14 - Removed Jupyter dependency
 1.0.15 - Added icc module under plat. Added various configuration template functions to icc module
+1.0.16 - Added version function. Modified create_custom_view to remove unnecessary output.

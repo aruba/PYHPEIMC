@@ -25,7 +25,7 @@ import requests
 HEADERS = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
 
-#command creates dummy IMCAuth object. Should be overwritten in script calling these functions
+
 
 
 
