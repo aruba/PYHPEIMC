@@ -28,3 +28,6 @@ What's Changed:
 1.0.14 - Removed Jupyter dependency
 1.0.15 - Added icc module under plat. Added various configuration template functions to icc module
 1.0.16 - Added version function. Modified create_custom_view to remove unnecessary output.
+1.0.17 - Added netassets, VRM, and WSM functions
+1.0.18 - Forced return of get_real_time_locate function to be a list
+1.0.19 - Added objects module and IMCDev and IMCInt classes for usability

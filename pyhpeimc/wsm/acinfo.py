@@ -20,7 +20,7 @@
 # This section imports required libraries
 import json
 import requests
-from pyhpeimc.plat.device import *
+
 
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
@@ -28,11 +28,10 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 
 def get_ac_info_all(auth, url):
     """
-    function takes hostId as input to RESTFUL call to HP IMC
-    :param hostip: int or string of hostip of Hypervisor host
-    :return:list of dictionatires contraining the VM Host information for the target hypervisor
+    function takes no input as input to RESTFUL call to HP IMC
+    :return:list of dictionatires contraining the Access Controller information as known by HPE IMC Wireless Services
+    Manager module.
     """
-    hostId = get_dev_details(hostip, auth, url)['id']
     get_ac_info_all_url = "/imcrs/wlan/acInfo/queryAcBasicInfo"
     f_url = url + get_ac_info_all_url
     payload = None

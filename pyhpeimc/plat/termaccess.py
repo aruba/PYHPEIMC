@@ -43,7 +43,12 @@ def get_real_time_locate(ipAddress, auth, url):
         if r.status_code == 200:
             response =  json.loads(r.text)
             if 'realtimeLocation' in response:
-                return json.loads(r.text)['realtimeLocation']
+                real_time_locate = json.loads(r.text)['realtimeLocation']
+                if type(real_time_locate) is dict:
+                    real_time_locate = [real_time_locate]
+                    return real_time_locate
+                else:
+                    return json.loads(r.text)['realtimeLocation']
             else:
                 return json.loads(r.text)
 

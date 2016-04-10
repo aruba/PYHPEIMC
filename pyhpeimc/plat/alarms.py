@@ -20,25 +20,15 @@
 # This section imports required libraries
 import requests
 import json
-import sys
-import time
-import subprocess
-import csv
-import os
-import ipaddress
-import pysnmp
-from requests.auth import HTTPDigestAuth
-from pysnmp.entity.rfc3413.oneliner import cmdgen
-from pysnmp.proto import rfc1902
 from pyhpeimc.auth import IMCAuth
-from __main__ import *
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
 
 auth = IMCAuth('http://','10.101.0.201','8080', 'admin','admin')
 
-
+headers = {'Accept': 'application/json', 'Content-Type':
+    'application/json', 'Accept-encoding': 'application/json'}
 
 def get_dev_alarms(devId, auth=auth.creds, url=auth.url):
     """
