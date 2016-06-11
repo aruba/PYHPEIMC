@@ -31,3 +31,7 @@ What's Changed:
 1.0.17 - Added netassets, VRM, and WSM functions
 1.0.18 - Forced return of get_real_time_locate function to be a list
 1.0.19 - Added objects module and IMCDev and IMCInt classes for usability
+1.0.20 - Modified get_plat_operator function to always returns object of type list
+         Added Object Class for IPScopes ( termimal access IP Address Management ) and supporting functions in plat.termaccess
+1.0.21 - Fixed bug in addip method of IPScope class
+1.0.22 - Added deallocate hostip method to IPScope class with supporting functions in plat.termaccess

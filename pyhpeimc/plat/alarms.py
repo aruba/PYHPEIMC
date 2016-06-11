@@ -25,12 +25,12 @@ from pyhpeimc.auth import IMCAuth
 HEADERS = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
 
-auth = IMCAuth('http://','10.101.0.201','8080', 'admin','admin')
+#auth = IMCAuth('http://','10.101.0.201','8080', 'admin','admin')
 
 headers = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
 
-def get_dev_alarms(devId, auth=auth.creds, url=auth.url):
+def get_dev_alarms(devId, auth, url):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
     device.

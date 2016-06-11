@@ -126,3 +126,43 @@ class IMCInterface:
         self.auth = auth
         self.url = url
 
+
+class IPScope:
+    def __init__(self, netaddr, auth, url):
+        self.id = get_scope_id(netaddr, auth, url)
+        self.details = get_ip_scope_detail(auth, url, self.id)
+        self.hosts = get_ip_scope_hosts(auth, url, self.id)
+        self.auth = auth
+        self.url = url
+        self.netaddr = ipaddress.ip_network(netaddr)
+        self.startip = get_ip_scope_detail(auth, url, self.id)['startIp']
+        self.endip = get_ip_scope_detail(auth, url, self.id)['endIp']
+        if 'assignedIpScope' in self.details:
+            self.child = get_ip_scope_detail(auth, url, self.id)['assignedIpScope']
+
+    def allocateIp(self, ipaddress, name, description):
+        add_scope_ip(ipaddress, name, description, self.id, self.auth, self.url)
+
+    def deallocateIp(self, hostid):
+        remove_scope_ip( hostid, self.auth, self.url)
+
+    def gethosts(self):
+        self.hosts = get_ip_scope_hosts(self.auth, self.url, self.id)
+
+
+    def nextfreeip(self):
+        allocated_ips = [ ipaddress.ip_address(host['ip']) for host in self.hosts]
+        for ip in self.netaddr:
+            if str(ip).split('.')[-1] == '0':
+                continue
+            if ip not in allocated_ips:
+                return ip
+
+    def addchild(self, startIp, endIp, name, description):
+        add_child_ip_scope(self.auth, self.url,startIp, endIp, name, description,self.id)
+
+
+
+
+
+

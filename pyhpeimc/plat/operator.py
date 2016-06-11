@@ -123,6 +123,10 @@ def get_plat_operator(auth, url,headers=HEADERS):
     try:
         r = requests.get(f_url, auth=auth, headers=headers)
         plat_oper_list = json.loads(r.text)
+        if type(plat_oper_list) is dict:
+            oper_list = [plat_oper_list['operator']]
+            #plat_oper_list[0] = plat_oper_list['operator']
+            return oper_list
         return plat_oper_list['operator']
     except requests.exceptions.RequestException as e:
         print ("Error:\n" + str(e) + ' get_plat_operator: An Error has occured')
