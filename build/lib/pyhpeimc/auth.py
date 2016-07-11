@@ -1,21 +1,7 @@
 #!/usr/bin/env python3
 # author: @netmanchris
 
-""" Copyright 2015 Hewlett Packard Enterprise Development LP
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-
-   """
 
 # This section imports required libraries
 import requests
@@ -28,8 +14,15 @@ headers = {'Accept': 'application/json', 'Content-Type':
 
 
 class IMCAuth(requests.auth.HTTPDigestAuth):
-    """ This class handles authentication against the HPE IMC API and uses the Requests API. IMCAuth derives from
+    """
+    This class handles authentication against the HPE IMC API and uses the Requests API. IMCAuth derives from
     requests.auth.HTTPDigestAuth.
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> auth.password
+    admin
+
     """
 
     def __init__(self, h_url,server,port,username, password):
