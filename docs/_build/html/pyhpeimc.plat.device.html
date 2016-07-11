@@ -45,36 +45,294 @@
 <h1>pyhpeimc.plat.device package<a class="headerlink" href="#pyhpeimc-plat-device-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-pyhpeimc.plat.device">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.plat.device" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2015 Hewlett Packard Enterprise Development LP</p>
-<p>Licensed under the Apache License, Version 2.0 (the &#8220;License&#8221;);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &#8220;AS IS&#8221; BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="data">
 <dt id="pyhpeimc.plat.device.HEADERS">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">HEADERS</code><em class="property"> = {'Accept-encoding': 'application/json', 'Content-Type': 'application/json', 'Accept': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.device.HEADERS" title="Permalink to this definition">¶</a></dt>
-<dd><p>This section contains functions which operate at the device level</p>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">HEADERS</code><em class="property"> = {'Accept': 'application/json', 'Accept-encoding': 'application/json', 'Content-Type': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.device.HEADERS" title="Permalink to this definition">¶</a></dt>
+<dd><p>This section contains functions which operate at the device level.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyhpeimc.plat.device.get_all_interface_details">
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_all_interface_details</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.get_all_interface_details" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><blockquote>
+<div><p>function takes the devId of a specific device and the ifindex value assigned to a specific interface
+and issues a RESTFUL call to get the interface details
+file as known by the HP IMC Base Platform ICC module for the target device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param devId:</th><td class="field-body">int or str value of the devId of the target device</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">list of dict objects which contains the details of all interfaces on the target device</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">retype:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>&gt;&gt;&gt;get_all_interface_details(&#8216;10&#8217;, auth.creds, auth.url)
+[{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</p>
+</div></blockquote>
+<p>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;VMSynology - HP_5500EI&#8217;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/1&#8217;,
+&#8216;ifIndex&#8217;: &#8216;1&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;5 day(s) 12 hour(s) 50 minute(s) 41 second(s) 750 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-23 10:10:05&#8217;,
+&#8216;mtu&#8217;: &#8216;9216&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:17&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;SynologyDS - HP_5500EI&#8217;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/2&#8217;,
+&#8216;ifIndex&#8217;: &#8216;2&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;5 day(s) 13 hour(s) 22 minute(s) 55 second(s) 710 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-23 10:42:19&#8217;,
+&#8216;mtu&#8217;: &#8216;1536&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:18&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8220;I&#8217;m a NMS Weenie&#8221;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/3&#8217;,
+&#8216;ifIndex&#8217;: &#8216;3&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 48 second(s) 670 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:58&#8217;,
+&#8216;mtu&#8217;: &#8216;1536&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:19&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8220;&#8217; &#8216;&#8221;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/4&#8217;,
+&#8216;ifIndex&#8217;: &#8216;4&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 48 second(s) 840 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:58&#8217;,
+&#8216;mtu&#8217;: &#8216;1536&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:1a&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;ESX55-10.101.0.7 - HP_5500EI&#8217;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/5&#8217;,
+&#8216;ifIndex&#8217;: &#8216;5&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 5 minute(s) 8 second(s) 590 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:23:18&#8217;,
+&#8216;mtu&#8217;: &#8216;1536&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:1b&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;ESX55-10.101.0.6 - HP_5500EI&#8217;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/6&#8217;,
+&#8216;ifIndex&#8217;: &#8216;6&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 10 minute(s) 47 second(s) 800 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:28:57&#8217;,
+&#8216;mtu&#8217;: &#8216;1536&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:1c&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;ESX55-10.101.0.7 - HP_5500EI&#8217;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/7&#8217;,
+&#8216;ifIndex&#8217;: &#8216;7&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 5 minute(s) 8 second(s) 940 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:23:18&#8217;,
+&#8216;mtu&#8217;: &#8216;1536&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:1d&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;ESX55-10.101.0.6 - HP_5500EI&#8217;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/8&#8217;,
+&#8216;ifIndex&#8217;: &#8216;8&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 10 minute(s) 48 second(s) 150 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:28:58&#8217;,
+&#8216;mtu&#8217;: &#8216;1536&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:1e&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8220;&#8217; &#8216;&#8221;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/9&#8217;,
+&#8216;ifIndex&#8217;: &#8216;9&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 25 second(s) 930 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:18:35&#8217;,
+&#8216;mtu&#8217;: &#8216;9216&#8217;,
+&#8216;operationStatus&#8217;: &#8216;2&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:1f&#8217;,
+&#8216;showStatus&#8217;: &#8216;2&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Down&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;Sentry3_5133a8 - HP_5500EI&#8217;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/10&#8217;,
+&#8216;ifIndex&#8217;: &#8216;10&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;100000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 46 second(s) 760 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:56&#8217;,
+&#8216;mtu&#8217;: &#8216;1536&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:20&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;}]</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_details">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_details</code><span class="sig-paren">(</span><em>ip_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_details" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes string input of IP address to issue RESTUL call to HP IMC
-:param ip_address: string object of dotted decimal notation of IPv4 address
-:return: dictionary of device details</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dev_details</span><span class="p">(</span><span class="s1">&#39;10.101.0.1&#39;</span><span class="p">)</span>
-<span class="go">{&#39;symbolLevel&#39;: &#39;2&#39;, &#39;typeName&#39;: &#39;Cisco 2811&#39;, &#39;location&#39;: &#39;changed this too&#39;, &#39;status&#39;: &#39;1&#39;, &#39;sysName&#39;: &#39;Cisco2811.haw.int&#39;, &#39;id&#39;: &#39;30&#39;, &#39;symbolType&#39;: &#39;3&#39;, &#39;symbolId&#39;: &#39;1032&#39;, &#39;sysDescription&#39;: &#39;&#39;, &#39;symbolName&#39;: &#39;Cisco2811.haw.int&#39;, &#39;mask&#39;: &#39;255.255.255.0&#39;, &#39;label&#39;: &#39;Cisco2811.haw.int&#39;, &#39;symbolDesc&#39;: &#39;&#39;, &#39;sysOid&#39;: &#39;1.3.6.1.4.1.9.1.576&#39;, &#39;contact&#39;: &#39;changed this too&#39;, &#39;statusDesc&#39;: &#39;Normal&#39;, &#39;parentId&#39;: &#39;1&#39;, &#39;categoryId&#39;: &#39;0&#39;, &#39;topoIconName&#39;: &#39;iconroute&#39;, &#39;mac&#39;: &#39;00:1b:d4:47:1e:68&#39;, &#39;devCategoryImgSrc&#39;: &#39;router&#39;, &#39;link&#39;: {&#39;@rel&#39;: &#39;self&#39;, &#39;@href&#39;: &#39;http://10.101.0.202:8080/imcrs/plat/res/device/30&#39;, &#39;@op&#39;: &#39;GET&#39;}, &#39;ip&#39;: &#39;10.101.0.1&#39;}</span>
+<dd><p>Takes string input of IP address to issue RESTUL call to HP IMC</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param ip_address:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">string object of dotted decimal notation of IPv4 address</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">dictionary of device details</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dev_details</span><span class="p">(</span><span class="s1">&#39;8.8.8.8&#39;</span><span class="p">)</span>
-<span class="go">Device not found</span>
-<span class="go">&#39;Device not found&#39;</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dev_details</span><span class="p">(</span><span class="s1">&#39;10.101.0.1&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">{&#39;categoryId&#39;: &#39;0&#39;,</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>&#8216;contact&#8217;: &#8216;changed this too&#8217;,
+&#8216;devCategoryImgSrc&#8217;: &#8216;router&#8217;,
+&#8216;id&#8217;: &#8216;15&#8217;,
+&#8216;ip&#8217;: &#8216;10.101.0.1&#8217;,
+&#8216;label&#8217;: &#8216;router.lab.local&#8217;,
+&#8216;link&#8217;: <a class="reference external" href="mailto:{'&#37;&#52;&#48;href">{'<span>&#64;</span>href</a>&#8216;: &#8216;<a class="reference external" href="http://10.101.0.203:8080/imcrs/plat/res/device/15">http://10.101.0.203:8080/imcrs/plat/res/device/15</a>&#8216;,</p>
+<blockquote>
+<div><a class="reference external" href="mailto:'&#37;&#52;&#48;op">'<span>&#64;</span>op</a>&#8216;: &#8216;GET&#8217;,
+<a class="reference external" href="mailto:'&#37;&#52;&#48;rel">'<span>&#64;</span>rel</a>&#8216;: &#8216;self&#8217;},</div></blockquote>
+<p>&#8216;location&#8217;: &#8216;changed this too&#8217;,
+&#8216;mac&#8217;: &#8216;00:1b:d4:47:1e:68&#8217;,
+&#8216;mask&#8217;: &#8216;255.255.255.0&#8217;,
+&#8216;parentId&#8217;: &#8216;1&#8217;,
+&#8216;status&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Normal&#8217;,
+&#8216;symbolDesc&#8217;: &#8216;&#8217;,
+&#8216;symbolId&#8217;: &#8216;1026&#8217;,
+&#8216;symbolLevel&#8217;: &#8216;2&#8217;,
+&#8216;symbolName&#8217;: &#8216;router.lab.local&#8217;,
+&#8216;symbolType&#8217;: &#8216;3&#8217;,
+&#8216;sysDescription&#8217;: &#8216;&#8217;,
+&#8216;sysName&#8217;: &#8216;Cisco2811.lab.local&#8217;,
+&#8216;sysOid&#8217;: &#8216;1.3.6.1.4.1.9.1.576&#8217;,
+&#8216;topoIconName&#8217;: &#8216;iconroute&#8217;,
+&#8216;typeName&#8217;: &#8216;Cisco 2811&#8217;}</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dev_details</span><span class="p">(</span><span class="s1">&#39;8.8.8.8&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -82,57 +340,4038 @@ limitations under the License.</p>
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_interface">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_interface</code><span class="sig-paren">(</span><em>devid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_interface" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function takes devid as input to RESTFUL call to HP IMC platform
-:param devid: requires devid as the only input
-:return: list object which contains a dictionary per interface</p>
+<dd><blockquote>
+<div><blockquote>
+<div><p>Function takes devid as input to RESTFUL call to HP IMC platform and returns list of device interfaces</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param devid:</th><td class="field-body">requires devid as the only input</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">list object which contains a dictionary per interface</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dev_interface</span><span class="p">(</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">[{&#39;adminStatus&#39;: &#39;2&#39;,</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>&#8216;adminStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Service-Engine1/0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;1&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;100000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 1 second(s) 610 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:18:46&#8217;,
+&#8216;mtu&#8217;: &#8216;1500&#8217;,
+&#8216;operationStatus&#8217;: &#8216;2&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1b:d4:47:1e:78&#8217;,
+&#8216;showStatus&#8217;: &#8216;-1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Disabled&#8217;},</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;inside&#8217;,
+&#8216;ifDescription&#8217;: &#8216;FastEthernet0/0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;2&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;100000000&#8217;,
+&#8216;ipHash&#8217;: {&#8216;item&#8217;: [&#8216;10.101.0.1&#8217;, &#8216;255.255.255.0&#8217;]},
+&#8216;lastChange&#8217;: &#8216;19 day(s) 20 hour(s) 33 minute(s) 3 second(s) 470 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-07-07 17:51:31&#8217;,
+&#8216;mtu&#8217;: &#8216;1500&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1b:d4:47:1e:68&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;WAN&#8217;,
+&#8216;ifDescription&#8217;: &#8216;FastEthernet0/1&#8217;,
+&#8216;ifIndex&#8217;: &#8216;3&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;100000000&#8217;,
+&#8216;ipHash&#8217;: {&#8216;item&#8217;: [&#8216;74.58.140.80&#8217;, &#8216;255.255.255.0&#8217;]},
+&#8216;lastChange&#8217;: &#8216;17 day(s) 21 hour(s) 13 minute(s) 33 second(s) 790 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-07-05 18:32:03&#8217;,
+&#8216;mtu&#8217;: &#8216;1500&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1b:d4:47:1e:69&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;2&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Serial0/0/0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;4&#8217;,
+&#8216;ifType&#8217;: &#8216;32&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;FRAMERELAY&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1544000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 1 second(s) 580 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:18:46&#8217;,
+&#8216;mtu&#8217;: &#8216;1500&#8217;,
+&#8216;operationStatus&#8217;: &#8216;2&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;-1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Disabled&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;VoIP-Null0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;5&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;10000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 41 second(s) 300 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:18:26&#8217;,
+&#8216;mtu&#8217;: &#8216;1500&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Null0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;6&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;10000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;1500&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Foreign Exchange Station 0/1/0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;8&#8217;,
+&#8216;ifType&#8217;: &#8216;102&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEFXS&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 33 second(s) 190 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:18&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;5&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Dormant&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Foreign Exchange Station 0/1/1&#8217;,
+&#8216;ifIndex&#8217;: &#8216;9&#8217;,
+&#8216;ifType&#8217;: &#8216;102&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEFXS&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 31 second(s) 340 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:16&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;5&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Dormant&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Foreign Exchange Station 0/1/2&#8217;,
+&#8216;ifIndex&#8217;: &#8216;10&#8217;,
+&#8216;ifType&#8217;: &#8216;102&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEFXS&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 33 second(s) 190 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:18&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;5&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Dormant&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Foreign Exchange Station 0/1/3&#8217;,
+&#8216;ifIndex&#8217;: &#8216;11&#8217;,
+&#8216;ifType&#8217;: &#8216;102&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEFXS&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 33 second(s) 190 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:18&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;5&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Dormant&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;POTS line from Telco&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Foreign Exchange Office 0/2/0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;12&#8217;,
+&#8216;ifType&#8217;: &#8216;101&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEFXO&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 33 second(s) 480 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:18&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;5&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Dormant&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;2&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Foreign Exchange Office 0/2/1&#8217;,
+&#8216;ifIndex&#8217;: &#8216;13&#8217;,
+&#8216;ifType&#8217;: &#8216;101&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEFXO&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 33 second(s) 360 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:18&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;2&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;-1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Disabled&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Over IP Peer: 2147483647&#8217;,
+&#8216;ifIndex&#8217;: &#8216;14&#8217;,
+&#8216;ifType&#8217;: &#8216;104&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEOVERIP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 46 second(s) 180 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:18:31&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Loopback0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;15&#8217;,
+&#8216;ifType&#8217;: &#8216;24&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;SOFTWARELOOPBACK&#8217;,
+&#8216;ifspeed&#8217;: &#8216;8000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 59 second(s) 600 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:18:44&#8217;,
+&#8216;mtu&#8217;: &#8216;1514&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 2&#8217;,
+&#8216;ifIndex&#8217;: &#8216;17&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 18 second(s) 480 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:03&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 3&#8217;,
+&#8216;ifIndex&#8217;: &#8216;18&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 18 second(s) 490 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:03&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 2000&#8217;,
+&#8216;ifIndex&#8217;: &#8216;19&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 18 second(s) 520 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:03&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/1&#8217;,
+&#8216;ifIndex&#8217;: &#8216;20&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20001&#8217;,
+&#8216;ifIndex&#8217;: &#8216;21&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 460 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/2&#8217;,
+&#8216;ifIndex&#8217;: &#8216;22&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20002&#8217;,
+&#8216;ifIndex&#8217;: &#8216;23&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 560 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/3&#8217;,
+&#8216;ifIndex&#8217;: &#8216;24&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20003&#8217;,
+&#8216;ifIndex&#8217;: &#8216;25&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 570 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/4&#8217;,
+&#8216;ifIndex&#8217;: &#8216;26&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20004&#8217;,
+&#8216;ifIndex&#8217;: &#8216;27&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 600 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/5&#8217;,
+&#8216;ifIndex&#8217;: &#8216;28&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20005&#8217;,
+&#8216;ifIndex&#8217;: &#8216;29&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 620 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/50&#8217;,
+&#8216;ifIndex&#8217;: &#8216;30&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20006&#8217;,
+&#8216;ifIndex&#8217;: &#8216;31&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 630 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/51&#8217;,
+&#8216;ifIndex&#8217;: &#8216;32&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20007&#8217;,
+&#8216;ifIndex&#8217;: &#8216;33&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 650 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/52&#8217;,
+&#8216;ifIndex&#8217;: &#8216;34&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20008&#8217;,
+&#8216;ifIndex&#8217;: &#8216;35&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 660 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/53&#8217;,
+&#8216;ifIndex&#8217;: &#8216;36&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20009&#8217;,
+&#8216;ifIndex&#8217;: &#8216;37&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 680 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/54&#8217;,
+&#8216;ifIndex&#8217;: &#8216;38&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20010&#8217;,
+&#8216;ifIndex&#8217;: &#8216;39&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 700 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/55&#8217;,
+&#8216;ifIndex&#8217;: &#8216;40&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20011&#8217;,
+&#8216;ifIndex&#8217;: &#8216;41&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 720 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/56&#8217;,
+&#8216;ifIndex&#8217;: &#8216;42&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20012&#8217;,
+&#8216;ifIndex&#8217;: &#8216;43&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 740 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/70&#8217;,
+&#8216;ifIndex&#8217;: &#8216;44&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20013&#8217;,
+&#8216;ifIndex&#8217;: &#8216;45&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 760 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;users_gateway&#8217;,
+&#8216;ifDescription&#8217;: &#8216;FastEthernet0/0.15&#8217;,
+&#8216;ifIndex&#8217;: &#8216;48&#8217;,
+&#8216;ifType&#8217;: &#8216;135&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;L2VLAN&#8217;,
+&#8216;ifspeed&#8217;: &#8216;100000000&#8217;,
+&#8216;ipHash&#8217;: {&#8216;item&#8217;: [&#8216;10.101.15.1&#8217;, &#8216;255.255.255.0&#8217;]},
+&#8216;lastChange&#8217;: &#8216;19 day(s) 20 hour(s) 33 minute(s) 3 second(s) 460 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-07-07 17:51:31&#8217;,
+&#8216;mtu&#8217;: &#8216;1500&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1b:d4:47:1e:68&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;phones_gateway&#8217;,
+&#8216;ifDescription&#8217;: &#8216;FastEthernet0/0.16&#8217;,
+&#8216;ifIndex&#8217;: &#8216;49&#8217;,
+&#8216;ifType&#8217;: &#8216;135&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;L2VLAN&#8217;,
+&#8216;ifspeed&#8217;: &#8216;100000000&#8217;,
+&#8216;ipHash&#8217;: {&#8216;item&#8217;: [&#8216;10.101.16.1&#8217;, &#8216;255.255.255.0&#8217;]},
+&#8216;lastChange&#8217;: &#8216;19 day(s) 20 hour(s) 33 minute(s) 35 second(s) 880 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-07-07 17:52:03&#8217;,
+&#8216;mtu&#8217;: &#8216;1500&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1b:d4:47:1e:68&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/6&#8217;,
+&#8216;ifIndex&#8217;: &#8216;50&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20014&#8217;,
+&#8216;ifIndex&#8217;: &#8216;51&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 930 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/7&#8217;,
+&#8216;ifIndex&#8217;: &#8216;52&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20015&#8217;,
+&#8216;ifIndex&#8217;: &#8216;53&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 950 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;3&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Testing&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;EFXS 50/0/8&#8217;,
+&#8216;ifIndex&#8217;: &#8216;54&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 0 minute(s) 0 second(s) 0 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-01-25 18:31:26&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;4&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Unknown&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unknown&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;Voice Encapsulation (POTS) Peer: 20016&#8217;,
+&#8216;ifIndex&#8217;: &#8216;55&#8217;,
+&#8216;ifType&#8217;: &#8216;103&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;VOICEENCAP&#8217;,
+&#8216;ifspeed&#8217;: &#8216;0&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 19 second(s) 960 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:04&#8217;,
+&#8216;mtu&#8217;: &#8216;0&#8217;,
+&#8216;operationStatus&#8217;: &#8216;2&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;2&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Down&#8217;},</dd>
+<dt>{&#8216;adminStatus&#8217;: &#8216;2&#8217;,</dt>
+<dd>&#8216;adminStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;&#8217;,
+&#8216;ifDescription&#8217;: &#8216;NVI0&#8217;,
+&#8216;ifIndex&#8217;: &#8216;56&#8217;,
+&#8216;ifType&#8217;: &#8216;1&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;OTHER&#8217;,
+&#8216;ifspeed&#8217;: &#8216;56000&#8217;,
+&#8216;lastChange&#8217;: &#8216;0 day(s) 0 hour(s) 1 minute(s) 23 second(s) 340 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-17 21:19:08&#8217;,
+&#8216;mtu&#8217;: &#8216;1514&#8217;,
+&#8216;operationStatus&#8217;: &#8216;2&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Down&#8217;,
+&#8216;phyAddress&#8217;: &#8216;&#8217;,
+&#8216;showStatus&#8217;: &#8216;-1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Disabled&#8217;}]</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_mac_learn">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_mac_learn</code><span class="sig-paren">(</span><em>devid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_mac_learn" title="Permalink to this definition">¶</a></dt>
-<dd><p>function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
-the target device.
-:param devid: int value of the target device
-:param auth:
-:param url:
-:return:</p>
+<dd><blockquote>
+<div><blockquote>
+<div><p>function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
+the target device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param devid:</th><td class="field-body">int value of the target device</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">list of dict objects which contain the mac learn table of target device id</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dev_mac_learn</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">[{&#39;device&#39;: &#39;http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10&#39;,</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/1&#8217;,
+&#8216;ifIndex&#8217;: &#8216;1&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/1">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/1</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;10.101.0.50&#8217;,
+&#8216;learnMac&#8217;: &#8216;00:11:32:11:da:57&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/2&#8217;,
+&#8216;ifIndex&#8217;: &#8216;2&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/2">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/2</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;10.101.0.51&#8217;,
+&#8216;learnMac&#8217;: &#8216;00:11:32:10:03:8b&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/3&#8217;,
+&#8216;ifIndex&#8217;: &#8216;3&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/3">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/3</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;10.101.0.10&#8217;,
+&#8216;learnMac&#8217;: &#8216;14:58:d0:60:61:04&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/4&#8217;,
+&#8216;ifIndex&#8217;: &#8216;4&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/4">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/4</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;10.101.0.11&#8217;,
+&#8216;learnMac&#8217;: &#8216;14:58:d0:60:a4:e6&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/5&#8217;,
+&#8216;ifIndex&#8217;: &#8216;5&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;&#8217;,
+&#8216;learnMac&#8217;: &#8216;00:50:56:59:dd:d8&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/5&#8217;,
+&#8216;ifIndex&#8217;: &#8216;5&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;10.101.0.100&#8217;,
+&#8216;learnMac&#8217;: &#8216;00:50:56:66:7d:73&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/5&#8217;,
+&#8216;ifIndex&#8217;: &#8216;5&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;10.101.0.7&#8217;,
+&#8216;learnMac&#8217;: &#8216;c4:34:6b:b9:dd:d8&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/6&#8217;,
+&#8216;ifIndex&#8217;: &#8216;6&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;&#8217;,
+&#8216;learnMac&#8217;: &#8216;00:50:56:59:4f:bc&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/6&#8217;,
+&#8216;ifIndex&#8217;: &#8216;6&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;10.101.0.113&#8217;,
+&#8216;learnMac&#8217;: &#8216;00:50:56:64:8e:db&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;},</dd>
+<dt>{&#8216;device&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10</a>&#8216;,</dt>
+<dd>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
+&#8216;ifDesc&#8217;: &#8216;GigabitEthernet1/0/6&#8217;,
+&#8216;ifIndex&#8217;: &#8216;6&#8217;,
+&#8216;iface&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6">http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6</a>&#8216;,
+&#8216;learnIp&#8217;: &#8216;10.101.0.20&#8217;,
+&#8216;learnMac&#8217;: &#8216;00:50:56:b5:7f:66&#8217;,
+&#8216;vlanId&#8217;: &#8216;1&#8217;}]</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_run_config">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_run_config</code><span class="sig-paren">(</span><em>devid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_run_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
-file as known by the HP IMC Base Platform ICC module for the target device.
-:param devid:  int or str value of the target device
-:return: str which contains the entire content of the target device running configuration. If the device is not
-currently supported in the HP IMC Base Platform ICC module, this call returns a string of &#8220;This feature is not
+<dd><blockquote>
+<div><p>function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
+file as known by the HP IMC Base Platform ICC module for the target device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param devid:</th><td class="field-body">int or str value of the target device</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">str which contains the entire content of the target device running configuration. If the device is not</td>
+</tr>
+</tbody>
+</table>
+<p>currently supported in the HP IMC Base Platform ICC module, this call returns a string of &#8220;This feature is not
 supported on this device&#8221;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>&gt;&gt;&gt;get_dev_run_config(&#8216;10&#8217;, auth.creds, auth.url)
+&#8216;</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>#</dt>
+<dd>version 5.20.99, Release 2221P20</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>sysname HP_5500EI</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>undo voice vlan mac-address 0001-e300-0000
+undo voice vlan mac-address 0003-6b00-0000
+undo voice vlan mac-address 0004-0d00-0000
+undo voice vlan mac-address 0060-b900-0000
+undo voice vlan mac-address 00d0-1e00-0000
+undo voice vlan mac-address 00e0-7500-0000
+undo voice vlan mac-address 00e0-bb00-0000
+voice vlan mac-address 0000-0000-0000 mask ff00-0000-0000
+undo voice vlan security enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>dhcp relay server-group 0 ip 10.10.10.212
+dhcp relay server-group 1 ip 10.101.0.20</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>irf domain 1
+irf mac-address persistent always
+irf auto-update enable
+irf link-delay 20
+irf member 1 priority 32</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>domain default enable dot1x</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>telnet server enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>irf-port load-sharing mode destination-mac source-mac</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>lldp compliance cdp</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>port-security enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>dot1x authentication-method pap</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>portal server SCEP2 ip 10.3.10.220 url <a class="reference external" href="http://10.3.10.220:8080/byod/deploy.jsf">http://10.3.10.220:8080/byod/deploy.jsf</a>
+portal server onboarding ip 10.3.10.220 key cipher $c$3$E6rgxrTGAF/JCCdkVDwgCg2mMS78hHb4FXNNJm8= url <a class="reference external" href="http://10.3.10.220:8080/byod">http://10.3.10.220:8080/byod</a>
+portal server SCEP ip 10.3.10.220 key cipher $c$3$pcK4ileNw1O1wdhJvGFR6m+m08igGg3FH8pv+cw= url <a class="reference external" href="http://10.3.10.220:8080/byod/deploy.jsf">http://10.3.10.220:8080/byod/deploy.jsf</a>
+portal free-rule 0 source ip 10.10.101.0 mask 255.255.255.0 destination ip 10.3.1.220 mask 255.255.255.255
+portal free-rule 1 source ip 10.10.101.0 mask 255.255.255.0 destination ip 10.10.10.212 mask 255.255.255.255
+portal free-rule 2 source ip any destination ip 10.101.254.1 mask 255.255.255.255
+portal free-rule 3 source ip 10.10.105.0 mask 255.255.255.0 destination ip 10.10.10.212 mask 255.255.255.255
+portal free-rule 4 source ip 10.10.10.212 mask 255.255.255.255 destination ip any
+portal free-rule 5 source ip 10.101.0.200 mask 255.255.255.255 destination ip any
+portal free-rule 6 source ip 10.3.10.220 mask 255.255.255.255 destination ip any</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>mac-authentication domain dot1x</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>poe legacy enable pse 4</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>multicast routing-enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>password-recovery enable</dd>
+</dl>
+<p>#
+acl number 2001 match-order auto</p>
+<blockquote>
+<div>rule 0 permit source 10.101.0.201 0</div></blockquote>
+<dl class="docutils">
+<dt>acl number 2500</dt>
+<dd>rule 1 permit</dd>
+</dl>
+<p>#
+acl number 3000</p>
+<blockquote>
+<div>rule 1 deny ip source 10.101.0.200 0 destination 10.0.0.0 0.255.255.255 
+rule 2 permit ip source 10.101.0.200 0</div></blockquote>
+<dl class="docutils">
+<dt>acl number 3001 match-order auto</dt>
+<dd>rule 0 permit ip source 10.101.0.201 0</dd>
+<dt>acl number 3015</dt>
+<dd>rule 0 permit udp destination-port eq snmp 
+rule 5 permit udp destination-port eq dns 
+rule 10 permit udp destination-port eq bootpc 
+rule 15 permit udp destination-port eq bootps 
+rule 20 permit tcp destination-port eq klogin 
+rule 25 permit tcp destination-port eq kshell</dd>
+<dt>acl number 3500 match-order auto</dt>
+<dd>description ACL for blocking allowing internet access and email. Blocking all other internal addresses.
+rule 0 permit ip destination 0.0.0.0 0 
+rule 20 permit ip destination 10.101.0.200 0 
+rule 25 permit ip destination 10.101.0.201 0 
+rule 15 deny ip destination 192.168.0.0 0.0.255.255 
+rule 10 deny ip destination 172.16.0.0 0.15.255.255 
+rule 5 deny ip destination 10.0.0.0 0.255.255.255</dd>
+</dl>
+<p>#
+acl number 4000</p>
+<blockquote>
+<div>rule 0 permit source-mac 000a-9c51-33a8 000a-9c51-33a8</div></blockquote>
+<p>#
+igmp-snooping
+#
+vlan 1</p>
+<blockquote>
+<div>name default</div></blockquote>
+<p>#
+vlan 2</p>
+<blockquote>
+<div>name TenantABC</div></blockquote>
+<p>#
+vlan 3</p>
+<blockquote>
+<div>description management
+name management</div></blockquote>
+<p>#
+vlan 10</p>
+<blockquote>
+<div>description mgmt
+name mgmt
+igmp-snooping enable</div></blockquote>
+<p>#
+vlan 11</p>
+<blockquote>
+<div>description simulate remote branch network
+name remotebranch</div></blockquote>
+<p>#
+vlan 12</p>
+<blockquote>
+<div>description competitive testing network
+name competitive</div></blockquote>
+<p>#
+vlan 13
+#
+vlan 15</p>
+<blockquote>
+<div>name users</div></blockquote>
+<p>#
+vlan 16</p>
+<blockquote>
+<div>name phones</div></blockquote>
+<p>#
+vlan 20</p>
+<blockquote>
+<div>description servers
+name servers</div></blockquote>
+<p>#
+vlan 50
+#
+vlan 101</p>
+<blockquote>
+<div>description onboarding
+name onboarding</div></blockquote>
+<p>#
+vlan 102</p>
+<blockquote>
+<div>name guest</div></blockquote>
+<p>#
+vlan 103</p>
+<blockquote>
+<div>description guestmobile
+name guestmobile</div></blockquote>
+<p>#
+vlan 105</p>
+<blockquote>
+<div>name scep</div></blockquote>
+<p>#
+vlan 106</p>
+<blockquote>
+<div>name scepreg</div></blockquote>
+<p>#
+vlan 110</p>
+<blockquote>
+<div>name NewVLAN</div></blockquote>
+<p>#
+vlan 201
+#
+vlan 203
+#
+vlan 500</p>
+<blockquote>
+<div>name VLAN500</div></blockquote>
+<p>#
+vlan 503</p>
+<blockquote>
+<div>name VLAN503</div></blockquote>
+<p>#
+vlan 1010</p>
+<blockquote>
+<div>description FBRA Management VLAN
+name FBRAMGMT</div></blockquote>
+<p>#
+vlan 1011</p>
+<blockquote>
+<div>description FBRA Servers VLAN
+name fbraservers</div></blockquote>
+<p>#
+vlan 1012</p>
+<blockquote>
+<div>description FBRA Employee VLAN
+name FBRAemployee</div></blockquote>
+<p>#
+vlan 1013</p>
+<blockquote>
+<div>description FBRA Guest VLAN
+name FBRAguest</div></blockquote>
+<p>#
+vlan 1014</p>
+<blockquote>
+<div>description FBRA Registration VLAN
+name FBRAregistration</div></blockquote>
+<p>#
+vlan 1015</p>
+<blockquote>
+<div>description FBRA Voice VLAN
+name FBRAvoice</div></blockquote>
+<p>#
+vlan 2000</p>
+<blockquote>
+<div>name vsr240</div></blockquote>
+<p>#
+vlan 2001</p>
+<blockquote>
+<div>name vsr241-1</div></blockquote>
+<p>#
+vlan 2002</p>
+<blockquote>
+<div>name vsr-241-2</div></blockquote>
+<p>#
+vlan 2003</p>
+<blockquote>
+<div>name vsr-242-1</div></blockquote>
+<p>#
+vlan 2004</p>
+<blockquote>
+<div>name vsr-242-2</div></blockquote>
+<p>#
+vlan 2005 to 2010
+#
+vlan 3010</p>
+<blockquote>
+<div>name ProvisionBranchVLAN10</div></blockquote>
+<p>#
+radius scheme system</p>
+<blockquote>
+<div>server-type extended
+primary authentication 127.0.0.1 1645
+primary accounting 127.0.0.1 1646
+user-name-format without-domain</div></blockquote>
+<dl class="docutils">
+<dt>radius scheme imcradius</dt>
+<dd>server-type extended
+primary authentication 10.3.10.220
+primary accounting 10.3.10.220
+key authentication cipher $c$3$rXKVE9pG05Lda2xcSpl6nrsYCkmBIW0kAdwEACg=
+key accounting cipher $c$3$YxLxR9RhvNJw1iP5DFdb+UiU0pVBWUBZ6ZU8m7g=
+user-name-format without-domain
+nas-ip 10.10.3.1</dd>
+</dl>
+<p>radius scheme dot1x
+#
+domain dot1x</p>
+<blockquote>
+<div>authentication default radius-scheme imcradius
+authorization default radius-scheme imcradius
+accounting default radius-scheme imcradius
+authentication login radius-scheme imcradius
+authorization login radius-scheme imcradius
+accounting login radius-scheme imcradius
+authentication lan-access radius-scheme imcradius
+authorization lan-access radius-scheme imcradius
+authentication portal radius-scheme imcradius
+authorization portal radius-scheme imcradius
+accounting portal radius-scheme imcradius
+access-limit disable 
+state active 
+idle-cut disable 
+self-service-url disable 
+accounting optional</div></blockquote>
+<dl class="docutils">
+<dt>domain system </dt>
+<dd>access-limit disable 
+state active 
+idle-cut disable 
+self-service-url disable</dd>
+</dl>
+<p>#
+traffic classifier testaug15 operator and
+traffic classifier For_Class operator and</p>
+<blockquote>
+<div>if-match dscp ef</div></blockquote>
+<p>#
+traffic behavior testaug15
+traffic behavior For_Behav
+#
+qos policy test</p>
+<blockquote>
+<div>classifier testaug15 behavior testaug15</div></blockquote>
+<p>qos policy Forrester_Test
+#
+dhcp server ip-pool sdn</p>
+<blockquote>
+<div>network 10.10.50.0 mask 255.255.255.0
+gateway-list 10.10.50.1 
+dns-list 10.101.254.1 10.10.10.212</div></blockquote>
+<p>#
+dhcp server ip-pool test</p>
+<blockquote>
+<div>option 242 ascii MCIPADD=192.168.42.1,MCPORT=1719,HTTPSRVR=192.168.42.1</div></blockquote>
+<p>#
+dhcp server ip-pool vlan50</p>
+<blockquote>
+<div>network 10.101.50.0 mask 255.255.255.0
+gateway-list 10.101.50.1 
+dns-list 10.101.0.10 10.101.254.1 
+domain-name haw.int</div></blockquote>
+<p>#
+user-group system</p>
+<blockquote>
+<div>group-attribute allow-guest</div></blockquote>
+<p>user-group -interf
+#
+local-user admin</p>
+<blockquote>
+<div>password cipher $c$3$FUUTGlnspoBc+K32yEiJj/Hl9PCPF/f7Lxey
+authorization-attribute level 3
+service-type ssh telnet terminal</div></blockquote>
+<dl class="docutils">
+<dt>local-user guest2</dt>
+<dd>password cipher $c$3$sCYBbRfLfr+n3G5W9GC98SK+MwENLiGsMw==</dd>
+<dt>local-user manager</dt>
+<dd>password cipher $c$3$H/4OBJArNH0CwNirmMs/iwez3yRyz3sitOY=
+authorization-attribute level 2
+service-type telnet terminal</dd>
+<dt>local-user monitor</dt>
+<dd>password cipher $c$3$bzWaOZUhgl+QJtl+3jQlFp2huhq5Wjn4V8o=
+authorization-attribute level 1
+service-type telnet terminal</dd>
+<dt>local-user wlanguest</dt>
+<dd>password cipher $c$3$iQp0DA8paeQufqntOUuKT6/FSjarGR/uY4HzLw==</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>stp instance 0 root primary
+stp enable</dd>
+</dl>
+<p>#
+poe-profile powerdown 1
+#
+interface Bridge-Aggregation1
+#
+interface Bridge-Aggregation2</p>
+<blockquote>
+<div>port link-type trunk
+port trunk permit vlan all
+link-aggregation mode dynamic</div></blockquote>
+<p>#
+interface Bridge-Aggregation110
+#
+interface NULL0
+#
+interface LoopBack0</p>
+<blockquote>
+<div>ip address 192.168.1.221 255.255.255.255</div></blockquote>
+<p>#
+interface LoopBack1</p>
+<blockquote>
+<div>ip address 172.16.3.10 255.255.255.255</div></blockquote>
+<p>#
+interface Vlan-interface1</p>
+<blockquote>
+<div>ip address 10.101.0.221 255.255.255.0 
+igmp enable
+pim dm</div></blockquote>
+<p>#
+interface Vlan-interface2</p>
+<blockquote>
+<div>ip address 10.101.2.1 255.255.255.0 
+dhcp select relay</div></blockquote>
+<p>#
+interface Vlan-interface3</p>
+<blockquote>
+<div>ip address 10.10.3.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface10</p>
+<blockquote>
+<div>description mgmt
+ip address 10.10.10.1 255.255.255.0 
+dhcp select relay</div></blockquote>
+<p>#
+interface Vlan-interface11</p>
+<blockquote>
+<div>description remote_branch
+ip address 10.10.11.1 255.255.255.0 
+dhcp select relay</div></blockquote>
+<p>#
+interface Vlan-interface12</p>
+<blockquote>
+<div>description competitive
+ip address 10.10.12.1 255.255.255.0 
+dhcp select relay</div></blockquote>
+<p>#
+interface Vlan-interface13</p>
+<blockquote>
+<div>ip address 10.10.13.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface15</p>
+<blockquote>
+<div>ip address 10.101.15.254 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface20</p>
+<blockquote>
+<div>description server router
+ip address 10.3.10.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface50</p>
+<blockquote>
+<div>ip address 10.102.1.2 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface101</p>
+<blockquote>
+<div>description guest
+ip address 10.10.101.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0
+portal server onboarding method direct
+portal domain dot1x</div></blockquote>
+<p>#
+interface Vlan-interface102</p>
+<blockquote>
+<div>ip address 10.10.102.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface103</p>
+<blockquote>
+<div>ip address 10.10.103.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface105</p>
+<blockquote>
+<div>description scep
+ip address 10.10.105.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0
+portal server SCEP2 method direct
+portal domain dot1x</div></blockquote>
+<p>#
+interface Vlan-interface106</p>
+<blockquote>
+<div>ip address 10.10.106.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface201</p>
+<blockquote>
+<div>ip address 10.10.201.1 255.255.255.0 
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface203</p>
+<blockquote>
+<div>ip address 10.10.203.1 255.255.255.0 
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface500</p>
+<blockquote>
+<div>ip address 10.10.50.1 255.255.255.0 
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface1010
+#
+interface Vlan-interface2000</p>
+<blockquote>
+<div>ip address 172.16.2.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2001</p>
+<blockquote>
+<div>ip address 172.16.3.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2002</p>
+<blockquote>
+<div>ip address 172.16.4.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2003</p>
+<blockquote>
+<div>ip address 172.16.5.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2004</p>
+<blockquote>
+<div>ip address 172.16.6.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2007</p>
+<blockquote>
+<div>ip address 172.16.7.1 255.255.255.0</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/15</p>
+<blockquote>
+<div>port link-mode route
+description &#8216; &#8216;
+ip address 172.16.0.2 255.255.255.0 
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/16</p>
+<blockquote>
+<div>port link-mode route
+description R1Br4Core - HP_5500EI
+ip address 172.16.11.1 255.255.255.252 
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow counter collector 1
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/17</p>
+<blockquote>
+<div>port link-mode route
+description R1Br3Core - HP_5500EI
+ip address 172.16.12.1 255.255.255.252 
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow counter collector 1
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/22</p>
+<blockquote>
+<div>port link-mode route
+ip address 10.20.10.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 1
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow counter interval 20</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/23</p>
+<blockquote>
+<div>port link-mode route
+ip address 10.20.1.254 255.255.255.0</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/1</p>
+<blockquote>
+<div>port link-mode bridge
+description VMSynology - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/2</p>
+<blockquote>
+<div>port link-mode bridge
+description SynologyDS - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+lldp voice-vlan 2
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/3</p>
+<blockquote>
+<div>port link-mode bridge
+description I&#8217;m a NMS Weenie
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/4</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/5</p>
+<blockquote>
+<div>port link-mode bridge
+description ESX55-10.101.0.7 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/6</p>
+<blockquote>
+<div>port link-mode bridge
+description ESX55-10.101.0.6 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/7</p>
+<blockquote>
+<div>port link-mode bridge
+description ESX55-10.101.0.7 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/8</p>
+<blockquote>
+<div>port link-mode bridge
+description ESX55-10.101.0.6 - HP_5500EI
+port link-type trunk
+port trunk permit vlan 1 to 2 110 500 to 503
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+packet-filter 2500 inbound
+packet-filter 2500 outbound
+packet-filter 4000 inbound
+packet-filter 4000 outbound
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/9</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/10</p>
+<blockquote>
+<div>port link-mode bridge
+description Sentry3_5133a8 - HP_5500EI
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/11</p>
+<blockquote>
+<div>port link-mode bridge
+description Sentry3_5146c3 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp disable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/12</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/13</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/14</p>
+<blockquote>
+<div>port link-mode bridge
+description HP-5406zl - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/18</p>
+<blockquote>
+<div>port link-mode bridge
+description Aruba3600 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/19</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/20</p>
+<blockquote>
+<div>port link-mode bridge
+description HP-3500yl-24G - HP_5500EI
+port access vlan 3010
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/21</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/23</p>
+<blockquote>
+<div>port link-mode bridge
+description HP830_LSW - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp compliance admin-status cdp txrx
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/24</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/25</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+shutdown
+broadcast-suppression pps 3000
+undo jumboframe enable
+stp edged-port enable</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/26</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+shutdown
+broadcast-suppression pps 3000
+undo jumboframe enable
+stp edged-port enable</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/27</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+shutdown
+broadcast-suppression pps 3000
+undo jumboframe enable
+stp edged-port enable</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/28</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+shutdown
+broadcast-suppression pps 3000
+undo jumboframe enable
+stp edged-port enable</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/1</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/2</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/3</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/4</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/5</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/6</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/7</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/8</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/9</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/10</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/11</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/12</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/13</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/14</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/15</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/16</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan 1 502 to 503
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/17</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/18</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/19</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/20</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/21</p>
+<blockquote>
+<div>port link-mode bridge
+description HP_5500EI - HP_5500EI
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/22</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/24</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/25</p>
+<blockquote>
+<div>port link-mode bridge
+shutdown</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/26</p>
+<blockquote>
+<div>port link-mode bridge
+shutdown</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/27</p>
+<blockquote>
+<div>port link-mode bridge
+shutdown</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/28</p>
+<blockquote>
+<div>port link-mode bridge
+shutdown</div></blockquote>
+<p>#
+interface Ten-GigabitEthernet1/1/1
+#
+interface Ten-GigabitEthernet1/1/2
+#
+interface Ten-GigabitEthernet2/1/1
+#
+interface Ten-GigabitEthernet2/1/2
+#
+interface Tunnel0
+#
+ospf 1 router-id 10.101.0.221</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>area 0.0.0.0 </dt>
+<dd>network 192.168.1.221 0.0.0.0 
+network 172.16.0.0 0.0.255.255 
+network 10.0.0.0 0.255.255.255</dd>
+</dl>
+</div></blockquote>
+<p>#
+pim
+#
+nqa entry 1 1</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type voice</dt>
+<dd>data-fill aaa
+data-size 100
+destination ip 10.12.10.10
+destination port 1000
+frequency 300000
+probe packet-number 10
+probe packet-timeout 3000
+source ip 10.10.10.1
+source port 1000
+tos 10
+ttl 10</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry 2 2</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type voice</dt>
+<dd>data-fill aaa
+data-size 100
+destination ip 10.11.10.10
+destination port 1000
+frequency 300000
+probe packet-number 10
+probe packet-timeout 3000
+source ip 10.10.10.1
+source port 1000
+tos 10
+ttl 10</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry 3 3</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type tcp</dt>
+<dd>destination ip 10.12.10.10
+destination port 7
+frequency 300000
+probe count 10
+source ip 10.101.0.221
+tos 10
+ttl 10</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry 4 4</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type tcp</dt>
+<dd>destination ip 10.11.10.1
+destination port 7
+frequency 300000
+probe count 10
+source ip 10.101.0.221
+tos 10
+ttl 10</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry admin nqatest</p>
+<blockquote>
+<div>type ftp</div></blockquote>
+<p>#
+nqa entry admin test</p>
+<blockquote>
+<div>type icmp-echo</div></blockquote>
+<p>#
+nqa entry admin testnqa</p>
+<blockquote>
+<div>type dns</div></blockquote>
+<p>#
+nqa entry dns 1</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type dns</dt>
+<dd>destination ip 4.2.2.2
+resolve-target www.google.com</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry ping 1
+#</p>
+<blockquote>
+<div>ip route-static 0.0.0.0 0.0.0.0 10.101.0.1
+ip route-static 0.0.0.0 0.0.0.0 10.101.254.1</div></blockquote>
+<dl class="docutils">
+<dt>#</dt>
+<dd>info-center source SHELL channel 2 log level notifications
+info-center source ACL channel 2
+info-center source ACL channel 5
+info-center loghost 10.101.0.117 channel 5
+info-center loghost 10.101.0.200 channel 5
+info-center loghost 10.101.0.201
+info-center loghost 10.101.0.205</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>snmp-agent
+snmp-agent local-engineid 8000002B03001EC1DCFC41
+snmp-agent community read sec 
+snmp-agent community read public  acl 2500
+snmp-agent community read secret  acl 2001
+snmp-agent community write private  acl 2500
+snmp-agent sys-info contact <a class="reference external" href="mailto:admin&#37;&#52;&#48;lab&#46;local">admin<span>&#64;</span>lab<span>&#46;</span>local</a>
+snmp-agent sys-info location LAB
+snmp-agent sys-info version all
+snmp-agent group v3 SNMPv3Group authentication write-view ViewDefault
+snmp-agent target-host trap address udp-domain 10.10.10.222 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.10.12.13 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.190 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.191 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.192 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.195 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.20 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.200 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.201 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.202 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.203 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.205 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.21 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.3.10.220 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.3.10.222 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.3.10.235 params securityname public v2c
+snmp-agent usm-user v3 test managerpriv cipher authentication-mode md5 $c$3$vPQENBFY7mnHycVSEjB5QuolgAIiTMjclfJqg7ExE3hbPg==
+snmp-agent usm-user v3 v3user SNMPv3Group cipher authentication-mode sha $c$3$IRXOFGMEkuajbSoJDlTGgQ9mDfb9Z4Dj1x0i7/+Wbai7vFmNByI= privacy-mode aes128 $c$3$HkyPCeXzfROwHK4hK6xQMqI3PF9qXeBJGK6Xjcyl4iV9RA==</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>command-alias enable
+command-alias mapping display show
+command-alias mapping save wr
+command-alias mapping undo no
+command-alias mapping reboot reload
+command-alias mapping header banner
+command-alias mapping reset clear
+command-alias mapping acl access-list
+command-alias mapping port switchport
+command-alias mapping stp spanning-tree
+command-alias mapping snmp-agent snmp-server
+command-alias mapping user-interface line
+command-alias mapping return end
+command-alias mapping quit exit
+command-alias mapping sysname hostname
+command-alias mapping delete erase
+command-alias mapping info-center logging</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>dhcp server forbidden-ip 10.101.50.1</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>dhcp enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>nqa schedule 1 1 start-time now lifetime forever 
+nqa schedule 2 2 start-time now lifetime forever 
+nqa schedule 3 3 start-time now lifetime forever 
+nqa schedule 4 4 start-time now lifetime forever 
+nqa server enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>ntp-service unicast-server 10.101.0.1
+ntp-service unicast-peer 10.101.0.220</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>ssh server enable
+sftp server enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>rmon event 1 description 3COM_RMON_EVENT trap public owner 3COM_4800G</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>ftp server enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>sflow agent ip 10.10.3.1
+sflow source ip 10.101.0.221
+sflow collector 1 ip 10.101.0.203 description &#8220;IMC 7.2&#8221;
+sflow collector 3 ip 10.101.0.205 description IMCAIO</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>load xml-configuration</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>load tr069-configuration</dd>
+</dl>
+<p>#
+user-interface aux 0</p>
+<blockquote>
+<div>authentication-mode scheme</div></blockquote>
+<p>user-interface aux 1
+user-interface vty 0 4</p>
+<blockquote>
+<div>authentication-mode scheme</div></blockquote>
+<p>user-interface vty 5 15
+#
+irf-port 1/1</p>
+<blockquote>
+<div>port group interface Ten-GigabitEthernet1/1/1 mode normal</div></blockquote>
+<p>#
+irf-port 1/2</p>
+<blockquote>
+<div>port group interface Ten-GigabitEthernet1/1/2 mode normal</div></blockquote>
+<p>#
+irf-port 2/1</p>
+<blockquote>
+<div>port group interface Ten-GigabitEthernet2/1/1 mode normal</div></blockquote>
+<p>#
+irf-port 2/2</p>
+<blockquote>
+<div>port group interface Ten-GigabitEthernet2/1/2 mode normal</div></blockquote>
+<p>#
+return&#8217;</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_start_config">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_start_config</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_start_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>function takes the devId of a specific device and issues a RESTFUL call to get the most current startup config
-file as known by the HP IMC Base Platform ICC module for the target device.
-:param devId:  int or str value of the target device
-:return: str which contains the entire content of the target device startup configuration. If the device is not
-currently supported in the HP IMC Base Platform ICC module, this call returns a string of &#8220;This feature is not
+<dd><blockquote>
+<div><p>function takes the devId of a specific device and issues a RESTFUL call to get the most current startup config
+file as known by the HP IMC Base Platform ICC module for the target device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param devId:</th><td class="field-body">int or str value of the target device</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">str which contains the entire content of the target device startup configuration. If the device is not</td>
+</tr>
+</tbody>
+</table>
+<p>currently supported in the HP IMC Base Platform ICC module, this call returns a string of &#8220;This feature is not
 supported on this device&#8221;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">retype:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dev_start_config</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">&#39;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl class="docutils">
+<dt>#</dt>
+<dd>version 5.20.99, Release 2221P20</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>sysname HP_5500EI</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>undo voice vlan mac-address 0001-e300-0000
+undo voice vlan mac-address 0003-6b00-0000
+undo voice vlan mac-address 0004-0d00-0000
+undo voice vlan mac-address 0060-b900-0000
+undo voice vlan mac-address 00d0-1e00-0000
+undo voice vlan mac-address 00e0-7500-0000
+undo voice vlan mac-address 00e0-bb00-0000
+voice vlan mac-address 0000-0000-0000 mask ff00-0000-0000
+undo voice vlan security enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>dhcp relay server-group 0 ip 10.10.10.212
+dhcp relay server-group 1 ip 10.101.0.20</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>irf domain 1
+irf mac-address persistent always
+irf auto-update enable
+irf link-delay 20
+irf member 1 priority 32</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>domain default enable dot1x</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>telnet server enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>irf-port load-sharing mode destination-mac source-mac</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>lldp compliance cdp</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>port-security enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>dot1x authentication-method pap</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>portal server SCEP2 ip 10.3.10.220 url <a class="reference external" href="http://10.3.10.220:8080/byod/deploy.jsf">http://10.3.10.220:8080/byod/deploy.jsf</a>
+portal server onboarding ip 10.3.10.220 key cipher $c$3$E6rgxrTGAF/JCCdkVDwgCg2mMS78hHb4FXNNJm8= url <a class="reference external" href="http://10.3.10.220:8080/byod">http://10.3.10.220:8080/byod</a>
+portal server SCEP ip 10.3.10.220 key cipher $c$3$pcK4ileNw1O1wdhJvGFR6m+m08igGg3FH8pv+cw= url <a class="reference external" href="http://10.3.10.220:8080/byod/deploy.jsf">http://10.3.10.220:8080/byod/deploy.jsf</a>
+portal free-rule 0 source ip 10.10.101.0 mask 255.255.255.0 destination ip 10.3.1.220 mask 255.255.255.255
+portal free-rule 1 source ip 10.10.101.0 mask 255.255.255.0 destination ip 10.10.10.212 mask 255.255.255.255
+portal free-rule 2 source ip any destination ip 10.101.254.1 mask 255.255.255.255
+portal free-rule 3 source ip 10.10.105.0 mask 255.255.255.0 destination ip 10.10.10.212 mask 255.255.255.255
+portal free-rule 4 source ip 10.10.10.212 mask 255.255.255.255 destination ip any
+portal free-rule 5 source ip 10.101.0.200 mask 255.255.255.255 destination ip any
+portal free-rule 6 source ip 10.3.10.220 mask 255.255.255.255 destination ip any</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>mac-authentication domain dot1x</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>poe legacy enable pse 4</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>multicast routing-enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>password-recovery enable</dd>
+</dl>
+<p>#
+acl number 2001 match-order auto</p>
+<blockquote>
+<div>rule 0 permit source 10.101.0.201 0</div></blockquote>
+<dl class="docutils">
+<dt>acl number 2500</dt>
+<dd>rule 1 permit</dd>
+</dl>
+<p>#
+acl number 3000</p>
+<blockquote>
+<div>rule 1 deny ip source 10.101.0.200 0 destination 10.0.0.0 0.255.255.255 
+rule 2 permit ip source 10.101.0.200 0</div></blockquote>
+<dl class="docutils">
+<dt>acl number 3001 match-order auto</dt>
+<dd>rule 0 permit ip source 10.101.0.201 0</dd>
+<dt>acl number 3015</dt>
+<dd>rule 0 permit udp destination-port eq snmp 
+rule 5 permit udp destination-port eq dns 
+rule 10 permit udp destination-port eq bootpc 
+rule 15 permit udp destination-port eq bootps 
+rule 20 permit tcp destination-port eq klogin 
+rule 25 permit tcp destination-port eq kshell</dd>
+<dt>acl number 3500 match-order auto</dt>
+<dd>description ACL for blocking allowing internet access and email. Blocking all other internal addresses.
+rule 0 permit ip destination 0.0.0.0 0 
+rule 20 permit ip destination 10.101.0.200 0 
+rule 25 permit ip destination 10.101.0.201 0 
+rule 15 deny ip destination 192.168.0.0 0.0.255.255 
+rule 10 deny ip destination 172.16.0.0 0.15.255.255 
+rule 5 deny ip destination 10.0.0.0 0.255.255.255</dd>
+</dl>
+<p>#
+acl number 4000</p>
+<blockquote>
+<div>rule 0 permit source-mac 000a-9c51-33a8 000a-9c51-33a8</div></blockquote>
+<p>#
+igmp-snooping
+#
+vlan 1</p>
+<blockquote>
+<div>name default</div></blockquote>
+<p>#
+vlan 2</p>
+<blockquote>
+<div>name TenantABC</div></blockquote>
+<p>#
+vlan 3</p>
+<blockquote>
+<div>description management
+name management</div></blockquote>
+<p>#
+vlan 10</p>
+<blockquote>
+<div>description mgmt
+name mgmt
+igmp-snooping enable</div></blockquote>
+<p>#
+vlan 11</p>
+<blockquote>
+<div>description simulate remote branch network
+name remotebranch</div></blockquote>
+<p>#
+vlan 12</p>
+<blockquote>
+<div>description competitive testing network
+name competitive</div></blockquote>
+<p>#
+vlan 13
+#
+vlan 15</p>
+<blockquote>
+<div>name users</div></blockquote>
+<p>#
+vlan 16</p>
+<blockquote>
+<div>name phones</div></blockquote>
+<p>#
+vlan 20</p>
+<blockquote>
+<div>description servers
+name servers</div></blockquote>
+<p>#
+vlan 50
+#
+vlan 101</p>
+<blockquote>
+<div>description onboarding
+name onboarding</div></blockquote>
+<p>#
+vlan 102</p>
+<blockquote>
+<div>name guest</div></blockquote>
+<p>#
+vlan 103</p>
+<blockquote>
+<div>description guestmobile
+name guestmobile</div></blockquote>
+<p>#
+vlan 105</p>
+<blockquote>
+<div>name scep</div></blockquote>
+<p>#
+vlan 106</p>
+<blockquote>
+<div>name scepreg</div></blockquote>
+<p>#
+vlan 110</p>
+<blockquote>
+<div>name NewVLAN</div></blockquote>
+<p>#
+vlan 201
+#
+vlan 203
+#
+vlan 500</p>
+<blockquote>
+<div>name VLAN500</div></blockquote>
+<p>#
+vlan 503</p>
+<blockquote>
+<div>name VLAN503</div></blockquote>
+<p>#
+vlan 1010</p>
+<blockquote>
+<div>description FBRA Management VLAN
+name FBRAMGMT</div></blockquote>
+<p>#
+vlan 1011</p>
+<blockquote>
+<div>description FBRA Servers VLAN
+name fbraservers</div></blockquote>
+<p>#
+vlan 1012</p>
+<blockquote>
+<div>description FBRA Employee VLAN
+name FBRAemployee</div></blockquote>
+<p>#
+vlan 1013</p>
+<blockquote>
+<div>description FBRA Guest VLAN
+name FBRAguest</div></blockquote>
+<p>#
+vlan 1014</p>
+<blockquote>
+<div>description FBRA Registration VLAN
+name FBRAregistration</div></blockquote>
+<p>#
+vlan 1015</p>
+<blockquote>
+<div>description FBRA Voice VLAN
+name FBRAvoice</div></blockquote>
+<p>#
+vlan 2000</p>
+<blockquote>
+<div>name vsr240</div></blockquote>
+<p>#
+vlan 2001</p>
+<blockquote>
+<div>name vsr241-1</div></blockquote>
+<p>#
+vlan 2002</p>
+<blockquote>
+<div>name vsr-241-2</div></blockquote>
+<p>#
+vlan 2003</p>
+<blockquote>
+<div>name vsr-242-1</div></blockquote>
+<p>#
+vlan 2004</p>
+<blockquote>
+<div>name vsr-242-2</div></blockquote>
+<p>#
+vlan 2005 to 2010
+#
+vlan 3010</p>
+<blockquote>
+<div>name ProvisionBranchVLAN10</div></blockquote>
+<p>#
+radius scheme system</p>
+<blockquote>
+<div>server-type extended
+primary authentication 127.0.0.1 1645
+primary accounting 127.0.0.1 1646
+user-name-format without-domain</div></blockquote>
+<dl class="docutils">
+<dt>radius scheme imcradius</dt>
+<dd>server-type extended
+primary authentication 10.3.10.220
+primary accounting 10.3.10.220
+key authentication cipher $c$3$rXKVE9pG05Lda2xcSpl6nrsYCkmBIW0kAdwEACg=
+key accounting cipher $c$3$YxLxR9RhvNJw1iP5DFdb+UiU0pVBWUBZ6ZU8m7g=
+user-name-format without-domain
+nas-ip 10.10.3.1</dd>
+</dl>
+<p>radius scheme dot1x
+#
+domain dot1x</p>
+<blockquote>
+<div>authentication default radius-scheme imcradius
+authorization default radius-scheme imcradius
+accounting default radius-scheme imcradius
+authentication login radius-scheme imcradius
+authorization login radius-scheme imcradius
+accounting login radius-scheme imcradius
+authentication lan-access radius-scheme imcradius
+authorization lan-access radius-scheme imcradius
+authentication portal radius-scheme imcradius
+authorization portal radius-scheme imcradius
+accounting portal radius-scheme imcradius
+access-limit disable 
+state active 
+idle-cut disable 
+self-service-url disable 
+accounting optional</div></blockquote>
+<dl class="docutils">
+<dt>domain system </dt>
+<dd>access-limit disable 
+state active 
+idle-cut disable 
+self-service-url disable</dd>
+</dl>
+<p>#
+traffic classifier testaug15 operator and
+traffic classifier For_Class operator and</p>
+<blockquote>
+<div>if-match dscp ef</div></blockquote>
+<p>#
+traffic behavior testaug15
+traffic behavior For_Behav
+#
+qos policy test</p>
+<blockquote>
+<div>classifier testaug15 behavior testaug15</div></blockquote>
+<p>qos policy Forrester_Test
+#
+dhcp server ip-pool sdn</p>
+<blockquote>
+<div>network 10.10.50.0 mask 255.255.255.0
+gateway-list 10.10.50.1 
+dns-list 10.101.254.1 10.10.10.212</div></blockquote>
+<p>#
+dhcp server ip-pool test</p>
+<blockquote>
+<div>option 242 ascii MCIPADD=192.168.42.1,MCPORT=1719,HTTPSRVR=192.168.42.1</div></blockquote>
+<p>#
+dhcp server ip-pool vlan50</p>
+<blockquote>
+<div>network 10.101.50.0 mask 255.255.255.0
+gateway-list 10.101.50.1 
+dns-list 10.101.0.10 10.101.254.1 
+domain-name haw.int</div></blockquote>
+<p>#
+user-group system</p>
+<blockquote>
+<div>group-attribute allow-guest</div></blockquote>
+<p>user-group -interf
+#
+local-user admin</p>
+<blockquote>
+<div>password cipher $c$3$FUUTGlnspoBc+K32yEiJj/Hl9PCPF/f7Lxey
+authorization-attribute level 3
+service-type ssh telnet terminal</div></blockquote>
+<dl class="docutils">
+<dt>local-user guest2</dt>
+<dd>password cipher $c$3$sCYBbRfLfr+n3G5W9GC98SK+MwENLiGsMw==</dd>
+<dt>local-user manager</dt>
+<dd>password cipher $c$3$H/4OBJArNH0CwNirmMs/iwez3yRyz3sitOY=
+authorization-attribute level 2
+service-type telnet terminal</dd>
+<dt>local-user monitor</dt>
+<dd>password cipher $c$3$bzWaOZUhgl+QJtl+3jQlFp2huhq5Wjn4V8o=
+authorization-attribute level 1
+service-type telnet terminal</dd>
+<dt>local-user wlanguest</dt>
+<dd>password cipher $c$3$iQp0DA8paeQufqntOUuKT6/FSjarGR/uY4HzLw==</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>stp instance 0 root primary
+stp enable</dd>
+</dl>
+<p>#
+poe-profile powerdown 1
+#
+interface Bridge-Aggregation1
+#
+interface Bridge-Aggregation2</p>
+<blockquote>
+<div>port link-type trunk
+port trunk permit vlan all
+link-aggregation mode dynamic</div></blockquote>
+<p>#
+interface Bridge-Aggregation110
+#
+interface NULL0
+#
+interface LoopBack0</p>
+<blockquote>
+<div>ip address 192.168.1.221 255.255.255.255</div></blockquote>
+<p>#
+interface LoopBack1</p>
+<blockquote>
+<div>ip address 172.16.3.10 255.255.255.255</div></blockquote>
+<p>#
+interface Vlan-interface1</p>
+<blockquote>
+<div>ip address 10.101.0.221 255.255.255.0 
+igmp enable
+pim dm</div></blockquote>
+<p>#
+interface Vlan-interface2</p>
+<blockquote>
+<div>ip address 10.101.2.1 255.255.255.0 
+dhcp select relay</div></blockquote>
+<p>#
+interface Vlan-interface3</p>
+<blockquote>
+<div>ip address 10.10.3.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface10</p>
+<blockquote>
+<div>description mgmt
+ip address 10.10.10.1 255.255.255.0 
+dhcp select relay</div></blockquote>
+<p>#
+interface Vlan-interface11</p>
+<blockquote>
+<div>description remote_branch
+ip address 10.10.11.1 255.255.255.0 
+dhcp select relay</div></blockquote>
+<p>#
+interface Vlan-interface12</p>
+<blockquote>
+<div>description competitive
+ip address 10.10.12.1 255.255.255.0 
+dhcp select relay</div></blockquote>
+<p>#
+interface Vlan-interface13</p>
+<blockquote>
+<div>ip address 10.10.13.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface15</p>
+<blockquote>
+<div>ip address 10.101.15.254 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface20</p>
+<blockquote>
+<div>description server router
+ip address 10.3.10.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface50</p>
+<blockquote>
+<div>ip address 10.102.1.2 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface101</p>
+<blockquote>
+<div>description guest
+ip address 10.10.101.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0
+portal server onboarding method direct
+portal domain dot1x</div></blockquote>
+<p>#
+interface Vlan-interface102</p>
+<blockquote>
+<div>ip address 10.10.102.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface103</p>
+<blockquote>
+<div>ip address 10.10.103.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface105</p>
+<blockquote>
+<div>description scep
+ip address 10.10.105.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0
+portal server SCEP2 method direct
+portal domain dot1x</div></blockquote>
+<p>#
+interface Vlan-interface106</p>
+<blockquote>
+<div>ip address 10.10.106.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface201</p>
+<blockquote>
+<div>ip address 10.10.201.1 255.255.255.0 
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface203</p>
+<blockquote>
+<div>ip address 10.10.203.1 255.255.255.0 
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface500</p>
+<blockquote>
+<div>ip address 10.10.50.1 255.255.255.0 
+dhcp relay server-select 0</div></blockquote>
+<p>#
+interface Vlan-interface1010
+#
+interface Vlan-interface2000</p>
+<blockquote>
+<div>ip address 172.16.2.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2001</p>
+<blockquote>
+<div>ip address 172.16.3.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2002</p>
+<blockquote>
+<div>ip address 172.16.4.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2003</p>
+<blockquote>
+<div>ip address 172.16.5.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2004</p>
+<blockquote>
+<div>ip address 172.16.6.1 255.255.255.0</div></blockquote>
+<p>#
+interface Vlan-interface2007</p>
+<blockquote>
+<div>ip address 172.16.7.1 255.255.255.0</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/15</p>
+<blockquote>
+<div>port link-mode route
+description &#8216; &#8216;
+ip address 172.16.0.2 255.255.255.0 
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/16</p>
+<blockquote>
+<div>port link-mode route
+description R1Br4Core - HP_5500EI
+ip address 172.16.11.1 255.255.255.252 
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow counter collector 1
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/17</p>
+<blockquote>
+<div>port link-mode route
+description R1Br3Core - HP_5500EI
+ip address 172.16.12.1 255.255.255.252 
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow counter collector 1
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/22</p>
+<blockquote>
+<div>port link-mode route
+ip address 10.20.10.1 255.255.255.0 
+dhcp select relay
+dhcp relay server-select 1
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow counter interval 20</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/23</p>
+<blockquote>
+<div>port link-mode route
+ip address 10.20.1.254 255.255.255.0</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/1</p>
+<blockquote>
+<div>port link-mode bridge
+description VMSynology - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/2</p>
+<blockquote>
+<div>port link-mode bridge
+description SynologyDS - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+lldp voice-vlan 2
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/3</p>
+<blockquote>
+<div>port link-mode bridge
+description I&#8217;m a NMS Weenie
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/4</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/5</p>
+<blockquote>
+<div>port link-mode bridge
+description ESX55-10.101.0.7 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/6</p>
+<blockquote>
+<div>port link-mode bridge
+description ESX55-10.101.0.6 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/7</p>
+<blockquote>
+<div>port link-mode bridge
+description ESX55-10.101.0.7 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/8</p>
+<blockquote>
+<div>port link-mode bridge
+description ESX55-10.101.0.6 - HP_5500EI
+port link-type trunk
+port trunk permit vlan 1 to 2 110 500 to 503
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+packet-filter 2500 inbound
+packet-filter 2500 outbound
+packet-filter 4000 inbound
+packet-filter 4000 outbound
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/9</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/10</p>
+<blockquote>
+<div>port link-mode bridge
+description Sentry3_5133a8 - HP_5500EI
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/11</p>
+<blockquote>
+<div>port link-mode bridge
+description Sentry3_5146c3 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp disable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/12</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/13</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/14</p>
+<blockquote>
+<div>port link-mode bridge
+description HP-5406zl - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp management-address-tlv 10.101.0.221
+lldp compliance admin-status cdp txrx
+lldp management-address-format string
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/18</p>
+<blockquote>
+<div>port link-mode bridge
+description Aruba3600 - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/19</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/20</p>
+<blockquote>
+<div>port link-mode bridge
+description HP-3500yl-24G - HP_5500EI
+port access vlan 3010
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/21</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/23</p>
+<blockquote>
+<div>port link-mode bridge
+description HP830_LSW - HP_5500EI
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+lldp compliance admin-status cdp txrx
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/24</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+port link-type trunk
+port trunk permit vlan all
+broadcast-suppression pps 3000
+undo jumboframe enable
+poe enable
+stp edged-port enable
+sflow sampling-rate 1000 
+sflow flow collector 1
+sflow flow max-header 512
+sflow counter interval 20
+sflow counter collector 1</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/25</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+shutdown
+broadcast-suppression pps 3000
+undo jumboframe enable
+stp edged-port enable</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/26</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+shutdown
+broadcast-suppression pps 3000
+undo jumboframe enable
+stp edged-port enable</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/27</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+shutdown
+broadcast-suppression pps 3000
+undo jumboframe enable
+stp edged-port enable</div></blockquote>
+<p>#
+interface GigabitEthernet1/0/28</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216; &#8216;
+shutdown
+broadcast-suppression pps 3000
+undo jumboframe enable
+stp edged-port enable</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/1</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/2</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/3</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/4</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/5</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/6</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/7</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/8</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan all
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/9</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/10</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/11</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/12</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/13</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/14</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/15</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/16</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+port link-type trunk
+port trunk permit vlan 1 502 to 503
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/17</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/18</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/19</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/20</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/21</p>
+<blockquote>
+<div>port link-mode bridge
+description HP_5500EI - HP_5500EI
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/22</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/24</p>
+<blockquote>
+<div>port link-mode bridge
+description &#8216;&#8217;
+lldp compliance admin-status cdp txrx</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/25</p>
+<blockquote>
+<div>port link-mode bridge
+shutdown</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/26</p>
+<blockquote>
+<div>port link-mode bridge
+shutdown</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/27</p>
+<blockquote>
+<div>port link-mode bridge
+shutdown</div></blockquote>
+<p>#
+interface GigabitEthernet2/0/28</p>
+<blockquote>
+<div>port link-mode bridge
+shutdown</div></blockquote>
+<p>#
+interface Ten-GigabitEthernet1/1/1
+#
+interface Ten-GigabitEthernet1/1/2
+#
+interface Ten-GigabitEthernet2/1/1
+#
+interface Ten-GigabitEthernet2/1/2
+#
+interface Tunnel0
+#
+ospf 1 router-id 10.101.0.221</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>area 0.0.0.0 </dt>
+<dd>network 192.168.1.221 0.0.0.0 
+network 172.16.0.0 0.0.255.255 
+network 10.0.0.0 0.255.255.255</dd>
+</dl>
+</div></blockquote>
+<p>#
+pim
+#
+nqa entry 1 1</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type voice</dt>
+<dd>data-fill aaa
+data-size 100
+destination ip 10.12.10.10
+destination port 1000
+frequency 300000
+probe packet-number 10
+probe packet-timeout 3000
+source ip 10.10.10.1
+source port 1000
+tos 10
+ttl 10</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry 2 2</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type voice</dt>
+<dd>data-fill aaa
+data-size 100
+destination ip 10.11.10.10
+destination port 1000
+frequency 300000
+probe packet-number 10
+probe packet-timeout 3000
+source ip 10.10.10.1
+source port 1000
+tos 10
+ttl 10</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry 3 3</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type tcp</dt>
+<dd>destination ip 10.12.10.10
+destination port 7
+frequency 300000
+probe count 10
+source ip 10.101.0.221
+tos 10
+ttl 10</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry 4 4</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type tcp</dt>
+<dd>destination ip 10.11.10.1
+destination port 7
+frequency 300000
+probe count 10
+source ip 10.101.0.221
+tos 10
+ttl 10</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry admin nqatest</p>
+<blockquote>
+<div>type ftp</div></blockquote>
+<p>#
+nqa entry admin test</p>
+<blockquote>
+<div>type icmp-echo</div></blockquote>
+<p>#
+nqa entry admin testnqa</p>
+<blockquote>
+<div>type dns</div></blockquote>
+<p>#
+nqa entry dns 1</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>type dns</dt>
+<dd>destination ip 4.2.2.2
+resolve-target www.google.com</dd>
+</dl>
+</div></blockquote>
+<p>#
+nqa entry ping 1
+#</p>
+<blockquote>
+<div>ip route-static 0.0.0.0 0.0.0.0 10.101.0.1
+ip route-static 0.0.0.0 0.0.0.0 10.101.254.1</div></blockquote>
+<dl class="docutils">
+<dt>#</dt>
+<dd>info-center source SHELL channel 2 log level notifications
+info-center source ACL channel 2
+info-center source ACL channel 5
+info-center loghost 10.101.0.117 channel 5
+info-center loghost 10.101.0.200 channel 5
+info-center loghost 10.101.0.201
+info-center loghost 10.101.0.205</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>snmp-agent
+snmp-agent local-engineid 8000002B03001EC1DCFC41
+snmp-agent community read sec 
+snmp-agent community read public  acl 2500
+snmp-agent community read secret  acl 2001
+snmp-agent community write private  acl 2500
+snmp-agent sys-info contact <a class="reference external" href="mailto:admin&#37;&#52;&#48;lab&#46;local">admin<span>&#64;</span>lab<span>&#46;</span>local</a>
+snmp-agent sys-info location LAB
+snmp-agent sys-info version all
+snmp-agent group v3 SNMPv3Group authentication write-view ViewDefault
+snmp-agent target-host trap address udp-domain 10.10.10.222 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.10.12.13 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.190 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.191 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.192 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.195 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.20 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.200 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.201 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.202 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.203 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.101.0.205 params securityname public
+snmp-agent target-host trap address udp-domain 10.101.0.21 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.3.10.220 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.3.10.222 params securityname public v2c
+snmp-agent target-host trap address udp-domain 10.3.10.235 params securityname public v2c
+snmp-agent usm-user v3 test managerpriv cipher authentication-mode md5 $c$3$vPQENBFY7mnHycVSEjB5QuolgAIiTMjclfJqg7ExE3hbPg==
+snmp-agent usm-user v3 v3user SNMPv3Group cipher authentication-mode sha $c$3$IRXOFGMEkuajbSoJDlTGgQ9mDfb9Z4Dj1x0i7/+Wbai7vFmNByI= privacy-mode aes128 $c$3$HkyPCeXzfROwHK4hK6xQMqI3PF9qXeBJGK6Xjcyl4iV9RA==</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>command-alias enable
+command-alias mapping display show
+command-alias mapping save wr
+command-alias mapping undo no
+command-alias mapping reboot reload
+command-alias mapping header banner
+command-alias mapping reset clear
+command-alias mapping acl access-list
+command-alias mapping port switchport
+command-alias mapping stp spanning-tree
+command-alias mapping snmp-agent snmp-server
+command-alias mapping user-interface line
+command-alias mapping return end
+command-alias mapping quit exit
+command-alias mapping sysname hostname
+command-alias mapping delete erase
+command-alias mapping info-center logging</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>dhcp server forbidden-ip 10.101.50.1</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>dhcp enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>nqa schedule 1 1 start-time now lifetime forever 
+nqa schedule 2 2 start-time now lifetime forever 
+nqa schedule 3 3 start-time now lifetime forever 
+nqa schedule 4 4 start-time now lifetime forever 
+nqa server enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>ntp-service unicast-server 10.101.0.1
+ntp-service unicast-peer 10.101.0.220</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>ssh server enable
+sftp server enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>rmon event 1 description 3COM_RMON_EVENT trap public owner 3COM_4800G</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>ftp server enable</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>sflow agent ip 10.10.3.1
+sflow source ip 10.101.0.221
+sflow collector 1 ip 10.101.0.203 description &#8220;IMC 7.2&#8221;
+sflow collector 3 ip 10.101.0.205 description IMCAIO</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>load xml-configuration</dd>
+</dl>
+<dl class="docutils">
+<dt>#</dt>
+<dd>load tr069-configuration</dd>
+</dl>
+<p>#
+user-interface aux 0</p>
+<blockquote>
+<div>authentication-mode scheme</div></blockquote>
+<p>user-interface aux 1
+user-interface vty 0 4</p>
+<blockquote>
+<div>authentication-mode scheme</div></blockquote>
+<p>user-interface vty 5 15
+#
+irf-port 1/1</p>
+<blockquote>
+<div>port group interface Ten-GigabitEthernet1/1/1 mode normal</div></blockquote>
+<p>#
+irf-port 1/2</p>
+<blockquote>
+<div>port group interface Ten-GigabitEthernet1/1/2 mode normal</div></blockquote>
+<p>#
+irf-port 2/1</p>
+<blockquote>
+<div>port group interface Ten-GigabitEthernet2/1/1 mode normal</div></blockquote>
+<p>#
+irf-port 2/2</p>
+<blockquote>
+<div>port group interface Ten-GigabitEthernet2/1/2 mode normal</div></blockquote>
+<p>#
+return&#8217;</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_interface_details">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_interface_details</code><span class="sig-paren">(</span><em>devId</em>, <em>ifIndex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.get_interface_details" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>function takes the devId of a specific device and the ifindex value assigned to a specific interface
+and issues a RESTFUL call to get the interface details
+file as known by the HP IMC Base Platform ICC module for the target device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>devId</strong> &#8211; int or str value of the devId of the target device</li>
+<li><strong>ifIndex</strong> &#8211; int or str value of the ifIndex of the target interface</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dict which contains the details of the target interface&#8221;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Retype:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>&gt;&gt;&gt;get_interface_details(&#8216;10&#8217;, &#8216;1&#8217;, auth.creds, auth.url)
+{&#8216;adminStatus&#8217;: &#8216;1&#8217;,</p>
+<blockquote>
+<div>&#8216;adminStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;appointedSpeed&#8217;: &#8216;-1&#8217;,
+&#8216;filterTrapStatus&#8217;: &#8216;0&#8217;,
+&#8216;ifAlias&#8217;: &#8216;VMSynology - HP_5500EI&#8217;,
+&#8216;ifDescription&#8217;: &#8216;GigabitEthernet1/0/1&#8217;,
+&#8216;ifIndex&#8217;: &#8216;1&#8217;,
+&#8216;ifType&#8217;: &#8216;6&#8217;,
+&#8216;ifTypeDesc&#8217;: &#8216;ETHERNETCSMACD&#8217;,
+&#8216;ifspeed&#8217;: &#8216;1000000000&#8217;,
+&#8216;lastChange&#8217;: &#8216;5 day(s) 12 hour(s) 50 minute(s) 41 second(s) 750 millisecond(s)&#8217;,
+&#8216;lastChangeTime&#8217;: &#8216;2016-06-23 10:10:05&#8217;,
+&#8216;mtu&#8217;: &#8216;9216&#8217;,
+&#8216;operationStatus&#8217;: &#8216;1&#8217;,
+&#8216;operationStatusDesc&#8217;: &#8216;Up&#8217;,
+&#8216;phyAddress&#8217;: &#8216;00:1e:c1:dc:fc:17&#8217;,
+&#8216;showStatus&#8217;: &#8216;1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Up&#8217;}</div></blockquote>
+</dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.run_dev_cmd">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">run_dev_cmd</code><span class="sig-paren">(</span><em>devid</em>, <em>cmd_list</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.run_dev_cmd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function takes devid of target device and a sequential list of strings which define the specific commands to be run
+<dd><blockquote>
+<div><blockquote>
+<div><p>Function takes devid of target device and a sequential list of strings which define the specific commands to be run
 on the target device and returns a str object containing the output of the commands.
-:param devid: int devid of the target device
-:param cmd_list: list of strings
-:return: str containing the response of the commands</p>
+:param devid: int devid of the target device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param cmd_list:</th><td class="field-body">list of strings</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">str containing the response of the commands</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cmd_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;display version&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">run_dev_cmd</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">cmd_list</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">{&#39;cmdlist&#39;: {&#39;cmd&#39;: &#39;display version&#39;},</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>&#8216;content&#8217;: &#8216;HPE Comware Platform Software</p>
+</div></blockquote>
+<p>Comware Software, Version 5.20.99, Release 2221P20
+Copyright (c) 2010-2015 Hewlett Packard Enterprise Development LP
+HP A5500-24G-PoE+ EI Switch with 2 Interface Slots uptime is 3 weeks, 2 days, 12 hours, 58 minutes</p>
+<p>HP A5500-24G-PoE+ EI Switch with 2 Interface Slots with 1 Processor
+256M    bytes SDRAM
+32768K  bytes Flash Memory</p>
+<p>Hardware Version is REV.C
+CPLD Version is 002
+Bootrom Version is 721
+[SubSlot 0] 24GE+4SFP+POE Hardware Version is REV.C
+[SubSlot 1] 2 CX4 Hardware Version is REV.A
+&#8216;,</p>
+<blockquote>
+<div>&#8216;deviceId&#8217;: &#8216;10&#8217;,
+&#8216;success&#8217;: &#8216;true&#8217;}</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -140,19 +4379,73 @@ on the target device and returns a str object containing the output of the comma
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">set_inteface_down</code><span class="sig-paren">(</span><em>devid</em>, <em>ifindex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.set_inteface_down" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takest devid and ifindex of specific device and interface and issues a RESTFUL call to &#8221; shut&#8221; the specifie
 d interface on the target device.
-:param devid: int or str value of the target device
-:param ifindex: int or str value of the target interface
-:return: HTTP status code 204 with no values.</p>
+:param devid: int or str value of the target device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ifindex</strong> &#8211; int or str value of the target interface</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">HTTP status code 204 with no values.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>:rtype:int</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>&gt;&gt;&gt;set_inteface_down(&#8216;10&#8217;, &#8216;9&#8217;, auth.creds, auth.url)
+204</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.set_inteface_up">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">set_inteface_up</code><span class="sig-paren">(</span><em>devid</em>, <em>ifindex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.device.set_inteface_up" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takest devid and ifindex of specific device and interface and issues a RESTFUL call to &#8220;undo shut&#8221; the spec
-ified interface on the target device.
-:param devid: int or str value of the target device
-:param ifindex: int or str value of the target interface
-:return: HTTP status code 204 with no values.</p>
+ified interface on the target device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>devid</strong> &#8211; int or str value of the target device</li>
+<li><strong>ifindex</strong> &#8211; int or str value of the target interface</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">HTTP status code 204 with no values.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Rype:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>&gt;&gt;&gt;set_inteface_up(&#8216;10&#8217;, &#8216;9&#8217;, auth.creds, auth.url)
+204</p>
 </dd></dl>
 
 </div>

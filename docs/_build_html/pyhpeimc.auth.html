@@ -45,23 +45,19 @@
 <h1>pyhpeimc.auth package<a class="headerlink" href="#pyhpeimc-auth-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-pyhpeimc.auth">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.auth" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2015 Hewlett Packard Enterprise Development LP</p>
-<p>Licensed under the Apache License, Version 2.0 (the &#8220;License&#8221;);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &#8220;AS IS&#8221; BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="class">
 <dt id="pyhpeimc.auth.IMCAuth">
 <em class="property">class </em><code class="descclassname">pyhpeimc.auth.</code><code class="descname">IMCAuth</code><span class="sig-paren">(</span><em>h_url</em>, <em>server</em>, <em>port</em>, <em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.auth.IMCAuth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">requests.auth.HTTPDigestAuth</span></code></p>
 <p>This class handles authentication against the HPE IMC API and uses the Requests API. IMCAuth derives from
 requests.auth.HTTPDigestAuth.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span><span class="o">.</span><span class="n">password</span>
+<span class="go">admin</span>
+</pre></div>
+</div>
 <dl class="method">
 <dt id="pyhpeimc.auth.IMCAuth.get_auth">
 <code class="descname">get_auth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.auth.IMCAuth.get_auth" title="Permalink to this definition">¶</a></dt>
