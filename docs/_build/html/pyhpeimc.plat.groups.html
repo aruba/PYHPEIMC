@@ -45,20 +45,9 @@
 <h1>pyhpeimc.plat.groups package<a class="headerlink" href="#pyhpeimc-plat-groups-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-pyhpeimc.plat.groups">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.plat.groups" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2015 Chris Young</p>
-<p>Licensed under the Apache License, Version 2.0 (the &#8220;License&#8221;);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &#8220;AS IS&#8221; BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="data">
 <dt id="pyhpeimc.plat.groups.HEADERS">
-<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">HEADERS</code><em class="property"> = {'Accept-encoding': 'application/json', 'Content-Type': 'application/json', 'Accept': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.groups.HEADERS" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">HEADERS</code><em class="property"> = {'Accept': 'application/json', 'Accept-encoding': 'application/json', 'Content-Type': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.groups.HEADERS" title="Permalink to this definition">¶</a></dt>
 <dd><p>This section deals with HPE IMC Custom View functions</p>
 </dd></dl>
 
@@ -82,7 +71,7 @@ IMC.
 
 <dl class="function">
 <dt id="pyhpeimc.plat.groups.get_custom_views">
-<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">get_custom_views</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>name=None</em>, <em>headers={'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'</em>, <em>'Accept': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.groups.get_custom_views" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">get_custom_views</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>name=None</em>, <em>headers={'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.groups.get_custom_views" title="Permalink to this definition">¶</a></dt>
 <dd><p>function requires no input and returns a list of dictionaries of custom views from an HPE IMC. Optional name
 argument will return only the specified view.
 :param name: str containing the name of the desired custom view

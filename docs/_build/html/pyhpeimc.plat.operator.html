@@ -45,26 +45,15 @@
 <h1>pyhpeimc.plat.operator package<a class="headerlink" href="#pyhpeimc-plat-operator-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-pyhpeimc.plat.operator">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.plat.operator" title="Permalink to this headline">¶</a></h2>
-<p>Copyright 2015 Chris Young</p>
-<p>Licensed under the Apache License, Version 2.0 (the &#8220;License&#8221;);
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at</p>
-<blockquote>
-<div><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></div></blockquote>
-<p>Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an &#8220;AS IS&#8221; BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.</p>
 <dl class="data">
 <dt id="pyhpeimc.plat.operator.HEADERS">
-<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">HEADERS</code><em class="property"> = {'Accept-encoding': 'application/json', 'Content-Type': 'application/json', 'Accept': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.operator.HEADERS" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">HEADERS</code><em class="property"> = {'Accept': 'application/json', 'Accept-encoding': 'application/json', 'Content-Type': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.operator.HEADERS" title="Permalink to this definition">¶</a></dt>
 <dd><p>This section deals with HPE IMC Operator Functions</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.operator.create_operator">
-<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">create_operator</code><span class="sig-paren">(</span><em>operator</em>, <em>auth</em>, <em>url</em>, <em>headers={'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'</em>, <em>'Accept': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.operator.create_operator" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">create_operator</code><span class="sig-paren">(</span><em>operator</em>, <em>auth</em>, <em>url</em>, <em>headers={'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.operator.create_operator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes input of dictionary operator with the following keys
 operator = { &#8220;fullName&#8221; : &#8220;&#8221;   ,</p>
 <blockquote>
@@ -85,7 +74,7 @@ operator = { &#8220;fullName&#8221; : &#8220;&#8221;   ,</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.operator.delete_plat_operator">
-<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">delete_plat_operator</code><span class="sig-paren">(</span><em>operator</em>, <em>auth</em>, <em>url</em>, <em>headers={'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'</em>, <em>'Accept': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.operator.delete_plat_operator" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">delete_plat_operator</code><span class="sig-paren">(</span><em>operator</em>, <em>auth</em>, <em>url</em>, <em>headers={'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.operator.delete_plat_operator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to set the password of an existing operator
 :param operator: str Name of the operator account
 :param password: str New password
@@ -97,7 +86,7 @@ operator = { &#8220;fullName&#8221; : &#8220;&#8221;   ,</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.operator.get_plat_operator">
-<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">get_plat_operator</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>headers={'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'</em>, <em>'Accept': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.operator.get_plat_operator" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">get_plat_operator</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>headers={'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.operator.get_plat_operator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Funtion takes no inputs and returns a list of dictionaties of all of the operators currently configured on the HPE
 IMC system
 :return: list of dictionaries</p>
@@ -105,7 +94,7 @@ IMC system
 
 <dl class="function">
 <dt id="pyhpeimc.plat.operator.set_operator_password">
-<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">set_operator_password</code><span class="sig-paren">(</span><em>operator</em>, <em>password</em>, <em>auth</em>, <em>url</em>, <em>headers={'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'</em>, <em>'Accept': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.operator.set_operator_password" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">set_operator_password</code><span class="sig-paren">(</span><em>operator</em>, <em>password</em>, <em>auth</em>, <em>url</em>, <em>headers={'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.operator.set_operator_password" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to set the password of an existing operator
 :param operator: str Name of the operator account
 :param password: str New password

@@ -1,28 +1,4 @@
-get_dev_asset_details   = True
-get_serial_numbers    =
-get_trunk_interfaces   = True
-get_device_access_interfaces   = True
-get_access_interface_vlan   = True
-get_interface_details   = True
-get_dev_details   = True
-get_dev_vlans   = True
-get_dev_interface   = True
-get_dev_run_config   = True
-get_dev_start_config   = True
-get_dev_alarms   =  True
-get_real_time_locate   = True
-get_ip_mac_arp_list   = True
-create_dev_vlan   = True
-delete_dev_vlans   = True
-print_to_file   = True
-set_imc_creds   = True
+delete_plat_operator crashes if operator does not exist - add error handling
 
-
-set_inteface_down   =
-set_inteface_up   =
-get_vm_host_info   =
-get_host_info   =
-get_host_vm_guest   =
-get_host_vm_nic   =
 
 
