@@ -1,29 +1,5 @@
-'''Copyright 2015 Chris Young
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.'''
-
-#   IMC Server Build Project 1.0
-#  Chris Young a.k.a Darth
-#
-# Hewlett Packard Company    Revision 1.0
-#
-# Change History.... 3/19/15
-#
-
-# This series of functions is intended to help automate the build of an IMC server using
-# the eAPI function. The eAPI is available natively on the IMC enterprise edition
-# and can be added to the standard edition through the purchase of the
-# eAPI addon license.
+#!/usr/bin/env python3
+# author: @netmanchris
 
 # This section imports required libraries
 import requests
