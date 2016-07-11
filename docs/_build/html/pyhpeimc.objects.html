@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.objects package &mdash; pyhpeimc 1.0.22 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0.22',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyhpeimc 1.0.22 documentation" href="index.html" />
+    <link rel="up" title="pyhpeimc package" href="pyhpeimc.html" />
+    <link rel="next" title="pyhpeimc.plat package" href="pyhpeimc.plat.html" />
+    <link rel="prev" title="pyhpeimc.auth package" href="pyhpeimc.auth.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pyhpeimc-objects-package">
+<h1>pyhpeimc.objects package<a class="headerlink" href="#pyhpeimc-objects-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-pyhpeimc.objects">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.objects" title="Permalink to this headline">¶</a></h2>
+<p>Copyright 2015 Hewlett Packard Enterprise Development LP</p>
+<p>Licensed under the Apache License, Version 2.0 (the &#8220;License&#8221;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+<blockquote>
+<div><a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">http://www.apache.org/licenses/LICENSE-2.0</a></div></blockquote>
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &#8220;AS IS&#8221; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+<dl class="class">
+<dt id="pyhpeimc.objects.IMCDev">
+<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IMCDev</code><span class="sig-paren">(</span><em>ip_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="docutils">
+<dt>imc_dev class takes in the ip_address which is used as the primary key to gather the following attributes</dt>
+<dd><p class="first">for a device which as been previously discovered in the HP IMC Network Management platform.
+Each instance of this class should have the following attributes</p>
+<p>ip: The IP address used to manage the device in HP IMC
+description: returns the description of the device as discovered in HP IMC
+location: returns the location of the device as discovered in HP IMC
+contact: returns the contact of the device as discovered in HP IMC
+type: returns the type of the device as discovered in HP IMC
+name: returns the name of the device as discovered in HP IMC
+status: returns the current alarm status as discovered in HP IMC
+devid: returns the current devid used to internally identify the device as discovered in HP IMC
+interfacelist: returns the current list of interfaces for the device as discovered in HP IMC
+numinterface: returns a count of the number of interfaces in the interfacelist attribute
+vlans: returns the current vlans existing in the device as discovered in HP IMC. Device must be supported in the</p>
+<blockquote>
+<div>HP IMC Platform VLAN manager module.</div></blockquote>
+<dl class="docutils">
+<dt>accessinterfaces: returns the device interfaces configured as access interfaces. Device must be supported in the</dt>
+<dd>HP IMC Platform VLAN manager module.</dd>
+<dt>trunkinterfaces: returns the device interfaces configured as trunk interfaces. Device must be supported in the</dt>
+<dd>HP IMC Platform VLAN manager module.</dd>
+</dl>
+<p>alarm: returns the current unrecovered alarms as known by HP IMC.
+num alarms: returns a count of the number of alarms as returned by the alarm attribute
+serial: returns the network assets, including serial numbers for the device as discovered by HP IMC. The device</p>
+<blockquote>
+<div>must support the ENTITY MIB ( rfc 4133 ) for this value to be returned.</div></blockquote>
+<dl class="docutils">
+<dt>runconfig: returns the most recent running configuration for the device as known by HP IMC. The device must be</dt>
+<dd>be supported in the HP IMC platform ICC module.</dd>
+<dt>startconfig: returns the most recent startup configuration for the device as known by HP IMC. The device must be</dt>
+<dd>be supported in the HP IMC platform ICC module.</dd>
+</dl>
+<p>ipmacarp: returns the current device maciparp table as discovered by HP IMC.</p>
+<p>The imc_dev class supports the following methods which can be called upon an instance of this class</p>
+<dl class="last docutils">
+<dt>addvlan: This method executes the addvlan function on the specific instance of the imc_dev object. Devices must</dt>
+<dd>supported in the HP IMC Platform VLAN Manager module.</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="pyhpeimc.objects.IMCDev.addvlan">
+<code class="descname">addvlan</code><span class="sig-paren">(</span><em>vlanid</em>, <em>vlan_name</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev.addvlan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyhpeimc.objects.IMCDev.delvlan">
+<code class="descname">delvlan</code><span class="sig-paren">(</span><em>vlanid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev.delvlan" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyhpeimc.objects.IMCDev.getipmacarp">
+<code class="descname">getipmacarp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev.getipmacarp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyhpeimc.objects.IMCDev.getvlans">
+<code class="descname">getvlans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev.getvlans" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyhpeimc.objects.IMCInterface">
+<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IMCInterface</code><span class="sig-paren">(</span><em>ip_address</em>, <em>ifIndex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyhpeimc.objects.IPScope">
+<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IPScope</code><span class="sig-paren">(</span><em>netaddr</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="pyhpeimc.objects.IPScope.addchild">
+<code class="descname">addchild</code><span class="sig-paren">(</span><em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.addchild" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyhpeimc.objects.IPScope.allocateIp">
+<code class="descname">allocateIp</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>name</em>, <em>description</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.allocateIp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyhpeimc.objects.IPScope.deallocateIp">
+<code class="descname">deallocateIp</code><span class="sig-paren">(</span><em>hostid</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.deallocateIp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyhpeimc.objects.IPScope.gethosts">
+<code class="descname">gethosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.gethosts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyhpeimc.objects.IPScope.nextfreeip">
+<code class="descname">nextfreeip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.nextfreeip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pyhpeimc.objects package</a><ul>
+<li><a class="reference internal" href="#module-pyhpeimc.objects">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="pyhpeimc.html">pyhpeimc package</a><ul>
+      <li>Previous: <a href="pyhpeimc.auth.html" title="previous chapter">pyhpeimc.auth package</a></li>
+      <li>Next: <a href="pyhpeimc.plat.html" title="next chapter">pyhpeimc.plat package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/pyhpeimc.objects.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, netmanchris.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      
+      |
+      <a href="_sources/pyhpeimc.objects.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
