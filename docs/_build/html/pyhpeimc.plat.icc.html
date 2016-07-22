@@ -48,14 +48,64 @@
 <dl class="function">
 <dt id="pyhpeimc.plat.icc.create_cfg_segment">
 <code class="descclassname">pyhpeimc.plat.icc.</code><code class="descname">create_cfg_segment</code><span class="sig-paren">(</span><em>filename</em>, <em>filecontent</em>, <em>description</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.icc.create_cfg_segment" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes a str into var filecontent which represents the entire content of a configuration segment, or partial
+<dd><blockquote>
+<div><blockquote>
+<div><p>Takes a str into var filecontent which represents the entire content of a configuration segment, or partial
 configuration file. Takes a str into var description which represents the description of the configuration segment
-:param filename: str containing the name of the configuration segment.
-:param filecontent: str containing the entire contents of the configuration segment
-:param description: str contrianing the description of the configuration segment
-:param auth:
-:param url:
-:return:</p>
+:param filename: str containing the name of the configuration segment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param filecontent:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">str containing the entire contents of the configuration segment</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param description:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">str contrianing the description of the configuration segment</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">If successful, Boolena of type True</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.icc</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">filecontent</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot; snmp-agent</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>snmp-agent community write ${ SNMP Write}
+snmp-agent community read</p>
+<blockquote>
+<div>${SNMP Read}</div></blockquote>
+<p>snmp-agent sys-info version v2c 
+snmp-agent target-host trap address</p>
+<blockquote>
+<div>udp-domain 10.101.0.203 params securityname public</div></blockquote>
+<p>snmp-agent trap enable arp</p>
+<blockquote>
+<div>snmp-agent trap enable radius</div></blockquote>
+</div></blockquote>
+<dl class="docutils">
+<dt>&#8220;&#8221;&#8220;</dt>
+<dd><div class="first last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">create_cfg_segment</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">filecontent</span><span class="p">,</span> <span class="s1">&#39;My New Template&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -63,40 +113,250 @@ configuration file. Takes a str into var description which represents the descri
 <code class="descclassname">pyhpeimc.plat.icc.</code><code class="descname">delete_cfg_template</code><span class="sig-paren">(</span><em>template_name</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.icc.delete_cfg_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Uses the get_template_id() funct to gather the template_id to craft a url which is sent to the IMC server using
 a Delete Method
-:param template_name: str containing the entire contents of the configuration segment
-:param auth:
-:param url:
-:return:</p>
+:param template_name: str containing the entire contents of the configuration segment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">If successful, Boolean of type True</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Boolean</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.icc</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delete_cfg_template</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.icc.get_cfg_template">
 <code class="descclassname">pyhpeimc.plat.icc.</code><code class="descname">get_cfg_template</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>folder=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.icc.get_cfg_template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function takes no input and returns a list of dictionaries containing the configuration templates in the root folder
-of the icc configuration template library.
-:param auth:
-:param url:
-:return:</p>
+<dd><blockquote>
+<div><blockquote>
+<div><blockquote>
+<div><p>Function takes no input and returns a list of dictionaries containing the configuration templates in the root folder
+of the icc configuration template library.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">List of Dictionaries containing folders and configuration files in the ICC library.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">rtype:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.icc</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>#Get list of folders and files in root of ICC Configuration Library
+&gt;&gt;&gt;get_cfg_template(auth.creds, auth.url)
+[{&#8216;appliedDevices&#8217;: &#8216;&#8217;,</p>
+</div></blockquote>
+<p>&#8216;cfgFileParent&#8217;: &#8216;-1&#8217;,
+&#8216;confFileDesc&#8217;: &#8216;Stores predefined configuration.&#8217;,
+&#8216;confFileId&#8217;: &#8216;1&#8217;,
+&#8216;confFileName&#8217;: &#8216;Default Folder&#8217;,
+&#8216;confFilePath&#8217;: &#8216;/&#8217;,
+&#8216;confFileType&#8217;: &#8216;-1&#8217;,
+&#8216;createAt&#8217;: &#8216;2016-01-26 23:36:18&#8217;,
+&#8216;createBy&#8217;: &#8216;$SYSTEM&#8217;,
+&#8216;defaultConfFile&#8217;: &#8216;1&#8217;,
+&#8216;defaultConfFileDesc&#8217;: &#8216;Default config file, cannot delete.&#8217;,
+&#8216;modifyAt&#8217;: &#8216;2016-01-26 23:36:18.483&#8217;,
+&#8216;syncType&#8217;: &#8216;0&#8217;},</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;appliedDevices&#8217;: &#8216;&#8217;,</dt>
+<dd>&#8216;cfgFileParent&#8217;: &#8216;-1&#8217;,
+&#8216;confFileDesc&#8217;: &#8216;Folder to Store AutoDeployment Plan related configuration templates&#8217;,
+&#8216;confFileId&#8217;: &#8216;57&#8217;,
+&#8216;confFileName&#8217;: &#8216;ADP_Configs&#8217;,
+&#8216;confFilePath&#8217;: &#8216;&#8217;,
+&#8216;confFileType&#8217;: &#8216;-1&#8217;,
+&#8216;createAt&#8217;: &#8216;2016-01-27 14:44:50&#8217;,
+&#8216;createBy&#8217;: &#8216;admin&#8217;,
+&#8216;defaultConfFile&#8217;: &#8216;2&#8217;,
+&#8216;defaultConfFileDesc&#8217;: &#8216;Useful config file.&#8217;,
+&#8216;syncType&#8217;: &#8216;0&#8217;},</dd>
+<dt>{&#8216;appliedDevices&#8217;: &#8216;&#8217;,</dt>
+<dd>&#8216;cfgFileParent&#8217;: &#8216;-1&#8217;,
+&#8216;confFileDesc&#8217;: &#8216;Juniper SNMP Strings&#8217;,
+&#8216;confFileId&#8217;: &#8216;62&#8217;,
+&#8216;confFileName&#8217;: &#8216;JuniperSNMP.cfg&#8217;,
+&#8216;confFilePath&#8217;: &#8216;&#8217;,
+&#8216;confFileType&#8217;: &#8216;2&#8217;,
+&#8216;confFileTypeDesc&#8217;: &#8216;Segment&#8217;,
+&#8216;createAt&#8217;: &#8216;2016-07-08 13:36:45&#8217;,
+&#8216;createBy&#8217;: &#8216;admin&#8217;,
+&#8216;defaultConfFile&#8217;: &#8216;2&#8217;,
+&#8216;defaultConfFileDesc&#8217;: &#8216;Useful config file.&#8217;,
+&#8216;syncType&#8217;: &#8216;0&#8217;},</dd>
+<dt>{&#8216;appliedDevices&#8217;: &#8216;&#8217;,</dt>
+<dd>&#8216;cfgFileParent&#8217;: &#8216;-1&#8217;,
+&#8216;confFileDesc&#8217;: &#8216;&#8217;,
+&#8216;confFileId&#8217;: &#8216;61&#8217;,
+&#8216;confFileName&#8217;: &#8216;SSHNAT.cfg&#8217;,
+&#8216;confFilePath&#8217;: &#8216;&#8217;,
+&#8216;confFileType&#8217;: &#8216;2&#8217;,
+&#8216;confFileTypeDesc&#8217;: &#8216;Segment&#8217;,
+&#8216;createAt&#8217;: &#8216;2016-06-22 10:02:07&#8217;,
+&#8216;createBy&#8217;: &#8216;admin&#8217;,
+&#8216;defaultConfFile&#8217;: &#8216;2&#8217;,
+&#8216;defaultConfFileDesc&#8217;: &#8216;Useful config file.&#8217;,
+&#8216;modifyAt&#8217;: &#8216;2016-06-22 10:05:48&#8217;,
+&#8216;syncType&#8217;: &#8216;0&#8217;},</dd>
+<dt>{&#8216;appliedDevices&#8217;: &#8216;HP 5900-AF-48XGT-4QSFP+&#8217;,</dt>
+<dd><p class="first">&#8216;cfgFileParent&#8217;: &#8216;-1&#8217;,
+&#8216;confFileDesc&#8217;: &#8216;SNMP. Tempalte for V2c for Comware Device&#8217;,
+&#8216;confFileId&#8217;: &#8216;59&#8217;,
+&#8216;confFileName&#8217;: &#8216;10.20.10.10_running_20160610095951.cfg&#8217;,
+&#8216;confFilePath&#8217;: &#8216;&#8217;,
+&#8216;confFileType&#8217;: &#8216;2&#8217;,
+&#8216;confFileTypeDesc&#8217;: &#8216;Segment&#8217;,
+&#8216;createAt&#8217;: &#8216;2016-06-10 13:21:32&#8217;,
+&#8216;createBy&#8217;: &#8216;admin&#8217;,
+&#8216;defaultConfFile&#8217;: &#8216;2&#8217;,
+&#8216;defaultConfFileDesc&#8217;: &#8216;Useful config file.&#8217;,
+&#8216;modifyAt&#8217;: &#8216;2016-06-10 13:24:15&#8217;,
+&#8216;syncType&#8217;: &#8216;0&#8217;}]</p>
+<blockquote class="last">
+<div>#Get list of Folders in Files in a specific folder of the ICC Configuration Library
+&gt;&gt;&gt;get_cfg_template(auth.creds, auth.url, folder=&#8217;ADP_Configs&#8217;)</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>[{&#8216;appliedDevices&#8217;: &#8216;HP 5900-AF-48XGT-4QSFP+&#8217;,</dt>
+<dd><blockquote class="first">
+<div>&#8216;cfgFileParent&#8217;: &#8216;57&#8217;,
+&#8216;confFileDesc&#8217;: &#8216;5900 ADP Config with Netconf - Ansible Ready&#8217;,
+&#8216;confFileId&#8217;: &#8216;60&#8217;,
+&#8216;confFileName&#8217;: &#8216;5900ADP_w_Netconf.cfg&#8217;,
+&#8216;confFilePath&#8217;: &#8216;ADP_Configs&#8217;,
+&#8216;confFileType&#8217;: &#8216;1&#8217;,
+&#8216;confFileTypeDesc&#8217;: &#8216;File&#8217;,
+&#8216;createAt&#8217;: &#8216;2016-06-21 12:01:14&#8217;,
+&#8216;createBy&#8217;: &#8216;admin&#8217;,
+&#8216;defaultConfFile&#8217;: &#8216;2&#8217;,
+&#8216;defaultConfFileDesc&#8217;: &#8216;Useful config file.&#8217;,
+&#8216;syncType&#8217;: &#8216;0&#8217;},</div></blockquote>
+<dl class="last docutils">
+<dt>{&#8216;appliedDevices&#8217;: &#8216;&#8217;,</dt>
+<dd>&#8216;cfgFileParent&#8217;: &#8216;57&#8217;,
+&#8216;confFileDesc&#8217;: &#8216;5900_Initial Config for ADP process&#8217;,
+&#8216;confFileId&#8217;: &#8216;58&#8217;,
+&#8216;confFileName&#8217;: &#8216;5900_Initial.cfg&#8217;,
+&#8216;confFilePath&#8217;: &#8216;ADP_Configs&#8217;,
+&#8216;confFileType&#8217;: &#8216;1&#8217;,
+&#8216;confFileTypeDesc&#8217;: &#8216;File&#8217;,
+&#8216;createAt&#8217;: &#8216;2016-01-27 14:47:59&#8217;,
+&#8216;createBy&#8217;: &#8216;admin&#8217;,
+&#8216;defaultConfFile&#8217;: &#8216;2&#8217;,
+&#8216;defaultConfFileDesc&#8217;: &#8216;Useful config file.&#8217;,
+&#8216;modifyAt&#8217;: &#8216;2016-01-28 14:37:21&#8217;,
+&#8216;syncType&#8217;: &#8216;0&#8217;}]</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.icc.get_folder_id">
 <code class="descclassname">pyhpeimc.plat.icc.</code><code class="descname">get_folder_id</code><span class="sig-paren">(</span><em>folder_name</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.icc.get_folder_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function takes str input of folder name and returns str numerical id of the folder.
-:param folder_name: str name of the folder
-:param auth:
-:param url:
-:return: str numerical id of the folder</p>
+:param folder_name: str name of the folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">str numerical id of the folder</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.icc</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>&gt;&gt;&gt;get_folder_id(&#8216;Default Folder&#8217;, auth.creds, auth.url)
+&#8216;1&#8217;</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.icc.get_template_id">
 <code class="descclassname">pyhpeimc.plat.icc.</code><code class="descname">get_template_id</code><span class="sig-paren">(</span><em>template_name</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.icc.get_template_id" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper function takes str input of folder name and returns str numerical id of the folder.
-:param folder_name: str name of the folder
-:param auth:
-:param url:
-:return: str numerical id of the folder</p>
+:param folder_name: str name of the folder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">str numerical id of the folder</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.icc</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>&gt;&gt;&gt;get_template_id(&#8216;CW7SNMP.cfg&#8217;, auth.creds, auth.url)
+&#8216;64&#8217;</p>
 </dd></dl>
 
 </div>
