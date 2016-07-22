@@ -47,7 +47,7 @@
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.plat.groups" title="Permalink to this headline">¶</a></h2>
 <dl class="data">
 <dt id="pyhpeimc.plat.groups.HEADERS">
-<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">HEADERS</code><em class="property"> = {'Accept': 'application/json', 'Accept-encoding': 'application/json', 'Content-Type': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.groups.HEADERS" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">HEADERS</code><em class="property"> = {'Accept': 'application/json', 'Content-Type': 'application/json', 'Accept-encoding': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.groups.HEADERS" title="Permalink to this definition">¶</a></dt>
 <dd><p>This section deals with HPE IMC Custom View functions</p>
 </dd></dl>
 
@@ -55,9 +55,41 @@
 <dt id="pyhpeimc.plat.groups.create_custom_views">
 <code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">create_custom_views</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>name=None</em>, <em>upperview=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.groups.create_custom_views" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes no input and issues a RESTFUL call to get a list of custom views from HPE IMC. Optioanl Name input
-will return only the specified view.
-:param name: string containg the name of the desired custom view
-:return: list of dictionaries containing attributes of the custom views.</p>
+will return only the specified view.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> &#8211; string containg the name of the desired custom view</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">str of creation results ( &#8220;view &#8221; + name + &#8220;created successfully&#8221;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.groups</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>#Create L1 custom view
+&gt;&gt;&gt; create_custom_views(auth.creds, auth.url, name=&#8217;L1 View&#8217;)
+&#8216;View Test View created successfully&#8217;</p>
+<p>#Create Nested custome view
+&gt;&gt;&gt; create_custom_views(auth.creds, auth.url, name=&#8217;L2 View&#8217;, upperview=&#8217;L1 View&#8217;)
+&#8216;View L2 View created successfully&#8217;</p>
 </dd></dl>
 
 <dl class="function">
@@ -65,17 +97,105 @@ will return only the specified view.
 <code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">delete_custom_view</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.groups.delete_custom_view" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes input of auth, url, and name and issues a RESTFUL call to delete a specific of custom views from HPE
 IMC.
-:param name: string containg the name of the desired custom view
-:return:</p>
+:param name: string containg the name of the desired custom view</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">str of creation results ( &#8220;view &#8221; + name + &#8220;created successfully&#8221;</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.groups</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;L1 View&quot;</span><span class="p">)</span>
+<span class="go">&#39;View Test View deleted successfully&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;L2 View&quot;</span><span class="p">)</span>
+<span class="go">&#39;View L2 View deleted successfully&#39;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.groups.get_custom_views">
-<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">get_custom_views</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>name=None</em>, <em>headers={'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'</em>, <em>'Content-Type': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.groups.get_custom_views" title="Permalink to this definition">¶</a></dt>
-<dd><p>function requires no input and returns a list of dictionaries of custom views from an HPE IMC. Optional name
+<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">get_custom_views</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>name=None</em>, <em>headers={'Accept': 'application/json'</em>, <em>'Content-Type': 'application/json'</em>, <em>'Accept-encoding': 'application/json'}</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.groups.get_custom_views" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><blockquote>
+<div><p>function requires no input and returns a list of dictionaries of custom views from an HPE IMC. Optional name
 argument will return only the specified view.
-:param name: str containing the name of the desired custom view
-:return: list of dictionaties containing attributes of the custom views</p>
+:param name: str containing the name of the desired custom view</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param auth:</th><td class="field-body">requests auth object #usually auth.creds from auth pyhpeimc.auth.class</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param url:</th><td class="field-body">base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body">(optional) str of name of specific custom view</td>
+</tr>
+<tr class="field-even field"><th class="field-name">return:</th><td class="field-body">list of dictionaties containing attributes of the custom views</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.groups</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+<span class="go">#Get All views</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">get_custo_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">[{&#39;name&#39;: &#39;My Network View&#39;,</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>&#8216;runStatus&#8217;: &#8216;5&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Critical&#8217;,
+&#8216;statusImgSrc&#8217;: &#8216;res/icon_custom_view_critical_16x16.png&#8217;,
+&#8216;symbolId&#8217;: &#8216;11&#8217;},</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>{&#8216;name&#8217;: &#8216;SimpleView&#8217;,</dt>
+<dd>&#8216;runStatus&#8217;: &#8216;4&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Major&#8217;,
+&#8216;statusImgSrc&#8217;: &#8216;res/icon_custom_view_major_16x16.png&#8217;,
+&#8216;symbolId&#8217;: &#8216;2700&#8217;},</dd>
+<dt>{&#8216;name&#8217;: &#8216;View1&#8217;,</dt>
+<dd><p class="first">&#8216;runStatus&#8217;: &#8216;-1&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Unmanaged&#8217;,
+&#8216;statusImgSrc&#8217;: &#8216;res/icon_custom_view_unmanaged_16x16.png&#8217;,
+&#8216;symbolId&#8217;: &#8216;1619&#8217;}]</p>
+<blockquote>
+<div>#Get details of a single view
+&gt;&gt;&gt;  get_custom_views(auth.creds, auth.url, name=&#8217;My Network View&#8217;)</div></blockquote>
+<p class="last">[{&#8216;name&#8217;: &#8216;My Network View&#8217;,
+&#8216;runStatus&#8217;: &#8216;5&#8217;,
+&#8216;statusDesc&#8217;: &#8216;Critical&#8217;,
+&#8216;statusImgSrc&#8217;: &#8216;res/icon_custom_view_critical_16x16.png&#8217;,
+&#8216;symbolId&#8217;: &#8216;11&#8217;}]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
