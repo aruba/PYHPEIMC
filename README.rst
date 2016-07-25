@@ -36,3 +36,6 @@ What's Changed:
 1.0.21 - Fixed bug in addip method of IPScope class
 1.0.22 - Added deallocate hostip method to IPScope class with supporting functions in plat.termaccess
 1.0.23 - Added Sphinx docs project, Improved Docstrings
+1.0.24 - Bug Fixes
+1.0.25 - Continuing to add docstrings and fixed bug in pyhpeimc.plat.operators get_plat_operators which was returning inconsistently
+1.0.26 - Paying some technical debt. Added perf module and intial add_per_task function

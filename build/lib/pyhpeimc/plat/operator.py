@@ -27,18 +27,46 @@ def create_operator(operator, auth, url,headers=HEADERS):
              "defaultAcl" : "",
              "authType"  : ""}
     converts to json and issues a HTTP POST request to the HPE IMC Restful API
-    :param url: str url of IMC server, see requests library docs for more info
-    :param auth: str see requests library docs for more info
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
     :param operator: dictionary with the required operator key-value pairs as defined above.
+
     :param headers: json formated string. default values set in module
+
     :return:
+
+    :rtype:
+
+
+    >>> import json
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.operator import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>>  operator = '''{ "fullName" : "test administrator"   ,
+             "sessionTimeout" : "30",
+             "password" :  "password",
+             "operatorGroupId" : "1",
+             "name" : "testadmin",
+             "desc" : "test admin account",
+             "defaultAcl" : "",
+             "authType"  : "0"}'''
+
+    >>> operator = json.loads(operator)
+
+    >>> create_operator(operator, auth.creds, auth.url)
+    Operator Successfully Created
+
     """
-    # checks to see if the imc credentials are already available
-    if auth == None or url == None:
-        imc_creds()
     create_operator_url = '/imcrs/plat/operator'
     f_url = url + create_operator_url
-    # opens imc_operator_list.csv file
+    print (f_url)
     payload = json.dumps(operator, indent=4)
     # creates the URL using the payload variable as the contents
     r = requests.post(f_url, data=payload, auth=auth, headers=headers)
@@ -55,13 +83,32 @@ def create_operator(operator, auth, url,headers=HEADERS):
 def set_operator_password(operator, password, auth, url,headers=HEADERS):
     """
     Function to set the password of an existing operator
+
     :param operator: str Name of the operator account
+
     :param password: str New password
-    :param url: str url of IMC server, see requests library docs for more info
-    :param auth: str see requests library docs for more info
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
     :param headers: json formated string. default values set in module
-    :return:
-    """
+
+    :return: int of 204 if successfull,
+
+    :rtype: int
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.operator import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> set_operator_password('testadmin', 'newpassword', auth.creds, auth.url)
+    Operator:testadmin password was successfully changed
+    204
+
+       """
     if operator == None:
         operator = input(
             '''\n What is the username you wish to change the password?''')
@@ -92,18 +139,34 @@ def get_plat_operator(auth, url,headers=HEADERS):
     '''
     Funtion takes no inputs and returns a list of dictionaties of all of the operators currently configured on the HPE
     IMC system
-    :return: list of dictionaries
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :return: list of dictionaries where each element represents one operator
+
+    :rtype: list
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.operator import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> get_plat_operator(auth.creds, auth.url)
+
     '''
     get_operator_url = '/imcrs/plat/operator?start=0&size=1000&orderBy=id&desc=false&total=false'
     f_url = url + get_operator_url
     try:
         r = requests.get(f_url, auth=auth, headers=headers)
-        plat_oper_list = json.loads(r.text)
+        plat_oper_list = json.loads(r.text)['operator']
         if type(plat_oper_list) is dict:
-            oper_list = [plat_oper_list['operator']]
-            #plat_oper_list[0] = plat_oper_list['operator']
+            oper_list = []
+            oper_list.append(plat_oper_list)
             return oper_list
-        return plat_oper_list['operator']
+        return plat_oper_list
     except requests.exceptions.RequestException as e:
         print ("Error:\n" + str(e) + ' get_plat_operator: An Error has occured')
         return "Error:\n" + str(e) + ' get_plat_operator: An Error has occured'
@@ -112,11 +175,20 @@ def delete_plat_operator(operator,auth, url, headers=HEADERS):
     """
     Function to set the password of an existing operator
     :param operator: str Name of the operator account
-    :param password: str New password
-    :param url: str url of IMC server, see requests library docs for more info
-    :param auth: str see requests library docs for more info
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
     :param headers: json formated string. default values set in module
-    :return:
+
+    :return: int of 204 if successfull
+
+    :rtype: int
+
+    >>> delete_plat_operator('testadmin', auth.creds, auth.url)
+    Operator: testadmin was successfully deleted
+    204
     """
     #oper_id = None
     plat_oper_list = get_plat_operator(auth, url)
