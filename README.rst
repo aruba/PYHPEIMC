@@ -39,3 +39,5 @@ What's Changed:
 1.0.24 - Bug Fixes
 1.0.25 - Continuing to add docstrings and fixed bug in pyhpeimc.plat.operators get_plat_operators which was returning inconsistently
 1.0.26 - Paying some technical debt. Added perf module and intial add_per_task function
+1.0.27 - Paying some more technical debt. Added functions to plat.alarms module
+1.0.28 0 Bug Fixes
