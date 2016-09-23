@@ -17,6 +17,222 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 """
 This section contains functions which operate at the device level.
 """
+
+def get_all_devs(auth, url, network_address= None):
+    """Takes string input of IP address to issue RESTUL call to HP IMC\n
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param network_address= str IPv4 Network Address
+
+    :return: dictionary of device details
+
+    :rtype: dict
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.device import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> get_all_devs( auth.creds, auth.url, network_address= '10.11.')
+    [{'categoryId': '0',
+  'contact': '',
+  'devCategoryImgSrc': 'router',
+  'id': '432',
+  'ip': '10.11.10.1',
+  'label': 'MSR930',
+  'link': {'@href': 'http://10.101.0.203:8080/imcrs/plat/res/device/432',
+   '@op': 'GET',
+   '@rel': 'self'},
+  'location': '',
+  'mac': 'b8:af:67:a2:14:5e',
+  'mask': '255.255.255.0',
+  'parentId': '1',
+  'status': '5',
+  'statusDesc': 'Critical',
+  'symbolDesc': 'MSR930',
+  'symbolId': '3027',
+  'symbolLevel': '2',
+  'symbolName': 'MSR930',
+  'symbolType': '3',
+  'sysDescription': 'MSR930',
+  'sysName': 'MSR930',
+  'sysOid': '1.3.6.1.4.1.25506.11.2.70',
+  'topoIconName': 'iconroute',
+  'typeName': 'HP MSR930'},
+ {'categoryId': '1',
+  'contact': 'kontrol.issues@gmail.com',
+  'devCategoryImgSrc': 'switch',
+  'id': '434',
+  'ip': '10.11.10.7',
+  'label': '3800',
+  'link': {'@href': 'http://10.101.0.203:8080/imcrs/plat/res/device/434',
+   '@op': 'GET',
+   '@rel': 'self'},
+  'location': 'Somewhere Cold',
+  'mask': '255.255.255.0',
+  'parentId': '1362',
+  'status': '5',
+  'statusDesc': 'Critical',
+  'symbolDesc': '3800',
+  'symbolId': '3031',
+  'symbolLevel': '3',
+  'symbolName': '3800',
+  'symbolType': '3',
+  'sysDescription': '3800',
+  'sysName': 'ArubaOS_3800',
+  'sysOid': '1.3.6.1.4.1.11.2.3.7.11.119',
+  'topoIconName': 'iconswitch',
+  'typeName': 'HP 3800-24G-PoE+-2SFP+ Switch'},
+ {'categoryId': '1',
+  'contact': '',
+  'devCategoryImgSrc': 'switch',
+  'id': '435',
+  'ip': '10.11.10.6',
+  'label': '2530',
+  'link': {'@href': 'http://10.101.0.203:8080/imcrs/plat/res/device/435',
+   '@op': 'GET',
+   '@rel': 'self'},
+  'location': '',
+  'mask': '255.255.255.0',
+  'parentId': '1362',
+  'status': '5',
+  'statusDesc': 'Critical',
+  'symbolDesc': '2530',
+  'symbolId': '3034',
+  'symbolLevel': '3',
+  'symbolName': '2530',
+  'symbolType': '3',
+  'sysDescription': '2530',
+  'sysName': 'HP-2530-24G-PoEP',
+  'sysOid': '1.3.6.1.4.1.11.2.3.7.11.137',
+  'topoIconName': 'iconswitch',
+  'typeName': 'HP 2530-24G-PoE+'},
+ {'categoryId': '1',
+  'contact': 'branch3',
+  'devCategoryImgSrc': 'switch',
+  'id': '436',
+  'ip': '10.11.10.5',
+  'label': '3500yl',
+  'link': {'@href': 'http://10.101.0.203:8080/imcrs/plat/res/device/436',
+   '@op': 'GET',
+   '@rel': 'self'},
+  'location': 'Somewhere Cold',
+  'mask': '255.255.255.0',
+  'parentId': '1362',
+  'status': '5',
+  'statusDesc': 'Critical',
+  'symbolDesc': '3500yl',
+  'symbolId': '3037',
+  'symbolLevel': '3',
+  'symbolName': '3500yl',
+  'symbolType': '3',
+  'sysDescription': '3500yl',
+  'sysName': 'HP-3500yl-24G',
+  'sysOid': '1.3.6.1.4.1.11.2.3.7.11.58',
+  'topoIconName': 'iconswitch',
+  'typeName': 'HP 3500yl-24G-PWR Switch'},
+ {'categoryId': '1',
+  'contact': '',
+  'devCategoryImgSrc': 'switch',
+  'id': '437',
+  'ip': '10.11.10.4',
+  'label': '5400',
+  'link': {'@href': 'http://10.101.0.203:8080/imcrs/plat/res/device/437',
+   '@op': 'GET',
+   '@rel': 'self'},
+  'location': '',
+  'mask': '255.255.255.0',
+  'parentId': '1',
+  'status': '5',
+  'statusDesc': 'Critical',
+  'symbolDesc': '5400',
+  'symbolId': '3040',
+  'symbolLevel': '2',
+  'symbolName': '5400',
+  'symbolType': '3',
+  'sysDescription': '5400',
+  'sysName': 'HP-5406zl',
+  'sysOid': '1.3.6.1.4.1.11.2.3.7.11.50',
+  'topoIconName': 'iconswitch',
+  'typeName': 'HP 5406zl Switch'},
+ {'categoryId': '1',
+  'contact': '',
+  'devCategoryImgSrc': 'switch',
+  'id': '438',
+  'ip': '10.11.10.3',
+  'label': '5400R',
+  'link': {'@href': 'http://10.101.0.203:8080/imcrs/plat/res/device/438',
+   '@op': 'GET',
+   '@rel': 'self'},
+  'location': '',
+  'mac': '64:51:06:79:0c:00',
+  'mask': '255.255.255.0',
+  'parentId': '1362',
+  'status': '5',
+  'statusDesc': 'Critical',
+  'symbolDesc': '5400R',
+  'symbolId': '3043',
+  'symbolLevel': '3',
+  'symbolName': '5400R',
+  'symbolType': '3',
+  'sysDescription': '5400R',
+  'sysName': 'HP-5406Rzl2',
+  'sysOid': '1.3.6.1.4.1.11.2.3.7.11.160',
+  'topoIconName': 'iconswitch',
+  'typeName': 'HP 5406R zl2 Switch'},
+ {'categoryId': '1',
+  'contact': 'kontrol.issues@gmail.com',
+  'devCategoryImgSrc': 'switch',
+  'id': '439',
+  'ip': '10.11.10.2',
+  'label': '2920',
+  'link': {'@href': 'http://10.101.0.203:8080/imcrs/plat/res/device/439',
+   '@op': 'GET',
+   '@rel': 'self'},
+  'location': 'Somewhere Cold',
+  'mac': '74:46:a0:ff:c4:40',
+  'mask': '255.255.255.0',
+  'parentId': '1362',
+  'status': '5',
+  'statusDesc': 'Critical',
+  'symbolDesc': '2920',
+  'symbolId': '3046',
+  'symbolLevel': '3',
+  'symbolName': '2920',
+  'symbolType': '3',
+  'sysDescription': '2920',
+  'sysName': '2920',
+  'sysOid': '1.3.6.1.4.1.11.2.3.7.11.153',
+  'topoIconName': 'iconswitch',
+  'typeName': 'HP 2920-24G-PoE+ Switch'}]
+
+    """
+
+    if network_address != None:
+        get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
+                          str(network_address) + "&start=0&size=1000&orderBy=id&desc=false&total=false"
+    else:
+        get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&start=0&size=1000&orderBy=id&desc=false&total=false&exact=false"
+
+    f_url = url + get_all_devs_url
+        # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    # r.status_code
+    try:
+        if r.status_code == 200:
+            dev_details = (json.loads(r.text))
+            if len(dev_details) == 0:
+                print("Device not found")
+                return "Device not found"
+            else:
+                return dev_details['device']
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+
 def get_dev_details(ip_address, auth, url):
     """Takes string input of IP address to issue RESTUL call to HP IMC\n
 
@@ -88,7 +304,6 @@ def get_dev_details(ip_address, auth, url):
                 return dev_details['device']
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
-
 
 def get_dev_interface(devid, auth, url):
     """
@@ -1066,7 +1281,6 @@ def get_dev_interface(devid, auth, url):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_interface: An Error has occured"
 
-
 def get_dev_run_config(devid, auth, url):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
@@ -1108,7 +1322,6 @@ def get_dev_run_config(devid, auth, url):
                 return "This features is no supported on this device"
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
-
 
 def get_dev_start_config(devId, auth, url):
     """
