@@ -14,6 +14,121 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 #auth = None
 
 
+
+"""
+This section contains functions which operate at the system level
+"""
+
+def get_system_vendors(auth, url):
+    """Takes string no input to issue RESTUL call to HP IMC\n
+
+      :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+      :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+      :return: list of dictionaries where each dictionary represents a single vendor
+
+      :rtype: list
+
+      >>> from pyhpeimc.auth import *
+
+      >>> from pyhpeimc.plat.device import *
+
+      >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+      >>> vendors = get_system_vendors(auth.creds, auth.url)
+
+      >>> type(vendors) is list
+      True
+
+    """
+    get_system_vendors_url = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false&total=false'
+
+    f_url = url + get_system_vendors_url
+    # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    # r.status_code
+    try:
+        if r.status_code == 200:
+            system_vendors = (json.loads(r.text))
+            return system_vendors['deviceVendor']
+    except requests.exceptions.RequestException as e:
+        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+
+def get_system_category(auth, url):
+    """Takes string no input to issue RESTUL call to HP IMC\n
+
+      :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+      :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+      :return: list of dictionaries where each dictionary represents a single device category
+
+      :rtype: list
+
+      >>> from pyhpeimc.auth import *
+
+      >>> from pyhpeimc.plat.device import *
+
+      >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+      >>> categories = get_system_category(auth.creds, auth.url)
+
+      >>> type(categories) is list
+      True
+
+    """
+    get_system_category_url = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false&total=false'
+
+    f_url = url + get_system_category_url
+    # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    # r.status_code
+    try:
+        if r.status_code == 200:
+            system_category = (json.loads(r.text))
+            return system_category['deviceCategory']
+    except requests.exceptions.RequestException as e:
+        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+
+
+def get_system_device_models(auth, url):
+    """Takes string no input to issue RESTUL call to HP IMC\n
+
+      :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+      :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+      :return: list of dictionaries where each dictionary represents a single device model
+
+      :rtype: list
+
+      >>> from pyhpeimc.auth import *
+
+      >>> from pyhpeimc.plat.device import *
+
+      >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+      >>> categories = get_system_device_models(auth.creds, auth.url)
+
+      >>> type(categories) is list
+      True
+
+    """
+    get_system_device_model_url = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc=false&total=false'
+
+    f_url = url + get_system_device_model_url
+    # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    # r.status_code
+    try:
+        if r.status_code == 200:
+            system_device_model = (json.loads(r.text))
+            return system_device_model['deviceModel']
+    except requests.exceptions.RequestException as e:
+        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+
+
 """
 This section contains functions which operate at the device level.
 """
@@ -233,6 +348,7 @@ def get_all_devs(auth, url, network_address= None):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
+
 def get_dev_details(ip_address, auth, url):
     """Takes string input of IP address to issue RESTUL call to HP IMC\n
 
@@ -304,6 +420,7 @@ def get_dev_details(ip_address, auth, url):
                 return dev_details['device']
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+
 
 def get_dev_interface(devid, auth, url):
     """
@@ -1281,6 +1398,7 @@ def get_dev_interface(devid, auth, url):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_interface: An Error has occured"
 
+
 def get_dev_run_config(devid, auth, url):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
@@ -1322,6 +1440,7 @@ def get_dev_run_config(devid, auth, url):
                 return "This features is no supported on this device"
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
+
 
 def get_dev_start_config(devId, auth, url):
     """
@@ -1368,6 +1487,174 @@ def get_dev_start_config(devId, auth, url):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
 
+
+def get_dev_mac_learn(devid, auth, url):
+    '''
+    function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
+    the target device.
+
+    :param devid: int value of the target device
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :return: list of dict objects which contain the mac learn table of target device id
+
+    :rtype: list
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.device import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> get_dev_mac_learn('10', auth.creds, auth.url)
+    [{'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/1',
+  'ifIndex': '1',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/1',
+  'learnIp': '10.101.0.50',
+  'learnMac': '00:11:32:11:da:57',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/2',
+  'ifIndex': '2',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/2',
+  'learnIp': '10.101.0.51',
+  'learnMac': '00:11:32:10:03:8b',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/3',
+  'ifIndex': '3',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/3',
+  'learnIp': '10.101.0.10',
+  'learnMac': '14:58:d0:60:61:04',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/4',
+  'ifIndex': '4',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/4',
+  'learnIp': '10.101.0.11',
+  'learnMac': '14:58:d0:60:a4:e6',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/5',
+  'ifIndex': '5',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5',
+  'learnIp': '',
+  'learnMac': '00:50:56:59:dd:d8',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/5',
+  'ifIndex': '5',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5',
+  'learnIp': '10.101.0.100',
+  'learnMac': '00:50:56:66:7d:73',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/5',
+  'ifIndex': '5',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5',
+  'learnIp': '10.101.0.7',
+  'learnMac': 'c4:34:6b:b9:dd:d8',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/6',
+  'ifIndex': '6',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6',
+  'learnIp': '',
+  'learnMac': '00:50:56:59:4f:bc',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/6',
+  'ifIndex': '6',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6',
+  'learnIp': '10.101.0.113',
+  'learnMac': '00:50:56:64:8e:db',
+  'vlanId': '1'},
+ {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
+  'deviceId': '10',
+  'deviceIp': '192.168.1.221',
+  'ifDesc': 'GigabitEthernet1/0/6',
+  'ifIndex': '6',
+  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6',
+  'learnIp': '10.101.0.20',
+  'learnMac': '00:50:56:b5:7f:66',
+  'vlanId': '1'}]
+    '''
+    get_dev_mac_learn_url='/imcrs/res/access/ipMacLearn/'+str(devid)
+    f_url = url+get_dev_mac_learn_url
+    try:
+        r = requests.get(f_url, auth=auth, headers=HEADERS)
+        if r.status_code == 200:
+            if len(r.text) < 1:
+                mac_learn_query = {}
+                return mac_learn_query
+            else:
+                mac_learn_query = (json.loads(r.text))['ipMacLearnResult']
+                return mac_learn_query
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " get_dev_mac_learn: An Error has occured"
+
+
+def run_dev_cmd(devid, cmd_list, auth, url):
+    '''
+    Function takes devid of target device and a sequential list of strings which define the specific commands to be run
+    on the target device and returns a str object containing the output of the commands.
+    :param devid: int devid of the target device
+
+    :param cmd_list: list of strings
+
+    :return: str containing the response of the commands
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.device import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> cmd_list = ['display version']
+
+    >>> run_dev_cmd('10', cmd_list, auth.creds, auth.url)
+    {'cmdlist': {'cmd': 'display version'},
+ 'content': 'HPE Comware Platform Software\r\nComware Software, Version 5.20.99, Release 2221P20\r\nCopyright (c) 2010-2015 Hewlett Packard Enterprise Development LP\r\nHP A5500-24G-PoE+ EI Switch with 2 Interface Slots uptime is 3 weeks, 2 days, 12 hours, 58 minutes\r\n\r\nHP A5500-24G-PoE+ EI Switch with 2 Interface Slots with 1 Processor\r\n256M    bytes SDRAM\r\n32768K  bytes Flash Memory\r\n\r\nHardware Version is REV.C\r\nCPLD Version is 002\r\nBootrom Version is 721\r\n[SubSlot 0] 24GE+4SFP+POE Hardware Version is REV.C\r\n[SubSlot 1] 2 CX4 Hardware Version is REV.A\r\n',
+ 'deviceId': '10',
+ 'success': 'true'}
+    '''
+    run_dev_cmd_url = '/imcrs/icc/confFile/executeCmd'
+    f_url = url + run_dev_cmd_url
+    cmd_list = _make_cmd_list(cmd_list)
+    payload = '''{ "deviceId" : "'''+str(devid) + '''",
+                   "cmdlist" : { "cmd" :
+                   ['''+ cmd_list + ''']
+
+                   }
+                   }'''
+    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
+    if r.status_code == 200:
+        if len(r.text) < 1:
+            return ''
+        else:
+            return json.loads(r.text)
 
 
 
@@ -1595,10 +1882,6 @@ def get_all_interface_details(devId, auth, url):
             return "Error:\n" + str(e) + " get_interface_details: An Error has occured"
 
 
-
-
-
-
 def get_interface_details(devId, ifIndex, auth, url):
     """
     function takes the devId of a specific device and the ifindex value assigned to a specific interface
@@ -1657,7 +1940,6 @@ def get_interface_details(devId, ifIndex, auth, url):
             return dev_details
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_interface_details: An Error has occured"
-
 
 
 def set_inteface_down(devid, ifindex, auth, url):
@@ -1734,175 +2016,6 @@ def set_inteface_up(devid, ifindex, auth, url):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " set_inteface_up: An Error has occured"
 
-
-def get_dev_mac_learn(devid, auth, url):
-    '''
-    function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
-    the target device.
-
-    :param devid: int value of the target device
-
-    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
-
-    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
-
-    :return: list of dict objects which contain the mac learn table of target device id
-
-    :rtype: list
-
-    >>> from pyhpeimc.auth import *
-
-    >>> from pyhpeimc.plat.device import *
-
-    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
-
-    >>> get_dev_mac_learn('10', auth.creds, auth.url)
-    [{'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/1',
-  'ifIndex': '1',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/1',
-  'learnIp': '10.101.0.50',
-  'learnMac': '00:11:32:11:da:57',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/2',
-  'ifIndex': '2',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/2',
-  'learnIp': '10.101.0.51',
-  'learnMac': '00:11:32:10:03:8b',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/3',
-  'ifIndex': '3',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/3',
-  'learnIp': '10.101.0.10',
-  'learnMac': '14:58:d0:60:61:04',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/4',
-  'ifIndex': '4',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/4',
-  'learnIp': '10.101.0.11',
-  'learnMac': '14:58:d0:60:a4:e6',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/5',
-  'ifIndex': '5',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5',
-  'learnIp': '',
-  'learnMac': '00:50:56:59:dd:d8',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/5',
-  'ifIndex': '5',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5',
-  'learnIp': '10.101.0.100',
-  'learnMac': '00:50:56:66:7d:73',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/5',
-  'ifIndex': '5',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/5',
-  'learnIp': '10.101.0.7',
-  'learnMac': 'c4:34:6b:b9:dd:d8',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/6',
-  'ifIndex': '6',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6',
-  'learnIp': '',
-  'learnMac': '00:50:56:59:4f:bc',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/6',
-  'ifIndex': '6',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6',
-  'learnIp': '10.101.0.113',
-  'learnMac': '00:50:56:64:8e:db',
-  'vlanId': '1'},
- {'device': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10',
-  'deviceId': '10',
-  'deviceIp': '192.168.1.221',
-  'ifDesc': 'GigabitEthernet1/0/6',
-  'ifIndex': '6',
-  'iface': 'http://kontrolissues.thruhere.net:8086/imcrs/plat/res/device/10/interface/6',
-  'learnIp': '10.101.0.20',
-  'learnMac': '00:50:56:b5:7f:66',
-  'vlanId': '1'}]
-    '''
-    get_dev_mac_learn_url='/imcrs/res/access/ipMacLearn/'+str(devid)
-    f_url = url+get_dev_mac_learn_url
-    try:
-        r = requests.get(f_url, auth=auth, headers=HEADERS)
-        if r.status_code == 200:
-            if len(r.text) < 1:
-                mac_learn_query = {}
-                return mac_learn_query
-            else:
-                mac_learn_query = (json.loads(r.text))['ipMacLearnResult']
-                return mac_learn_query
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_dev_mac_learn: An Error has occured"
-
-
-
-def run_dev_cmd(devid, cmd_list, auth, url):
-    '''
-    Function takes devid of target device and a sequential list of strings which define the specific commands to be run
-    on the target device and returns a str object containing the output of the commands.
-    :param devid: int devid of the target device
-
-    :param cmd_list: list of strings
-
-    :return: str containing the response of the commands
-
-    >>> from pyhpeimc.auth import *
-
-    >>> from pyhpeimc.plat.device import *
-
-    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
-
-    >>> cmd_list = ['display version']
-
-    >>> run_dev_cmd('10', cmd_list, auth.creds, auth.url)
-    {'cmdlist': {'cmd': 'display version'},
- 'content': 'HPE Comware Platform Software\r\nComware Software, Version 5.20.99, Release 2221P20\r\nCopyright (c) 2010-2015 Hewlett Packard Enterprise Development LP\r\nHP A5500-24G-PoE+ EI Switch with 2 Interface Slots uptime is 3 weeks, 2 days, 12 hours, 58 minutes\r\n\r\nHP A5500-24G-PoE+ EI Switch with 2 Interface Slots with 1 Processor\r\n256M    bytes SDRAM\r\n32768K  bytes Flash Memory\r\n\r\nHardware Version is REV.C\r\nCPLD Version is 002\r\nBootrom Version is 721\r\n[SubSlot 0] 24GE+4SFP+POE Hardware Version is REV.C\r\n[SubSlot 1] 2 CX4 Hardware Version is REV.A\r\n',
- 'deviceId': '10',
- 'success': 'true'}
-    '''
-    run_dev_cmd_url = '/imcrs/icc/confFile/executeCmd'
-    f_url = url + run_dev_cmd_url
-    cmd_list = _make_cmd_list(cmd_list)
-    payload = '''{ "deviceId" : "'''+str(devid) + '''",
-                   "cmdlist" : { "cmd" :
-                   ['''+ cmd_list + ''']
-
-                   }
-                   }'''
-    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
-    if r.status_code == 200:
-        if len(r.text) < 1:
-            return ''
-        else:
-            return json.loads(r.text)
 
 def _make_cmd_list(cmd_list):
     '''

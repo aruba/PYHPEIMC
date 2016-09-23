@@ -102,7 +102,7 @@ def set_operator_password(operator, password, auth, url,headers=HEADERS):
 
     >>> from pyhpeimc.plat.operator import *
 
-    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+    >>> auth = IMCAuth("http://", "10.101.0.204", "8080", "admin", "admin")
 
     >>> set_operator_password('testadmin', 'newpassword', auth.creds, auth.url)
     Operator:testadmin password was successfully changed
