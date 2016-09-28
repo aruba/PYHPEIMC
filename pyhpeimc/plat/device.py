@@ -1942,7 +1942,7 @@ def get_interface_details(devId, ifIndex, auth, url):
             return "Error:\n" + str(e) + " get_interface_details: An Error has occured"
 
 
-def set_inteface_down(devid, ifindex, auth, url):
+def set_interface_down(devid, ifindex, auth, url):
     """
     function takest devid and ifindex of specific device and interface and issues a RESTFUL call to " shut" the specifie
     d interface on the target device.
@@ -1964,7 +1964,7 @@ def set_inteface_down(devid, ifindex, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>>set_inteface_down('10', '9', auth.creds, auth.url)
+    >>>set_interface_down('10', '9', auth.creds, auth.url)
     204
     """
     set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/down"
