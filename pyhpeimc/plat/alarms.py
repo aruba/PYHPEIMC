@@ -6,12 +6,10 @@
 # This section imports required libraries
 import requests
 import json
-from pyhpeimc.auth import IMCAuth
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
 
-#auth = IMCAuth('http://','10.101.0.201','8080', 'admin','admin')
 
 headers = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
