@@ -1,6 +1,10 @@
 Metadata-Version: 1.1
 Name: pyhpeimc
+<<<<<<< Updated upstream
 Version: 1.0.33
+=======
+Version: 1.0.28
+>>>>>>> Stashed changes
 Summary: Python binding for HPE IMC REST API Interface
 Home-page: https://github.com/HPENetworking/PYHPEIMC
 Author: netmanchris
@@ -44,7 +48,15 @@ Description: PYHPEIMC Python project
         1.0.21 - Fixed bug in addip method of IPScope class
         1.0.22 - Added deallocate hostip method to IPScope class with supporting functions in plat.termaccess
         1.0.23 - Added Sphinx docs project, Improved Docstrings
+<<<<<<< Updated upstream
         1.0.33 - Bug Fixes, Added function.
+=======
+        1.0.24 - Bug Fixes
+        1.0.25 - Continuing to add docstrings and fixed bug in pyhpeimc.plat.operators get_plat_operators which was returning inconsistently
+        1.0.26 - Paying some technical debt. Added perf module and intial add_per_task function
+        1.0.27 - Paying some more technical debt. Added functions to plat.alarms module
+        1.0.28 0 Bug Fixes
+>>>>>>> Stashed changes
 Keywords: HPE IMC NMS RESTFUL API
 Platform: UNKNOWN
 Classifier: Development Status :: 4 - Beta

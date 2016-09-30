@@ -7,3 +7,9 @@
 
 .idea/HP-Intelligent-Management-Center.iml
 pyoutput.txt
+
+*.iml
+
+docs/.DS_Store
+
+examples/.ipynb_checkpoints/Working with Network Assets Miami Dade-checkpoint.ipynb
