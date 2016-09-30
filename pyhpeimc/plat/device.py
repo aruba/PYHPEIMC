@@ -1960,7 +1960,6 @@ def get_interface_details(devId, ifIndex, auth, url):
      'statusDesc': 'Up'}
 
      """
-
     get_interface_details_url = "/imcrs/plat/res/device/" + str(devId) + "/interface/" + str(ifIndex)
     f_url = url + get_interface_details_url
     payload = None
