@@ -37,30 +37,18 @@ def get_custom_views(auth: object, url: object, name: object = None, headers: ob
     >>> from pyhpeimc.plat.groups import *
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
-    #Get All views
-    >>> get_custom_views(auth.creds, auth.url)
-    [{'name': 'My Network View',
-  'runStatus': '5',
-  'statusDesc': 'Critical',
-  'statusImgSrc': 'res/icon_custom_view_critical_16x16.png',
-  'symbolId': '11'},
- {'name': 'SimpleView',
-  'runStatus': '4',
-  'statusDesc': 'Major',
-  'statusImgSrc': 'res/icon_custom_view_major_16x16.png',
-  'symbolId': '2700'},
- {'name': 'View1',
-  'runStatus': '-1',
-  'statusDesc': 'Unmanaged',
-  'statusImgSrc': 'res/icon_custom_view_unmanaged_16x16.png',
-  'symbolId': '1619'}]
-    #Get details of a single view
-    >>>  get_custom_views(auth.creds, auth.url, name='My Network View')
-  [{'name': 'My Network View',
-  'runStatus': '5',
-  'statusDesc': 'Critical',
-  'statusImgSrc': 'res/icon_custom_view_critical_16x16.png',
-  'symbolId': '11'}]
+
+    >>> all_views = get_custom_views(auth.creds, auth.url)
+
+    >>> assert type(all_views) is list
+
+    >>> assert 'name' in all_views[0]
+
+    >>> non_existant_view = get_custom_views(auth.creds, auth.url, name = '''Doesn't Exist''')
+
+    >>> assert non_existant_view == None
+
+
     """
     if name is None:
         get_custom_view_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&desc=false&total=false'
@@ -70,12 +58,14 @@ def get_custom_views(auth: object, url: object, name: object = None, headers: ob
     r = requests.get(f_url, auth=auth, headers=headers)
     try:
         if r.status_code == 200:
-            custom_view_list = (json.loads(r.text))["customView"]
-            if type(custom_view_list) == dict:
-                custom_view_list = [custom_view_list]
-                return custom_view_list
-            else:
-                return custom_view_list
+            custom_view_list = (json.loads(r.text))
+            if 'customView' in custom_view_list:
+                custom_view_list = custom_view_list['customView']
+                if type(custom_view_list) == dict:
+                    custom_view_list = [custom_view_list]
+                    return custom_view_list
+                else:
+                    return custom_view_list
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
 
@@ -100,6 +90,13 @@ def get_custom_view_details(name, auth, url):
     >>> from pyhpeimc.plat.groups import *
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> view_details = get_custom_view_details('My Network View', auth.creds, auth.url)
+
+    >>> assert type(view_details) is list
+
+    >>> assert 'label' in view_details[0]
+
     """
     view_id = get_custom_views(auth, url, name=name)[0]['symbolId']
     get_custom_view_details_url = '/imcrs/plat/res/view/custom/' + str(view_id)
@@ -142,13 +139,23 @@ def create_custom_views(auth, url,name=None, upperview=None):
 
     #Create L1 custom view
     >>> create_custom_views(auth.creds, auth.url, name='L1 View')
-    'View Test View created successfully'
+    'View L1 View created successfully'
+
+    >>> view_1 =get_custom_views( auth.creds, auth.url, name = 'L1 View')
+
+    >>> assert type(view_1) is list
+
+    >>> assert view_1[0]['name'] == 'L1 View'
 
     #Create Nested custome view
     >>> create_custom_views(auth.creds, auth.url, name='L2 View', upperview='L1 View')
     'View L2 View created successfully'
 
+    >>> view_2 = get_custom_views( auth.creds, auth.url, name = 'L2 View')
 
+    >>> assert type(view_2) is list
+
+    >>> assert view_2[0]['name'] == 'L2 View'
 
     """
     create_custom_views_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&desc=false&total=false'
@@ -226,9 +233,18 @@ def delete_custom_view(auth, url, name):
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
     >>> delete_custom_view(auth.creds, auth.url, name = "L1 View")
-    'View Test View deleted successfully'
+    'View L1 View deleted successfully'
+
+    >>> view_1 =get_custom_views( auth.creds, auth.url, name = 'L1 View')
+
+    >>> assert view_1 == None
+
     >>> delete_custom_view(auth.creds, auth.url, name = "L2 View")
     'View L2 View deleted successfully'
+
+    >>> view_2 =get_custom_views( auth.creds, auth.url, name = 'L2 View')
+
+    >>> assert view_2 == None
 
     """
     view_id  = get_custom_views(auth, url,name )[0]['symbolId']
