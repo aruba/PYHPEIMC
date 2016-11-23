@@ -37,9 +37,11 @@ def get_dev_vlans(devid, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> get_dev_vlans('350', auth.creds, auth.url)
-    [{'vlanId': '1', 'vlanName': 'default', 'vlanStatus': '1'},
- {'vlanId': '5', 'vlanName': 'DoesntBelong', 'vlanStatus': '1'}]
+    >>> vlans = get_dev_vlans('350', auth.creds, auth.url)
+
+    >>> assert type(vlans) is list
+
+    >>> assert 'vlanId' in vlans[0]
 
     """
 
@@ -79,32 +81,18 @@ def get_trunk_interfaces(devId, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> get_trunk_interfaces('10', auth.creds, auth.url)
-    [{'allowedVlans': '1-4094', 'ifIndex': '1', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '2', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '3', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '5', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '6', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '7', 'pvid': '1'},
- {'allowedVlans': '1-2,110,500-503', 'ifIndex': '8', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '11', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '12', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '14', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '18', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '19', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '23', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '24', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '32', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '56', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '58', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '59', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '60', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '61', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '62', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '63', 'pvid': '1'},
- {'allowedVlans': '1-4094', 'ifIndex': '64', 'pvid': '1'},
- {'allowedVlans': '1,502-503', 'ifIndex': '78', 'pvid': '1'}]
-    #example of a switch with no trunk interfaces configured
+    >>> trunk_interfaces = get_trunk_interfaces('10', auth.creds, auth.url)
+
+    >>> assert type(trunk_interfaces) is list
+
+    >>> assert len(trunk_interfaces[0]) == 3
+
+    >>> assert 'allowedVlans' in trunk_interfaces[0]
+
+    >>> assert 'ifIndex' in trunk_interfaces[0]
+
+    >>> assert 'pvid' in trunk_interfaces[0]
+
     >>> get_trunk_interfaces('350', auth.creds, auth.url)
     ['No trunk inteface']
     """
@@ -147,37 +135,15 @@ def get_device_access_interfaces(devId, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> get_device_access_interfaces('10', auth.creds, auth.url)
-    [{'ifIndex': '4', 'pvid': '1'},
- {'ifIndex': '9', 'pvid': '1'},
- {'ifIndex': '10', 'pvid': '1'},
- {'ifIndex': '13', 'pvid': '1'},
- {'ifIndex': '20', 'pvid': '3010'},
- {'ifIndex': '21', 'pvid': '1'},
- {'ifIndex': '25', 'pvid': '1'},
- {'ifIndex': '26', 'pvid': '1'},
- {'ifIndex': '27', 'pvid': '1'},
- {'ifIndex': '28', 'pvid': '1'},
- {'ifIndex': '31', 'pvid': '1'},
- {'ifIndex': '50', 'pvid': '1'},
- {'ifIndex': '65', 'pvid': '1'},
- {'ifIndex': '66', 'pvid': '1'},
- {'ifIndex': '67', 'pvid': '1'},
- {'ifIndex': '68', 'pvid': '1'},
- {'ifIndex': '73', 'pvid': '1'},
- {'ifIndex': '74', 'pvid': '1'},
- {'ifIndex': '77', 'pvid': '1'},
- {'ifIndex': '79', 'pvid': '1'},
- {'ifIndex': '80', 'pvid': '1'},
- {'ifIndex': '81', 'pvid': '1'},
- {'ifIndex': '82', 'pvid': '1'},
- {'ifIndex': '83', 'pvid': '1'},
- {'ifIndex': '84', 'pvid': '1'},
- {'ifIndex': '86', 'pvid': '1'},
- {'ifIndex': '87', 'pvid': '1'},
- {'ifIndex': '88', 'pvid': '1'},
- {'ifIndex': '89', 'pvid': '1'},
- {'ifIndex': '90', 'pvid': '1'}]
+    >>> access_interfaces = get_device_access_interfaces('10', auth.creds, auth.url)
+
+    >>> assert type(access_interfaces) is list
+
+    >>> assert (len(access_interfaces[0])) is 2
+
+    >>> assert 'ifIndex' in access_interfaces[0]
+
+    >>> assert 'pvid' in access_interfaces[0]
 
     """
     # checks to see if the imc credentials are already available
@@ -223,6 +189,7 @@ def get_access_interface_vlan(ifIndex, accessinterfacelist, auth, url):
     >>> access_interface_list = get_device_access_interfaces('10', auth.creds, auth.url)
 
     >>> get_access_interface_vlan('4', access_interface_list, auth.creds, auth.url)
+    '1'
     """
     for i in accessinterfacelist:
         if i['ifIndex'] == ifIndex:
@@ -231,7 +198,7 @@ def get_access_interface_vlan(ifIndex, accessinterfacelist, auth, url):
             return "Not an Access Port"
 
 
-
+#TODO add abstraction to use IP address of device and not
 def create_dev_vlan(devid, vlanid, vlan_name, auth, url):
     """
     function takes devid and vlanid vlan_name of specific device and 802.1q VLAN tag and issues a RESTFUL call to add the
@@ -258,7 +225,6 @@ def create_dev_vlan(devid, vlanid, vlan_name, auth, url):
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
     >>> create_dev_vlan = create_dev_vlan('350', '200', 'test vlan', auth.creds, auth.url)
-    <Response [201]>
 
 
     """
