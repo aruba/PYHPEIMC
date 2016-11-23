@@ -176,6 +176,8 @@ def create_custom_views(auth, url,name=None, upperview=None):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
 
+#TODO Need to add tests and examples for add_devs_custom_views
+
 def add_devs_custom_views(custom_view_name, dev_list, auth, url):
     """
     function takes a list of devIDs from devices discovered in the HPE IMC platform and and issues a RESTFUL call to
