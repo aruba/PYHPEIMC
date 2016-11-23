@@ -8,4 +8,4 @@ def version():
     >>> version()
     1.0.33
     """
-    print ('1.0.33')
+    print ('1.0.34')

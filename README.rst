@@ -44,3 +44,4 @@ What's Changed:
 1.0.29 - More bug Fixes. Added functions in groups and devices to support adding device sto custom views
 1.0.30 - Added functions to pull system vendors, categories, and device models
 1.0.33 - Bug Fixes, Added function.
+1.0.34 - Refactored doctests for all modules to improve coverage and stability

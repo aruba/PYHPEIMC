@@ -31,56 +31,36 @@ def get_ac_info_all(auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> get_ac_info_all(auth.creds, auth.url)
-    [{'hardwareVersion': '',
-  'ipAddress': '10.10.10.5',
-  'label': 'HP830_WSC',
-  'macAddress': 'd0:7e:28:80:40:0c',
-  'onlineApCount': '2',
-  'onlineClientCount': '5',
-  'pingStatus': '1',
-  'serialId': '',
-  'softwareVersion': 'Release 3507P51',
-  'status': '3',
-  'sysName': 'HP830_WSC',
-  'type': 'HP 830-24P'},
- {'hardwareVersion': '',
-  'ipAddress': '10.101.0.235',
-  'label': 'aruba3600.lab.local',
-  'macAddress': '',
-  'onlineApCount': '1',
-  'onlineClientCount': '0',
-  'pingStatus': '1',
-  'serialId': '',
-  'softwareVersion': '',
-  'status': '1',
-  'sysName': 'Aruba3600',
-  'type': 'Aruba 3600'},
- {'hardwareVersion': '',
-  'ipAddress': '10.101.0.236',
-  'label': 'Aruba7010',
-  'macAddress': '',
-  'onlineApCount': '4',
-  'onlineClientCount': '0',
-  'pingStatus': '0',
-  'serialId': '',
-  'softwareVersion': '',
-  'status': '5',
-  'sysName': 'Aruba7010',
-  'type': 'Aruba 7010 Controller'},
- {'hardwareVersion': '',
-  'ipAddress': '10.101.0.241',
-  'label': 'SG9483N00P',
-  'macAddress': '',
-  'onlineApCount': '0',
-  'onlineClientCount': '0',
-  'pingStatus': '0',
-  'serialId': '',
-  'softwareVersion': '',
-  'status': '5',
-  'sysName': 'SG9483N00P',
-  'type': 'HP MultiService Controllers MSM760'}]
+    >>> ac_info_all = get_ac_info_all(auth.creds, auth.url)
 
+    >>> assert type(ac_info_all) is list
+
+    >>> assert len(ac_info_all[0]) == 12
+
+    >>> assert 'hardwareVersion' in ac_info_all[0]
+
+    >>> assert 'ipAddress' in ac_info_all[0]
+
+    >>> assert 'label' in ac_info_all[0]
+
+    >>> assert 'macAddress' in ac_info_all[0]
+
+    >>> assert 'onlineApCount' in ac_info_all[0]
+
+    >>> assert 'onlineClientCount' in ac_info_all[0]
+
+    >>> assert 'pingStatus' in ac_info_all[0]
+
+    >>> assert 'serialId' in ac_info_all[0]
+
+    >>> assert 'softwareVersion' in ac_info_all[0]
+
+    >>> assert 'status' in ac_info_all[0]
+
+    >>> assert 'sysName' in ac_info_all[0]
+
+    >>> assert 'type' in ac_info_all[0]
+    
     """
     get_ac_info_all_url = "/imcrs/wlan/acInfo/queryAcBasicInfo"
     f_url = url + get_ac_info_all_url
