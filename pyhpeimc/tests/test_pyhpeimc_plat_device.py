@@ -1,8 +1,6 @@
 from unittest import TestCase
 from nose.plugins.skip import Skip, SkipTest
-
 from pyhpeimc.tests.test_machine import *
-
 from pyhpeimc.plat.device import *
 
 
@@ -1197,9 +1195,9 @@ class TestGet_dev_run_configLinux_Server(TestCase):
 #VMWare ESX
 class TestGet_dev_run_configVMWare(TestCase):
     def test_get_dev_run_config_unsupported(self):
-        if VMWare is None:
+        if ESX is None:
             raise SkipTest
-        run_config = get_dev_run_config(auth.creds, auth.url, devip=VMWare)
+        run_config = get_dev_run_config(auth.creds, auth.url, devip=ESX)
         self.assertEqual(run_config,"This features is no supported on this device")
 
 
@@ -1337,7 +1335,7 @@ class TestGet_dev_start_configLinux_Server(TestCase):
 #VMWare ESX
 class TestGet_dev_start_configVMWare(TestCase):
     def test_get_dev_run_start_unsupported(self):
-        if VMWare is None:
+        if ESX is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=VMWare)
         self.assertEqual(run_config,"This features is no supported on this device")
@@ -1391,7 +1389,7 @@ class TestGet_dev_mac_learnCW5_Switch(TestCase):
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=CW5_Switch)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
+    def test_get_dev_mac_learnContent(self):
         if CW5_Switch is None:
             raise SkipTest
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=CW5_Switch)
@@ -1415,7 +1413,7 @@ class TestGet_dev_mac_learnCW7_Switch(TestCase):
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=CW7_Switch)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
+    def test_get_dev_mac_learnContent(self):
         if CW7_Switch is None:
             raise SkipTest
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=CW7_Switch)
@@ -1438,7 +1436,7 @@ class TestGet_dev_mac_learnCisco_Switch(TestCase):
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Cisco_Switch)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
+    def test_get_dev_mac_learnContent(self):
         if Cisco_Switch is None:
             raise SkipTest
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Cisco_Switch)
@@ -1461,7 +1459,7 @@ class TestGet_dev_mac_learnJuniper_Switch(TestCase):
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Juniper_Switch)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
+    def test_get_dev_mac_learnContent(self):
         if Juniper_Switch is None:
             raise SkipTest
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Juniper_Switch)
@@ -1484,7 +1482,7 @@ class TestGet_dev_mac_learnArista_Switch(TestCase):
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Arista_Switch)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
+    def test_get_dev_mac_learnContent(self):
         if Arista_Switch is None:
             raise SkipTest
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Arista_Switch)
@@ -1507,7 +1505,7 @@ class TestGet_dev_mac_learnArubaOS_Switch(TestCase):
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=ArubaOS_Switch)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
+    def test_get_dev_mac_learnContent(self):
         if ArubaOS_Switch is None:
             raise SkipTest
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=ArubaOS_Switch)
@@ -1531,7 +1529,7 @@ class TestGet_dev_mac_learnCisco_Router(TestCase):
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Cisco_Router)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
+    def test_get_dev_mac_learnContent(self):
         if Cisco_Router is None:
             raise SkipTest
         dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Cisco_Router)
@@ -1547,17 +1545,17 @@ class TestGet_dev_mac_learnCisco_Router(TestCase):
         self.assertIn('ifDesc', dev_mac_learn[0])
 
 #CW5_Router
-class TestGet_dev_mac_learnCisco_Router(TestCase):
+class TestGet_dev_mac_learnCW5_Router(TestCase):
     def test_get_dev_mac_learnType(self):
-        if Cisco_Router is None:
+        if CW5_Router is None:
             raise SkipTest
-        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Cisco_Router)
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=CW5_Router)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
-        if Cisco_Router is None:
+    def test_get_dev_mac_learnContent(self):
+        if CW5_Router is None:
             raise SkipTest
-        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Cisco_Router)
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=CW5_Router)
         self.assertIs(len(dev_mac_learn[0]), 9)
         self.assertIn('learnIp', dev_mac_learn[0])
         self.assertIn('ifIndex', dev_mac_learn[0])
@@ -1572,15 +1570,15 @@ class TestGet_dev_mac_learnCisco_Router(TestCase):
 #Juniper_Router (SRV)
 class TestGet_dev_mac_learnJuniper_Router(TestCase):
     def test_get_dev_mac_learnType(self):
-        if Cisco_Router is None:
+        if Juniper_Router is None:
             raise SkipTest
-        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Cisco_Router)
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Juniper_Router)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learnhContent(self):
-        if Cisco_Router is None:
+    def test_get_dev_mac_learnContent(self):
+        if Juniper_Router is None:
             raise SkipTest
-        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Cisco_Router)
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Juniper_Router)
         self.assertIs(len(dev_mac_learn[0]), 9)
         self.assertIn('learnIp', dev_mac_learn[0])
         self.assertIn('ifIndex', dev_mac_learn[0])
@@ -1596,45 +1594,143 @@ class TestGet_dev_mac_learnJuniper_Router(TestCase):
 
 
 #Windows_Server
+class TestGet_dev_mac_learnWindows_Server(TestCase):
+    def test_get_dev_mac_learnType(self):
+        if Windows_Server is None:
+            raise SkipTest
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Windows_Server)
+        self.assertIs(type(dev_mac_learn), list)
 
+    def test_get_dev_mac_learnContent(self):
+        if Windows_Server is None:
+            raise SkipTest
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Windows_Server)
+        self.assertIs(len(dev_mac_learn[0]), 9)
+        self.assertIn('learnIp', dev_mac_learn[0])
+        self.assertIn('ifIndex', dev_mac_learn[0])
+        self.assertIn('deviceIp', dev_mac_learn[0])
+        self.assertIn('learnMac', dev_mac_learn[0])
+        self.assertIn('iface', dev_mac_learn[0])
+        self.assertIn('deviceId', dev_mac_learn[0])
+        self.assertIn('device', dev_mac_learn[0])
+        self.assertIn('vlanId', dev_mac_learn[0])
+        self.assertIn('ifDesc', dev_mac_learn[0])
 
 #Linux_Server
+class TestGet_dev_mac_learnLinux_Server(TestCase):
+    def test_get_dev_mac_learnType(self):
+        if Linux_Server is None:
+            raise SkipTest
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Linux_Server)
+        self.assertIs(type(dev_mac_learn), list)
+
+    def test_get_dev_mac_learnContent(self):
+        if Linux_Server is None:
+            raise SkipTest
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=Linux_Server)
+        self.assertIs(len(dev_mac_learn[0]), 9)
+        self.assertIn('learnIp', dev_mac_learn[0])
+        self.assertIn('ifIndex', dev_mac_learn[0])
+        self.assertIn('deviceIp', dev_mac_learn[0])
+        self.assertIn('learnMac', dev_mac_learn[0])
+        self.assertIn('iface', dev_mac_learn[0])
+        self.assertIn('deviceId', dev_mac_learn[0])
+        self.assertIn('device', dev_mac_learn[0])
+        self.assertIn('vlanId', dev_mac_learn[0])
+        self.assertIn('ifDesc', dev_mac_learn[0])
+
 
 ###Hypervisors
 
 
 #VMWare ESX
+class TestGet_dev_mac_learnESX(TestCase):
+    def test_get_dev_mac_learnType(self):
+        if ESX is None:
+            raise SkipTest
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=ESX)
+        self.assertIs(type(dev_mac_learn), list)
 
+    def test_get_dev_mac_learnContent(self):
+        if ESX is None:
+            raise SkipTest
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=ESX)
+        self.assertIs(len(dev_mac_learn[0]), 9)
+        self.assertIn('learnIp', dev_mac_learn[0])
+        self.assertIn('ifIndex', dev_mac_learn[0])
+        self.assertIn('deviceIp', dev_mac_learn[0])
+        self.assertIn('learnMac', dev_mac_learn[0])
+        self.assertIn('iface', dev_mac_learn[0])
+        self.assertIn('deviceId', dev_mac_learn[0])
+        self.assertIn('device', dev_mac_learn[0])
+        self.assertIn('vlanId', dev_mac_learn[0])
+        self.assertIn('ifDesc', dev_mac_learn[0])
 
 #HyperV
 
-class TestGet_dev_mac_learn(TestCase):
-    def test_get_dev_mac_learn_type(self):
-        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip='10.101.0.221')
+class TestGet_dev_mac_learnHyperV(TestCase):
+    def test_get_dev_mac_learnType(self):
+        if HyperV is None:
+            raise SkipTest
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=HyperV)
         self.assertIs(type(dev_mac_learn), list)
 
-    def test_get_dev_mac_learn_content(self):
-        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip='10.101.0.221')
+    def test_get_dev_mac_learnContent(self):
+        if HyperV is None:
+            raise SkipTest
+        dev_mac_learn = get_dev_mac_learn(auth.creds, auth.url, devip=HyperV)
         self.assertIs(len(dev_mac_learn[0]), 9)
-        self.assertIn('deviceIp', dev_mac_learn[0])
         self.assertIn('learnIp', dev_mac_learn[0])
-        self.assertIn('ifDesc', dev_mac_learn[0])
-        self.assertIn('vlanId', dev_mac_learn[0])
-        self.assertIn('learnMac', dev_mac_learn[0])
         self.assertIn('ifIndex', dev_mac_learn[0])
-        self.assertIn('deviceId', dev_mac_learn[0])
+        self.assertIn('deviceIp', dev_mac_learn[0])
+        self.assertIn('learnMac', dev_mac_learn[0])
         self.assertIn('iface', dev_mac_learn[0])
+        self.assertIn('deviceId', dev_mac_learn[0])
         self.assertIn('device', dev_mac_learn[0])
+        self.assertIn('vlanId', dev_mac_learn[0])
+        self.assertIn('ifDesc', dev_mac_learn[0])
 
 
-#Test TestRun_dev_cmd for Multiple Vendor Devices
+
+
+"""============================================================================================="""
+
+#####Test TestRun_dev_cmd for Multiple Vendor Devices
+
+###Switches
+
+# CW3_Switch
+class TestRun_dev_cmd_CW3_Switch(TestCase):
+    def test_run_dev_cmd_type(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=CW3_Switch)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=CW3_Switch)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+
+# CW5_Switch
 class TestRun_dev_cmd_CW5_Switch(TestCase):
     def test_run_dev_cmd_type(self):
+        if CW5_Switch is None:
+            raise SkipTest
         cmd_list = ['display version']
         cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=CW5_Switch)
         self.assertIs(type(cmd_output), dict)
 
     def test_run_dev_cmd_content(self):
+        if CW5_Switch is None:
+            raise SkipTest
         cmd_list = ['display version']
         cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=CW5_Switch)
         self.assertIs(len(cmd_output), 4)
@@ -1643,66 +1739,281 @@ class TestRun_dev_cmd_CW5_Switch(TestCase):
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
 
-    """============================================================================================="""
+# CW7_Switch
+class TestRun_dev_cmd_CW7_Switch(TestCase):
+    def test_run_dev_cmd_type(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(type(cmd_output), dict)
 
-    #####Test TEST_NAME_HERE for Multiple Vendor Devices
-
-    ###Switches
-
-    # CW3_Switch
-
-
-    # CW5_Switch
-
-
-    # CW7_Switch
-
-
-    # Cisco_Switch
-
-
-    # Juniper_Switch
-
-
-    # Arista_Switch
+    def test_run_dev_cmd_content(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
 
 
-    # ArubaOS_Switch (Formerly Provision)
+# Cisco_Switch
+class TestRun_dev_cmd_Cisco_Switch(TestCase):
+    def test_run_dev_cmd_type(self):
+        if Cisco_Switch is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertIs(type(cmd_output), dict)
 
-    ###Routers
+    def test_run_dev_cmd_content(self):
+        if Cisco_Switch is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
 
-    # Cisco_Router
+# Juniper_Switch
+class TestRun_dev_cmd_Juniper_Switch(TestCase):
+    def test_run_dev_cmd_type(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+
+# Arista_Switch
+class TestRun_dev_cmd_Arista_Switch(TestCase):
+    def test_run_dev_cmd_type(self):
+        if Arista_Switch is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Arista_Switch)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if Arista_Switch is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Arista_Switch)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+
+# ArubaOS_Switch (Formerly Provision)
+class TestRun_dev_cmd_ArubaOS_Switch(TestCase):
+    def test_run_dev_cmd_type(self):
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+###Routers
+
+# Cisco_Router
+class TestRun_dev_cmd_Cisco_Router(TestCase):
+    def test_run_dev_cmd_type(self):
+        if Cisco_Router is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Cisco_Router)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if Cisco_Router is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Cisco_Router)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
 
 
-    # CW5_Router
+# CW5_Router
+class TestRun_dev_cmd_CW5_Router(TestCase):
+    def test_run_dev_cmd_type(self):
+        if CW5_Router is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=CW5_Router)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if CW5_Router is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=CW5_Router)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
 
 
-    # Juniper_Router (SRV)
+# Juniper_Router (SRX)
+class TestRun_dev_cmd_Juniper_Router(TestCase):
+    def test_run_dev_cmd_type(self):
+        if Juniper_Router is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Juniper_Router)
+        self.assertIs(type(cmd_output), dict)
 
-    ####Servers
+    def test_run_dev_cmd_content(self):
+        if Juniper_Router is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Juniper_Router)
+        self.assertIs(len(cmd_output), 4)
+        self.assertIn('success', cmd_output)
+        self.assertIn('content', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+####Servers
 
 
-    # Windows_Server
+# Windows_Server
+class TestRun_dev_cmd_Windows_Server(TestCase):
+    def test_run_dev_cmd_type(self):
+        if Windows_Server is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Windows_Server)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if Windows_Server is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Windows_Server)
+        self.assertIs(len(cmd_output), 5)
+        self.assertIn('success', cmd_output)
+        self.assertIn('errorCode', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+        self.assertIn('errorMsg', cmd_output)
+
+# Linux_Server
+class TestRun_dev_cmd_Linux_Server(TestCase):
+    def test_run_dev_cmd_type(self):
+        if Linux_Server is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Linux_Server)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if Linux_Server is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Linux_Server)
+        self.assertIs(len(cmd_output), 5)
+        self.assertIn('success', cmd_output)
+        self.assertIn('errorCode', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+        self.assertIn('errorMsg', cmd_output)
+
+###Hypervisors
 
 
-    # Linux_Server
+# VMWare ESX
+class TestRun_dev_cmd_ESX(TestCase):
+    def test_run_dev_cmd_type(self):
+        if ESX is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=ESX)
+        self.assertIs(type(cmd_output), dict)
 
-    ###Hypervisors
+    def test_run_dev_cmd_content(self):
+        if ESX is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=ESX)
+        self.assertIs(len(cmd_output), 5)
+        self.assertIn('success', cmd_output)
+        self.assertIn('errorCode', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+        self.assertIn('errorMsg', cmd_output)
 
 
-    # VMWare ESX
+# HyperV
+class TestRun_dev_cmd_VMWare(TestCase):
+    def test_run_dev_cmd_type(self):
+        if HyperV is None:
+            raise SkipTest
+        cmd_list = ['show version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=HyperV)
+        self.assertIs(type(cmd_output), dict)
+
+    def test_run_dev_cmd_content(self):
+        if HyperV is None:
+            raise SkipTest
+        cmd_list = ['display version']
+        cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=HyperV)
+        self.assertIs(len(cmd_output), 5)
+        self.assertIn('success', cmd_output)
+        self.assertIn('errorCode', cmd_output)
+        self.assertIn('cmdlist', cmd_output)
+        self.assertIn('deviceId', cmd_output)
+        self.assertIn('errorMsg', cmd_output)
 
 
-    # HyperV
 
-#Test TestGet_all_interface_details for Multiple Vendor Devices
-class TestGet_all_interface_details(TestCase):
+
+"""============================================================================================="""
+
+######Test TestGet_all_interface_details for Multiple Vendor Devices
+
+###Switches
+
+#CW3_Switch
+class TestGet_all_interface_details_CW3_Switch(TestCase):
     def test_get_all_interface_details_type(self):
-        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip='10.101.0.221')
+        if CW3_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=CW3_Switch)
         self.assertIs(type(all_interface_details), list)
 
     def test_get_all_interface_details_content(self):
-        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip='10.101.0.221')
+        if CW3_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=CW3_Switch)
         self.assertIs(len(all_interface_details[0]), 18)
         self.assertIn('phyAddress', all_interface_details[0])
         self.assertIn('ifAlias', all_interface_details[0])
@@ -1723,9 +2034,928 @@ class TestGet_all_interface_details(TestCase):
         self.assertIn('adminStatus', all_interface_details[0])
         self.assertIn('ifspeed', all_interface_details[0])
 
+#CW5_Switch
+class TestGet_all_interface_details_CW5_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=CW5_Switch)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=CW5_Switch)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+#CW7_Switch
+class TestGet_all_interface_details_CW7_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#Cisco_Switch
+class TestGet_all_interface_details_Cisco_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Cisco_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if Cisco_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#Juniper_Switch
+class TestGet_all_interface_details_Juniper_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#Arista_Switch
+class TestGet_all_interface_details_Arista_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Arista_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Arista_Switch)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if Arista_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Arista_Switch)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#ArubaOS_Switch (Formerly Provision)
+class TestGet_all_interface_details_ArubaOS_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+###Routers
+
+#Cisco_Router
+class TestGet_all_interface_details_Cisco_Router(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Cisco_Router is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Cisco_Router)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#CW5_Router
+class TestGet_all_interface_details_CW5_Router(TestCase):
+    def test_get_all_interface_details_type(self):
+        if CW5_Router is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=CW5_Router)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if CW5_Router is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=CW5_Router)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#Juniper_Router (SRV)
+class TestGet_all_interface_details_Juniper_Router(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Juniper_Router is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Juniper_Router)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if Juniper_Router is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Juniper_Router)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+####Servers
+
+
+#Windows_Server
+class TestGet_all_interface_details_Windows_Server(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Windows_Server is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Windows_Server)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#Linux_Server
+class TestGet_all_interface_details_Linux_Server(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Linux_Server is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Linux_Server)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if Linux_Server is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=Linux_Server)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+###Hypervisors
+
+
+#VMWare ESX
+class TestGet_all_interface_details_VMWare(TestCase):
+    def test_get_all_interface_details_type(self):
+        if ESX is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=ESX)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if ESX is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=ESX)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#HyperV
+class TestGet_all_interface_details_HyperV(TestCase):
+    def test_get_all_interface_details_type(self):
+        if HyperV is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=HyperV)
+        self.assertIs(type(all_interface_details), list)
+
+    def test_get_all_interface_details_content(self):
+        if HyperV is None:
+            raise SkipTest
+        all_interface_details = get_all_interface_details(auth.creds, auth.url, devip=HyperV)
+        self.assertIs(len(all_interface_details[0]), 18)
+        self.assertIn('phyAddress', all_interface_details[0])
+        self.assertIn('ifAlias', all_interface_details[0])
+        self.assertIn('statusDesc', all_interface_details[0])
+        self.assertIn('ifType', all_interface_details[0])
+        self.assertIn('operationStatusDesc', all_interface_details[0])
+        self.assertIn('lastChangeTime', all_interface_details[0])
+        self.assertIn('ifDescription', all_interface_details[0])
+        self.assertIn('appointedSpeed', all_interface_details[0])
+        self.assertIn('ifTypeDesc', all_interface_details[0])
+        self.assertIn('filterTrapStatus', all_interface_details[0])
+        self.assertIn('ifIndex', all_interface_details[0])
+        self.assertIn('lastChange', all_interface_details[0])
+        self.assertIn('adminStatusDesc', all_interface_details[0])
+        self.assertIn('showStatus', all_interface_details[0])
+        self.assertIn('operationStatus', all_interface_details[0])
+        self.assertIn('mtu', all_interface_details[0])
+        self.assertIn('adminStatus', all_interface_details[0])
+        self.assertIn('ifspeed', all_interface_details[0])
+
+
+#TODO
 """============================================================================================="""
 
-#####Test TEST_NAME_HERE for Multiple Vendor Devices
+######Test TestGet_interface_details for Multiple Vendor Devices
+
+
+###Switches
+
+#CW3_Switch
+class TestGet_interface_details_CW3_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+
+
+
+#CW5_Switch
+class TestGet_interface_details_CW5_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+#CW7_Switch
+class TestGet_interface_details_CW7_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+#Cisco_Switch
+class TestGet_interface_details_Cisco_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Cisco_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if Cisco_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+#Juniper_Switch
+class TestGet_interface_details_Juniper_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+#Arista_Switch
+class TestGet_interface_details_Arista_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Arista_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Arista_Switch)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if Arista_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Arista_Switch)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+#ArubaOS_Switch (Formerly Provision)
+class TestGet_interface_details_ArubaOS_Switch(TestCase):
+    def test_get_all_interface_details_type(self):
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+
+###Routers
+
+#Cisco_Router
+class TestGet_interface_details_Cisco_Router(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Cisco_Router is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Cisco_Router)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if Cisco_Router is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Cisco_Router)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+#CW5_Router
+class TestGet_interface_details_CW5_Router(TestCase):
+    def test_get_all_interface_details_type(self):
+        if CW5_Router is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=CW5_Router)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if CW5_Router is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=CW5_Router)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+#Juniper_Router (SRV)
+class TestGet_interface_details_Juniper_Router(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Juniper_Router is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Juniper_Router)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if Juniper_Router is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Juniper_Router)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+####Servers
+
+
+#Windows_Server
+class TestGet_interface_details_Windows_Server(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Windows_Server is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Windows_Server)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if Windows_Server is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Windows_Server)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+#Linux_Server
+class TestGet_interface_details_Linux_Server(TestCase):
+    def test_get_all_interface_details_type(self):
+        if Linux_Server is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Linux_Server)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if Linux_Server is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=Linux_Server)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+###Hypervisors
+
+
+#ESX
+class TestGet_interface_details_ESX(TestCase):
+    def test_get_all_interface_details_type(self):
+        if ESX is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=ESX)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if ESX is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=ESX)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+#HyperV
+class TestGet_interface_details_HyperV(TestCase):
+    def test_get_all_interface_details_type(self):
+        if HyperV is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=HyperV)
+        self.assertIs(type(interface_details), dict)
+
+    def test_get_all_interface_details_content(self):
+        if HyperV is None:
+            raise SkipTest
+        interface_details = get_interface_details('1', auth.creds, auth.url, devip=HyperV)
+        self.assertIs(len(interface_details), 18)
+        self.assertIn('operationStatus', interface_details)
+        self.assertIn('ifType', interface_details)
+        self.assertIn('statusDesc', interface_details)
+        self.assertIn('adminStatus', interface_details)
+        self.assertIn('ifspeed', interface_details)
+        self.assertIn('lastChangeTime', interface_details)
+        self.assertIn('ifTypeDesc', interface_details)
+        self.assertIn('showStatus', interface_details)
+        self.assertIn('ifDescription', interface_details)
+        self.assertIn('appointedSpeed', interface_details)
+        self.assertIn('phyAddress', interface_details)
+        self.assertIn('operationStatusDesc', interface_details)
+        self.assertIn('filterTrapStatus', interface_details)
+        self.assertIn('adminStatusDesc', interface_details)
+        self.assertIn('lastChange', interface_details)
+        self.assertIn('ifIndex', interface_details)
+        self.assertIn('ifAlias', interface_details)
+
+
+
+
+
+
+#TODO
+"""============================================================================================="""
+
+######Test TestSet_inteface_up for Multiple Vendor Devices
+
 
 ###Switches
 
@@ -1770,9 +3000,56 @@ class TestGet_all_interface_details(TestCase):
 ###Hypervisors
 
 
-#VMWare ESX
+#ESX
 
 
-#HyperV
+#TODO
+"""============================================================================================="""
 
+######Test TestSet_inteface_down for Multiple Vendor Devices
+
+###Switches
+
+#CW3_Switch
+
+
+#CW5_Switch
+
+
+#CW7_Switch
+
+
+#Cisco_Switch
+
+
+#Juniper_Switch
+
+
+#Arista_Switch
+
+
+#ArubaOS_Switch (Formerly Provision)
+
+###Routers
+
+#Cisco_Router
+
+
+#CW5_Router
+
+
+#Juniper_Router (SRV)
+
+####Servers
+
+
+#Windows_Server
+
+
+#Linux_Server
+
+###Hypervisors
+
+
+#ESX
 

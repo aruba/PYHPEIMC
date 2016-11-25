@@ -581,10 +581,10 @@ def get_all_interface_details( auth, url, devId=None, devip=None):
             dev_details = (json.loads(r.text))
             return dev_details['interface']
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_interface_details: An Error has occured"
+            return "Error:\n" + str(e) + " get_all_interface_details: An Error has occured"
 
 
-def get_interface_details(devId, ifIndex, auth, url):
+def get_interface_details(ifIndex, auth, url, devId = None, devip = None):
     """
     function takes the devId of a specific device and the ifindex value assigned to a specific interface
     and issues a RESTFUL call to get the interface details
@@ -608,7 +608,9 @@ def get_interface_details(devId, ifIndex, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> interface_details = get_interface_details('10', '1', auth.creds, auth.url)
+    >>> interface_details = get_interface_details('1', auth.creds, auth.url, devId = '10')
+
+    >>> interface_details = get_interface_details('1', auth.creds, auth.url, devip = '10.101.0.221')
 
     >>> assert type(interface_details) is dict
 
@@ -616,6 +618,8 @@ def get_interface_details(devId, ifIndex, auth, url):
 
 
      """
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
     get_interface_details_url = "/imcrs/plat/res/device/" + str(devId) + "/interface/" + str(ifIndex)
     f_url = url + get_interface_details_url
     payload = None
