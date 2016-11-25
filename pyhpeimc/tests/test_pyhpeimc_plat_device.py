@@ -2947,11 +2947,6 @@ class TestGet_interface_details_HyperV(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-
-
-
-#TODO
 """============================================================================================="""
 
 ######Test TestSet_inteface_up for Multiple Vendor Devices
@@ -2960,50 +2955,158 @@ class TestGet_interface_details_HyperV(TestCase):
 ###Switches
 
 #CW3_Switch
-
+class TestSet_inteface_up_CW3_Switch(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if CW3_Switch is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=CW3_Switch)
+        int_up_response = set_inteface_up('1', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 
 #CW5_Switch
+class TestSet_inteface_up_CW5_Switch(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if CW5_Switch is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=CW5_Switch)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 
 
 #CW7_Switch
+class TestSet_inteface_up_CW7_Switch(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if CW7_Switch is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=CW7_Switch)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 
 
 #Cisco_Switch
+class TestSet_inteface_up_Cisco_Switch(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if Cisco_Switch is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=Cisco_Switch)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 
 
 #Juniper_Switch
+class TestSet_inteface_up_Juniper_Switch(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if Juniper_Switch is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=Juniper_Switch)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 
 
 #Arista_Switch
+class TestSet_inteface_up_Arista_Switch(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if Arista_Switch is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=Arista_Switch)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=Arista_Switch)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 
 
 #ArubaOS_Switch (Formerly Provision)
+class TestSet_inteface_up_ArubaOS_Switch(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=ArubaOS_Switch)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 
 ###Routers
 
 #Cisco_Router
 
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
+#which will force manual intervention
+class TestSet_inteface_up_Cisco_Router(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if Cisco_Router is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=Cisco_Router)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=Cisco_Router)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
+
 
 #CW5_Router
-
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
+#which will force manual intervention
+class TestSet_inteface_up_CW5_Router(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if CW5_Router is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=CW5_Router)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=CW5_Router)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 
 #Juniper_Router (SRV)
-
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
+#which will force manual intervention
+class TestSet_inteface_up_Juniper_Router(TestCase):
+    def test_set_inteface_up(self):
+        if set_interface_up is False:
+            raise SkipTest
+        if Juniper_Router is None:
+            raise SkipTest
+        set_interface_down('9', auth.creds, auth.url, devip=Juniper_Router)
+        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=Juniper_Router)
+        self.assertIs(type(int_up_response), int)
+        self.assertIs(int_up_response, 204)
 ####Servers
 
 
 #Windows_Server
-
+#Deemed inappropriate to test
 
 #Linux_Server
+#Deemed inappropriate to test
 
 ###Hypervisors
 
 
 #ESX
+#Deemed inappropriate to test
+
+#HyperV
+#Deemed inappropriate to test
 
 
-#TODO
 """============================================================================================="""
 
 ######Test TestSet_inteface_down for Multiple Vendor Devices
@@ -3011,45 +3114,162 @@ class TestGet_interface_details_HyperV(TestCase):
 ###Switches
 
 #CW3_Switch
-
+class TestSet_inteface_down_CW3_Switch(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if CW3_Switch is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=CW3_Switch)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=CW3_Switch)
+        set_inteface_up('9', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 #CW5_Switch
+class TestSet_inteface_down_CW5_Switch(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if CW5_Switch is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=CW5_Switch)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=CW5_Switch)
+        set_inteface_up('9', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 
 #CW7_Switch
+class TestSet_inteface_down_CW7_Switch(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if CW7_Switch is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=CW7_Switch)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=CW7_Switch)
+        set_inteface_up('9', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 
 #Cisco_Switch
-
+class TestSet_inteface_down_Cisco_Switch(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if Cisco_Switch is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=Cisco_Switch)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=Cisco_Switch)
+        set_inteface_up('9', auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 #Juniper_Switch
-
+class TestSet_inteface_down_Juniper_Switch(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if Juniper_Switch is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=Juniper_Switch)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=Juniper_Switch)
+        set_inteface_up('9', auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 #Arista_Switch
+class TestSet_inteface_down_Arista_Switch(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if Arista_Switch is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=Arista_Switch)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=Arista_Switch)
+        set_inteface_up('9', auth.creds, auth.url, devip=Arista_Switch)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 
 #ArubaOS_Switch (Formerly Provision)
+class TestSet_inteface_down_ArubaOS_Switch(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=ArubaOS_Switch)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=ArubaOS_Switch)
+        set_inteface_up('9', auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
+
+
+
 
 ###Routers
 
 #Cisco_Router
-
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
+#which will force manual intervention
+class TestSet_inteface_down_Cisco_Router(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if Cisco_Router is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=Cisco_Router)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=Cisco_Router)
+        set_inteface_up('9', auth.creds, auth.url, devip=Cisco_Router)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 #CW5_Router
-
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
+#which will force manual intervention
+class TestSet_inteface_down_CW5_Router(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if CW5_Router is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=CW5_Router)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=CW5_Router)
+        set_inteface_up('9', auth.creds, auth.url, devip=CW5_Router)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 #Juniper_Router (SRV)
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
+#which will force manual intervention
+class TestSet_inteface_down_Juniper_Router(TestCase):
+    def test_set_inteface_down(self):
+        if set_interface_down is False:
+            raise SkipTest
+        if Juniper_Router is None:
+            raise SkipTest
+        set_inteface_up('9', auth.creds, auth.url, devip=Juniper_Router)
+        int_down_response = set_interface_down('9', auth.creds, auth.url, devip=Juniper_Router)
+        set_inteface_up('9', auth.creds, auth.url, devip=Juniper_Router)
+        self.assertIs(type(int_down_response), int)
+        self.assertIs(int_down_response, 204)
 
 ####Servers
 
 
 #Windows_Server
-
+#Deemed inappropriate to test
 
 #Linux_Server
-
+#Deemed inappropriate to test
 ###Hypervisors
 
 
 #ESX
+#Deemed inappropriate to test
 
+#HyperV
+#Deemed inappropriate to test
