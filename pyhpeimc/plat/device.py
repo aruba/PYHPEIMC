@@ -469,10 +469,12 @@ def get_dev_mac_learn(auth, url, devid = None, devip= None):
         r = requests.get(f_url, auth=auth, headers=HEADERS)
         if r.status_code == 200:
             if len(r.text) < 1:
-                mac_learn_query = {}
+                mac_learn_query = []
                 return mac_learn_query
             else:
                 mac_learn_query = (json.loads(r.text))['ipMacLearnResult']
+                if type(mac_learn_query) is dict:
+                    mac_learn_query = [mac_learn_query]
                 return mac_learn_query
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_mac_learn: An Error has occured"

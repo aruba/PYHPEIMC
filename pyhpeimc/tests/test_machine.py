@@ -9,10 +9,10 @@ router = '10.101.0.1'
 #Switches
 CW3_Switch = None
 CW5_Switch = '10.101.0.221'
-CW7_Switch = None
+CW7_Switch = '10.20.10.10'
 Cisco_Switch = None
 Juniper_Switch = None
-Arista_Switch = None
+Arista_Switch = '10.101.0.249'
 ArubaOS_Switch = None
 
 
@@ -31,23 +31,55 @@ ESX= '10.101.0.6'
 HyperV = None
 
 
-#CW3_Switch
-#CW5_Switch
-#CW7_Switch
-#Cisco_Switch
-#Juniper_Switch
-#Arista_Switch
-#ArubaOS_Switch
 
-#Routers
+"""============================================================================================="""
+
+#####Test TEST_NAME_HERE for Multiple Vendor Devices
+
+###Switches
+
+#CW3_Switch
+
+
+#CW5_Switch
+
+
+#CW7_Switch
+
+
+#Cisco_Switch
+
+
+#Juniper_Switch
+
+
+#Arista_Switch
+
+
+#ArubaOS_Switch (Formerly Provision)
+
+###Routers
 
 #Cisco_Router
-#CW5_Router
-#Juniper_Router
 
-#Servers
+
+#CW5_Router
+
+
+#Juniper_Router (SRV)
+
+####Servers
+
 
 #Windows_Server
+
+
 #Linux_Server
 
-#Hypervisors
+###Hypervisors
+
+
+#VMWare ESX
+
+
+#HyperV
