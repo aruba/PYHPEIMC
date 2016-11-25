@@ -34,9 +34,12 @@ HyperV = None
 #Set to True if you wish to test the set_interface_up and set_interface_down functions in the test_pyhpeimc_plat_device test file.
 #Warning - Setting these values to True may disrupt access to your network devices and require manual intervention to repair if
 #connectivity to the IMC system is lost.
-set_interface_up = True
+test_interface_up = False
 
-set_interface_down = False
+test_interface_down = False
+
+
+#Template for building Multiple Vendor Tests
 
 """============================================================================================="""
 

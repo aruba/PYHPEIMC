@@ -2957,7 +2957,7 @@ class TestGet_interface_details_HyperV(TestCase):
 #CW3_Switch
 class TestSet_inteface_up_CW3_Switch(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if CW3_Switch is None:
             raise SkipTest
@@ -2969,7 +2969,7 @@ class TestSet_inteface_up_CW3_Switch(TestCase):
 #CW5_Switch
 class TestSet_inteface_up_CW5_Switch(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if CW5_Switch is None:
             raise SkipTest
@@ -2982,7 +2982,7 @@ class TestSet_inteface_up_CW5_Switch(TestCase):
 #CW7_Switch
 class TestSet_inteface_up_CW7_Switch(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if CW7_Switch is None:
             raise SkipTest
@@ -2995,7 +2995,7 @@ class TestSet_inteface_up_CW7_Switch(TestCase):
 #Cisco_Switch
 class TestSet_inteface_up_Cisco_Switch(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if Cisco_Switch is None:
             raise SkipTest
@@ -3008,7 +3008,7 @@ class TestSet_inteface_up_Cisco_Switch(TestCase):
 #Juniper_Switch
 class TestSet_inteface_up_Juniper_Switch(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if Juniper_Switch is None:
             raise SkipTest
@@ -3021,7 +3021,7 @@ class TestSet_inteface_up_Juniper_Switch(TestCase):
 #Arista_Switch
 class TestSet_inteface_up_Arista_Switch(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if Arista_Switch is None:
             raise SkipTest
@@ -3034,7 +3034,7 @@ class TestSet_inteface_up_Arista_Switch(TestCase):
 #ArubaOS_Switch (Formerly Provision)
 class TestSet_inteface_up_ArubaOS_Switch(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if ArubaOS_Switch is None:
             raise SkipTest
@@ -3051,7 +3051,7 @@ class TestSet_inteface_up_ArubaOS_Switch(TestCase):
 #which will force manual intervention
 class TestSet_inteface_up_Cisco_Router(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if Cisco_Router is None:
             raise SkipTest
@@ -3066,7 +3066,7 @@ class TestSet_inteface_up_Cisco_Router(TestCase):
 #which will force manual intervention
 class TestSet_inteface_up_CW5_Router(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if CW5_Router is None:
             raise SkipTest
@@ -3080,7 +3080,7 @@ class TestSet_inteface_up_CW5_Router(TestCase):
 #which will force manual intervention
 class TestSet_inteface_up_Juniper_Router(TestCase):
     def test_set_inteface_up(self):
-        if set_interface_up is False:
+        if test_interface_up is False:
             raise SkipTest
         if Juniper_Router is None:
             raise SkipTest
@@ -3116,7 +3116,7 @@ class TestSet_inteface_up_Juniper_Router(TestCase):
 #CW3_Switch
 class TestSet_inteface_down_CW3_Switch(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if CW3_Switch is None:
             raise SkipTest
@@ -3129,7 +3129,7 @@ class TestSet_inteface_down_CW3_Switch(TestCase):
 #CW5_Switch
 class TestSet_inteface_down_CW5_Switch(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if CW5_Switch is None:
             raise SkipTest
@@ -3143,7 +3143,7 @@ class TestSet_inteface_down_CW5_Switch(TestCase):
 #CW7_Switch
 class TestSet_inteface_down_CW7_Switch(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if CW7_Switch is None:
             raise SkipTest
@@ -3157,7 +3157,7 @@ class TestSet_inteface_down_CW7_Switch(TestCase):
 #Cisco_Switch
 class TestSet_inteface_down_Cisco_Switch(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if Cisco_Switch is None:
             raise SkipTest
@@ -3170,7 +3170,7 @@ class TestSet_inteface_down_Cisco_Switch(TestCase):
 #Juniper_Switch
 class TestSet_inteface_down_Juniper_Switch(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if Juniper_Switch is None:
             raise SkipTest
@@ -3183,7 +3183,7 @@ class TestSet_inteface_down_Juniper_Switch(TestCase):
 #Arista_Switch
 class TestSet_inteface_down_Arista_Switch(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if Arista_Switch is None:
             raise SkipTest
@@ -3197,7 +3197,7 @@ class TestSet_inteface_down_Arista_Switch(TestCase):
 #ArubaOS_Switch (Formerly Provision)
 class TestSet_inteface_down_ArubaOS_Switch(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if ArubaOS_Switch is None:
             raise SkipTest
@@ -3217,7 +3217,7 @@ class TestSet_inteface_down_ArubaOS_Switch(TestCase):
 #which will force manual intervention
 class TestSet_inteface_down_Cisco_Router(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if Cisco_Router is None:
             raise SkipTest
@@ -3232,7 +3232,7 @@ class TestSet_inteface_down_Cisco_Router(TestCase):
 #which will force manual intervention
 class TestSet_inteface_down_CW5_Router(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if CW5_Router is None:
             raise SkipTest
@@ -3247,7 +3247,7 @@ class TestSet_inteface_down_CW5_Router(TestCase):
 #which will force manual intervention
 class TestSet_inteface_down_Juniper_Router(TestCase):
     def test_set_inteface_down(self):
-        if set_interface_down is False:
+        if test_interface_down is False:
             raise SkipTest
         if Juniper_Router is None:
             raise SkipTest
