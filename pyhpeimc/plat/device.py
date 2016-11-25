@@ -16,9 +16,12 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 
 """
 This section contains functions which operate at the system level
+This whole section has been moved to pyhpeimc.plat.system - functions left here for legacy.
+Intention is to remove by version 1.0.60 or greater. Please modify any scripts using functions in this section to use the
+new functions in the new module
 """
 
-
+#TODO Delete function when version => 1.60
 def get_system_vendors(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -56,7 +59,7 @@ def get_system_vendors(auth, url):
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
-
+#TODO Delete function when version => 1.60
 def get_system_category(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -94,7 +97,7 @@ def get_system_category(auth, url):
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
-
+#TODO Delete function when version => 1.60
 def get_system_device_models(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -131,7 +134,7 @@ def get_system_device_models(auth, url):
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
-
+#TODO Delete function when version => 1.60
 def get_system_series(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -280,11 +283,13 @@ def get_dev_details(ip_address, auth, url):
             return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
 
-def get_dev_interface(devid, auth, url):
+def get_dev_interface(auth, url, devid= None, devip = None):
     """
     Function takes devid as input to RESTFUL call to HP IMC platform and returns list of device interfaces
 
-    :param devid: requires devid as the only input
+    :param devid: optional devid as the input
+
+    :param devip: optional devip as input
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -301,14 +306,17 @@ def get_dev_interface(devid, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> dev_interfaces = get_dev_interface('15', auth.creds, auth.url)
+    >>> dev_interfaces = get_dev_interface(auth.creds, auth.url, devid='15')
+
+    >>> dev_interfaces = get_dev_interface(auth.creds, auth.url, devip='10.101.0.221')
 
     >>> assert type(dev_interfaces) is list
 
     >>> assert 'ifAlias' in dev_interfaces[0]
 
    """
-
+    if devip is not None:
+        devid = get_dev_details(devip, auth, url)['id']
     get_dev_interface_url = "/imcrs/plat/res/device/" + str(devid) + \
                             "/interface?start=0&size=1000&desc=false&total=false"
     f_url = url + get_dev_interface_url
@@ -323,7 +331,7 @@ def get_dev_interface(devid, auth, url):
             return "Error:\n" + str(e) + " get_dev_interface: An Error has occured"
 
 
-def get_dev_run_config(devid, auth, url):
+def get_dev_run_config( auth, url, devid=None, devip = None):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
     file as known by the HP IMC Base Platform ICC module for the target device.
@@ -346,12 +354,16 @@ def get_dev_run_config(devid, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> run_config = get_dev_run_config('10', auth.creds, auth.url)
+    >>> run_config = get_dev_run_config(auth.creds, auth.url, devid='10')
+
+    >>> run_config = get_dev_run_config(auth.creds, auth.url, devip='10.101.0.221')
 
     >>> assert type(run_config) is str
 
     """
     # checks to see if the imc credentials are already available
+    if devip is not None:
+        devid = get_dev_details(devip, auth, url)['id']
     get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devid) + "/currentRun"
     f_url = url + get_dev_run_url
     # creates the URL using the payload variable as the contents
@@ -359,21 +371,22 @@ def get_dev_run_config(devid, auth, url):
     # print (r.status_code)
     try:
         if r.status_code == 200:
-            try:
-                run_conf = (json.loads(r.text))['content']
-                return run_conf
-            except:
+            run_conf = (json.loads(r.text))['content']
+            return run_conf
+        elif r.status_code == 404:
                 return "This features is no supported on this device"
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
 
 
-def get_dev_start_config(devId, auth, url):
+def get_dev_start_config(auth, url, devId= None, devip = None):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the most current startup config
     file as known by the HP IMC Base Platform ICC module for the target device.
 
-    :param devId:  int or str value of the target device
+    :param devId:  optional int or str value of the target device
+
+    :param devip:  optional ipv4 address of the target device
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -391,34 +404,39 @@ def get_dev_start_config(devId, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> start_config = get_dev_start_config('10', auth.creds, auth.url)
+    >>> start_config = get_dev_start_config(auth.creds, auth.url, devId='10')
+
+    >>> start_config = get_dev_start_config(auth.creds, auth.url, devip='10.101.0.221')
 
     >>> assert type(start_config) is str
 
     """
     # checks to see if the imc credentials are already available
+    if devip is not None:
+        devId = get_dev_details(devip, auth, url)['id']
     get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devId) + "/currentStart"
     f_url = url + get_dev_run_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
-            try:
-                start_conf = (json.loads(r.text))['content']
-                return start_conf
-            except:
-                return "Start Conf not supported on this device"
+            start_conf = (json.loads(r.text))['content']
+            return start_conf
+        elif r.status_code == 404:
+            return "This features is no supported on this device"
 
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
+            return "Error:\n" + str(e) + " get_dev_start_config: An Error has occured"
 
 
-def get_dev_mac_learn(devid, auth, url):
+def get_dev_mac_learn(auth, url, devid = None, devip= None):
     '''
     function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
     the target device.
 
     :param devid: int value of the target device
+
+    :param devip: ipv4 address of the target device
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -434,13 +452,17 @@ def get_dev_mac_learn(devid, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> dev_mac_learn = get_dev_mac_learn('10', auth.creds, auth.url)
+    >>> dev_mac_learn = get_dev_mac_learn( auth.creds, auth.url, devid='10')
+
+    >>> dev_mac_learn = get_dev_mac_learn( auth.creds, auth.url, devip='10.101.0.221')
 
     >>> assert type(dev_mac_learn) is list
 
     >>> assert 'deviceId' in dev_mac_learn[0]
 
     '''
+    if devip is not None:
+        devid = get_dev_details(devip, auth, url)['id']
     get_dev_mac_learn_url='/imcrs/res/access/ipMacLearn/'+str(devid)
     f_url = url+get_dev_mac_learn_url
     try:
@@ -456,7 +478,7 @@ def get_dev_mac_learn(devid, auth, url):
             return "Error:\n" + str(e) + " get_dev_mac_learn: An Error has occured"
 
 
-def run_dev_cmd(devid, cmd_list, auth, url):
+def run_dev_cmd( cmd_list, auth, url, devid= None, devip = None):
     '''
     Function takes devid of target device and a sequential list of strings which define the specific commands to be run
     on the target device and returns a str object containing the output of the commands.
@@ -474,7 +496,9 @@ def run_dev_cmd(devid, cmd_list, auth, url):
 
     >>> cmd_list = ['display version']
 
-    >>> cmd_output = run_dev_cmd('10', cmd_list, auth.creds, auth.url)
+    >>> cmd_output = run_dev_cmd( cmd_list, auth.creds, auth.url, devid ='10')
+
+    >>> cmd_output = run_dev_cmd( cmd_list, auth.creds, auth.url, devip='10.101.0.221')
 
     >>> assert type(cmd_output) is dict
 
@@ -484,6 +508,8 @@ def run_dev_cmd(devid, cmd_list, auth, url):
 
 
     '''
+    if devip is not None:
+        devid= get_dev_details(devip, auth, url)['id']
     run_dev_cmd_url = '/imcrs/icc/confFile/executeCmd'
     f_url = url + run_dev_cmd_url
     cmd_list = _make_cmd_list(cmd_list)
@@ -506,13 +532,15 @@ def run_dev_cmd(devid, cmd_list, auth, url):
 This section contains functions which operate at the interface level
 """
 
-def get_all_interface_details(devId, auth, url):
+def get_all_interface_details( auth, url, devId=None, devip=None):
     """
     function takes the devId of a specific device and the ifindex value assigned to a specific interface
     and issues a RESTFUL call to get the interface details
     file as known by the HP IMC Base Platform ICC module for the target device.
 
     :param devId:  int or str value of the devId of the target device
+
+    :param devip: ipv4 address of the target device
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -528,7 +556,9 @@ def get_all_interface_details(devId, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> all_interface_details = get_all_interface_details('10', auth.creds, auth.url)
+    >>> all_interface_details = get_all_interface_details( auth.creds, auth.url, devId='10')
+
+    >>> all_interface_details = get_all_interface_details( auth.creds, auth.url, devip='10.101.0.221')
 
     >>> assert type(all_interface_details) is list
 
@@ -536,7 +566,8 @@ def get_all_interface_details(devId, auth, url):
 
 
      """
-
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
     get_all_interface_details_url = "/imcrs/plat/res/device/" + str(devId) + "/interface/?start=0&size=1000&desc=false&total=false"
     f_url = url + get_all_interface_details_url
     payload = None
