@@ -7,6 +7,7 @@
 import json
 import requests
 import ipaddress
+from pyhpeimc.plat.device import get_dev_details
 
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
@@ -71,13 +72,14 @@ def get_real_time_locate(ipAddress, auth, url):
                 else:
                     return json.loads(r.text)['realtimeLocation']
             else:
-                return json.loads(r.text)
+                print ("Host not found")
+                return 403
 
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_real_time_locate: An Error has occured"
 
 
-def get_ip_mac_arp_list(devId, auth,url):
+def get_ip_mac_arp_list(auth,url, devId = None, devip = None):
     """
     function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list from the target device.
 
@@ -97,15 +99,23 @@ def get_ip_mac_arp_list(devId, auth,url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> ip_mac_list = get_ip_mac_arp_list('10', auth.creds, auth.url)
+    >>> ip_mac_list = get_ip_mac_arp_list( auth.creds, auth.url, devId='10')
+
+    >>> ip_mac_list = get_ip_mac_arp_list( auth.creds, auth.url, devip='10.101.0.221')
 
     >>> assert type(ip_mac_list) is list
 
     >>> assert 'deviceId' in ip_mac_list[0]
 
     """
-    if auth is None or url is None:  # checks to see if the imc credentials are already available
-        set_imc_creds()
+    if devip is not None:
+        dev_details = get_dev_details(devip, auth,url)
+        if type(dev_details) is not str:
+            devId = get_dev_details(devip, auth,url)['id']
+        elif type(dev_details) is str:
+            print ("Device not found")
+            return 403
+
     ip_mac_arp_list_url = "/imcrs/res/access/ipMacArp/" + str(devId)
     f_url = url + ip_mac_arp_list_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents

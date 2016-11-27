@@ -11,6 +11,10 @@ auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
 #Tests will use the following IP addresses for specific tests
 
+DoesntExist = '8.8.8.8' #Chose an IP address which you know doesn't exist in your IMC system
+term_access_host = '10.101.0.51'
+
+
 #Switches
 CW3_Switch = None
 CW5_Switch = '10.101.0.221'
@@ -44,6 +48,8 @@ test_interface_up = False
 test_interface_down = False
 
 
+
+'''
 #Template for building Multiple Vendor Tests
 
 """============================================================================================="""
@@ -55,13 +61,25 @@ test_interface_down = False
 #CW3_Switch
 
 
+
 #CW5_Switch
+class Test_Function_Name_CW5_Switch(TestCase):
+    def test_Function_Name_type(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        self.fail()
+    def test_Function_Name_content(self):
+        if CW5_Switch is None:
+            raise SkipTest
+            self.fail()
 
 
 #CW7_Switch
 
 
+
 #Cisco_Switch
+
 
 
 #Juniper_Switch
@@ -70,7 +88,11 @@ test_interface_down = False
 #Arista_Switch
 
 
+
+
 #ArubaOS_Switch (Formerly Provision)
+
+
 
 ###Routers
 
@@ -82,13 +104,17 @@ test_interface_down = False
 
 #Juniper_Router (SRV)
 
+
+
 ####Servers
 
 
 #Windows_Server
 
 
+
 #Linux_Server
+
 
 ###Hypervisors
 
@@ -96,4 +122,10 @@ test_interface_down = False
 #ESX
 
 
+
 #HyperV
+
+#DoesntExist
+
+'''
+

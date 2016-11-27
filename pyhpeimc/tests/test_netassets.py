@@ -49,14 +49,6 @@ class TestGet_dev_asset_detailsCW3_Switch(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if CW3_Switch is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(CW3_Switch, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
-
-
 
 #CW5_Switch
 class TestGet_dev_asset_detailsCW5_Switch(TestCase):
@@ -99,12 +91,7 @@ class TestGet_dev_asset_detailsCW5_Switch(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if CW5_Switch is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(CW5_Switch, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
+
 
 #CW7_Switch
 class TestGet_dev_asset_detailsCW7_Switch(TestCase):
@@ -146,13 +133,6 @@ class TestGet_dev_asset_detailsCW7_Switch(TestCase):
         self.assertIn('desc', single_asset[0])
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
-
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if CW7_Switch is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(CW7_Switch, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
 
 
 #Cisco_Switch
@@ -196,13 +176,6 @@ class TestGet_dev_asset_detailsCisco_Switch(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if CW7_Switch is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(CW7_Switch, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
-
 
 #Juniper_Switch
 class TestGet_dev_asset_detailsJuniper_Switch(TestCase):
@@ -244,13 +217,6 @@ class TestGet_dev_asset_detailsJuniper_Switch(TestCase):
         self.assertIn('desc', single_asset[0])
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
-
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if Juniper_Switch is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(Juniper_Switch, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
 
 
 #Arista_Switch
@@ -294,13 +260,6 @@ class TestGet_dev_asset_detailsArista_Switch(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if Arista_Switch is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(Arista_Switch, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
-
 
 #ArubaOS_Switch (Formerly Provision)
 class TestGet_dev_asset_detailsArubaOS_Switch(TestCase):
@@ -342,13 +301,6 @@ class TestGet_dev_asset_detailsArubaOS_Switch(TestCase):
         self.assertIn('desc', single_asset[0])
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
-
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if ArubaOS_Switch is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(ArubaOS_Switch, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
 
 
 ###Routers
@@ -395,13 +347,6 @@ class TestGet_dev_asset_detailsCisco_Router(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if Cisco_Router is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(Cisco_Router, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
-
 
 #CW5_Router
 class TestGet_dev_asset_detailsCW5_Router(TestCase):
@@ -444,13 +389,6 @@ class TestGet_dev_asset_detailsCW5_Router(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if CW5_Router is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(CW5_Router, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
-
 
 #Juniper_Router (SRV)
 class TestGet_dev_asset_detailsJuniper_Router(TestCase):
@@ -492,13 +430,6 @@ class TestGet_dev_asset_detailsJuniper_Router(TestCase):
         self.assertIn('desc', single_asset[0])
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
-
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if Juniper_Router is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(Juniper_Router, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
 
 
 ####Servers
@@ -545,13 +476,6 @@ class TestGet_dev_asset_detailsWindows_Server(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if Windows_Server is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(Windows_Server, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
-
 
 #Linux_Server
 class TestGet_dev_asset_detailsLinux_Server(TestCase):
@@ -593,13 +517,6 @@ class TestGet_dev_asset_detailsLinux_Server(TestCase):
         self.assertIn('desc', single_asset[0])
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
-
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if Linux_Server is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(Linux_Server, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
 
 
 ###Hypervisors
@@ -646,13 +563,6 @@ class TestGet_dev_asset_detailsESX(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if ESX is None:
-            raise SkipTest
-        single_asset = get_dev_asset_details(ESX, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
-
 
 #HyperV
 class TestGet_dev_asset_detailsHyperV(TestCase):
@@ -695,12 +605,14 @@ class TestGet_dev_asset_detailsHyperV(TestCase):
         self.assertIn('phyIndex', single_asset[0])
         self.assertIn('serverDate', single_asset[0])
 
-    def test_get_dev_asset_details_doesnt_existt(self):
-        if HyperV is None:
+
+class TestGet_dev_asset_details_doesnt_exist(TestCase):
+    def test_get_dev_asset_details_doesnt_exist(self):
+        if DoesntExist is None:
             raise SkipTest
-        single_asset = get_dev_asset_details(HyperV, auth.creds, auth.url)
-        self.assertIs(type(single_asset), list)
-        self.assertIs(len(single_asset), 0 )
+        asset_doesnt_exist = get_dev_asset_details(DoesntExist, auth.creds, auth.url)
+        self.assertIs(type(asset_doesnt_exist), int)
+        self.assertEqual(asset_doesnt_exist, 403)
 
 
 ##### Test get_dev_asset_details_all function
