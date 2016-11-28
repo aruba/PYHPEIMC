@@ -377,3 +377,35 @@ class TestGet_ip_mac_arp_list_DoesntExist(TestCase):
         ip_mac_list = get_ip_mac_arp_list(auth.creds, auth.url, devip=DoesntExist)
         self.assertIs(type(ip_mac_list), int)
         self.assertEqual(ip_mac_list, 403)
+
+
+
+"""============================================================================================="""
+
+#####Test for Terminal Access - IP Address Manager Functions
+
+
+class TestGet_Get_ip_scope(TestCase):
+    def test_get_ip_scope_type(self):
+        delete_ip_scope('10.50.0.0/24', auth.creds, auth.url)
+        new_scope = add_ip_scope('10.50.0.1', '10.50.0.254', 'cyoung', 'test group', auth.creds, auth.url)
+        ip_scope_list = get_ip_scope(auth.creds, auth.url)
+        self.assertIs(type(ip_scope_list), list)
+        delete_ip_scope('10.50.0.0/24', auth.creds, auth.url)
+
+
+    def test_get_ip_scope_content(self):
+        delete_ip_scope('10.50.0.0/24', auth.creds, auth.url)
+        new_scope = add_ip_scope('10.50.0.1', '10.50.0.254', 'cyoung', 'test group', auth.creds, auth.url)
+        ip_scope_list = get_ip_scope(auth.creds, auth.url)
+        self.assertIs(len(ip_scope_list[0]), 7)
+        self.assertIn('name', ip_scope_list[0])
+        self.assertIn('description', ip_scope_list[0])
+        self.assertIn('id', ip_scope_list[0])
+        self.assertIn('ip', ip_scope_list[0])
+        self.assertIn('parentId', ip_scope_list[0])
+        self.assertIn('percent', ip_scope_list[0])
+        self.assertIn('percentStr', ip_scope_list[0])
+        delete_ip_scope('10.50.0.0/24', auth.creds, auth.url)
+
+
