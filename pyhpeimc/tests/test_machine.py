@@ -14,6 +14,8 @@ auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 DoesntExist = '8.8.8.8' #Chose an IP address which you know doesn't exist in your IMC system
 term_access_host = '10.101.0.51'
 
+term_access_ipam_network_scope = '10.50.0.0/24' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
+term_access_ipam_host = '10.50.0.5/24' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
 
 #Switches
 CW3_Switch = None
