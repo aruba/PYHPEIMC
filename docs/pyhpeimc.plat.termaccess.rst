@@ -1,8 +1,5 @@
-pyhpeimc.plat.termaccess package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.termaccess module
+===============================
 
 .. automodule:: pyhpeimc.plat.termaccess
     :members:

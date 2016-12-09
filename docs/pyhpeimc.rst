@@ -1,21 +1,23 @@
 pyhpeimc package
 ================
 
+Subpackages
+-----------
 
+.. toctree::
 
+    pyhpeimc.plat
+    pyhpeimc.tests
+    pyhpeimc.wsm
 
 Submodules
 ----------
 
 .. toctree::
 
-    pyhpeimc.auth
-    pyhpeimc.objects
-    pyhpeimc.plat
-    pyhpeimc.wsm
-
-
-
+   pyhpeimc.auth
+   pyhpeimc.objects
+   pyhpeimc.version
 
 Module contents
 ---------------

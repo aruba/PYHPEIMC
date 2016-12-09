@@ -1,8 +1,5 @@
-pyhpeimc.wsm.apinfo package
-==============================
-
-Module contents
----------------
+pyhpeimc.wsm.apinfo module
+==========================
 
 .. automodule:: pyhpeimc.wsm.apinfo
     :members:

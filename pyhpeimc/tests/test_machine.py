@@ -19,8 +19,8 @@ term_access_ipam_host = '10.50.0.5/24' #Used for pyhpeimc_plat_termaccess IP Add
 
 #Switches
 CW3_Switch = None
-CW5_Switch = '10.101.0.221'
-CW7_Switch = None
+CW5_Switch = None
+CW7_Switch = '10.20.10.10'
 Cisco_Switch = None
 Juniper_Switch = None
 Arista_Switch = None

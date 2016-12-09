@@ -1,8 +1,5 @@
-pyhpeimc.objects package
-============================
-
-Module contents
----------------
+pyhpeimc.objects module
+=======================
 
 .. automodule:: pyhpeimc.objects
     :members:

@@ -1,25 +1,18 @@
-HPE PYHPEIMC PYTHON SDK
+.. PYHPEIMC documentation master file, created by
+   sphinx-quickstart on Fri Dec  9 08:40:34 2016.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Welcome to PYHPEIMC's documentation!
 ====================================
-
-Introduction
-============
-
-This library was built to simplify working with the HPE Intelligent Management Center Network Management
-System RESTful API.
-
-Rather than to have network developers worry
-about the underlying REST API, this library provides a means to
-manage HPE IMC functions through pre-built Python objects that make it
-extremely easy to get started programming in an HPE environment.
-
-Contents:
 
 .. toctree::
    :maxdepth: 4
+   :caption: Contents:
 
    pyhpeimc
+   setup
 
-   license
 
 Indices and tables
 ==================
@@ -27,4 +20,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

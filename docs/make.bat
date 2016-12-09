@@ -2,6 +2,8 @@
 
 REM Command file for Sphinx documentation
 
+pushd %~dp0
+
 if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=sphinx-build
 )
@@ -23,7 +25,7 @@ if "%1" == "help" (
 	echo.  singlehtml to make a single large HTML file
 	echo.  pickle     to make pickle files
 	echo.  json       to make JSON files
-	echo.  htmlhelp   to make HTML files and a HTML help project
+	echo.  htmlhelp   to make HTML files and an HTML help project
 	echo.  qthelp     to make HTML files and a qthelp project
 	echo.  devhelp    to make HTML files and a Devhelp project
 	echo.  epub       to make an epub
@@ -129,9 +131,9 @@ if "%1" == "qthelp" (
 	echo.
 	echo.Build finished; now you can run "qcollectiongenerator" with the ^
 .qhcp project file in %BUILDDIR%/qthelp, like this:
-	echo.^> qcollectiongenerator %BUILDDIR%\qthelp\pyhpeimc.qhcp
+	echo.^> qcollectiongenerator %BUILDDIR%\qthelp\PYHPEIMC.qhcp
 	echo.To view the help file:
-	echo.^> assistant -collectionFile %BUILDDIR%\qthelp\pyhpeimc.ghc
+	echo.^> assistant -collectionFile %BUILDDIR%\qthelp\PYHPEIMC.ghc
 	goto end
 )
 
@@ -279,3 +281,4 @@ if "%1" == "dummy" (
 )
 
 :end
+popd

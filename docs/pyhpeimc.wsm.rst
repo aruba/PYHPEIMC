@@ -1,15 +1,14 @@
 pyhpeimc.wsm package
-======================
+====================
 
-Subpackages
------------
+Submodules
+----------
 
 .. toctree::
 
-    pyhpeimc.wsm.acinfo
-    pyhpeimc.wsm.apinfo
-    pyhpeimc.wsm.clientinfo
-
+   pyhpeimc.wsm.acinfo
+   pyhpeimc.wsm.apinfo
+   pyhpeimc.wsm.clientinfo
 
 Module contents
 ---------------

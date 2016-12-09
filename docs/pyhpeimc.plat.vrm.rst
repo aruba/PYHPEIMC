@@ -1,8 +1,5 @@
-pyhpeimc.plat.vrm package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.vrm module
+========================
 
 .. automodule:: pyhpeimc.plat.vrm
     :members:
