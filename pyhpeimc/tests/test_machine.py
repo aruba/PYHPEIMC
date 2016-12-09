@@ -17,8 +17,8 @@ term_access_host = '10.101.0.51'
 
 #Switches
 CW3_Switch = None
-CW5_Switch = '10.101.0.221'
-CW7_Switch = None
+CW5_Switch = None
+CW7_Switch = '10.20.10.10'
 Cisco_Switch = None
 Juniper_Switch = None
 Arista_Switch = None

@@ -1,8 +1,5 @@
-pyhpeimc.plat.device package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.device module
+===========================
 
 .. automodule:: pyhpeimc.plat.device
     :members:

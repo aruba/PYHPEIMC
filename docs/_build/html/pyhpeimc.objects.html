@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyhpeimc.objects package &mdash; pyhpeimc 1.0.22 documentation</title>
+    <title>pyhpeimc.objects module &#8212; PYHPEIMC  documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,21 +14,23 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.22',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="pyhpeimc 1.0.22 documentation" href="index.html" />
-    <link rel="up" title="pyhpeimc package" href="pyhpeimc.html" />
-    <link rel="next" title="pyhpeimc.plat package" href="pyhpeimc.plat.html" />
-    <link rel="prev" title="pyhpeimc.auth package" href="pyhpeimc.auth.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyhpeimc.version module" href="pyhpeimc.version.html" />
+    <link rel="prev" title="pyhpeimc.auth module" href="pyhpeimc.auth.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -41,13 +43,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="pyhpeimc-objects-package">
-<h1>pyhpeimc.objects package<a class="headerlink" href="#pyhpeimc-objects-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pyhpeimc.objects">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.objects" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-pyhpeimc.objects">
+<span id="pyhpeimc-objects-module"></span><h1>pyhpeimc.objects module<a class="headerlink" href="#module-pyhpeimc.objects" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyhpeimc.objects.IMCDev">
-<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IMCDev</code><span class="sig-paren">(</span><em>ip_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IMCDev</code><span class="sig-paren">(</span><em>ip_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IMCDev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IMCDev" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="docutils">
 <dt>imc_dev class takes in the ip_address which is used as the primary key to gather the following attributes</dt>
@@ -93,64 +93,63 @@ serial: returns the network assets, including serial numbers for the device as d
 </dl>
 <dl class="method">
 <dt id="pyhpeimc.objects.IMCDev.addvlan">
-<code class="descname">addvlan</code><span class="sig-paren">(</span><em>vlanid</em>, <em>vlan_name</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev.addvlan" title="Permalink to this definition">¶</a></dt>
+<code class="descname">addvlan</code><span class="sig-paren">(</span><em>vlanid</em>, <em>vlan_name</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IMCDev.addvlan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IMCDev.addvlan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyhpeimc.objects.IMCDev.delvlan">
-<code class="descname">delvlan</code><span class="sig-paren">(</span><em>vlanid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev.delvlan" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delvlan</code><span class="sig-paren">(</span><em>vlanid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IMCDev.delvlan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IMCDev.delvlan" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyhpeimc.objects.IMCDev.getipmacarp">
-<code class="descname">getipmacarp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev.getipmacarp" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getipmacarp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IMCDev.getipmacarp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IMCDev.getipmacarp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyhpeimc.objects.IMCDev.getvlans">
-<code class="descname">getvlans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCDev.getvlans" title="Permalink to this definition">¶</a></dt>
+<code class="descname">getvlans</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IMCDev.getvlans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IMCDev.getvlans" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="pyhpeimc.objects.IMCInterface">
-<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IMCInterface</code><span class="sig-paren">(</span><em>ip_address</em>, <em>ifIndex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IMCInterface" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IMCInterface</code><span class="sig-paren">(</span><em>ip_address</em>, <em>ifIndex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IMCInterface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IMCInterface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="pyhpeimc.objects.IPScope">
-<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IPScope</code><span class="sig-paren">(</span><em>netaddr</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyhpeimc.objects.</code><code class="descname">IPScope</code><span class="sig-paren">(</span><em>netaddr</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IPScope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IPScope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="pyhpeimc.objects.IPScope.addchild">
-<code class="descname">addchild</code><span class="sig-paren">(</span><em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.addchild" title="Permalink to this definition">¶</a></dt>
+<code class="descname">addchild</code><span class="sig-paren">(</span><em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IPScope.addchild"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IPScope.addchild" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyhpeimc.objects.IPScope.allocateIp">
-<code class="descname">allocateIp</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>name</em>, <em>description</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.allocateIp" title="Permalink to this definition">¶</a></dt>
+<code class="descname">allocateIp</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>name</em>, <em>description</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IPScope.allocateIp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IPScope.allocateIp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyhpeimc.objects.IPScope.deallocateIp">
-<code class="descname">deallocateIp</code><span class="sig-paren">(</span><em>hostid</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.deallocateIp" title="Permalink to this definition">¶</a></dt>
+<code class="descname">deallocateIp</code><span class="sig-paren">(</span><em>hostid</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IPScope.deallocateIp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IPScope.deallocateIp" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyhpeimc.objects.IPScope.gethosts">
-<code class="descname">gethosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.gethosts" title="Permalink to this definition">¶</a></dt>
+<code class="descname">gethosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IPScope.gethosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IPScope.gethosts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="pyhpeimc.objects.IPScope.nextfreeip">
-<code class="descname">nextfreeip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.objects.IPScope.nextfreeip" title="Permalink to this definition">¶</a></dt>
+<code class="descname">nextfreeip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/objects.html#IPScope.nextfreeip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.objects.IPScope.nextfreeip" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-</div>
 </div>
 
 
@@ -158,32 +157,17 @@ serial: returns the network assets, including serial numbers for the device as d
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pyhpeimc.objects package</a><ul>
-<li><a class="reference internal" href="#module-pyhpeimc.objects">Module contents</a></li>
-</ul>
-</li>
-</ul>
-<div class="relations">
+        <div class="sphinxsidebarwrapper"><div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="pyhpeimc.html">pyhpeimc package</a><ul>
-      <li>Previous: <a href="pyhpeimc.auth.html" title="previous chapter">pyhpeimc.auth package</a></li>
-      <li>Next: <a href="pyhpeimc.plat.html" title="next chapter">pyhpeimc.plat package</a></li>
+      <li>Previous: <a href="pyhpeimc.auth.html" title="previous chapter">pyhpeimc.auth module</a></li>
+      <li>Next: <a href="pyhpeimc.version.html" title="next chapter">pyhpeimc.version module</a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/pyhpeimc.objects.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -199,15 +183,12 @@ serial: returns the network assets, including serial numbers for the device as d
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2016, netmanchris.
+      &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
-      |
-      <a href="_sources/pyhpeimc.objects.txt"
-          rel="nofollow">Page source</a>
     </div>
 
     

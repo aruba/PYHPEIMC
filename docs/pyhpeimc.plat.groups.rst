@@ -1,8 +1,5 @@
-pyhpeimc.plat.groups package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.groups module
+===========================
 
 .. automodule:: pyhpeimc.plat.groups
     :members:

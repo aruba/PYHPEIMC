@@ -1,8 +1,5 @@
-pyhpeimc.plat.metassets package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.netassets module
+==============================
 
 .. automodule:: pyhpeimc.plat.netassets
     :members:
