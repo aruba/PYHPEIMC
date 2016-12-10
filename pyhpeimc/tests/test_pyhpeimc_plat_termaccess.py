@@ -385,10 +385,11 @@ class TestGet_ip_mac_arp_list_DoesntExist(TestCase):
 #####Test for Terminal Access - IP Address Manager Functions
 
 
-class TestGet_Get_ip_scope(TestCase):
+class TestGet_ip_scope(TestCase):
     def test_get_ip_scope_type(self):
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
-        new_scope = add_ip_scope(term_access_ipam_network_scope, '10.50.0.254', 'cyoung', 'test group', auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
         ip_scope_list = get_ip_scope(auth.creds, auth.url)
         self.assertIs(type(ip_scope_list), list)
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
@@ -396,7 +397,8 @@ class TestGet_Get_ip_scope(TestCase):
 
     def test_get_ip_scope_content(self):
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
-        new_scope = add_ip_scope(term_access_ipam_network_scope, '10.50.0.254', 'cyoung', 'test group', auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
         ip_scope_list = get_ip_scope(auth.creds, auth.url)
         self.assertIs(len(ip_scope_list[0]), 7)
         self.assertIn('name', ip_scope_list[0])
@@ -407,5 +409,66 @@ class TestGet_Get_ip_scope(TestCase):
         self.assertIn('percent', ip_scope_list[0])
         self.assertIn('percentStr', ip_scope_list[0])
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+class TestGet_ip_scope_detail(TestCase):
+    def test_get_ip_scope_detail_type(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        ip_scope_detail = get_ip_scope_detail(auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        self.assertIs(type(ip_scope_detail), dict)
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+    def test_get_ip_scope_detail_content(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
+        ip_scope_detail = get_ip_scope_detail(auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        self.assertIs(len(ip_scope_detail), 10)
+        self.assertIn('parentId', ip_scope_detail)
+        self.assertIn('startIp', ip_scope_detail)
+        self.assertIn('endIp', ip_scope_detail)
+        self.assertIn('ip', ip_scope_detail)
+        self.assertIn('description', ip_scope_detail)
+        self.assertIn('operatorGroup', ip_scope_detail)
+        self.assertIn('percent', ip_scope_detail)
+        self.assertIn('id', ip_scope_detail)
+        self.assertIn('name', ip_scope_detail)
+        self.assertIn('percentStr', ip_scope_detail)
+
+
+class Test_Add_ip_scope(TestCase):
+    def test_add_ip_scope_type(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        self.assertIs(type(new_scope), int)
+        ip_scope_detail = get_ip_scope_detail(auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        self.assertEqual(new_scope, 200)
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+    def test_Add_ip_scope_content(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
+        ip_scope_detail = get_ip_scope_detail(auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        self.assertEqual(ip_scope_detail['name'], 'cyoung')
+        self.assertEqual(ip_scope_detail['description'], "test group")
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+class Test_Add_child_ip_scope(TestCase):
+    def test_add_child_ip_scope_type(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        child_scope = add_child_ip_scope('csyoung', 'test child scope', auth.creds, auth.url,
+                                         network_address=term_access_ipam_child_scope, parent_network_address=term_access_ipam_network_scope)
+        self.assertIs(type(child_scope), int)
+        self.assertEqual(child_scope, 200)
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+
 
 

@@ -216,7 +216,7 @@ def get_ip_scope_detail( auth, url, scopeId= None, network_address = None ):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_ip_scope: An Error has occured"
 
-def add_ip_scope(startIp, endIp, name, description, auth, url):
+def add_ip_scope(name, description, auth, url, startIp = None , endIp = None, network_address = None ):
     """
     Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
     in the HPE IMC base platform
@@ -260,9 +260,10 @@ def add_ip_scope(startIp, endIp, name, description, auth, url):
 
 
     """
-    if auth is None or url is None:  # checks to see if the imc credentials are already available
-        set_imc_creds()
-
+    if network_address != None:
+        nw_address = ipaddress.IPv4Network(network_address)
+        startIp = nw_address[1]
+        endIp = nw_address[-2]
     add_ip_scope_url = "/imcrs/res/access/assignedIpScope"
     f_url = url + add_ip_scope_url
     payload = ('''{  "startIp": "%s", "endIp": "%s","name": "%s","description": "%s" }'''
@@ -278,7 +279,7 @@ def add_ip_scope(startIp, endIp, name, description, auth, url):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
 
-def add_child_ip_scope(startIp, endIp, name, description, scopeid, auth, url):
+def add_child_ip_scope(name, description, auth, url,startIp=None, endIp=None, parent_scopeid=None, network_address=None, parent_network_address=None):
     """
     Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
     in the HPE IMC base platform
@@ -290,6 +291,8 @@ def add_child_ip_scope(startIp, endIp, name, description, scopeid, auth, url):
     :param name: str Name of the owner of this IP scope  ex. 'admin'
 
     :param description: str description of the Ip scope
+
+    :param parent_scopeid
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -307,16 +310,17 @@ def add_child_ip_scope(startIp, endIp, name, description, scopeid, auth, url):
 
     >>> add_child_ip_scope('10.50.0.1', '10.50.0.126', 'cyoung', 'test sub scope', '175', auth.creds, auth.url)
 
-
-
     """
-    if auth is None or url is None:  # checks to see if the imc credentials are already available
-        set_imc_creds()
-
-    add_ip_scope_url = "/imcrs/res/access/assignedIpScope/" + str(scopeid)
+    if parent_network_address != None:
+        parent_scopeid = get_scope_id(parent_network_address, auth, url)
+    if network_address != None:
+        nw_address = ipaddress.IPv4Network(network_address)
+        startIp = nw_address[1]
+        endIp = nw_address[-2]
+    add_ip_scope_url = "/imcrs/res/access/assignedIpScope/" + str(parent_scopeid)
     f_url = url + add_ip_scope_url
     payload = ('''{  "startIp": "%s", "endIp": "%s","name": "%s","description": "%s", "parentId" : "%s"}'''
-               %(str(startIp), str(endIp), str(name), str(description), str(scopeid)))
+               %(str(startIp), str(endIp), str(name), str(description), str(parent_scopeid)))
     r = requests.post(f_url, auth=auth, headers=HEADERS, data=payload) # creates the URL using the payload variable as the contents
     try:
         if r.status_code == 200:

@@ -11,16 +11,21 @@ auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
 #Tests will use the following IP addresses for specific tests
 
+
 DoesntExist = '8.8.8.8' #Chose an IP address which you know doesn't exist in your IMC system
 term_access_host = '10.101.0.51'
 
-term_access_ipam_network_scope = '10.50.0.0/24' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
+#Used for pyhpeimc.plat.termaccess to test IP address manager functions. Suggest using
+#IP address range that does not exist on the managed network
+term_access_ipam_network_scope = '10.50.0.0/16' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
+term_access_ipam_child_scope = '10.50.0.0/24' #used for pyhpeimc_plat_termaccess IP address Manager functions
 term_access_ipam_host = '10.50.0.5/24' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
+
 
 #Switches
 CW3_Switch = None
-CW5_Switch = None
-CW7_Switch = '10.20.10.10'
+CW5_Switch = '10.101.0.221'
+CW7_Switch = None
 Cisco_Switch = None
 Juniper_Switch = None
 Arista_Switch = None
