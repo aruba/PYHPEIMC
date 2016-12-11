@@ -351,14 +351,15 @@ def delete_ip_scope(network_address, auth, url):
 
     '''
     scope_id = get_scope_id(network_address, auth,url)
+    if (scope_id) == "Scope Doesn't Exist":
+        return scope_id
     delete_ip_address_url = '''/imcrs/res/access/assignedIpScope/'''+str(scope_id)
     f_url = url + delete_ip_address_url
     r = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
-        return r
         if r.status_code == 204:
             #print("IP Segment Successfully Deleted")
-            return r.status_code
+            return 204
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " delete_ip_scope: An Error has occured"
 
@@ -627,15 +628,23 @@ def get_scope_id(network_address, auth, url):
     """
     netaddr = ipaddress.ip_network(network_address)
     scopes = get_ip_scope(auth, url)
-    for i in scopes:
-        if int(i['id']) > 0:
-            if ipaddress.ip_address(i['startIp']) in netaddr and ipaddress.ip_address(i['endIp']) in netaddr:
-                return i['id']
-            if "assignedIpScope" in i:
-                for child in i['assignedIpScope']:
-                    if ipaddress.ip_address(child['startIp']) in netaddr and ipaddress.ip_address(child['endIp']) in netaddr:
+    for parent_scope in scopes:
+        if int(parent_scope['id']) > 0:
+            if "assignedIpScope" in parent_scope:
+                child_scope = parent_scope['assignedIpScope']
+                if type(child_scope) is dict:
+                    child_scope = [child_scope]
+                for scope in child_scope:
+                    if ipaddress.ip_address(scope['startIp']) == netaddr[1] and ipaddress.ip_address(scope['endIp']) == netaddr[-2]:
+                        return scope['id']
+            if ipaddress.ip_address(parent_scope['startIp']) == netaddr[1] and ipaddress.ip_address(parent_scope['endIp']) == netaddr[-2]:
+                return parent_scope['id']
+    return "Scope Doesn't Exist"
 
-                        return child['id']
+
+
+
+
 
 def get_host_id(host_address, network_address, auth, url):
     """

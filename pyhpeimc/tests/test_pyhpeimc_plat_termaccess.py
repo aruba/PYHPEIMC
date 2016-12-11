@@ -469,6 +469,45 @@ class Test_Add_child_ip_scope(TestCase):
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
 
 
+class Test_Delete_ip_scope(TestCase):
+    def test_delete_ip_scope_type(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        delete_scope = delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        self.assertIs(type(delete_scope), int)
+        self.assertEqual(delete_scope, 204)
+
+    def test_delete_ip_scope_doesnt_exst(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        delete_scope = delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        self.assertIs(type(delete_scope), str)
+        self.assertEqual(delete_scope, "Scope Doesn't Exist")
+
+class Test_Get_scope_id(TestCase):
+    def test_get_scope_id(self):
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
+        scope_id = get_scope_id('10.50.0.0/16', auth.creds, auth.url)
+        self.assertIs(type(int(scope_id)), int)
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+    def test_get_child_scope_id(self):
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
+        child_scope = add_child_ip_scope('csyoung', 'test child scope', auth.creds, auth.url,
+                                         network_address=term_access_ipam_child_scope,
+                                         parent_network_address=term_access_ipam_network_scope)
+        scope_id = get_scope_id('10.50.0.0/16', auth.creds, auth.url)
+        self.assertIs(type(int(scope_id)), int)
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+    def test_get_scope_id_doesnt_exist(self):
+        scope_id = get_scope_id('10.50.0.0/16', auth.creds, auth.url)
+        self.assertIs(type((scope_id)), str)
+        self.assertEqual(scope_id, "Scope Doesn't Exist")
+
 
 
 
