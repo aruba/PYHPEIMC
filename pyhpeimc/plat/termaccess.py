@@ -363,9 +363,11 @@ def delete_ip_scope(network_address, auth, url):
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " delete_ip_scope: An Error has occured"
 
+
+
 #Following functions deal with hosts assigned to IP scopes
 
-def add_scope_ip(ipaddress, name, description, scopeid, auth, url):
+def add_scope_ip(ipaddress, name, description, auth, url, scopeid=None, network_address=None):
     """
     Function to add new host IP address allocation to existing scope ID
 
@@ -389,9 +391,13 @@ def add_scope_ip(ipaddress, name, description, scopeid, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> add_scope_ip('10.50.0.5', 'cyoung', 'New Test Host','175', auth.creds, auth.url)
+    >>> new_host = add_scope_ip('10.50.0.5', 'cyoung', 'New Test Host','175', auth.creds, auth.url)
 
     """
+    if network_address != None:
+        scopeid = get_scope_id(network_address, auth, url)
+        if scopeid == "Scope Doesn't Exist":
+            return scopeid
     new_ip = { "ip": ipaddress,
       "name": name,
       "description": description}
@@ -402,10 +408,10 @@ def add_scope_ip(ipaddress, name, description, scopeid, auth, url):
                       data=payload)  # creates the URL using the payload variable as the contents
     try:
         if r.status_code == 200:
-            #print("IP Scope Successfully Created")
+            #print("IP Host Successfully Created")
             return r.status_code
         elif r.status_code == 409:
-            #print("IP Scope Already Exists")
+            #print("IP Host Already Exists")
             return r.status_code
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
@@ -443,11 +449,9 @@ def remove_scope_ip(hostid, auth, url):
     >>> assert rem_host == 204
 
     """
-    add_scope_ip_url = '/imcrs/res/access/assignedIpScope/ip/'+str(hostid)
-    f_url = url + add_scope_ip_url
-
-    r = requests.delete(f_url, auth=auth, headers=HEADERS,
-                      )
+    delete_scope_ip_url = '/imcrs/res/access/assignedIpScope/ip/'+str(hostid)
+    f_url = url + delete_scope_ip_url
+    r = requests.delete(f_url, auth=auth, headers=HEADERS,                 )
     try:
         if r.status_code == 204:
             #print("Host Successfully Deleted")
@@ -460,7 +464,7 @@ def remove_scope_ip(hostid, auth, url):
 
 
 
-def get_ip_scope_hosts( scopeId, auth, url):
+def get_ip_scope_hosts( auth, url, scopeId=None, network_address=None):
     """
     Function requires input of scope ID and returns list of allocated IP address for the specified scope
 
@@ -495,6 +499,10 @@ def get_ip_scope_hosts( scopeId, auth, url):
     >>> assert 'id' in ip_scope_hosts[0]
 
     """
+    if network_address != None:
+        scopeId = get_scope_id(network_address, auth, url)
+        if scopeId == "Scope Doesn't Exist":
+            return scopeId
     get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?size=10000&ipScopeId="+str(scopeId)
     f_url = url + get_ip_scope_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
@@ -512,50 +520,7 @@ def get_ip_scope_hosts( scopeId, auth, url):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_ip_scope: An Error has occured"
 
-def add_scope_ip(ipaddress, name, description, scopeid, auth, url):
-    """
-    Function to add new host IP address allocation to existing scope ID
 
-    :param ipaddress:
-
-    :param name: name of the owner of this host
-
-    :param description: Description of the host
-
-    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
-
-    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
-
-    :return:
-
-    :rtype:
-
-    >>> from pyhpeimc.auth import *
-
-    >>> from pyhpeimc.plat.termaccess import *
-
-    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
-
-    >>> new_host = add_scope_ip('10.50.0.5', 'cyoung', 'New Test Host','175', auth.creds, auth.url)
-
-    """
-    new_ip = { "ip": ipaddress,
-      "name": name,
-      "description": description}
-    add_scope_ip_url = '/imcrs/res/access/assignedIpScope/ip?ipScopeId='+str(scopeid)
-    f_url = url + add_scope_ip_url
-    payload = json.dumps(new_ip)
-    r = requests.post(f_url, auth=auth, headers=HEADERS,
-                      data=payload)  # creates the URL using the payload variable as the contents
-    try:
-        if r.status_code == 200:
-            #print("IP Host Successfully Created")
-            return r.status_code
-        elif r.status_code == 409:
-            #print("IP Host Already Exists")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
 
 def add_host_to_segment(ipaddress, name, description, network_address, auth, url):
     ''' Function to abstract existing add_scope_ip_function. Allows for use of network address rather than forcing human
@@ -590,13 +555,16 @@ def delete_host_from_segment(ipaddress, networkaddress, auth, url):
 
     '''
     host_id = get_host_id(ipaddress, networkaddress, auth, url)
-    remove_scope_ip(host_id, auth.creds, auth.url)
+    delete_host = remove_scope_ip(host_id, auth, url)
+    return delete_host
 
 
 """
 Following Section are Helper functions to help translate human readable IPv4 address to IMC internal keys for working with IP
 scopes and hosts
 """
+
+
 def get_scope_id(network_address, auth, url):
     """
 
@@ -643,9 +611,6 @@ def get_scope_id(network_address, auth, url):
 
 
 
-
-
-
 def get_host_id(host_address, network_address, auth, url):
     """
 
@@ -680,10 +645,12 @@ def get_host_id(host_address, network_address, auth, url):
 
     """
     scope_id = get_scope_id(network_address, auth, url)
-    all_scope_hosts = get_ip_scope_hosts(scope_id, auth, url)
+    all_scope_hosts = get_ip_scope_hosts( auth, url, scopeId= scope_id)
     for host in all_scope_hosts:
         if host['ip'] == host_address:
             return host['id']
+        else:
+            return "Host Doesn't Exist"
 
 
 

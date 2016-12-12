@@ -509,5 +509,92 @@ class Test_Get_scope_id(TestCase):
         self.assertEqual(scope_id, "Scope Doesn't Exist")
 
 
+class Test_Add_scope_ip(TestCase):
+    def test_add_scope_ip_type(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url, network_address=term_access_ipam_network_scope)
+        child_scope = add_child_ip_scope('csyoung', 'test child scope', auth.creds, auth.url,
+                                         network_address=term_access_ipam_child_scope, parent_network_address=term_access_ipam_network_scope)
+        new_host_ip = add_scope_ip(term_access_ipam_host, 'cyoung', 'New Test Host', auth.creds, auth.url,
+                                network_address=term_access_ipam_network_scope)
+        self.assertIs(type(new_host_ip), int)
+        self.assertEqual(new_host_ip, 200)
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+    def test_add_scope_ip_doesnt_exist(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_host_ip = add_scope_ip(term_access_ipam_host, 'cyoung', 'New Test Host', auth.creds, auth.url,
+                                   network_address=term_access_ipam_network_scope)
+        self.assertEqual(new_host_ip, "Scope Doesn't Exist")
+
+class Test_Get_host_id(TestCase):
+    def test_get_host_id(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
+        child_scope = add_child_ip_scope('csyoung', 'test child scope', auth.creds, auth.url,
+                                         network_address=term_access_ipam_child_scope,
+                                         parent_network_address=term_access_ipam_network_scope)
+        new_host_ip = add_scope_ip(term_access_ipam_host, 'cyoung', 'New Test Host', auth.creds, auth.url,
+                                   network_address=term_access_ipam_network_scope)
+        host_id = get_host_id(term_access_ipam_host, term_access_ipam_network_scope, auth.creds, auth.url)
+        self.assertIs(type(int(host_id)), int)
+
+
+    def test_get_host_id_doesnt_exist(self):
+        host_id = get_host_id(DoesntExist, term_access_ipam_network_scope, auth.creds, auth.url)
+        self.assertEqual(host_id, "Host Doesn't Exist")
+
+class Test_Delete_host_from_segment(TestCase):
+    def test_delete_host_from_segment(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
+        child_scope = add_child_ip_scope('csyoung', 'test child scope', auth.creds, auth.url,
+                                         network_address=term_access_ipam_child_scope,
+                                         parent_network_address=term_access_ipam_network_scope)
+        new_host_ip = add_scope_ip(term_access_ipam_host, 'cyoung', 'New Test Host', auth.creds, auth.url,
+                                   network_address=term_access_ipam_network_scope)
+        delete_host = delete_host_from_segment(term_access_ipam_host,term_access_ipam_network_scope, auth.creds, auth.url)
+        self.assertEqual(delete_host, 204)
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+class Test_Get_ip_scope_hosts(TestCase):
+    def test_get_ip_scope_hosts_type(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
+        child_scope = add_child_ip_scope('csyoung', 'test child scope', auth.creds, auth.url,
+                                         network_address=term_access_ipam_child_scope,
+                                         parent_network_address=term_access_ipam_network_scope)
+        new_host_ip = add_scope_ip(term_access_ipam_host, 'cyoung', 'New Test Host', auth.creds, auth.url,
+                                   network_address=term_access_ipam_network_scope)
+        host_list = get_ip_scope_hosts(auth.creds, auth.url, network_address='10.50.0.0/16')
+        self.assertIs(type(host_list), list)
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+    def test_get_ip_scope_hosts_content(self):
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+        new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
+                                 network_address=term_access_ipam_network_scope)
+        child_scope = add_child_ip_scope('csyoung', 'test child scope', auth.creds, auth.url,
+                                         network_address=term_access_ipam_child_scope,
+                                         parent_network_address=term_access_ipam_network_scope)
+        new_host_ip = add_scope_ip(term_access_ipam_host, 'cyoung', 'New Test Host', auth.creds, auth.url,
+                                   network_address=term_access_ipam_network_scope)
+        host_list = get_ip_scope_hosts(auth.creds, auth.url, network_address='10.50.0.0/16')
+        self.assertIs(len(host_list[0]), 5)
+        self.assertIn('parentId', host_list[0])
+        self.assertIn('ip', host_list[0])
+        self.assertIn('description', host_list[0])
+        self.assertIn('name', host_list[0])
+        self.assertIn('id', host_list[0])
+        delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
+
+
+
+
 
 

@@ -19,7 +19,7 @@ term_access_host = '10.101.0.51'
 #IP address range that does not exist on the managed network
 term_access_ipam_network_scope = '10.50.0.0/16' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
 term_access_ipam_child_scope = '10.50.0.0/24' #used for pyhpeimc_plat_termaccess IP address Manager functions
-term_access_ipam_host = '10.50.0.5/24' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
+term_access_ipam_host = '10.50.0.5' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
 
 
 #Switches
