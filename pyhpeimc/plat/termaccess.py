@@ -645,7 +645,11 @@ def get_host_id(host_address, network_address, auth, url):
 
     """
     scope_id = get_scope_id(network_address, auth, url)
+    if scope_id == "Scope Doesn't Exist":
+        return scope_id
     all_scope_hosts = get_ip_scope_hosts( auth, url, scopeId= scope_id)
+    if len(all_scope_hosts) == 0:
+        return "Host Doesn't Exist"
     for host in all_scope_hosts:
         if host['ip'] == host_address:
             return host['id']

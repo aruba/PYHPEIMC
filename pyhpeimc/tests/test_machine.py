@@ -22,10 +22,14 @@ term_access_ipam_child_scope = '10.50.0.0/24' #used for pyhpeimc_plat_termaccess
 term_access_ipam_host = '10.50.0.5' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
 
 
+#used for testing VLAN functions to create and destroy vlans during tests
+vlanid = '500'
+vlan_name = 'Test_Vlan'
+
 #Switches
 CW3_Switch = None
 CW5_Switch = '10.101.0.221'
-CW7_Switch = None
+CW7_Switch = '10.20.10.10'
 Cisco_Switch = None
 Juniper_Switch = None
 Arista_Switch = None
@@ -33,17 +37,24 @@ ArubaOS_Switch = None
 
 
 #Routers
-Cisco_Router = None
+Cisco_Router = '10.101.0.1'
 CW5_Router = None
 Juniper_Router = None
 
+
 #Servers
-Windows_Server = None
-Linux_Server = None
+Windows_Server = '10.101.0.20'
+Linux_Server = '10.101.0.51'
+
 #Wireless
-cw5 = None
+CW5_Wireless = None
+Aruba = None
+MSM = None
+CiscoWireless = None
+
+
 #Hypervisor
-ESX= None
+ESX= '10.101.0.6'
 HyperV = None
 
 
@@ -110,6 +121,17 @@ class Test_Function_Name_CW5_Switch(TestCase):
 
 
 #Juniper_Router (SRV)
+
+
+#Wireless
+
+#CW5_Wireless
+
+#Aruba
+
+#MSM
+
+#CiscoWireless
 
 
 

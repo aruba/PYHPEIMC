@@ -6,6 +6,7 @@
 # This section imports required libraries
 import requests
 import json
+from pyhpeimc.plat.device import get_dev_details
 
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
@@ -18,7 +19,7 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 """
 This section contains functions which operate at the device level
 """
-def get_dev_vlans(devid, auth, url):
+def get_dev_vlans(auth, url, devid = None, devip= None):
     """Function takes input of devID to issue RESTUL call to HP IMC
 
     :param devid: str requires devId as the only input parameter
@@ -44,7 +45,8 @@ def get_dev_vlans(devid, auth, url):
     >>> assert 'vlanId' in vlans[0]
 
     """
-
+    if devip is not None:
+        devid=get_dev_details(devip, auth, url)['id']
     # checks to see if the imc credentials are already available
     get_dev_vlans_url = "/imcrs/vlan?devId=" + str(devid) + "&start=0&size=5000&total=false"
     f_url = url + get_dev_vlans_url
@@ -61,7 +63,8 @@ def get_dev_vlans(devid, auth, url):
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + ' get_dev_vlans: An Error has occured'
 
-def get_trunk_interfaces(devId, auth, url):
+
+def get_trunk_interfaces( auth, url, devId=None, devip=None ):
     """Function takes devId as input to RESTFULL call to HP IMC platform
 
     :param devid: str requires devId as the only input parameter
@@ -96,12 +99,14 @@ def get_trunk_interfaces(devId, auth, url):
     >>> get_trunk_interfaces('350', auth.creds, auth.url)
     ['No trunk inteface']
     """
-
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
     # checks to see if the imc credentials are already available
     get_trunk_interfaces_url = "/imcrs/vlan/trunk?devId=" + str(devId) + "&start=1&size=5000&total=false"
     f_url = url + get_trunk_interfaces_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
+    print (f_url)
     try:
         if r.status_code == 200:
             dev_trunk_interfaces = (json.loads(r.text))
@@ -114,9 +119,7 @@ def get_trunk_interfaces(devId, auth, url):
             return "Error:\n" + str(e) + ' get_trunk_interfaces: An Error has occured'
 
 
-
-
-def get_device_access_interfaces(devId, auth, url):
+def get_device_access_interfaces(auth, url, devId=None, devip = None):
     """Function takes devId as input to RESTFUL call to HP IMC platform
     :param devid: str requires devId as the only input parameter
 
@@ -146,7 +149,8 @@ def get_device_access_interfaces(devId, auth, url):
     >>> assert 'pvid' in access_interfaces[0]
 
     """
-    # checks to see if the imc credentials are already available
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
     get_access_interface_vlan_url = "/imcrs/vlan/access?devId=" + str(devId) + "&start=1&size=500&total=false"
     f_url = url + get_access_interface_vlan_url
     payload = None
@@ -199,7 +203,7 @@ def get_access_interface_vlan(ifIndex, accessinterfacelist, auth, url):
 
 
 #TODO add abstraction to use IP address of device and not
-def create_dev_vlan(devid, vlanid, vlan_name, auth, url):
+def create_dev_vlan( vlanid, vlan_name, auth, url, devid= None, devip = None ):
     """
     function takes devid and vlanid vlan_name of specific device and 802.1q VLAN tag and issues a RESTFUL call to add the
     specified VLAN from the target device. VLAN Name MUST be valid on target device.
@@ -228,24 +232,28 @@ def create_dev_vlan(devid, vlanid, vlan_name, auth, url):
 
 
     """
+    if devip is not None:
+        devid=get_dev_details(devip, auth, url)['id']
     create_dev_vlan_url = "/imcrs/vlan?devId=" + str(devid)
     f_url = url + create_dev_vlan_url
+    print (f_url)
     payload = '''{ "vlanId": "''' + str(vlanid) + '''", "vlanName" : "''' + str(vlan_name) + '''"}'''
+    print (payload)
     r = requests.post(f_url, data=payload, auth=auth,
                       headers=HEADERS)  # creates the URL using the payload variable as the contents
-    return r
     try:
 
         if r.status_code == 201:
             print ('Vlan Created')
-            return r.status_code
+            return 201
         elif r.status_code == 409:
-            return '''Unable to create VLAN.\nVLAN Already Exists\nDevice does not support VLAN function'''
+            print ('''Unable to create VLAN.\nVLAN Already Exists\nDevice does not support VLAN function''')
+            return 409
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " create_dev_vlan: An Error has occured"
 
 
-def delete_dev_vlans(devid, vlanid, auth, url):
+def delete_dev_vlans(vlanid, auth, url, devid=None, devip=None):
     """
     function takes devid and vlanid of specific device and 802.1q VLAN tag and issues a RESTFUL call to remove the
     specified VLAN from the target device.
@@ -269,6 +277,8 @@ def delete_dev_vlans(devid, vlanid, auth, url):
 
     >>> create_dev_vlan = create_dev_vlan('350', '200', 'test vlan', auth.creds, auth.url)
     """
+    if devip is not None:
+        devid=get_dev_details(devip, auth, url)['id']
     remove_dev_vlan_url = "/imcrs/vlan/delvlan?devId=" + str(devid) + "&vlanId=" + str(vlanid)
     f_url = url + remove_dev_vlan_url
     payload = None
