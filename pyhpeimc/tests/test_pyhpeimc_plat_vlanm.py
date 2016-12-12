@@ -1006,3 +1006,304 @@ class Test_Delete_dev_vlans_HyperV(TestCase):
         set_vlan = create_dev_vlan(vlanid, vlan_name, auth.creds, auth.url, devip=HyperV)
         del_vlan = delete_dev_vlans(vlanid, auth.creds, auth.url, devip=HyperV)
         self.assertEqual(del_vlan, 409)
+
+
+#Section for get_device_hybrid_interfaces function for multi-vendor testing
+
+#CW3_Switch
+class Test_Get_device_hybrid_interfaces_CW3_Switch(TestCase):
+    def test_get_device_hybrid_interfaces_type(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW3_Switch)
+        dev_hybrid = get_device_hybrid_interfaces(auth.creds, auth.url, devip=CW3_Switch)
+        self.assertIs(type(dev_hybrid), list)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+    def test_get_device_hybrid_interfaces_content(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        dev_hybrid = get_device_hybrid_interfaces(auth.creds, auth.url, devip=CW3_Switch)
+        self.assertIs(len(dev_hybrid[0]), 5)
+        self.assertIn('untaggedVlans', dev_hybrid[0])
+        self.assertIn('taggedVlans', dev_hybrid[0])
+        self.assertIn('untagVlanFlag', dev_hybrid[0])
+        self.assertIn('ifIndex', dev_hybrid[0])
+        self.assertIn('pvid', dev_hybrid[0])
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+
+
+#CW5_Switch
+class Test_Get_device_hybrid_interfaces_CW5_Switch(TestCase):
+    def test_get_device_hybrid_interfaces_type(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW5_Switch)
+        dev_hybrid = get_device_hybrid_interfaces(auth.creds, auth.url, devip=CW5_Switch)
+        self.assertIs(type(dev_hybrid), list)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+    def test_get_device_hybrid_interfaces_content(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW5_Switch)
+        dev_hybrid = get_device_hybrid_interfaces(auth.creds, auth.url, devip=CW5_Switch)
+        self.assertIs(len(dev_hybrid[0]), 5)
+        self.assertIn('untaggedVlans', dev_hybrid[0])
+        self.assertIn('taggedVlans', dev_hybrid[0])
+        self.assertIn('untagVlanFlag', dev_hybrid[0])
+        self.assertIn('ifIndex', dev_hybrid[0])
+        self.assertIn('pvid', dev_hybrid[0])
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+
+
+
+#CW7_Switch
+class Test_Get_device_hybrid_interfaces_CW7_Switch(TestCase):
+    def test_get_device_hybrid_interfaces_type(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW7_Switch)
+        dev_hybrid = get_device_hybrid_interfaces(auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(type(dev_hybrid), list)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+    def test_get_device_hybrid_interfaces_content(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW7_Switch)
+        dev_hybrid = get_device_hybrid_interfaces(auth.creds, auth.url, devip=CW7_Switch)
+        self.assertIs(len(dev_hybrid[0]), 5)
+        self.assertIn('untaggedVlans', dev_hybrid[0])
+        self.assertIn('taggedVlans', dev_hybrid[0])
+        self.assertIn('untagVlanFlag', dev_hybrid[0])
+        self.assertIn('ifIndex', dev_hybrid[0])
+        self.assertIn('pvid', dev_hybrid[0])
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+
+
+# Testing add_hybrid_interface for Comware Switches
+
+#CW3_Switch
+class Test_Add_hybrid_interface_CW3_Switch(TestCase):
+    def test_add_hybrid_interface(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertEqual(add_hybrid, 201)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+
+    def test_add_hybrid_interface_already_exists(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW3_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertEqual(add_hybrid, 409)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+
+
+#CW5_Switch
+class Test_Add_hybrid_interface_CW5_Switch(TestCase):
+    def test_add_hybrid_interface(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertEqual(add_hybrid, 201)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+
+    def test_add_hybrid_interface_already_exists(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW5_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertEqual(add_hybrid, 409)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+
+
+#CW7_Switch
+class Test_Add_hybrid_interface_CW7_Switch(TestCase):
+    def test_add_hybrid_interface(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertEqual(add_hybrid, 201)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+
+    def test_add_hybrid_interface_already_exists(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW7_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertEqual(add_hybrid, 409)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+
+
+# Testing modify_hybrid_interface for Comware Switches
+
+#CW3_Switch
+class Test_Modify_hybrid_interface_CW3_Switch(TestCase):
+    def test_modify_hybrid_interface(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW3_Switch)
+        modify_hybrid = modify_hybrid_interface('9', '1', '10,15', '1', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertEqual(modify_hybrid, 204)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+
+
+#CW5_Switch
+class Test_Modify_hybrid_interface_CW5_Switch(TestCase):
+    def test_modify_hybrid_interface(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW5_Switch)
+        modify_hybrid = modify_hybrid_interface('9', '1', '10,15', '1', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertEqual(modify_hybrid, 204)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+
+
+#CW7_Switch
+class Test_Modify_hybrid_interface_CW7_Switch(TestCase):
+    def test_modify_hybrid_interface(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW7_Switch)
+        modify_hybrid = modify_hybrid_interface('9', '1', '10,15', '1', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertEqual(modify_hybrid, 204)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+
+
+# Testing delete_hybrid_interface for Comware Switches
+
+#CW3_Switch
+class Test_Delete_hybrid_interface_CW3_Switch(TestCase):
+    def test_delete_hybrid_interface(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW3_Switch)
+        delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertEqual(delete_hybrid, 204)
+
+    def test_delete_hybrid_interface_doesnt_exists(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+        delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertEqual(delete_hybrid, 409)
+
+
+#CW5_Switch
+class Test_Delete_hybrid_interface_CW5_Switch(TestCase):
+    def test_delete_hybrid_interface(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW5_Switch)
+        delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertEqual(delete_hybrid, 204)
+
+    def test_delete_hybrid_interface_doesnt_exists(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+        delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertEqual(delete_hybrid, 409)
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW5_Switch)
+
+
+#CW7_Switch
+class Test_Delete_hybrid_interface_CW7_Switch(TestCase):
+    def test_delete_hybrid_interface(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+        add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW7_Switch)
+        delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertEqual(delete_hybrid, 204)
+
+    def test_delete_hybrid_interface_doesnt_exists(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+        delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertEqual(delete_hybrid, 409)
+
+
+# Test set_access_interface_pvid for Multi-Vendor Devices
+
+#CW3_Switch
+class Test_Set_access_interface_pvid_CW3_Switch(TestCase):
+    def test_set_access_interface_pvid(self):
+        if CW3_Switch is None:
+            raise SkipTest
+        change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=CW3_Switch)
+        self.assertEqual(change_pvid, 204)
+        change_pvid = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=CW3_Switch)
+
+#CW5_Switch
+class Test_Set_access_interface_pvid_CW5_Switch(TestCase):
+    def test_set_access_interface_pvid(self):
+        if CW5_Switch is None:
+            raise SkipTest
+        change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=CW5_Switch)
+        self.assertEqual(change_pvid, 204)
+        change_pvid = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=CW5_Switch)
+
+
+#CW7_Switch
+class Test_Set_access_interface_pvid_CW7_Switch(TestCase):
+    def test_set_access_interface_pvid(self):
+        if CW7_Switch is None:
+            raise SkipTest
+        change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=CW7_Switch)
+        self.assertEqual(change_pvid, 204)
+        change_pvid = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=CW7_Switch)
+
+
+#Cisco_Switch
+class Test_Set_access_interface_pvid_Cisco_Switch(TestCase):
+    def test_set_access_interface_pvid(self):
+        if Cisco_Switch is None:
+            raise SkipTest
+        change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=Cisco_Switch)
+        self.assertEqual(change_pvid, 204)
+        change_pvid = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=Cisco_Switch)
+
+
+#Juniper_Switch
+class Test_Set_access_interface_pvid_Juniper_Switch(TestCase):
+    def test_set_access_interface_pvid(self):
+        if Juniper_Switch is None:
+            raise SkipTest
+        change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=Juniper_Switch)
+        self.assertEqual(change_pvid, 204)
+        change_pvid = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=Juniper_Switch)
+
+
+#Arista_Switch
+class Test_Set_access_interface_pvid_Arista_Switch(TestCase):
+    def test_set_access_interface_pvid(self):
+        if Arista_Switch is None:
+            raise SkipTest
+        change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=Arista_Switch)
+        self.assertEqual(change_pvid, 204)
+        change_pvid = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=Arista_Switch)
+
+
+
+
+#ArubaOS_Switch (Formerly Provision)
+class Test_Set_access_interface_pvid_ArubaOS_Switch(TestCase):
+    def test_set_access_interface_pvid(self):
+        if ArubaOS_Switch is None:
+            raise SkipTest
+        change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=ArubaOS_Switch)
+        self.assertEqual(change_pvid, 204)
+        change_pvid = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=ArubaOS_Switch)

@@ -169,6 +169,142 @@ def get_device_access_interfaces(auth, url, devId=None, devip = None):
             return "Error:\n" + str(e) + " get_device_access_interfaces: An Error has occured"
 
 
+#Section for Hybrid Interfaces - Applies to Comware Devices only
+
+def get_device_hybrid_interfaces(auth, url, devId=None, devip = None):
+    """Function takes devId as input to RESTFUL call to HP IMC platform
+    :param devid: str requires devId as the only input parameter
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :return: list of dictionaries where each element of the list represents an interface which has been configured as a
+    VLAN access port
+
+    :rtype: list
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.vlanm import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> hybrid_interfaces = get_device_hybrid_interfaces('10', auth.creds, auth.url)
+
+    >>> assert type(access_interfaces) is list
+
+    >>> assert (len(access_interfaces[0])) is 2
+
+    >>> assert 'ifIndex' in access_interfaces[0]
+
+    >>> assert 'pvid' in access_interfaces[0]
+
+    """
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
+    get_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devId) + "&start=1&size=500&total=false"
+    f_url = url + get_hybrid_interface_vlan_url
+    payload = None
+    # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    # r.status_code
+    try:
+        if r.status_code == 200:
+            dev_hybrid_interfaces = (json.loads(r.text))
+            if len(dev_hybrid_interfaces) == 2:
+                dev_hybrid = dev_hybrid_interfaces['hybridIf']
+                if type(dev_hybrid) == dict:
+                    dev_hybrid = [dev_hybrid]
+                return dev_hybrid
+            else:
+                dev_hybrid_interfaces['hybridIf'] = ["No hybrid inteface"]
+                return dev_hybrid_interfaces['hybridIf']
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
+
+
+def add_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url, devip=None):
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
+    add_hybrid_interface_url = "/imcrs/vlan/hybrid?devId=" + str(devId) + "&start=1&size=500&total=false"
+    f_url = url + add_hybrid_interface_url
+    payload = '''{"ifIndex": "'''+ifindex+'''",
+        "pvid": "'''+pvid+'''",
+        "taggedVlans": "'''+taggedVlans+'''",
+        "untagVlanFlag": "true",
+        "untaggedVlans": "'''+untaggedVlans+'''"
+    }'''
+    # creates the URL using the payload variable as the contents
+    r = requests.post(f_url, auth=auth, data=payload, headers=HEADERS)
+    # r.status_code
+    try:
+        if r.status_code == 201:
+            return 201
+        if r.status_code == 409:
+            return 409
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
+
+
+def modify_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url, devip=None):
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
+    modify_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devId) + "&start=1&size=500&total=false"
+    f_url = url + modify_hybrid_interface_vlan_url
+    payload = '''{"ifIndex": "'''+ifindex+'''",
+        "pvid": "'''+pvid+'''",
+        "taggedVlans": "'''+taggedVlans+'''",
+        "untagVlanFlag": "true",
+        "untaggedVlans": "'''+untaggedVlans+'''"
+    }'''
+    # creates the URL using the payload variable as the contents
+    r = requests.put(f_url, auth=auth, data=payload, headers=HEADERS)
+    try:
+        if r.status_code == 204:
+            return 204
+        if r.status_code == 409:
+            return 409
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
+
+
+
+def delete_hybrid_interface(ifindex, auth, url, devip=None):
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
+    delete_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId="+devId+"&ifIndex="+ifindex
+    f_url = url + delete_hybrid_interface_vlan_url
+    r = requests.delete(f_url, auth=auth, headers=HEADERS)
+    # r.status_code
+    try:
+        if r.status_code == 204:
+            return 204
+        if r.status_code == 409:
+            return 409
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
+
+# Section for working with Access Interfaces
+
+def set_access_interface_pvid(ifIndex, pvid, auth, url, devip=None):
+    if devip is not None:
+        devId=get_dev_details(devip, auth, url)['id']
+    set_access_interface_pvid_url = "/imcrs/vlan/access?devId="+devId+"&destVlanId="+pvid+"&ifIndex="+str(ifIndex)
+    f_url = url + set_access_interface_pvid_url
+    # creates the URL using the payload variable as the contents
+    r = requests.put(f_url, auth=auth, headers=HEADERS)
+    try:
+        if r.status_code == 204:
+            return 204
+        if r.status_code == 409:
+            return 409
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " set_access_interface_pvid: An Error has occured"
+
+
+
+
 def get_access_interface_vlan(ifIndex, accessinterfacelist, auth, url):
     """
 
@@ -200,6 +336,8 @@ def get_access_interface_vlan(ifIndex, accessinterfacelist, auth, url):
             return i['pvid']
         else:
             return "Not an Access Port"
+
+
 
 
 #TODO add abstraction to use IP address of device and not
