@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.auth &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.auth</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># author: @netmanchris</span>
+
+
+
+<span class="c1"># This section imports required libraries</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="k">import</span> <span class="n">HTTPDigestAuth</span>
+
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="IMCAuth"><a class="viewcode-back" href="../../pyhpeimc.auth.html#pyhpeimc.auth.IMCAuth">[docs]</a><span class="k">class</span> <span class="nc">IMCAuth</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">HTTPDigestAuth</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class handles authentication against the HPE IMC API and uses the Requests API. IMCAuth derives from</span>
+<span class="sd">    requests.auth.HTTPDigestAuth.</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.204&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; auth.password</span>
+<span class="sd">    &#39;admin&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">h_url</span><span class="p">,</span><span class="n">server</span><span class="p">,</span><span class="n">port</span><span class="p">,</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initializes the class. Set the h_url, server, username, and password variables.</span>
+<span class="sd">        :param h_url: str value. Must be equal to &quot;http://&quot; or &quot;https://</span>
+<span class="sd">        :param server: str value. Must be valid IPv4 address or FQDN</span>
+<span class="sd">        :param port: str value. Equal to listening port of IMC server. example &quot;8080&quot; for http or &quot;8443&quot; for HTTPS</span>
+<span class="sd">        :param username: str value. Equal to username of IMC operator with privileges to access RESTUL API</span>
+<span class="sd">        :param password: str value. Equal to valid password of username defined above</span>
+<span class="sd">        :return:</span>
+<span class="sd">        returns HTTPDigestauth object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HTTPDigestAuth</span><span class="p">,</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h_url</span> <span class="o">=</span> <span class="n">h_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">creds</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">HTTPDigestAuth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+
+<div class="viewcode-block" id="IMCAuth.get_auth"><a class="viewcode-back" href="../../pyhpeimc.auth.html#pyhpeimc.auth.IMCAuth.get_auth">[docs]</a>    <span class="k">def</span> <span class="nf">get_auth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method requests an authentication object from the HPE IMC NMS and returns an HTTPDigest Auth Object</span>
+<span class="sd">        :return:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">h_url</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">server</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span>
+        <span class="n">auth</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">HTTPDigestAuth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="n">auth_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs&quot;</span>
+        <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">auth_url</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="c1"># checks for reqeusts exceptions</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">The IMC server address is invalid. Please try again&#39;</span><span class="p">)</span>
+            <span class="n">set_imc_creds</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># checks for valid IMC credentials</span>
+            <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot;Error: </span><span class="se">\n</span><span class="s2"> You&#39;re credentials are invalid. Please try again</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">set_imc_creds</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="test_imc_creds"><a class="viewcode-back" href="../../pyhpeimc.auth.html#pyhpeimc.auth.test_imc_creds">[docs]</a><span class="k">def</span> <span class="nf">test_imc_creds</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function takes input of auth class object auth object and URL and returns a BOOL of TRUE if the authentication was successful.</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; test_imc_creds(auth.creds, auth.url)</span>
+<span class="sd">    True</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">test_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs&#39;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">test_url</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; test_imc_creds: An Error has occured&quot;</span></div>
+
+
+<div class="viewcode-block" id="set_imc_creds"><a class="viewcode-back" href="../../pyhpeimc.auth.html#pyhpeimc.auth.set_imc_creds">[docs]</a><span class="k">def</span> <span class="nf">set_imc_creds</span><span class="p">(</span><span class="n">h_url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">imc_server</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">imc_port</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">imc_user</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">imc_pw</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; This function prompts user for IMC server information and credentuials and stores</span>
+<span class="sd">    values in url and auth global variables&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span>
+    <span class="k">if</span> <span class="n">h_url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">imc_protocol</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
+        <span class="s2">&quot;What protocol would you like to use to connect to the IMC server: </span><span class="se">\n</span><span class="s2"> Press 1 for HTTP: </span><span class="se">\n</span><span class="s2"> Press 2 for HTTPS:&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">imc_protocol</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+            <span class="n">h_url</span> <span class="o">=</span> <span class="s1">&#39;http://&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">h_url</span> <span class="o">=</span> <span class="s1">&#39;https://&#39;</span>
+        <span class="n">imc_server</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What is the ip address of the IMC server?&quot;</span><span class="p">)</span>
+        <span class="n">imc_port</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What is the port number of the IMC server?&quot;</span><span class="p">)</span>
+        <span class="n">imc_user</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;What is the username of the IMC eAPI user?&quot;</span><span class="p">)</span>
+        <span class="n">imc_pw</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;What is the password of the IMC eAPI user?&#39;&#39;&#39;</span><span class="p">)</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">h_url</span> <span class="o">+</span> <span class="n">imc_server</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="n">imc_port</span>
+    <span class="n">auth</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">HTTPDigestAuth</span><span class="p">(</span><span class="n">imc_user</span><span class="p">,</span> <span class="n">imc_pw</span><span class="p">)</span>
+    <span class="n">test_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs&#39;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">test_url</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">auth</span>
+    <span class="c1"># checks for reqeusts exceptions</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">The IMC server address is invalid. Please try again</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">set_imc_creds</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># checks for valid IMC credentials</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: </span><span class="se">\n</span><span class="s2"> You&#39;re credentials are invalid. Please try again</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">set_imc_creds</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;You&#39;ve successfully access the IMC eAPI&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This section contains misc helper functions as needed.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="print_to_file"><a class="viewcode-back" href="../../pyhpeimc.auth.html#pyhpeimc.auth.print_to_file">[docs]</a><span class="k">def</span> <span class="nf">print_to_file</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function takes in object of type str, list, or dict and prints out to current working directory as pyoutput.txt</span>
+<span class="sd">    :param:  Object: object of type str, list, or dict</span>
+<span class="sd">    :return: No return. Just prints out to file handler and save to current working directory as pyoutput.txt</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span> <span class="p">(</span><span class="s1">&#39;pyoutput.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">indent</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">indent</span> <span class="o">=</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="nb">object</span>
+        <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

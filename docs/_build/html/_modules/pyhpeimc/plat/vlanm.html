@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.plat.vlanm &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.plat.vlanm</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># author: @netmanchris</span>
+
+
+
+<span class="c1"># This section imports required libraries</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+<span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+<span class="c1">#command creates dummy IMCAuth object. Should be overwritten in script calling these functions</span>
+
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This section contains functions which operate at the device level</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="get_dev_vlans"><a class="viewcode-back" href="../../../pyhpeimc.plat.vlanm.html#pyhpeimc.plat.vlanm.get_dev_vlans">[docs]</a><span class="k">def</span> <span class="nf">get_dev_vlans</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function takes input of devID to issue RESTUL call to HP IMC</span>
+
+<span class="sd">    :param devid: str requires devId as the only input parameter</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: list of dictionaries where each element of the list represents one vlan on the target device</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.vlanm import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; vlans = get_dev_vlans(&#39;350&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(vlans) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;vlanId&#39; in vlans[0]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># checks to see if the imc credentials are already available</span>
+    <span class="n">get_dev_vlans_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/vlan?devId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;start=0&amp;size=5000&amp;total=false&quot;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_dev_vlans_url</span>
+
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
+    <span class="c1"># r.status_code</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">dev_vlans</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">dev_vlans</span><span class="p">[</span><span class="s1">&#39;vlan&#39;</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;vlan&#39;</span><span class="p">:</span> <span class="s1">&#39;no vlans&#39;</span><span class="p">}</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; get_dev_vlans: An Error has occured&#39;</span></div>
+
+<div class="viewcode-block" id="get_trunk_interfaces"><a class="viewcode-back" href="../../../pyhpeimc.plat.vlanm.html#pyhpeimc.plat.vlanm.get_trunk_interfaces">[docs]</a><span class="k">def</span> <span class="nf">get_trunk_interfaces</span><span class="p">(</span><span class="n">devId</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function takes devId as input to RESTFULL call to HP IMC platform</span>
+
+<span class="sd">    :param devid: str requires devId as the only input parameter</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: list of dictionaries where each element of the list represents an interface which has been configured as a</span>
+<span class="sd">    VLAN trunk port</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.vlanm import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; trunk_interfaces = get_trunk_interfaces(&#39;10&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(trunk_interfaces) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert len(trunk_interfaces[0]) == 3</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;allowedVlans&#39; in trunk_interfaces[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;ifIndex&#39; in trunk_interfaces[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;pvid&#39; in trunk_interfaces[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; get_trunk_interfaces(&#39;350&#39;, auth.creds, auth.url)</span>
+<span class="sd">    [&#39;No trunk inteface&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># checks to see if the imc credentials are already available</span>
+    <span class="n">get_trunk_interfaces_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/vlan/trunk?devId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devId</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;start=1&amp;size=5000&amp;total=false&quot;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_trunk_interfaces_url</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
+    <span class="c1"># r.status_code</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">dev_trunk_interfaces</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dev_trunk_interfaces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dev_trunk_interfaces</span><span class="p">[</span><span class="s1">&#39;trunkIf&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dev_trunk_interfaces</span><span class="p">[</span><span class="s1">&#39;trunkIf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;No trunk inteface&quot;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">dev_trunk_interfaces</span><span class="p">[</span><span class="s1">&#39;trunkIf&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; get_trunk_interfaces: An Error has occured&#39;</span></div>
+
+
+
+
+<div class="viewcode-block" id="get_device_access_interfaces"><a class="viewcode-back" href="../../../pyhpeimc.plat.vlanm.html#pyhpeimc.plat.vlanm.get_device_access_interfaces">[docs]</a><span class="k">def</span> <span class="nf">get_device_access_interfaces</span><span class="p">(</span><span class="n">devId</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function takes devId as input to RESTFUL call to HP IMC platform</span>
+<span class="sd">    :param devid: str requires devId as the only input parameter</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: list of dictionaries where each element of the list represents an interface which has been configured as a</span>
+<span class="sd">    VLAN access port</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.vlanm import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; access_interfaces = get_device_access_interfaces(&#39;10&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(access_interfaces) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert (len(access_interfaces[0])) is 2</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;ifIndex&#39; in access_interfaces[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;pvid&#39; in access_interfaces[0]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># checks to see if the imc credentials are already available</span>
+    <span class="n">get_access_interface_vlan_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/vlan/access?devId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devId</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;start=1&amp;size=500&amp;total=false&quot;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_access_interface_vlan_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
+    <span class="c1"># r.status_code</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">dev_access_interfaces</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dev_access_interfaces</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">dev_access_interfaces</span><span class="p">[</span><span class="s1">&#39;accessIf&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dev_access_interfaces</span><span class="p">[</span><span class="s1">&#39;accessIf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;No access inteface&quot;</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">dev_access_interfaces</span><span class="p">[</span><span class="s1">&#39;accessIf&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_device_access_interfaces: An Error has occured&quot;</span></div>
+
+
+<div class="viewcode-block" id="get_access_interface_vlan"><a class="viewcode-back" href="../../../pyhpeimc.plat.vlanm.html#pyhpeimc.plat.vlanm.get_access_interface_vlan">[docs]</a><span class="k">def</span> <span class="nf">get_access_interface_vlan</span><span class="p">(</span><span class="n">ifIndex</span><span class="p">,</span> <span class="n">accessinterfacelist</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param ifIndex: str object representing the numeric value of the iFindex for the interface</span>
+
+<span class="sd">    :param accessinterfacelist: list object, intended to be the output of the get_device_access_interfaces function</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: str representing the numeric value of the PVID for the target interface.</span>
+
+<span class="sd">    :rtype: str</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.vlanm import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; access_interface_list = get_device_access_interfaces(&#39;10&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; get_access_interface_vlan(&#39;4&#39;, access_interface_list, auth.creds, auth.url)</span>
+<span class="sd">    &#39;1&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">accessinterfacelist</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;ifIndex&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">ifIndex</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;pvid&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Not an Access Port&quot;</span></div>
+
+
+<span class="c1">#TODO add abstraction to use IP address of device and not</span>
+<div class="viewcode-block" id="create_dev_vlan"><a class="viewcode-back" href="../../../pyhpeimc.plat.vlanm.html#pyhpeimc.plat.vlanm.create_dev_vlan">[docs]</a><span class="k">def</span> <span class="nf">create_dev_vlan</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">vlanid</span><span class="p">,</span> <span class="n">vlan_name</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function takes devid and vlanid vlan_name of specific device and 802.1q VLAN tag and issues a RESTFUL call to add the</span>
+<span class="sd">    specified VLAN from the target device. VLAN Name MUST be valid on target device.</span>
+
+<span class="sd">    :param devid: int or str value of the target device</span>
+
+<span class="sd">    :param vlanid:int or str value of target 802.1q VLAN</span>
+
+<span class="sd">    :param vlan_name: str value of the target 802.1q VLAN name. MUST be valid name on target device.</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: str HTTP Response code. Should be 201 if successfully created</span>
+
+<span class="sd">    :rtype: str</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.vlanm import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; create_dev_vlan = create_dev_vlan(&#39;350&#39;, &#39;200&#39;, &#39;test vlan&#39;, auth.creds, auth.url)</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">create_dev_vlan_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/vlan?devId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">create_dev_vlan_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{ &quot;vlanId&quot;: &quot;&#39;&#39;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">vlanid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;&quot;, &quot;vlanName&quot; : &quot;&#39;&#39;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">vlan_name</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;&quot;}&#39;&#39;&#39;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span>
+                      <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">return</span> <span class="n">r</span>
+    <span class="k">try</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Vlan Created&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;&#39;Unable to create VLAN.</span><span class="se">\n</span><span class="s1">VLAN Already Exists</span><span class="se">\n</span><span class="s1">Device does not support VLAN function&#39;&#39;&#39;</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; create_dev_vlan: An Error has occured&quot;</span></div>
+
+
+<div class="viewcode-block" id="delete_dev_vlans"><a class="viewcode-back" href="../../../pyhpeimc.plat.vlanm.html#pyhpeimc.plat.vlanm.delete_dev_vlans">[docs]</a><span class="k">def</span> <span class="nf">delete_dev_vlans</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">vlanid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function takes devid and vlanid of specific device and 802.1q VLAN tag and issues a RESTFUL call to remove the</span>
+<span class="sd">    specified VLAN from the target device.</span>
+<span class="sd">    :param vlanid:int or str value of target 802.1q VLAN</span>
+
+<span class="sd">    :param vlan_name: str value of the target 802.1q VLAN name. MUST be valid name on target device.</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: HTTP response object from requests library. Status code should be 204 if Successful</span>
+
+<span class="sd">    :rtype: requests.models.Response</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.vlanm import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; create_dev_vlan = create_dev_vlan(&#39;350&#39;, &#39;200&#39;, &#39;test vlan&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">remove_dev_vlan_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/vlan/delvlan?devId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;vlanId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">vlanid</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">remove_dev_vlan_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span>
+                        <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Vlan deleted&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;Unable to delete VLAN.</span><span class="se">\n</span><span class="s1">VLAN does not Exist</span><span class="se">\n</span><span class="s1">Device does not support VLAN function&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; delete_dev_vlans: An Error has occured&quot;</span></div>
+
+
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This section contains functions which operate at the interface level</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

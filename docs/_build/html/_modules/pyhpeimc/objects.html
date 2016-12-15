@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.objects &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.objects</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># author: @netmanchris</span>
+
+
+
+<span class="c1"># This section imports required libraries</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.vlanm</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.netassets</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.alarms</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">requests.auth</span> <span class="k">import</span> <span class="n">HTTPDigestAuth</span>
+
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+<span class="c1"># IMC Device Class</span>
+
+<div class="viewcode-block" id="IMCDev"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IMCDev">[docs]</a><span class="k">class</span> <span class="nc">IMCDev</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    imc_dev class takes in the ip_address which is used as the primary key to gather the following attributes</span>
+<span class="sd">         for a device which as been previously discovered in the HP IMC Network Management platform.</span>
+<span class="sd">         Each instance of this class should have the following attributes</span>
+
+<span class="sd">         ip: The IP address used to manage the device in HP IMC</span>
+<span class="sd">         description: returns the description of the device as discovered in HP IMC</span>
+<span class="sd">         location: returns the location of the device as discovered in HP IMC</span>
+<span class="sd">         contact: returns the contact of the device as discovered in HP IMC</span>
+<span class="sd">         type: returns the type of the device as discovered in HP IMC</span>
+<span class="sd">         name: returns the name of the device as discovered in HP IMC</span>
+<span class="sd">         status: returns the current alarm status as discovered in HP IMC</span>
+<span class="sd">         devid: returns the current devid used to internally identify the device as discovered in HP IMC</span>
+<span class="sd">         interfacelist: returns the current list of interfaces for the device as discovered in HP IMC</span>
+<span class="sd">         numinterface: returns a count of the number of interfaces in the interfacelist attribute</span>
+<span class="sd">         vlans: returns the current vlans existing in the device as discovered in HP IMC. Device must be supported in the</span>
+<span class="sd">                HP IMC Platform VLAN manager module.</span>
+<span class="sd">         accessinterfaces: returns the device interfaces configured as access interfaces. Device must be supported in the</span>
+<span class="sd">                HP IMC Platform VLAN manager module.</span>
+<span class="sd">         trunkinterfaces: returns the device interfaces configured as trunk interfaces. Device must be supported in the</span>
+<span class="sd">                HP IMC Platform VLAN manager module.</span>
+<span class="sd">         alarm: returns the current unrecovered alarms as known by HP IMC.</span>
+<span class="sd">         num alarms: returns a count of the number of alarms as returned by the alarm attribute</span>
+<span class="sd">         serial: returns the network assets, including serial numbers for the device as discovered by HP IMC. The device</span>
+<span class="sd">                must support the ENTITY MIB ( rfc 4133 ) for this value to be returned.</span>
+<span class="sd">         runconfig: returns the most recent running configuration for the device as known by HP IMC. The device must be</span>
+<span class="sd">                be supported in the HP IMC platform ICC module.</span>
+<span class="sd">         startconfig: returns the most recent startup configuration for the device as known by HP IMC. The device must be</span>
+<span class="sd">                be supported in the HP IMC platform ICC module.</span>
+<span class="sd">         ipmacarp: returns the current device maciparp table as discovered by HP IMC.</span>
+
+<span class="sd">         The imc_dev class supports the following methods which can be called upon an instance of this class</span>
+
+<span class="sd">         addvlan: This method executes the addvlan function on the specific instance of the imc_dev object. Devices must</span>
+<span class="sd">                  supported in the HP IMC Platform VLAN Manager module.</span>
+
+<span class="sd">         &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;ip&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;sysDescription&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;location&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contact</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;contact&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;typeName&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;sysName&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;statusDesc&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interfacelist</span> <span class="o">=</span> <span class="n">get_dev_interface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numinterface</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_dev_interface</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vlans</span> <span class="o">=</span> <span class="n">get_dev_vlans</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accessinterfaces</span> <span class="o">=</span> <span class="n">get_device_access_interfaces</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trunkinterfaces</span> <span class="o">=</span> <span class="n">get_trunk_interfaces</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alarm</span> <span class="o">=</span> <span class="n">get_dev_alarms</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numalarm</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">get_dev_alarms</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assets</span> <span class="o">=</span> <span class="n">get_dev_asset_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serials</span> <span class="o">=</span> <span class="p">[({</span><span class="s1">&#39;name&#39;</span> <span class="p">:</span> <span class="n">asset</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="s1">&#39;serialNum&#39;</span><span class="p">:</span> <span class="n">asset</span><span class="p">[</span><span class="s1">&#39;serialNum&#39;</span><span class="p">]})</span> <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">assets</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runconfig</span> <span class="o">=</span> <span class="n">get_dev_run_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startconfig</span> <span class="o">=</span> <span class="n">get_dev_start_config</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ipmacarp</span> <span class="o">=</span> <span class="n">get_ip_mac_arp_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+
+<div class="viewcode-block" id="IMCDev.getvlans"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IMCDev.getvlans">[docs]</a>    <span class="k">def</span> <span class="nf">getvlans</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vlans</span> <span class="o">=</span> <span class="n">get_dev_vlans</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IMCDev.addvlan"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IMCDev.addvlan">[docs]</a>    <span class="k">def</span> <span class="nf">addvlan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vlanid</span><span class="p">,</span> <span class="n">vlan_name</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="n">create_dev_vlan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">vlanid</span><span class="p">,</span> <span class="n">vlan_name</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IMCDev.delvlan"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IMCDev.delvlan">[docs]</a>    <span class="k">def</span> <span class="nf">delvlan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vlanid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="n">delete_dev_vlans</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">vlanid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IMCDev.getipmacarp"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IMCDev.getipmacarp">[docs]</a>    <span class="k">def</span> <span class="nf">getipmacarp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ipmacarp</span> <span class="o">=</span> <span class="n">get_ip_mac_arp_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="IMCInterface"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IMCInterface">[docs]</a><span class="k">class</span> <span class="nc">IMCInterface</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ip_address</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ip</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;ip&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ifIndex</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;ifIndex&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">macaddress</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;phyAddress&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;statusDesc&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">adminstatus</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;adminStatusDesc&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;ifDescription&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;ifAlias&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mtu</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;mtu&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;ifspeed&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accessinterfaces</span> <span class="o">=</span> <span class="n">get_device_access_interfaces</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">devid</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvid</span> <span class="o">=</span> <span class="n">get_access_interface_vlan</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ifIndex</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">accessinterfaces</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span></div>
+
+
+<div class="viewcode-block" id="IPScope"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IPScope">[docs]</a><span class="k">class</span> <span class="nc">IPScope</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">netaddr</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">get_scope_id</span><span class="p">(</span><span class="n">netaddr</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">details</span> <span class="o">=</span> <span class="n">get_ip_scope_detail</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hosts</span> <span class="o">=</span> <span class="n">get_ip_scope_hosts</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auth</span> <span class="o">=</span> <span class="n">auth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">netaddr</span> <span class="o">=</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_network</span><span class="p">(</span><span class="n">netaddr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">startip</span> <span class="o">=</span> <span class="n">get_ip_scope_detail</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;startIp&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">endip</span> <span class="o">=</span> <span class="n">get_ip_scope_detail</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;endIp&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;assignedIpScope&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">details</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">child</span> <span class="o">=</span> <span class="n">get_ip_scope_detail</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="s1">&#39;assignedIpScope&#39;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="IPScope.allocateIp"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IPScope.allocateIp">[docs]</a>    <span class="k">def</span> <span class="nf">allocateIp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ipaddress</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">add_scope_ip</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IPScope.deallocateIp"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IPScope.deallocateIp">[docs]</a>    <span class="k">def</span> <span class="nf">deallocateIp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostid</span><span class="p">):</span>
+        <span class="n">remove_scope_ip</span><span class="p">(</span> <span class="n">hostid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IPScope.gethosts"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IPScope.gethosts">[docs]</a>    <span class="k">def</span> <span class="nf">gethosts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hosts</span> <span class="o">=</span> <span class="n">get_ip_scope_hosts</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="IPScope.nextfreeip"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IPScope.nextfreeip">[docs]</a>    <span class="k">def</span> <span class="nf">nextfreeip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">allocated_ips</span> <span class="o">=</span> <span class="p">[</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_address</span><span class="p">(</span><span class="n">host</span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">hosts</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">netaddr</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">ip</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allocated_ips</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ip</span></div>
+
+<div class="viewcode-block" id="IPScope.addchild"><a class="viewcode-back" href="../../pyhpeimc.objects.html#pyhpeimc.objects.IPScope.addchild">[docs]</a>    <span class="k">def</span> <span class="nf">addchild</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">startIp</span><span class="p">,</span> <span class="n">endIp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">):</span>
+        <span class="n">add_child_ip_scope</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auth</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span><span class="n">startIp</span><span class="p">,</span> <span class="n">endIp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div></div>
+
+
+
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.wsm.apinfo &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.wsm.apinfo</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># author: @netmanchris</span>
+
+
+
+<span class="c1"># This section imports required libraries</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+
+<span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+<div class="viewcode-block" id="get_ap_info_all"><a class="viewcode-back" href="../../../pyhpeimc.wsm.apinfo.html#pyhpeimc.wsm.apinfo.get_ap_info_all">[docs]</a><span class="k">def</span> <span class="nf">get_ap_info_all</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function takes no input to RESTFUL call to HP IMC</span>
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: list of dictionaries where each element of the list represents a single wireless access point which has been</span>
+<span class="sd">    discovered in the HPE IMC WSM module</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.wsm.apinfo import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; all_ap_info = get_ap_info_all(auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(all_ap_info) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert len(all_ap_info[0]) == 19</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;acDevId&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;acIpAddress&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;acLabel&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;apAlias&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;connectType&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;hardwareVersion&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;ipAddress&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;isFit&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;label&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;location&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;macAddress&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;onlineClientCount&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;onlineStatus&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;serialId&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;softwareVersion&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;ssids&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;status&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;type&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;sysName&#39; in all_ap_info[0]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">get_ap_info_all_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/wlan/apInfo/queryApBasicInfo&quot;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_ap_info_all_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span>
+                     <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="c1"># print(r.status_code)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;apBasicInfo&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_ap_info_all: An Error has occured&quot;</span></div>
+
+<div class="viewcode-block" id="get_ap_info"><a class="viewcode-back" href="../../../pyhpeimc.wsm.apinfo.html#pyhpeimc.wsm.apinfo.get_ap_info">[docs]</a><span class="k">def</span> <span class="nf">get_ap_info</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function takes input of ipaddress to RESTFUL call to HP IMC</span>
+
+<span class="sd">    :param ipaddress: The current IP address of the Access Point at time of query.</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: Dictionary object with the details of the target access point</span>
+
+<span class="sd">    :rtype: dict</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.wsm.apinfo import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; ap_info = get_ap_info(&#39;10.101.0.170&#39;,auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(ap_info) is dict</span>
+
+<span class="sd">    &gt;&gt;&gt; assert len(ap_info) == 20</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;acDevId&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;acIpAddress&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;acLabel&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;apAlias&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;connectType&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;hardwareVersion&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;ipAddress&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;isFit&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;label&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;location&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;locationList&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;macAddress&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;onlineClientCount&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;serialId&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;softwareVersion&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;ssids&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;status&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;sysName&#39; in ap_info</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;type&#39; in ap_info</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">get_ap_info_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/wlan/apInfo/queryApBasicInfoByCondition?ipAddress=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_ap_info_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span>
+                     <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="c1"># print(r.status_code)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;apBasicInfo&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_ap_info_all: An Error has occured&quot;</span></div>
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

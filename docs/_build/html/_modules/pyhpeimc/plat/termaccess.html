@@ -1,0 +1,752 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.plat.termaccess &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.plat.termaccess</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># author: @netmanchris</span>
+
+
+
+<span class="c1"># This section imports required libraries</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">ipaddress</span>
+
+
+<span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+
+
+
+
+<div class="viewcode-block" id="get_real_time_locate"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.get_real_time_locate">[docs]</a><span class="k">def</span> <span class="nf">get_real_time_locate</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function takes the ipAddress of a specific host and issues a RESTFUL call to get the device and interface that the</span>
+<span class="sd">    target host is currently connected to. Note: Although intended to return a single location, Multiple locations may</span>
+<span class="sd">    be returned for a single host due to a partially discovered network or misconfigured environment.</span>
+
+<span class="sd">    :param ipAddress: str value valid IPv4 IP address</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: list of dictionaries where each element of the list represents the location of the target host</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; found_device = get_real_time_locate(&#39;10.101.0.51&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(found_device) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;deviceId&#39; in found_device[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;deviceId&#39; in found_device[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;deviceId&#39; in found_device[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;deviceId&#39; in found_device[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; no_device = get_real_time_locate(&#39;192.168.254.254&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(no_device) is dict</span>
+
+<span class="sd">    &gt;&gt;&gt; assert len(no_device) == 0</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">real_time_locate_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/res/access/realtimeLocate?type=2&amp;value=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ipAddress</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;total=false&quot;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">real_time_locate_url</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span>  <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">&#39;realtimeLocation&#39;</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+                <span class="n">real_time_locate</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;realtimeLocation&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">real_time_locate</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                    <span class="n">real_time_locate</span> <span class="o">=</span> <span class="p">[</span><span class="n">real_time_locate</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="n">real_time_locate</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;realtimeLocation&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_real_time_locate: An Error has occured&quot;</span></div>
+
+
+<div class="viewcode-block" id="get_ip_mac_arp_list"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.get_ip_mac_arp_list">[docs]</a><span class="k">def</span> <span class="nf">get_ip_mac_arp_list</span><span class="p">(</span><span class="n">devId</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span><span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list from the target device.</span>
+
+<span class="sd">    :param devId: int or str value of the target device.</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: list of dictionaries containing the IP/MAC/ARP list of the target device.</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; ip_mac_list = get_ip_mac_arp_list(&#39;10&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(ip_mac_list) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;deviceId&#39; in ip_mac_list[0]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">auth</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># checks to see if the imc credentials are already available</span>
+        <span class="n">set_imc_creds</span><span class="p">()</span>
+    <span class="n">ip_mac_arp_list_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/res/access/ipMacArp/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devId</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">ip_mac_arp_list_url</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">macarplist</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">macarplist</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">macarplist</span><span class="p">[</span><span class="s1">&#39;ipMacArp&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[</span><span class="s1">&#39;this function is unsupported&#39;</span><span class="p">]</span>
+
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_ip_mac_arp_list: An Error has occured&quot;</span></div>
+
+
+<span class="c1">#this section deals with the IP Address Manager functions with terminal access of HPE IMC Base platform</span>
+
+
+<span class="c1">#Following functions deal with IP scopes</span>
+<div class="viewcode-block" id="get_ip_scope"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.get_ip_scope">[docs]</a><span class="k">def</span> <span class="nf">get_ip_scope</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">scopeId</span><span class="o">=</span><span class="kc">None</span><span class="p">,):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function requires no inputs and returns all IP address scopes currently configured on the HPE IMC server. If the</span>
+<span class="sd">    optional scopeId parameter is included, this will automatically return only the desired scope id.</span>
+
+<span class="sd">    :param scopeId: integer of the desired scope id ( optional )</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: list of dictionary objects where each element of the list represents one IP scope</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; ip_scope_list = get_ip_scope(auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(ip_scope_list) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;ip&#39; in ip_scope_list[0]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">scopeId</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">get_ip_scope_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/res/access/assignedIpScope&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">get_ip_scope_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/res/access/assignedIpScope/ip?ipScopeId=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">scopeId</span><span class="p">)</span>
+
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_ip_scope_url</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">ipscopelist</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">ipscopelist</span><span class="p">[</span><span class="s1">&#39;assignedIpScope&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_ip_scope: An Error has occured&quot;</span></div>
+
+<div class="viewcode-block" id="get_ip_scope_detail"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.get_ip_scope_detail">[docs]</a><span class="k">def</span> <span class="nf">get_ip_scope_detail</span><span class="p">(</span><span class="n">scopeId</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span> <span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    function requires no inputs and returns all IP address scopes currently configured on the HPE IMC server. If the</span>
+<span class="sd">    optional scopeId parameter is included, this will automatically return only the desired scope id.</span>
+<span class="sd">    :param scopeId: integer of the desired scope id ( optional )</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: dictionary, may containing multiple entries if sub-scopes have been created</span>
+
+<span class="sd">    :rtype: dict</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; ip_scope_detail = get_ip_scope_detail(&#39;45&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(ip_scope_detail) is dict</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;startIp&#39; in ip_scope_detail</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">get_ip_scope_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/res/access/assignedIpScope/&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">scopeId</span><span class="p">)</span>
+
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_ip_scope_url</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">ipscopelist</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">ipscopelist</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_ip_scope: An Error has occured&quot;</span></div>
+
+<div class="viewcode-block" id="add_ip_scope"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.add_ip_scope">[docs]</a><span class="k">def</span> <span class="nf">add_ip_scope</span><span class="p">(</span><span class="n">startIp</span><span class="p">,</span> <span class="n">endIp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access</span>
+<span class="sd">    in the HPE IMC base platform</span>
+
+<span class="sd">    :param startIp: str Start of IP address scope ex. &#39;10.101.0.1&#39;</span>
+
+<span class="sd">    :param endIp: str End of IP address scope ex. &#39;10.101.0.254&#39;</span>
+
+<span class="sd">    :param name: str Name of the owner of this IP scope  ex. &#39;admin&#39;</span>
+
+<span class="sd">    :param description: str description of the Ip scope</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: 200 if successfull</span>
+
+<span class="sd">    :rtype:</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; delete_ip_scope(&#39;10.50.0.0/24&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &lt;Response [204]&gt;</span>
+
+<span class="sd">    &gt;&gt;&gt; new_scope = add_ip_scope(&#39;10.50.0.1&#39;, &#39;10.50.0.254&#39;, &#39;cyoung&#39;, &#39;test group&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(new_scope) is int</span>
+
+<span class="sd">    &gt;&gt;&gt; assert new_scope == 200</span>
+
+<span class="sd">    &gt;&gt;&gt; existing_scope = add_ip_scope(&#39;10.50.0.1&#39;, &#39;10.50.0.254&#39;, &#39;cyoung&#39;, &#39;test group&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(existing_scope) is int</span>
+
+<span class="sd">    &gt;&gt;&gt; assert existing_scope == 409</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">auth</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># checks to see if the imc credentials are already available</span>
+        <span class="n">set_imc_creds</span><span class="p">()</span>
+
+    <span class="n">add_ip_scope_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/res/access/assignedIpScope&quot;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">add_ip_scope_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;&#39;{  &quot;startIp&quot;: &quot;</span><span class="si">%s</span><span class="s1">&quot;, &quot;endIp&quot;: &quot;</span><span class="si">%s</span><span class="s1">&quot;,&quot;name&quot;: &quot;</span><span class="si">%s</span><span class="s1">&quot;,&quot;description&quot;: &quot;</span><span class="si">%s</span><span class="s1">&quot; }&#39;&#39;&#39;</span>
+               <span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">startIp</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">endIp</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">description</span><span class="p">)))</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span> <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="c1">#print(&quot;IP Scope Successfully Created&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="c1">#print (&quot;IP Scope Already Exists&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; add_ip_scope: An Error has occured&quot;</span></div>
+
+<div class="viewcode-block" id="add_child_ip_scope"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.add_child_ip_scope">[docs]</a><span class="k">def</span> <span class="nf">add_child_ip_scope</span><span class="p">(</span><span class="n">startIp</span><span class="p">,</span> <span class="n">endIp</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">scopeid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access</span>
+<span class="sd">    in the HPE IMC base platform</span>
+
+<span class="sd">    :param startIp: str Start of IP address scope ex. &#39;10.101.0.1&#39;</span>
+
+<span class="sd">    :param endIp: str End of IP address scope ex. &#39;10.101.0.254&#39;</span>
+
+<span class="sd">    :param name: str Name of the owner of this IP scope  ex. &#39;admin&#39;</span>
+
+<span class="sd">    :param description: str description of the Ip scope</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: 200</span>
+
+<span class="sd">    :rtype:</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; add_child_ip_scope(&#39;10.50.0.1&#39;, &#39;10.50.0.126&#39;, &#39;cyoung&#39;, &#39;test sub scope&#39;, &#39;175&#39;, auth.creds, auth.url)</span>
+
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">auth</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="c1"># checks to see if the imc credentials are already available</span>
+        <span class="n">set_imc_creds</span><span class="p">()</span>
+
+    <span class="n">add_ip_scope_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/res/access/assignedIpScope/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">scopeid</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">add_ip_scope_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;&#39;&#39;{  &quot;startIp&quot;: &quot;</span><span class="si">%s</span><span class="s1">&quot;, &quot;endIp&quot;: &quot;</span><span class="si">%s</span><span class="s1">&quot;,&quot;name&quot;: &quot;</span><span class="si">%s</span><span class="s1">&quot;,&quot;description&quot;: &quot;</span><span class="si">%s</span><span class="s1">&quot;, &quot;parentId&quot; : &quot;</span><span class="si">%s</span><span class="s1">&quot;}&#39;&#39;&#39;</span>
+               <span class="o">%</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">startIp</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">endIp</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">description</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="n">scopeid</span><span class="p">)))</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span> <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="c1">#print(&quot;IP Scope Successfully Created&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="c1">#print (&quot;Conflict with Current Scope&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; add_ip_scope: An Error has occured&quot;</span></div>
+
+<div class="viewcode-block" id="delete_ip_scope"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.delete_ip_scope">[docs]</a><span class="k">def</span> <span class="nf">delete_ip_scope</span><span class="p">(</span><span class="n">network_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Function to delete an entire IP segment from the IMC IP Address management under terminal access</span>
+<span class="sd">    :param network_address</span>
+<span class="sd">    :param auth</span>
+<span class="sd">    :param url</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; new_scope = add_ip_scope(&#39;10.50.0.1&#39;, &#39;10.50.0.254&#39;, &#39;cyoung&#39;, &#39;test group&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; delete_scope = delete_ip_scope(&#39;10.50.0.0/24&#39;, auth.creds, auth.url)</span>
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">scope_id</span> <span class="o">=</span> <span class="n">get_scope_id</span><span class="p">(</span><span class="n">network_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">delete_ip_address_url</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;/imcrs/res/access/assignedIpScope/&#39;&#39;&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">scope_id</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">delete_ip_address_url</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">r</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+            <span class="c1">#print(&quot;IP Segment Successfully Deleted&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; delete_ip_scope: An Error has occured&quot;</span></div>
+
+<span class="c1">#Following functions deal with hosts assigned to IP scopes</span>
+
+<span class="k">def</span> <span class="nf">add_scope_ip</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">scopeid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to add new host IP address allocation to existing scope ID</span>
+
+<span class="sd">    :param ipaddress:</span>
+
+<span class="sd">    :param name: name of the owner of this host</span>
+
+<span class="sd">    :param description: Description of the host</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return:</span>
+
+<span class="sd">    :rtype:</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; add_scope_ip(&#39;10.50.0.5&#39;, &#39;cyoung&#39;, &#39;New Test Host&#39;,&#39;175&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_ip</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="n">ipaddress</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+      <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">}</span>
+    <span class="n">add_scope_ip_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/res/access/assignedIpScope/ip?ipScopeId=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">scopeid</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">add_scope_ip_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">new_ip</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">,</span>
+                      <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="c1">#print(&quot;IP Scope Successfully Created&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="c1">#print(&quot;IP Scope Already Exists&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; add_ip_scope: An Error has occured&quot;</span>
+
+<div class="viewcode-block" id="remove_scope_ip"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.remove_scope_ip">[docs]</a><span class="k">def</span> <span class="nf">remove_scope_ip</span><span class="p">(</span><span class="n">hostid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to add remove IP address allocation</span>
+
+<span class="sd">    :param hostid: Host id of the host to be deleted</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: String of HTTP response code. Should be 204 is successfull</span>
+
+<span class="sd">    :rtype: str</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; new_scope = add_ip_scope(&#39;10.50.0.1&#39;, &#39;10.50.0.254&#39;, &#39;cyoung&#39;, &#39;test group&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; add_host_to_segment(&#39;10.50.0.5&#39;, &#39;cyoung&#39;, &#39;New Test Host&#39;, &#39;10.50.0.0/24&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; host_id = get_host_id(&#39;10.50.0.5&#39;, &#39;10.50.0.0/24&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; rem_host = remove_scope_ip(host_id, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(rem_host) is int</span>
+
+<span class="sd">    &gt;&gt;&gt; assert rem_host == 204</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">add_scope_ip_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/res/access/assignedIpScope/ip/&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">hostid</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">add_scope_ip_url</span>
+
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">,</span>
+                      <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+            <span class="c1">#print(&quot;Host Successfully Deleted&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="c1">#print(&quot;IP Scope Already Exists&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; add_ip_scope: An Error has occured&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="get_ip_scope_hosts"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.get_ip_scope_hosts">[docs]</a><span class="k">def</span> <span class="nf">get_ip_scope_hosts</span><span class="p">(</span> <span class="n">scopeId</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function requires input of scope ID and returns list of allocated IP address for the specified scope</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :param scopeId: Interger of teh desired scope id</span>
+
+<span class="sd">    :return: list of dictionary objects where each element of the list represents a single host assigned to the IP scope</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; scope_id = get_scope_id(&#39;10.50.0.0/24&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; ip_scope_hosts = get_ip_scope_hosts(scope_id, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(ip_scope_hosts) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;name&#39; in ip_scope_hosts[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;description&#39; in ip_scope_hosts[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;ip&#39; in ip_scope_hosts[0]</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;id&#39; in ip_scope_hosts[0]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">get_ip_scope_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/res/access/assignedIpScope/ip?size=10000&amp;ipScopeId=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">scopeId</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_ip_scope_url</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">ipscopelist</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">ipscopelist</span> <span class="o">==</span> <span class="p">{}:</span>
+                <span class="k">return</span> <span class="n">ipscopelist</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">ipscopelist</span> <span class="o">=</span> <span class="n">ipscopelist</span><span class="p">[</span><span class="s1">&#39;assignedIpInfo&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ipscopelist</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                <span class="n">ipscope</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">ipscope</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ipscopelist</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">ipscope</span>
+            <span class="k">return</span> <span class="n">ipscopelist</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_ip_scope: An Error has occured&quot;</span></div>
+
+<div class="viewcode-block" id="add_scope_ip"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.add_scope_ip">[docs]</a><span class="k">def</span> <span class="nf">add_scope_ip</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">scopeid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to add new host IP address allocation to existing scope ID</span>
+
+<span class="sd">    :param ipaddress:</span>
+
+<span class="sd">    :param name: name of the owner of this host</span>
+
+<span class="sd">    :param description: Description of the host</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return:</span>
+
+<span class="sd">    :rtype:</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; new_host = add_scope_ip(&#39;10.50.0.5&#39;, &#39;cyoung&#39;, &#39;New Test Host&#39;,&#39;175&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_ip</span> <span class="o">=</span> <span class="p">{</span> <span class="s2">&quot;ip&quot;</span><span class="p">:</span> <span class="n">ipaddress</span><span class="p">,</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+      <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">description</span><span class="p">}</span>
+    <span class="n">add_scope_ip_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/res/access/assignedIpScope/ip?ipScopeId=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">scopeid</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">add_scope_ip_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">new_ip</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">,</span>
+                      <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="c1">#print(&quot;IP Host Successfully Created&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="c1">#print(&quot;IP Host Already Exists&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; add_ip_scope: An Error has occured&quot;</span></div>
+
+<div class="viewcode-block" id="add_host_to_segment"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.add_host_to_segment">[docs]</a><span class="k">def</span> <span class="nf">add_host_to_segment</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">network_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Function to abstract existing add_scope_ip_function. Allows for use of network address rather than forcing human</span>
+<span class="sd">    to learn the scope_id</span>
+<span class="sd">    :param ipaddress:</span>
+
+<span class="sd">    :param name: name of the owner of this host</span>
+
+<span class="sd">    :param description: Description of the host</span>
+
+<span class="sd">    :param: network_address: network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the</span>
+<span class="sd">    network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written</span>
+<span class="sd">    as 10.50.0.0/24</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return:</span>
+
+<span class="sd">    :rtype:</span>
+
+
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">scope_id</span> <span class="o">=</span> <span class="n">get_scope_id</span><span class="p">(</span><span class="n">network_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="n">add_scope_ip</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="n">scope_id</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span><span class="n">url</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="delete_host_from_segment"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.delete_host_from_segment">[docs]</a><span class="k">def</span> <span class="nf">delete_host_from_segment</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">,</span> <span class="n">networkaddress</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Function to abstract</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">host_id</span> <span class="o">=</span> <span class="n">get_host_id</span><span class="p">(</span><span class="n">ipaddress</span><span class="p">,</span> <span class="n">networkaddress</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="n">remove_scope_ip</span><span class="p">(</span><span class="n">host_id</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Following Section are Helper functions to help translate human readable IPv4 address to IMC internal keys for working with IP</span>
+<span class="sd">scopes and hosts</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="get_scope_id"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.get_scope_id">[docs]</a><span class="k">def</span> <span class="nf">get_scope_id</span><span class="p">(</span><span class="n">network_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param network_address: network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the</span>
+<span class="sd">    network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written</span>
+<span class="sd">    as 10.50.0.0/24</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: str object which contains the numerical ID of the target scope</span>
+
+<span class="sd">    :rtype: str</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; new_scope = add_ip_scope(&#39;10.50.0.1&#39;, &#39;10.50.0.254&#39;, &#39;cyoung&#39;, &#39;test group&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; scope_id = get_scope_id(&#39;10.50.0.0/24&#39;, auth.creds, auth.url)</span>
+
+
+<span class="sd">    &gt;&gt;&gt; assert type(scope_id) is str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">netaddr</span> <span class="o">=</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_network</span><span class="p">(</span><span class="n">network_address</span><span class="p">)</span>
+    <span class="n">scopes</span> <span class="o">=</span> <span class="n">get_ip_scope</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">scopes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_address</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;startIp&#39;</span><span class="p">])</span> <span class="ow">in</span> <span class="n">netaddr</span> <span class="ow">and</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_address</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s1">&#39;endIp&#39;</span><span class="p">])</span> <span class="ow">in</span> <span class="n">netaddr</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="s2">&quot;assignedIpScope&quot;</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;assignedIpScope&#39;</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_address</span><span class="p">(</span><span class="n">child</span><span class="p">[</span><span class="s1">&#39;startIp&#39;</span><span class="p">])</span> <span class="ow">in</span> <span class="n">netaddr</span> <span class="ow">and</span> <span class="n">ipaddress</span><span class="o">.</span><span class="n">ip_address</span><span class="p">(</span><span class="n">child</span><span class="p">[</span><span class="s1">&#39;endIp&#39;</span><span class="p">])</span> <span class="ow">in</span> <span class="n">netaddr</span><span class="p">:</span>
+
+                        <span class="k">return</span> <span class="n">child</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="get_host_id"><a class="viewcode-back" href="../../../pyhpeimc.plat.termaccess.html#pyhpeimc.plat.termaccess.get_host_id">[docs]</a><span class="k">def</span> <span class="nf">get_host_id</span><span class="p">(</span><span class="n">host_address</span><span class="p">,</span> <span class="n">network_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    :param host: str describing network address of the target scope in format x.x.x.x  where x.x.x.x representents the</span>
+<span class="sd">    full ipv4 address.  Example:  10.50.0.5 255.255.255.0 would be written</span>
+<span class="sd">    as 10.50.0.5</span>
+
+<span class="sd">    :param network_address: network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the</span>
+<span class="sd">    network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written</span>
+<span class="sd">    as 10.50.0.0/24</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: str object which contains the numerical ID of the target scope</span>
+
+<span class="sd">    :rtype: str</span>
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.termaccess import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; new_scope = add_ip_scope(&#39;10.50.0.1&#39;, &#39;10.50.0.254&#39;, &#39;cyoung&#39;, &#39;test group&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; add_host_to_segment(&#39;10.50.0.5&#39;, &#39;cyoung&#39;, &#39;New Test Host&#39;, &#39;10.50.0.0/24&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; new_host_id = get_host_id(&#39;10.50.0.5&#39;, &#39;10.50.0.0/24&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(new_host_id) is str</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">scope_id</span> <span class="o">=</span> <span class="n">get_scope_id</span><span class="p">(</span><span class="n">network_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="n">all_scope_hosts</span> <span class="o">=</span> <span class="n">get_ip_scope_hosts</span><span class="p">(</span><span class="n">scope_id</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="n">all_scope_hosts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">host_address</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">host</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span></div>
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
