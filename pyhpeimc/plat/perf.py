@@ -51,7 +51,8 @@ def add_perf_task(task, auth, url):
         return r.status_code
 
     except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_dev_alarms: An Error has occured'
+        return "Error:\n" + str(e) + ' add_perf_task: An Error has occured'
+
 
 def get_perf_task(task_name, auth, url):
     """
@@ -86,7 +87,45 @@ def get_perf_task(task_name, auth, url):
     r = requests.get(f_url, auth=auth, headers=headers)
     try:
         if r.status_code == 200:
-            perf_task_info = (json.loads(r.text))['task']
+            perf_task_info = (json.loads(r.text))
+            if 'task' in perf_task_info:
+                perf_task_info = (json.loads(r.text))['task']
+            else:
+                perf_task_info = "Task Doesn't Exist"
             return perf_task_info
     except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_dev_alarms: An Error has occured'
+        return "Error:\n" + str(e) + ' get_perf_task: An Error has occured'
+
+
+def delete_perf_task(task_name, auth, url):
+    '''
+    Function takes a str of the target task_name to be deleted and retrieves task_id using
+    the get_perf_task function. Once the task_id has been successfully retrieved it is
+    populated into the task_id variable and an DELETE call is made against the HPE IMC REST
+    interface to delete the target task.
+    :param task_name: str of task name
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :return: int of 204 if successful, str of "Perf Task doesn't exist" i
+
+    :rtype: int
+
+
+    '''
+    task_id = get_perf_task(task_name, auth, url)
+    if type(task_id) is str:
+        print ("Perf task doesn't exist")
+        return 403
+    task_id = task_id['taskId']
+    get_perf_task_url = "/imcrs/perf/task/delete/"+str(task_id)
+    f_url = url + get_perf_task_url
+    # creates the URL using the payload variable as the contents
+    r = requests.delete(f_url, auth=auth, headers=headers)
+    try:
+        if r.status_code == 204:
+            print ("Perf Task successfully delete")
+            return r.status_code
+    except requests.exceptions.RequestException as e:
+        return "Error:\n" + str(e) + ' delete_perf_task: An Error has occured'

@@ -1,8 +1,5 @@
-pyhpeimc.plat.operator package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.operator module
+=============================
 
 .. automodule:: pyhpeimc.plat.operator
     :members:

@@ -1,8 +1,5 @@
-pyhpeimc.plat.vlanm package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.vlanm module
+==========================
 
 .. automodule:: pyhpeimc.plat.vlanm
     :members:

@@ -1,8 +1,5 @@
-pyhpeimc.wsm.clientinfo package
+pyhpeimc.wsm.clientinfo module
 ==============================
-
-Module contents
----------------
 
 .. automodule:: pyhpeimc.wsm.clientinfo
     :members:

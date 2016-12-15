@@ -6,6 +6,7 @@
 # This section imports required libraries
 import requests
 import json
+from pyhpeimc.plat.device import get_dev_details
 
 
 
@@ -13,7 +14,6 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
 
 
-#TODO Need to change ipaddress function to grab "real" device IP to poll from network assets
 def get_dev_asset_details(ipaddress, auth, url):
     """Takes in ipaddress as input to fetch device assett details from HP IMC RESTFUL API
 
@@ -40,6 +40,12 @@ def get_dev_asset_details(ipaddress, auth, url):
     >>> assert 'name' in single_asset[0]
 
     """
+    ipaddress = get_dev_details(ipaddress, auth,url)
+    if type(ipaddress) is dict:
+        ipaddress = ipaddress['ip']
+    else:
+        print ("Asset Doens't Exist")
+        return 403
     get_dev_asset_url = "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
     f_url = url + get_dev_asset_url
     # creates the URL using the payload variable as the contents

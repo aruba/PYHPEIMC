@@ -98,6 +98,9 @@ def get_custom_view_details(name, auth, url):
     >>> assert 'label' in view_details[0]
 
     """
+    view_id = get_custom_views(auth, url, name=name)
+    if view_id is None:
+        return view_id
     view_id = get_custom_views(auth, url, name=name)[0]['symbolId']
     get_custom_view_details_url = '/imcrs/plat/res/view/custom/' + str(view_id)
     f_url = url + get_custom_view_details_url
@@ -112,8 +115,6 @@ def get_custom_view_details(name, auth, url):
                 return []
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
-
-
 
 
 def create_custom_views(auth, url,name=None, upperview=None):
@@ -172,7 +173,13 @@ def create_custom_views(auth, url,name=None, upperview=None):
     r = requests.post(f_url, data = payload, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
         if r.status_code == 201:
-            return 'View ' + name +' created successfully'
+            print ('View ' + name +' created successfully')
+            return r.status_code
+        elif r.status_code == 409:
+            print ("View " + name + " already exists")
+            return r.status_code
+        else:
+            return r.status_code
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
 
@@ -200,9 +207,18 @@ def add_devs_custom_views(custom_view_name, dev_list, auth, url):
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
     """
+    view_id = get_custom_views(auth, url, name=custom_view_name)
+    if view_id == None:
+        print ("View " + custom_view_name + " doesn't exist")
+        return view_id
     view_id = get_custom_views(auth, url, name=custom_view_name)[0]['symbolId']
     add_devs_custom_views_url = '/imcrs/plat/res/view/custom/'+str(view_id)
-    payload = '''{"device" : '''+ json.dumps(dev_list) + '''}'''
+    device_list = []
+    for dev in dev_list:
+        new_dev = {"id" : dev}
+        device_list.append(new_dev)
+    payload = '''{"device" : '''+ json.dumps(device_list) + '''}'''
+    print (payload)
     f_url = url + add_devs_custom_views_url
     r = requests.put(f_url, data = payload, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
@@ -211,7 +227,6 @@ def add_devs_custom_views(custom_view_name, dev_list, auth, url):
             return r.status_code
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
-
 
 
 def delete_custom_view(auth, url, name):
@@ -249,12 +264,19 @@ def delete_custom_view(auth, url, name):
     >>> assert view_2 == None
 
     """
+    view_id  = get_custom_views(auth, url,name )
+    if view_id is None:
+        print ("View " + name + " doesn't exists")
+        return view_id
     view_id  = get_custom_views(auth, url,name )[0]['symbolId']
     delete_custom_view_url = '/imcrs/plat/res/view/custom/'+str(view_id)
     f_url = url + delete_custom_view_url
     r = requests.delete(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
         if r.status_code == 204:
-            return 'View ' + name +' deleted successfully'
+            print ('View ' + name +' deleted successfully')
+            return r.status_code
+        else:
+            return r.status_code
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + ' delete_custom_view: An Error has occured'

@@ -129,7 +129,7 @@ def set_operator_password(operator, password, auth, url,headers=HEADERS):
             oper_id = i['id']
             authType = i['authType']
     if oper_id == '':
-        return("\n User does not exist")
+        return("User does not exist")
     change_pw_url = "/imcrs/plat/operator/"
     f_url = url + change_pw_url + oper_id
     if password is None:

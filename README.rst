@@ -45,3 +45,5 @@ What's Changed:
 1.0.30 - Added functions to pull system vendors, categories, and device models
 1.0.33 - Bug Fixes, Added function.
 1.0.34 - Refactored doctests for all modules to improve coverage and stability
+1.0.35 - Refactored nosetests for all modules to improve coverage and stability. Modifications to functions which take devid as input too allow ipaddress directly
+1.0.36 - Added functions to vlanm for hybrid ports and access vlans. with applicable tests

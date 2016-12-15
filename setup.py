@@ -21,9 +21,9 @@ setup(
     name='pyhpeimc',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
-    # the version across setup.py and the project code, see
+    # the version across test_machine.py and the project code, see
     # https://packaging.python.org/en/latest/single_source_version.html
-    version='1.0.34',
+    version='1.0.36',
 
     description='Python binding for HPE IMC REST API Interface',
     long_description=long_description,

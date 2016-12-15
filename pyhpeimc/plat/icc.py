@@ -93,13 +93,14 @@ def create_cfg_segment(filename, filecontent, description, auth, url):
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
     >>> filecontent = ("""sample file content""")
-     >>> create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
 
-     >>> template_id = get_template_id('CW7SNMP.cfg', auth.creds, auth.url)
+    >>> create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
 
-     >>> assert type(template_id) is str
+    >>> template_id = get_template_id('CW7SNMP.cfg', auth.creds, auth.url)
 
-     >>>
+    >>> assert type(template_id) is str
+
+    >>>
     '''
     payload = {"confFileName": filename,
                "confFileType": "2",
@@ -112,7 +113,10 @@ def create_cfg_segment(filename, filecontent, description, auth, url):
     r = requests.post(f_url,data= (json.dumps(payload)), auth=auth, headers=HEADERS)
     try:
         if r.status_code == 201:
-            return True
+            print ("Template successfully created")
+            return r.status_code
+        elif r.status_code is not 201:
+            return r.status_code
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " create_cfg_segment: An Error has occured"
 
@@ -138,53 +142,19 @@ def get_template_id(template_name, auth, url):
 
     >>> file_id = get_template_id('CW7SNMP.cfg', auth.creds, auth.url)
 
-    >>> assert type(file_id) is str
+    >>> assert type(file_id) is int
 
     """
     object_list = get_cfg_template(auth=auth, url=url)
     for object in object_list:
         if object['confFileName'] == template_name:
-            return object['confFileId']
+            return int(object['confFileId'])
     return "template not found"
 
 
-def delete_cfg_template(template_name, auth, url):
-    '''Uses the get_template_id() funct to gather the template_id to craft a url which is sent to the IMC server using
-    a Delete Method
-    :param template_name: str containing the entire contents of the configuration segment
 
-    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
-    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: If successful, Boolean of type True
-
-    :rtype: Boolean
-
-    >>> from pyhpeimc.auth import *
-
-    >>> from pyhpeimc.plat.icc import *
-
-    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
-
-    >>> delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
-    True
-
-    >>> get_template_id('CW7SNMP.cfg', auth.creds, auth.url)
-    'template not found'
-
-    '''
-    file_id = get_template_id(template_name, auth, url)
-    delete_cfg_template_url = "/imcrs/icc/confFile/"+str(file_id)
-    f_url = url + delete_cfg_template_url
-    # creates the URL using the payload variable as the contents
-    r = requests.delete(f_url, auth=auth, headers=HEADERS)
-    #print (r.status_code)
-    try:
-        if r.status_code == 204:
-            return True
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " delete_cfg_template: An Error has occured"
 
 def get_folder_id(folder_name, auth, url):
     """
@@ -207,14 +177,92 @@ def get_folder_id(folder_name, auth, url):
 
     >>> default_folder_id = get_folder_id('Default Folder', auth.creds, auth.url)
 
-    >>> assert type(default_folder_id) is str
+    >>> assert type(default_folder_id) is int
 
     """
     object_list = get_cfg_template(auth=auth, url=url)
     for object in object_list:
         if object['confFileName'] == folder_name:
-            return object['confFileId']
+            return int(object['confFileId'])
     return "Folder not found"
 
 
+def delete_cfg_template(template_name, auth, url):
+    '''Uses the get_template_id() funct to gather the template_id to craft a url which is sent to the IMC server using
+    a Delete Method
+    :param template_name: str containing the entire contents of the configuration segment
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :return: If successful, return int of status.code 204.
+
+    :rtype: Int
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.icc import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
+
+
+    '''
+    file_id = get_template_id(template_name, auth, url)
+    delete_cfg_template_url = "/imcrs/icc/confFile/"+str(file_id)
+    f_url = url + delete_cfg_template_url
+    # creates the URL using the payload variable as the contents
+    r = requests.delete(f_url, auth=auth, headers=HEADERS)
+    #print (r.status_code)
+    try:
+        if r.status_code == 204:
+            print ("Template successfully Deleted")
+            return r.status_code
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " delete_cfg_template: An Error has occured"
+
+
+def get_template_details(template_name, auth, url):
+    '''Uses the get_template_id() funct to gather the template_id to craft a get_template_details_url which is sent to the IMC server using
+       a get Method
+       :param template_name: str containing the entire contents of the configuration segment
+
+       :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+       :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+       :return: If successful, return dict containing the template details
+
+       :rtype: dict
+
+       >>> from pyhpeimc.auth import *
+
+       >>> from pyhpeimc.plat.icc import *
+
+       >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+       >>> filecontent = ("""sample file content""")
+
+       >>> create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
+
+       >>> template_contents = get_template_details('CW7SNMP.cfg', auth.creds, auth.url)
+
+       >>> assert type(template_contents) is dict
+
+    '''
+    file_id = get_template_id(template_name, auth, url)
+    if type(file_id) is str:
+        return file_id
+    get_template_details_url = "/imcrs/icc/confFile/" +str(file_id)
+    f_url = url + get_template_details_url
+    # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    try:
+        if r.status_code == 200:
+            template_details = json.loads(r.text)
+            return template_details
+    except requests.exceptions.RequestException as e:
+            return "Error:\n" + str(e) + " get_template_contents: An Error has occured"
 

@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyhpeimc.plat.alarms package &mdash; pyhpeimc 1.0.22 documentation</title>
+    <title>pyhpeimc.plat.alarms module &#8212; PYHPEIMC  documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,21 +14,23 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.22',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="pyhpeimc 1.0.22 documentation" href="index.html" />
-    <link rel="up" title="pyhpeimc.plat package" href="pyhpeimc.plat.html" />
-    <link rel="next" title="pyhpeimc.plat.device package" href="pyhpeimc.plat.device.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyhpeimc.plat.device module" href="pyhpeimc.plat.device.html" />
     <link rel="prev" title="pyhpeimc.plat package" href="pyhpeimc.plat.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -41,17 +43,18 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="pyhpeimc-plat-alarms-package">
-<h1>pyhpeimc.plat.alarms package<a class="headerlink" href="#pyhpeimc-plat-alarms-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pyhpeimc.plat.alarms">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.plat.alarms" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-pyhpeimc.plat.alarms">
+<span id="pyhpeimc-plat-alarms-module"></span><h1>pyhpeimc.plat.alarms module<a class="headerlink" href="#module-pyhpeimc.plat.alarms" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="pyhpeimc.plat.alarms.get_dev_alarms">
-<code class="descclassname">pyhpeimc.plat.alarms.</code><code class="descname">get_dev_alarms</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.alarms.get_dev_alarms" title="Permalink to this definition">¶</a></dt>
-<dd><blockquote>
+<dt id="pyhpeimc.plat.alarms.get_alarms">
+<code class="descclassname">pyhpeimc.plat.alarms.</code><code class="descname">get_alarms</code><span class="sig-paren">(</span><em>username</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/alarms.html#get_alarms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.alarms.get_alarms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes in no param as input to fetch RealTime Alarms from HP IMC RESTFUL API</p>
+<blockquote>
 <div><blockquote>
-<div><p>function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
-device.</p>
+<div><dl class="docutils">
+<dt>:param username OpeatorName, String type. Required. Default Value &#8220;admin&#8221;. Checks the operator</dt>
+<dd>has the privileges to view the Real-Time Alarms.</dd>
+</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -64,7 +67,10 @@ device.</p>
 </tr>
 </tbody>
 </table>
-<p>:return:list of dictionaries containing the alarms for this device</p>
+<dl class="docutils">
+<dt>:return:list of dictionaries where each element of the list represents a single alarm as pulled from the the current</dt>
+<dd>list of browse alarms in the HPE IMC Platform</dd>
+</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -82,316 +88,326 @@ device.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_dev_alarms</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="o">.</span><span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-<span class="go">[{&#39;OID&#39;: &#39;1.3.6.1.6.3.1.1.5.3.0&#39;,</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_alarms</span> <span class="o">=</span> <span class="n">get_alarms</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">all_alarms</span><span class="p">)</span>
+<span class="go">&lt;class &#39;list&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;ackStatus&#39;</span> <span class="ow">in</span> <span class="n">all_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>[{&#8216;OID&#8217;: &#8216;1.3.6.1.4.1.11.2.14.11.15.2.75.5.3.1.6.7&#8217;,</p>
 </div></blockquote>
-<p>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet2/0/23 is UP.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160612">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160612</a>&#8216;,
-&#8216;alarmLevel&#8217;: &#8216;5&#8217;,
-&#8216;alarmLevelDesc&#8217;: &#8216;Info&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467765645&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 20:40:45&#8217;,
+<p>&#8216;ackStatus&#8217;: &#8216;0&#8217;,
+&#8216;ackStatusDesc&#8217;: &#8216;Unacknowledged&#8217;,
+&#8216;ackTime&#8217;: &#8216;0&#8217;,
+&#8216;ackTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;ackUserName&#8217;: &#8216;&#8217;,
+&#8216;alarmCategory&#8217;: &#8216;1001&#8217;,
+&#8216;alarmCategoryDesc&#8217;: &#8216;Wireless Device Alarm&#8217;,
+&#8216;alarmDesc&#8217;: &#8216;The device(MAC Address:   F4 B7 E2 95 A0 CD) is detected to be flooding the network. Attack Frame Type: Probe Request.&#8217;,
+&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://10.101.0.203:8080/imcrs/fault/alarm/187616">http://10.101.0.203:8080/imcrs/fault/alarm/187616</a>&#8216;,
+&#8216;alarmLevel&#8217;: &#8216;3&#8217;,
+&#8216;alarmLevelDesc&#8217;: &#8216;Minor&#8217;,
+&#8216;deviceId&#8217;: &#8216;31&#8217;,
+&#8216;deviceIp&#8217;: &#8216;10.10.10.5&#8217;,
+&#8216;deviceName&#8217;: &#8216;HP830_WSC&#8217;,
+&#8216;faultTime&#8217;: &#8216;1469471298&#8217;,
+&#8216;faultTimeDesc&#8217;: &#8216;2016-07-25 14:28:18&#8217;,
 &#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160612&#8217;,
+&#8216;id&#8217;: &#8216;187616&#8217;,
 &#8216;originalType&#8217;: &#8216;1&#8217;,
 &#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id1"><span class="problematic" id="id2">*</span></a>Interface Index=85;Interface Description=GigabitEthernet2/0/23;Interface Admin Status=1;Interface Operate Status=1&#8217;,
+&#8216;paras&#8217;: &#8216;<a href="#id1"><span class="problematic" id="id2">*</span></a>Attack MAC=  F4 B7 E2 95 A0 CD;Attack Frame Type=Probe Request&#8217;,
 &#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467765645&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-05 20:40:45&#8217;,
-&#8216;recUserName&#8217;: &#8216;$SYSTEM&#8217;,
+&#8216;recStatus&#8217;: &#8216;0&#8217;,
+&#8216;recStatusDesc&#8217;: &#8216;Unrecovered&#8217;,
+&#8216;recTime&#8217;: &#8216;0&#8217;,
+&#8216;recTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;recUserName&#8217;: &#8216;&#8217;,
 &#8216;remark&#8217;: &#8216;&#8217;,
 &#8216;somState&#8217;: &#8216;0&#8217;},</p>
 </div></blockquote>
 <dl class="docutils">
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.2.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet2/0/23 is DOWN.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160539">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160539</a>&#8216;,
+<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.4.1.25506.4.2.2.2.6.1&#8217;,</dt>
+<dd>&#8216;ackStatus&#8217;: &#8216;0&#8217;,
+&#8216;ackStatusDesc&#8217;: &#8216;Unacknowledged&#8217;,
+&#8216;ackTime&#8217;: &#8216;0&#8217;,
+&#8216;ackTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;ackUserName&#8217;: &#8216;&#8217;,
+&#8216;alarmCategory&#8217;: &#8216;15&#8217;,
+&#8216;alarmCategoryDesc&#8217;: &#8216;Other Alarms from NMS&#8217;,
+&#8216;alarmDesc&#8217;: &#8216;iMC alarm system has received 100 alarms about the event (hh3cPeriodicalTrap) of device ADP_Initial_Config(10.20.10.10) from 2016-07-25 12:56:01 to 2016-07-25 14:36:01.&#8217;,
+&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://10.101.0.203:8080/imcrs/fault/alarm/187625">http://10.101.0.203:8080/imcrs/fault/alarm/187625</a>&#8216;,
+&#8216;alarmLevel&#8217;: &#8216;4&#8217;,
+&#8216;alarmLevelDesc&#8217;: &#8216;Warning&#8217;,
+&#8216;deviceId&#8217;: &#8216;0&#8217;,
+&#8216;deviceIp&#8217;: &#8216;127.0.0.1&#8217;,
+&#8216;deviceName&#8217;: &#8216;NMS&#8217;,
+&#8216;faultTime&#8217;: &#8216;1469471761&#8217;,
+&#8216;faultTimeDesc&#8217;: &#8216;2016-07-25 14:36:01&#8217;,
+&#8216;id&#8217;: &#8216;187625&#8217;,
+&#8216;originalType&#8217;: &#8216;3&#8217;,
+&#8216;originalTypeDesc&#8217;: &#8216;iMC&#8217;,
+&#8216;paras&#8217;: &#8216;Start Time=2016-07-25 12:56:01;Stop Time=2016-07-25 14:36:01;Times=100;*Repeat Event Name=hh3cPeriodicalTrap;*Device IP=10.20.10.10;Device Name=ADP_Initial_Config&#8217;,
+&#8216;parentId&#8217;: &#8216;173953&#8217;,
+&#8216;recStatus&#8217;: &#8216;0&#8217;,
+&#8216;recStatusDesc&#8217;: &#8216;Unrecovered&#8217;,
+&#8216;recTime&#8217;: &#8216;0&#8217;,
+&#8216;recTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;recUserName&#8217;: &#8216;&#8217;,
+&#8216;remark&#8217;: &#8216;&#8217;,
+&#8216;somState&#8217;: &#8216;0&#8217;},</dd>
+<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.4.1.25506.4.2.2.2.6.1&#8217;,</dt>
+<dd>&#8216;ackStatus&#8217;: &#8216;0&#8217;,
+&#8216;ackStatusDesc&#8217;: &#8216;Unacknowledged&#8217;,
+&#8216;ackTime&#8217;: &#8216;0&#8217;,
+&#8216;ackTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;ackUserName&#8217;: &#8216;&#8217;,
+&#8216;alarmCategory&#8217;: &#8216;15&#8217;,
+&#8216;alarmCategoryDesc&#8217;: &#8216;Other Alarms from NMS&#8217;,
+&#8216;alarmDesc&#8217;: &#8216;iMC alarm system has received 100 alarms about the event (Some ambient device interferes) of device HP830_WSC(10.10.10.5) from 2016-07-25 14:07:06 to 2016-07-25 14:40:21.&#8217;,
+&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://10.101.0.203:8080/imcrs/fault/alarm/187626">http://10.101.0.203:8080/imcrs/fault/alarm/187626</a>&#8216;,
+&#8216;alarmLevel&#8217;: &#8216;4&#8217;,
+&#8216;alarmLevelDesc&#8217;: &#8216;Warning&#8217;,
+&#8216;deviceId&#8217;: &#8216;0&#8217;,
+&#8216;deviceIp&#8217;: &#8216;127.0.0.1&#8217;,
+&#8216;deviceName&#8217;: &#8216;NMS&#8217;,
+&#8216;faultTime&#8217;: &#8216;1469472021&#8217;,
+&#8216;faultTimeDesc&#8217;: &#8216;2016-07-25 14:40:21&#8217;,
+&#8216;id&#8217;: &#8216;187626&#8217;,
+&#8216;originalType&#8217;: &#8216;3&#8217;,
+&#8216;originalTypeDesc&#8217;: &#8216;iMC&#8217;,
+&#8216;paras&#8217;: &#8216;Start Time=2016-07-25 14:07:06;Stop Time=2016-07-25 14:40:21;Times=100;*Repeat Event Name=Some ambient device interferes;*Device IP=10.10.10.5;Device Name=HP830_WSC&#8217;,
+&#8216;parentId&#8217;: &#8216;173953&#8217;,
+&#8216;recStatus&#8217;: &#8216;0&#8217;,
+&#8216;recStatusDesc&#8217;: &#8216;Unrecovered&#8217;,
+&#8216;recTime&#8217;: &#8216;0&#8217;,
+&#8216;recTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;recUserName&#8217;: &#8216;&#8217;,
+&#8216;remark&#8217;: &#8216;&#8217;,
+&#8216;somState&#8217;: &#8216;0&#8217;},</dd>
+<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.4.1.25506.4.2.3.2.6.11&#8217;,</dt>
+<dd>&#8216;ackStatus&#8217;: &#8216;0&#8217;,
+&#8216;ackStatusDesc&#8217;: &#8216;Unacknowledged&#8217;,
+&#8216;ackTime&#8217;: &#8216;0&#8217;,
+&#8216;ackTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;ackUserName&#8217;: &#8216;&#8217;,
+&#8216;alarmCategory&#8217;: &#8216;9&#8217;,
+&#8216;alarmCategoryDesc&#8217;: &#8216;Traffic Analysis and Audit Alarm&#8217;,
+&#8216;alarmDesc&#8217;: &#8216;The in direction of interface GigabitEthernet1/0/23 on device 192.168.1.221 at 2016-07-25 14:32:00 is greater than the baseline(2.87 Mbps).&#8217;,
+&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://10.101.0.203:8080/imcrs/fault/alarm/187631">http://10.101.0.203:8080/imcrs/fault/alarm/187631</a>&#8216;,
 &#8216;alarmLevel&#8217;: &#8216;2&#8217;,
 &#8216;alarmLevelDesc&#8217;: &#8216;Major&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467747889&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 15:44:49&#8217;,
+&#8216;deviceId&#8217;: &#8216;67&#8217;,
+&#8216;deviceIp&#8217;: &#8216;10.101.0.203&#8217;,
+&#8216;deviceName&#8217;: &#8216;HPEIMC72WIN2K12R2&#8217;,
+&#8216;faultTime&#8217;: &#8216;1469472140&#8217;,
+&#8216;faultTimeDesc&#8217;: &#8216;2016-07-25 14:42:20&#8217;,
 &#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160539&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id3"><span class="problematic" id="id4">*</span></a>Interface Index=85;Interface Description=GigabitEthernet2/0/23;Interface Admin Status=1;Interface Operate Status=2&#8217;,
+&#8216;id&#8217;: &#8216;187631&#8217;,
+&#8216;originalType&#8217;: &#8216;3&#8217;,
+&#8216;originalTypeDesc&#8217;: &#8216;iMC&#8217;,
+&#8216;paras&#8217;: &#8216;<a href="#id3"><span class="problematic" id="id4">*</span></a>UNBA Server Name=NMS;*UNBA Server IP=127.0.0.1;*Alarm Object Name=The in direction of interface GigabitEthernet1/0/23 on device 192.168.1.221;Alarm Occur Time=2016-07-25 14:32:00;Current Flow Speed=48.38 Mbps;Alarm Severity=2;Threshold Speed=2.87 Mbps;Device IP=192.168.1.221;Interface Index=23;Interface Name=GigabitEthernet1/0/23;Flow Direction=1&#8217;,
 &#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467765645&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-05 20:40:45&#8217;,
-&#8216;recUserName&#8217;: &#8216;$SYSTEM&#8217;,
+&#8216;recStatus&#8217;: &#8216;0&#8217;,
+&#8216;recStatusDesc&#8217;: &#8216;Unrecovered&#8217;,
+&#8216;recTime&#8217;: &#8216;0&#8217;,
+&#8216;recTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;recUserName&#8217;: &#8216;&#8217;,
 &#8216;remark&#8217;: &#8216;&#8217;,
 &#8216;somState&#8217;: &#8216;0&#8217;},</dd>
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.2.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet2/0/20 is DOWN.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160524">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160524</a>&#8216;,
+<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.4.1.25506.4.2.3.2.6.11&#8217;,</dt>
+<dd>&#8216;ackStatus&#8217;: &#8216;0&#8217;,
+&#8216;ackStatusDesc&#8217;: &#8216;Unacknowledged&#8217;,
+&#8216;ackTime&#8217;: &#8216;0&#8217;,
+&#8216;ackTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;ackUserName&#8217;: &#8216;&#8217;,
+&#8216;alarmCategory&#8217;: &#8216;9&#8217;,
+&#8216;alarmCategoryDesc&#8217;: &#8216;Traffic Analysis and Audit Alarm&#8217;,
+&#8216;alarmDesc&#8217;: &#8216;The out direction of interface GigabitEthernet1/0/2 on device 192.168.1.221 at 2016-07-25 14:32:00 is greater than the baseline(1.78 Mbps).&#8217;,
+&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://10.101.0.203:8080/imcrs/fault/alarm/187632">http://10.101.0.203:8080/imcrs/fault/alarm/187632</a>&#8216;,
 &#8216;alarmLevel&#8217;: &#8216;2&#8217;,
 &#8216;alarmLevelDesc&#8217;: &#8216;Major&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467747461&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 15:37:41&#8217;,
+&#8216;deviceId&#8217;: &#8216;67&#8217;,
+&#8216;deviceIp&#8217;: &#8216;10.101.0.203&#8217;,
+&#8216;deviceName&#8217;: &#8216;HPEIMC72WIN2K12R2&#8217;,
+&#8216;faultTime&#8217;: &#8216;1469472140&#8217;,
+&#8216;faultTimeDesc&#8217;: &#8216;2016-07-25 14:42:20&#8217;,
 &#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160524&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id5"><span class="problematic" id="id6">*</span></a>Interface Index=82;Interface Description=GigabitEthernet2/0/20;Interface Admin Status=1;Interface Operate Status=2&#8217;,
+&#8216;id&#8217;: &#8216;187632&#8217;,
+&#8216;originalType&#8217;: &#8216;3&#8217;,
+&#8216;originalTypeDesc&#8217;: &#8216;iMC&#8217;,
+&#8216;paras&#8217;: &#8216;<a href="#id5"><span class="problematic" id="id6">*</span></a>UNBA Server Name=NMS;*UNBA Server IP=127.0.0.1;*Alarm Object Name=The out direction of interface GigabitEthernet1/0/2 on device 192.168.1.221;Alarm Occur Time=2016-07-25 14:32:00;Current Flow Speed=48.79 Mbps;Alarm Severity=2;Threshold Speed=1.78 Mbps;Device IP=192.168.1.221;Interface Index=2;Interface Name=GigabitEthernet1/0/2;Flow Direction=0&#8217;,
 &#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467854218&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-06 21:16:58&#8217;,
-&#8216;recUserName&#8217;: &#8216;admin&#8217;,
+&#8216;recStatus&#8217;: &#8216;0&#8217;,
+&#8216;recStatusDesc&#8217;: &#8216;Unrecovered&#8217;,
+&#8216;recTime&#8217;: &#8216;0&#8217;,
+&#8216;recTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;recUserName&#8217;: &#8216;&#8217;,
 &#8216;remark&#8217;: &#8216;&#8217;,
 &#8216;somState&#8217;: &#8216;0&#8217;},</dd>
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.2.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet1/0/21 is DOWN.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160496">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160496</a>&#8216;,
-&#8216;alarmLevel&#8217;: &#8216;2&#8217;,
-&#8216;alarmLevelDesc&#8217;: &#8216;Major&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467745458&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 15:04:18&#8217;,
-&#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160496&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id7"><span class="problematic" id="id8">*</span></a>Interface Index=21;Interface Description=GigabitEthernet1/0/21;Interface Admin Status=1;Interface Operate Status=2&#8217;,
-&#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467854218&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-06 21:16:58&#8217;,
-&#8216;recUserName&#8217;: &#8216;admin&#8217;,
+<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.4.1.25506.4.2.2.2.6.1&#8217;,</dt>
+<dd>&#8216;ackStatus&#8217;: &#8216;0&#8217;,
+&#8216;ackStatusDesc&#8217;: &#8216;Unacknowledged&#8217;,
+&#8216;ackTime&#8217;: &#8216;0&#8217;,
+&#8216;ackTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;ackUserName&#8217;: &#8216;&#8217;,
+&#8216;alarmCategory&#8217;: &#8216;15&#8217;,
+&#8216;alarmCategoryDesc&#8217;: &#8216;Other Alarms from NMS&#8217;,
+&#8216;alarmDesc&#8217;: &#8216;iMC alarm system has received 100 alarms about the event (Some ambient AP interferes) of device HP830_WSC(10.10.10.5) from 2016-07-25 14:14:00 to 2016-07-25 14:47:55.&#8217;,
+&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://10.101.0.203:8080/imcrs/fault/alarm/187637">http://10.101.0.203:8080/imcrs/fault/alarm/187637</a>&#8216;,
+&#8216;alarmLevel&#8217;: &#8216;4&#8217;,
+&#8216;alarmLevelDesc&#8217;: &#8216;Warning&#8217;,
+&#8216;deviceId&#8217;: &#8216;0&#8217;,
+&#8216;deviceIp&#8217;: &#8216;127.0.0.1&#8217;,
+&#8216;deviceName&#8217;: &#8216;NMS&#8217;,
+&#8216;faultTime&#8217;: &#8216;1469472475&#8217;,
+&#8216;faultTimeDesc&#8217;: &#8216;2016-07-25 14:47:55&#8217;,
+&#8216;id&#8217;: &#8216;187637&#8217;,
+&#8216;originalType&#8217;: &#8216;3&#8217;,
+&#8216;originalTypeDesc&#8217;: &#8216;iMC&#8217;,
+&#8216;paras&#8217;: &#8216;Start Time=2016-07-25 14:14:00;Stop Time=2016-07-25 14:47:55;Times=100;*Repeat Event Name=Some ambient AP interferes;*Device IP=10.10.10.5;Device Name=HP830_WSC&#8217;,
+&#8216;parentId&#8217;: &#8216;173953&#8217;,
+&#8216;recStatus&#8217;: &#8216;0&#8217;,
+&#8216;recStatusDesc&#8217;: &#8216;Unrecovered&#8217;,
+&#8216;recTime&#8217;: &#8216;0&#8217;,
+&#8216;recTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;recUserName&#8217;: &#8216;&#8217;,
 &#8216;remark&#8217;: &#8216;&#8217;,
 &#8216;somState&#8217;: &#8216;0&#8217;},</dd>
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.3.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet2/0/20 is UP.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160487">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160487</a>&#8216;,
-&#8216;alarmLevel&#8217;: &#8216;5&#8217;,
-&#8216;alarmLevelDesc&#8217;: &#8216;Info&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467742807&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 14:20:07&#8217;,
-&#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160487&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id9"><span class="problematic" id="id10">*</span></a>Interface Index=82;Interface Description=GigabitEthernet2/0/20;Interface Admin Status=1;Interface Operate Status=1&#8217;,
-&#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467742807&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-05 14:20:07&#8217;,
-&#8216;recUserName&#8217;: &#8216;$SYSTEM&#8217;,
-&#8216;remark&#8217;: &#8216;&#8217;,
-&#8216;somState&#8217;: &#8216;0&#8217;},</dd>
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.2.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet2/0/19 is DOWN.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160485">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160485</a>&#8216;,
-&#8216;alarmLevel&#8217;: &#8216;2&#8217;,
-&#8216;alarmLevelDesc&#8217;: &#8216;Major&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467742775&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 14:19:35&#8217;,
-&#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160485&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id11"><span class="problematic" id="id12">*</span></a>Interface Index=81;Interface Description=GigabitEthernet2/0/19;Interface Admin Status=1;Interface Operate Status=2&#8217;,
-&#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467854218&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-06 21:16:58&#8217;,
-&#8216;recUserName&#8217;: &#8216;admin&#8217;,
-&#8216;remark&#8217;: &#8216;&#8217;,
-&#8216;somState&#8217;: &#8216;0&#8217;},</dd>
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.3.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet2/0/19 is UP.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160484">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160484</a>&#8216;,
-&#8216;alarmLevel&#8217;: &#8216;5&#8217;,
-&#8216;alarmLevelDesc&#8217;: &#8216;Info&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467742742&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 14:19:02&#8217;,
-&#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160484&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id13"><span class="problematic" id="id14">*</span></a>Interface Index=81;Interface Description=GigabitEthernet2/0/19;Interface Admin Status=1;Interface Operate Status=1&#8217;,
-&#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467742742&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-05 14:19:02&#8217;,
-&#8216;recUserName&#8217;: &#8216;$SYSTEM&#8217;,
-&#8216;remark&#8217;: &#8216;&#8217;,
-&#8216;somState&#8217;: &#8216;0&#8217;},</dd>
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.3.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet1/0/21 is UP.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160447">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160447</a>&#8216;,
-&#8216;alarmLevel&#8217;: &#8216;5&#8217;,
-&#8216;alarmLevelDesc&#8217;: &#8216;Info&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467736157&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 12:29:17&#8217;,
-&#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160447&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id15"><span class="problematic" id="id16">*</span></a>Interface Index=21;Interface Description=GigabitEthernet1/0/21;Interface Admin Status=1;Interface Operate Status=1&#8217;,
-&#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467736157&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-05 12:29:17&#8217;,
-&#8216;recUserName&#8217;: &#8216;$SYSTEM&#8217;,
-&#8216;remark&#8217;: &#8216;&#8217;,
-&#8216;somState&#8217;: &#8216;0&#8217;},</dd>
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.2.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet1/0/21 is DOWN.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160446">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160446</a>&#8216;,
-&#8216;alarmLevel&#8217;: &#8216;2&#8217;,
-&#8216;alarmLevelDesc&#8217;: &#8216;Major&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467736125&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 12:28:45&#8217;,
-&#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160446&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id17"><span class="problematic" id="id18">*</span></a>Interface Index=21;Interface Description=GigabitEthernet1/0/21;Interface Admin Status=1;Interface Operate Status=2&#8217;,
-&#8216;parentId&#8217;: &#8216;160438&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467736157&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-05 12:29:17&#8217;,
-&#8216;recUserName&#8217;: &#8216;$SYSTEM&#8217;,
-&#8216;remark&#8217;: &#8216;&#8217;,
-&#8216;somState&#8217;: &#8216;0&#8217;},</dd>
-<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.6.3.1.1.5.3.0&#8217;,</dt>
-<dd>&#8216;ackStatus&#8217;: &#8216;1&#8217;,
-&#8216;ackStatusDesc&#8217;: &#8216;Acknowledged&#8217;,
-&#8216;ackTime&#8217;: &#8216;1467854226&#8217;,
-&#8216;ackTimeDesc&#8217;: &#8216;2016-07-06 21:17:06&#8217;,
-&#8216;ackUserName&#8217;: &#8216;admin&#8217;,
-&#8216;alarmCategory&#8217;: &#8216;3&#8217;,
-&#8216;alarmCategoryDesc&#8217;: &#8216;Interface/Link Status Alarm&#8217;,
-&#8216;alarmDesc&#8217;: &#8216;The interface GigabitEthernet1/0/21 is UP.&#8217;,
-&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160444">http://kontrolissues.thruhere.net:8086/imcrs/fault/alarm/160444</a>&#8216;,
-&#8216;alarmLevel&#8217;: &#8216;5&#8217;,
-&#8216;alarmLevelDesc&#8217;: &#8216;Info&#8217;,
-&#8216;deviceId&#8217;: &#8216;10&#8217;,
-&#8216;deviceIp&#8217;: &#8216;192.168.1.221&#8217;,
-&#8216;deviceName&#8217;: &#8216;HP_5500EI&#8217;,
-&#8216;faultTime&#8217;: &#8216;1467736092&#8217;,
-&#8216;faultTimeDesc&#8217;: &#8216;2016-07-05 12:28:12&#8217;,
-&#8216;holdInfo&#8217;: &#8216;&#8217;,
-&#8216;id&#8217;: &#8216;160444&#8217;,
-&#8216;originalType&#8217;: &#8216;1&#8217;,
-&#8216;originalTypeDesc&#8217;: &#8216;Trap&#8217;,
-&#8216;paras&#8217;: &#8216;<a href="#id19"><span class="problematic" id="id20">*</span></a>Interface Index=21;Interface Description=GigabitEthernet1/0/21;Interface Admin Status=1;Interface Operate Status=1&#8217;,
-&#8216;parentId&#8217;: &#8216;0&#8217;,
-&#8216;recStatus&#8217;: &#8216;1&#8217;,
-&#8216;recStatusDesc&#8217;: &#8216;Recovered&#8217;,
-&#8216;recTime&#8217;: &#8216;1467736092&#8217;,
-&#8216;recTimeDesc&#8217;: &#8216;2016-07-05 12:28:12&#8217;,
-&#8216;recUserName&#8217;: &#8216;$SYSTEM&#8217;,
+<dt>{&#8216;OID&#8217;: &#8216;1.3.6.1.4.1.25506.4.2.2.2.6.1&#8217;,</dt>
+<dd>&#8216;ackStatus&#8217;: &#8216;0&#8217;,
+&#8216;ackStatusDesc&#8217;: &#8216;Unacknowledged&#8217;,
+&#8216;ackTime&#8217;: &#8216;0&#8217;,
+&#8216;ackTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;ackUserName&#8217;: &#8216;&#8217;,
+&#8216;alarmCategory&#8217;: &#8216;15&#8217;,
+&#8216;alarmCategoryDesc&#8217;: &#8216;Other Alarms from NMS&#8217;,
+&#8216;alarmDesc&#8217;: &#8216;iMC alarm system has received 100 alarms about the event (Some ambient device interferes) of device HP830_WSC(10.10.10.5) from 2016-07-25 14:40:21 to 2016-07-25 15:15:50.&#8217;,
+&#8216;alarmDetail&#8217;: &#8216;<a class="reference external" href="http://10.101.0.203:8080/imcrs/fault/alarm/187654">http://10.101.0.203:8080/imcrs/fault/alarm/187654</a>&#8216;,
+&#8216;alarmLevel&#8217;: &#8216;4&#8217;,
+&#8216;alarmLevelDesc&#8217;: &#8216;Warning&#8217;,
+&#8216;deviceId&#8217;: &#8216;0&#8217;,
+&#8216;deviceIp&#8217;: &#8216;127.0.0.1&#8217;,
+&#8216;deviceName&#8217;: &#8216;NMS&#8217;,
+&#8216;faultTime&#8217;: &#8216;1469474150&#8217;,
+&#8216;faultTimeDesc&#8217;: &#8216;2016-07-25 15:15:50&#8217;,
+&#8216;id&#8217;: &#8216;187654&#8217;,
+&#8216;originalType&#8217;: &#8216;3&#8217;,
+&#8216;originalTypeDesc&#8217;: &#8216;iMC&#8217;,
+&#8216;paras&#8217;: &#8216;Start Time=2016-07-25 14:40:21;Stop Time=2016-07-25 15:15:50;Times=100;*Repeat Event Name=Some ambient device interferes;*Device IP=10.10.10.5;Device Name=HP830_WSC&#8217;,
+&#8216;parentId&#8217;: &#8216;173953&#8217;,
+&#8216;recStatus&#8217;: &#8216;0&#8217;,
+&#8216;recStatusDesc&#8217;: &#8216;Unrecovered&#8217;,
+&#8216;recTime&#8217;: &#8216;0&#8217;,
+&#8216;recTimeDesc&#8217;: &#8216;&#8217;,
+&#8216;recUserName&#8217;: &#8216;&#8217;,
 &#8216;remark&#8217;: &#8216;&#8217;,
 &#8216;somState&#8217;: &#8216;0&#8217;}]</dd>
 </dl>
 </dd></dl>
 
+<dl class="function">
+<dt id="pyhpeimc.plat.alarms.get_dev_alarms">
+<code class="descclassname">pyhpeimc.plat.alarms.</code><code class="descname">get_dev_alarms</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/alarms.html#get_dev_alarms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.alarms.get_dev_alarms" title="Permalink to this definition">¶</a></dt>
+<dd><p>function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
+device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>devId</strong> &#8211; int or str value of the target device</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>:return:list of dictionaries containing the alarms for this device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
 </div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.alarms</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dev_alarms</span> <span class="o">=</span> <span class="n">get_dev_alarms</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">dev_alarms</span><span class="p">)</span>
+<span class="go">&lt;class &#39;list&#39;&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;ackStatus&#39;</span> <span class="ow">in</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyhpeimc.plat.alarms.get_realtime_alarm">
+<code class="descclassname">pyhpeimc.plat.alarms.</code><code class="descname">get_realtime_alarm</code><span class="sig-paren">(</span><em>username</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/alarms.html#get_realtime_alarm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.alarms.get_realtime_alarm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes in no param as input to fetch RealTime Alarms from HP IMC RESTFUL API</p>
+<dl class="docutils">
+<dt>:param username OpeatorName, String type. Required. Default Value &#8220;admin&#8221;. Checks the operator</dt>
+<dd>has the privileges to view the Real-Time Alarms.</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>devId</strong> &#8211; int or str value of the target device</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>:return:list of dictionaries where each element of the list represents a single alarm as pulled from the the current</dt>
+<dd>list of realtime alarms in the HPE IMC Platform</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.alarms</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">real_time_alarm</span> <span class="o">=</span> <span class="n">get_realtime_alarm</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">real_time_alarm</span><span class="p">)</span>
+<span class="go">&lt;class &#39;list&#39;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;faultDesc&#39;</span> <span class="ow">in</span> <span class="n">real_time_alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 
@@ -399,34 +415,19 @@ device.</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pyhpeimc.plat.alarms package</a><ul>
-<li><a class="reference internal" href="#module-pyhpeimc.plat.alarms">Module contents</a></li>
-</ul>
-</li>
-</ul>
-<div class="relations">
+        <div class="sphinxsidebarwrapper"><div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="pyhpeimc.html">pyhpeimc package</a><ul>
   <li><a href="pyhpeimc.plat.html">pyhpeimc.plat package</a><ul>
       <li>Previous: <a href="pyhpeimc.plat.html" title="previous chapter">pyhpeimc.plat package</a></li>
-      <li>Next: <a href="pyhpeimc.plat.device.html" title="next chapter">pyhpeimc.plat.device package</a></li>
+      <li>Next: <a href="pyhpeimc.plat.device.html" title="next chapter">pyhpeimc.plat.device module</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/pyhpeimc.plat.alarms.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -442,15 +443,12 @@ device.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2016, netmanchris.
+      &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
-      |
-      <a href="_sources/pyhpeimc.plat.alarms.txt"
-          rel="nofollow">Page source</a>
     </div>
 
     

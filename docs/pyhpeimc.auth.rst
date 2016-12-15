@@ -1,8 +1,5 @@
-pyhpeimc.auth package
-============================
-
-Module contents
----------------
+pyhpeimc.auth module
+====================
 
 .. automodule:: pyhpeimc.auth
     :members:

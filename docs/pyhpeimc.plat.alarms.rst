@@ -1,8 +1,5 @@
-pyhpeimc.plat.alarms package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.alarms module
+===========================
 
 .. automodule:: pyhpeimc.plat.alarms
     :members:

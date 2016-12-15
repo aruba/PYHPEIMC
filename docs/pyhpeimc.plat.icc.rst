@@ -1,8 +1,5 @@
-pyhpeimc.plat.icc package
-============================
-
-Module contents
----------------
+pyhpeimc.plat.icc module
+========================
 
 .. automodule:: pyhpeimc.plat.icc
     :members:

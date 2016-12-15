@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyhpeimc.auth package &mdash; pyhpeimc 1.0.22 documentation</title>
+    <title>pyhpeimc.auth module &#8212; PYHPEIMC  documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,21 +14,23 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.22',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="pyhpeimc 1.0.22 documentation" href="index.html" />
-    <link rel="up" title="pyhpeimc package" href="pyhpeimc.html" />
-    <link rel="next" title="pyhpeimc.objects package" href="pyhpeimc.objects.html" />
-    <link rel="prev" title="pyhpeimc package" href="pyhpeimc.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyhpeimc.objects module" href="pyhpeimc.objects.html" />
+    <link rel="prev" title="pyhpeimc.wsm.clientinfo module" href="pyhpeimc.wsm.clientinfo.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -41,26 +43,24 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="pyhpeimc-auth-package">
-<h1>pyhpeimc.auth package<a class="headerlink" href="#pyhpeimc-auth-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pyhpeimc.auth">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.auth" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-pyhpeimc.auth">
+<span id="pyhpeimc-auth-module"></span><h1>pyhpeimc.auth module<a class="headerlink" href="#module-pyhpeimc.auth" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="pyhpeimc.auth.IMCAuth">
-<em class="property">class </em><code class="descclassname">pyhpeimc.auth.</code><code class="descname">IMCAuth</code><span class="sig-paren">(</span><em>h_url</em>, <em>server</em>, <em>port</em>, <em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.auth.IMCAuth" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyhpeimc.auth.</code><code class="descname">IMCAuth</code><span class="sig-paren">(</span><em>h_url</em>, <em>server</em>, <em>port</em>, <em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#IMCAuth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.IMCAuth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">requests.auth.HTTPDigestAuth</span></code></p>
 <p>This class handles authentication against the HPE IMC API and uses the Requests API. IMCAuth derives from
 requests.auth.HTTPDigestAuth.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.204&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span><span class="o">.</span><span class="n">password</span>
-<span class="go">admin</span>
+<span class="go">&#39;admin&#39;</span>
 </pre></div>
 </div>
 <dl class="method">
 <dt id="pyhpeimc.auth.IMCAuth.get_auth">
-<code class="descname">get_auth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.auth.IMCAuth.get_auth" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_auth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#IMCAuth.get_auth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.IMCAuth.get_auth" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method requests an authentication object from the HPE IMC NMS and returns an HTTPDigest Auth Object
 :return:</p>
 </dd></dl>
@@ -69,7 +69,7 @@ requests.auth.HTTPDigestAuth.</p>
 
 <dl class="function">
 <dt id="pyhpeimc.auth.print_to_file">
-<code class="descclassname">pyhpeimc.auth.</code><code class="descname">print_to_file</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.auth.print_to_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.auth.</code><code class="descname">print_to_file</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#print_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.print_to_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes in object of type str, list, or dict and prints out to current working directory as pyoutput.txt
 :param:  Object: object of type str, list, or dict
 :return: No return. Just prints out to file handler and save to current working directory as pyoutput.txt</p>
@@ -77,17 +77,24 @@ requests.auth.HTTPDigestAuth.</p>
 
 <dl class="function">
 <dt id="pyhpeimc.auth.set_imc_creds">
-<code class="descclassname">pyhpeimc.auth.</code><code class="descname">set_imc_creds</code><span class="sig-paren">(</span><em>h_url=None</em>, <em>imc_server=None</em>, <em>imc_port=None</em>, <em>imc_user=None</em>, <em>imc_pw=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.auth.set_imc_creds" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.auth.</code><code class="descname">set_imc_creds</code><span class="sig-paren">(</span><em>h_url=None</em>, <em>imc_server=None</em>, <em>imc_port=None</em>, <em>imc_user=None</em>, <em>imc_pw=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#set_imc_creds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.set_imc_creds" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function prompts user for IMC server information and credentuials and stores
 values in url and auth global variables</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.auth.test_imc_creds">
-<code class="descclassname">pyhpeimc.auth.</code><code class="descname">test_imc_creds</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.auth.test_imc_creds" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<code class="descclassname">pyhpeimc.auth.</code><code class="descname">test_imc_creds</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#test_imc_creds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.test_imc_creds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function takes input of auth class object auth object and URL and returns a BOOL of TRUE if the authentication was successful.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
 </div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test_imc_creds</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </div>
 
 
@@ -95,32 +102,17 @@ values in url and auth global variables</p>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pyhpeimc.auth package</a><ul>
-<li><a class="reference internal" href="#module-pyhpeimc.auth">Module contents</a></li>
-</ul>
-</li>
-</ul>
-<div class="relations">
+        <div class="sphinxsidebarwrapper"><div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="pyhpeimc.html">pyhpeimc package</a><ul>
-      <li>Previous: <a href="pyhpeimc.html" title="previous chapter">pyhpeimc package</a></li>
-      <li>Next: <a href="pyhpeimc.objects.html" title="next chapter">pyhpeimc.objects package</a></li>
+      <li>Previous: <a href="pyhpeimc.wsm.clientinfo.html" title="previous chapter">pyhpeimc.wsm.clientinfo module</a></li>
+      <li>Next: <a href="pyhpeimc.objects.html" title="next chapter">pyhpeimc.objects module</a></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/pyhpeimc.auth.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -136,15 +128,12 @@ values in url and auth global variables</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2016, netmanchris.
+      &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
-      |
-      <a href="_sources/pyhpeimc.auth.txt"
-          rel="nofollow">Page source</a>
     </div>
 
     

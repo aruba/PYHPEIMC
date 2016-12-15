@@ -66,7 +66,7 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
             set_imc_creds()
 
 
-def test_imc_creds(auth, url):
+def check_imc_creds(auth, url):
     """Function takes input of auth class object auth object and URL and returns a BOOL of TRUE if the authentication was successful.
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")

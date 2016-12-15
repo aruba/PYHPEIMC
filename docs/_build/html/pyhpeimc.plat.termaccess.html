@@ -2,11 +2,11 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>pyhpeimc.plat.termaccess package &mdash; pyhpeimc 1.0.22 documentation</title>
+    <title>pyhpeimc.plat.termaccess module &#8212; PYHPEIMC  documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,21 +14,23 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '1.0.22',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="pyhpeimc 1.0.22 documentation" href="index.html" />
-    <link rel="up" title="pyhpeimc.plat package" href="pyhpeimc.plat.html" />
-    <link rel="next" title="pyhpeimc.plat.vlanm package" href="pyhpeimc.plat.vlanm.html" />
-    <link rel="prev" title="pyhpeimc.plat.operator package" href="pyhpeimc.plat.operator.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="pyhpeimc.plat.vlanm module" href="pyhpeimc.plat.vlanm.html" />
+    <link rel="prev" title="pyhpeimc.plat.system module" href="pyhpeimc.plat.system.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -41,111 +43,637 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="pyhpeimc-plat-termaccess-package">
-<h1>pyhpeimc.plat.termaccess package<a class="headerlink" href="#pyhpeimc-plat-termaccess-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-pyhpeimc.plat.termaccess">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyhpeimc.plat.termaccess" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="module-pyhpeimc.plat.termaccess">
+<span id="pyhpeimc-plat-termaccess-module"></span><h1>pyhpeimc.plat.termaccess module<a class="headerlink" href="#module-pyhpeimc.plat.termaccess" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.add_child_ip_scope">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_child_ip_scope</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em>, <em>scopeid</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_child_ip_scope" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_child_ip_scope</code><span class="sig-paren">(</span><em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em>, <em>scopeid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_child_ip_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_child_ip_scope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
-in the HPE IMC base platform
-:param startIp: str Start of IP address scope ex. &#8216;10.101.0.1&#8217;
-:param endIp: str End of IP address scope ex. &#8216;10.101.0.254&#8217;
-:param name: str Name of the owner of this IP scope  ex. &#8216;admin&#8217;
-:param description: str description of the Ip scope
-:return:</p>
+in the HPE IMC base platform</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>startIp</strong> &#8211; str Start of IP address scope ex. &#8216;10.101.0.1&#8217;</li>
+<li><strong>endIp</strong> &#8211; str End of IP address scope ex. &#8216;10.101.0.254&#8217;</li>
+<li><strong>name</strong> &#8211; str Name of the owner of this IP scope  ex. &#8216;admin&#8217;</li>
+<li><strong>description</strong> &#8211; str description of the Ip scope</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">200</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">add_child_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.126&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;test sub scope&#39;</span><span class="p">,</span> <span class="s1">&#39;175&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyhpeimc.plat.termaccess.add_host_to_segment">
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_host_to_segment</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>name</em>, <em>description</em>, <em>network_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_host_to_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_host_to_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to abstract existing add_scope_ip_function. Allows for use of network address rather than forcing human
+to learn the scope_id
+:param ipaddress:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> &#8211; name of the owner of this host</li>
+<li><strong>description</strong> &#8211; Description of the host</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Param:</th><td class="field-body"><p class="first last">network_address: network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written
+as 10.50.0.0/24</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.add_ip_scope">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_ip_scope</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_ip_scope" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_ip_scope</code><span class="sig-paren">(</span><em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_ip_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_ip_scope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
-in the HPE IMC base platform
-:param startIp: str Start of IP address scope ex. &#8216;10.101.0.1&#8217;
-:param endIp: str End of IP address scope ex. &#8216;10.101.0.254&#8217;
-:param name: str Name of the owner of this IP scope  ex. &#8216;admin&#8217;
-:param description: str description of the Ip scope
-:return:</p>
+in the HPE IMC base platform</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>startIp</strong> &#8211; str Start of IP address scope ex. &#8216;10.101.0.1&#8217;</li>
+<li><strong>endIp</strong> &#8211; str End of IP address scope ex. &#8216;10.101.0.254&#8217;</li>
+<li><strong>name</strong> &#8211; str Name of the owner of this IP scope  ex. &#8216;admin&#8217;</li>
+<li><strong>description</strong> &#8211; str description of the Ip scope</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">200 if successfull</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delete_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.0/24&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">&lt;Response [204]&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_scope</span> <span class="o">=</span> <span class="n">add_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.254&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;test group&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">new_scope</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">new_scope</span> <span class="o">==</span> <span class="mi">200</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">existing_scope</span> <span class="o">=</span> <span class="n">add_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.254&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;test group&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">existing_scope</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">existing_scope</span> <span class="o">==</span> <span class="mi">409</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.add_scope_ip">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_scope_ip</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>name</em>, <em>description</em>, <em>scopeid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_scope_ip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to add new IP address allocation to existing scope ID
-:param ipaddress:
-:param name:
-:param description:
-:param auth:
-:param url:
-:return:</p>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_scope_ip</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>name</em>, <em>description</em>, <em>scopeid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_scope_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_scope_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to add new host IP address allocation to existing scope ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ipaddress</strong> &#8211; </li>
+<li><strong>name</strong> &#8211; name of the owner of this host</li>
+<li><strong>description</strong> &#8211; Description of the host</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"></p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_host</span> <span class="o">=</span> <span class="n">add_scope_ip</span><span class="p">(</span><span class="s1">&#39;10.50.0.5&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;New Test Host&#39;</span><span class="p">,</span><span class="s1">&#39;175&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyhpeimc.plat.termaccess.delete_host_from_segment">
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">delete_host_from_segment</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>networkaddress</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#delete_host_from_segment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.delete_host_from_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to abstract</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyhpeimc.plat.termaccess.delete_ip_scope">
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">delete_ip_scope</code><span class="sig-paren">(</span><em>network_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#delete_ip_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.delete_ip_scope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to delete an entire IP segment from the IMC IP Address management under terminal access
+:param network_address
+:param auth
+:param url</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_scope</span> <span class="o">=</span> <span class="n">add_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.254&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;test group&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delete_scope</span> <span class="o">=</span> <span class="n">delete_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.0/24&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyhpeimc.plat.termaccess.get_host_id">
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_host_id</code><span class="sig-paren">(</span><em>host_address</em>, <em>network_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_host_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_host_id" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>host</strong> &#8211; str describing network address of the target scope in format x.x.x.x  where x.x.x.x representents the</td>
+</tr>
+</tbody>
+</table>
+<p>full ipv4 address.  Example:  10.50.0.5 255.255.255.0 would be written
+as 10.50.0.5</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>network_address</strong> &#8211; network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the</td>
+</tr>
+</tbody>
+</table>
+<p>network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written
+as 10.50.0.0/24</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">str object which contains the numerical ID of the target scope</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_scope</span> <span class="o">=</span> <span class="n">add_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.254&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;test group&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">add_host_to_segment</span><span class="p">(</span><span class="s1">&#39;10.50.0.5&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;New Test Host&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.0/24&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_host_id</span> <span class="o">=</span> <span class="n">get_host_id</span><span class="p">(</span><span class="s1">&#39;10.50.0.5&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.0/24&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">new_host_id</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_ip_mac_arp_list">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_mac_arp_list</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_mac_arp_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list from the target device.
-:param devId: int or str value of the target device.
-:return: list of dictionaries containing the IP/MAC/ARP list of the target device.</p>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_mac_arp_list</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_mac_arp_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_mac_arp_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list from the target device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>devId</strong> &#8211; int or str value of the target device.</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of dictionaries containing the IP/MAC/ARP list of the target device.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_mac_list</span> <span class="o">=</span> <span class="n">get_ip_mac_arp_list</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">ip_mac_list</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;deviceId&#39;</span> <span class="ow">in</span> <span class="n">ip_mac_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_ip_scope">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>scopeId=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>scopeId=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope" title="Permalink to this definition">¶</a></dt>
 <dd><p>function requires no inputs and returns all IP address scopes currently configured on the HPE IMC server. If the
-optional scopeId parameter is included, this will automatically return only the desired scope id.
-:param scopeId: integer of the desired scope id ( optional )
-:param auth:
-:return:</p>
+optional scopeId parameter is included, this will automatically return only the desired scope id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>scopeId</strong> &#8211; integer of the desired scope id ( optional )</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of dictionary objects where each element of the list represents one IP scope</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_scope_list</span> <span class="o">=</span> <span class="n">get_ip_scope</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">ip_scope_list</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;ip&#39;</span> <span class="ow">in</span> <span class="n">ip_scope_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_ip_scope_detail">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope_detail</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>scopeId=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope_detail" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope_detail</code><span class="sig-paren">(</span><em>scopeId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_scope_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope_detail" title="Permalink to this definition">¶</a></dt>
 <dd><p>function requires no inputs and returns all IP address scopes currently configured on the HPE IMC server. If the
 optional scopeId parameter is included, this will automatically return only the desired scope id.
-:param scopeId: integer of the desired scope id ( optional )
-:param auth:
-:return:</p>
+:param scopeId: integer of the desired scope id ( optional )</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">dictionary, may containing multiple entries if sub-scopes have been created</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_scope_detail</span> <span class="o">=</span> <span class="n">get_ip_scope_detail</span><span class="p">(</span><span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">ip_scope_detail</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;startIp&#39;</span> <span class="ow">in</span> <span class="n">ip_scope_detail</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_ip_scope_hosts">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope_hosts</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>scopeId</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope_hosts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function requires input of scope ID and returns list of allocated IP address for the specified scope
-:param auth:
-:param url:
-:param scopeId: Interger of teh desired scope id
-:return:</p>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope_hosts</code><span class="sig-paren">(</span><em>scopeId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_scope_hosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope_hosts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function requires input of scope ID and returns list of allocated IP address for the specified scope</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+<li><strong>scopeId</strong> &#8211; Interger of teh desired scope id</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of dictionary objects where each element of the list represents a single host assigned to the IP scope</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scope_id</span> <span class="o">=</span> <span class="n">get_scope_id</span><span class="p">(</span><span class="s1">&#39;10.50.0.0/24&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_scope_hosts</span> <span class="o">=</span> <span class="n">get_ip_scope_hosts</span><span class="p">(</span><span class="n">scope_id</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">ip_scope_hosts</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">ip_scope_hosts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;description&#39;</span> <span class="ow">in</span> <span class="n">ip_scope_hosts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;ip&#39;</span> <span class="ow">in</span> <span class="n">ip_scope_hosts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="n">ip_scope_hosts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_real_time_locate">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_real_time_locate</code><span class="sig-paren">(</span><em>ipAddress</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_real_time_locate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_real_time_locate</code><span class="sig-paren">(</span><em>ipAddress</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_real_time_locate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_real_time_locate" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes the ipAddress of a specific host and issues a RESTFUL call to get the device and interface that the
-target host is currently connected to.
-:param ipAddress: str value valid IPv4 IP address
-:return: dictionary containing hostIp, devId, deviceIP, ifDesc, ifIndex</p>
+target host is currently connected to. Note: Although intended to return a single location, Multiple locations may
+be returned for a single host due to a partially discovered network or misconfigured environment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ipAddress</strong> &#8211; str value valid IPv4 IP address</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of dictionaries where each element of the list represents the location of the target host</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">found_device</span> <span class="o">=</span> <span class="n">get_real_time_locate</span><span class="p">(</span><span class="s1">&#39;10.101.0.51&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">found_device</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;deviceId&#39;</span> <span class="ow">in</span> <span class="n">found_device</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;deviceId&#39;</span> <span class="ow">in</span> <span class="n">found_device</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;deviceId&#39;</span> <span class="ow">in</span> <span class="n">found_device</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="s1">&#39;deviceId&#39;</span> <span class="ow">in</span> <span class="n">found_device</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">no_device</span> <span class="o">=</span> <span class="n">get_real_time_locate</span><span class="p">(</span><span class="s1">&#39;192.168.254.254&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">no_device</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">no_device</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_scope_id">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_scope_id</code><span class="sig-paren">(</span><em>network_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_scope_id" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_scope_id</code><span class="sig-paren">(</span><em>network_address</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_scope_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_scope_id" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>network_address</strong> &#8211; network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the</td>
+</tr>
+</tbody>
+</table>
+<p>network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written
+as 10.50.0.0/24</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">str object which contains the numerical ID of the target scope</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_scope</span> <span class="o">=</span> <span class="n">add_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.254&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;test group&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">scope_id</span> <span class="o">=</span> <span class="n">get_scope_id</span><span class="p">(</span><span class="s1">&#39;10.50.0.0/24&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">scope_id</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
+</pre></div>
+</div>
+</dd></dl>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.remove_scope_ip">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">remove_scope_ip</code><span class="sig-paren">(</span><em>hostid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#pyhpeimc.plat.termaccess.remove_scope_ip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to add new IP address allocation to existing scope ID
-:param ipaddress:
-:param name:
-:param description:
-:param auth:
-:param url:
-:return:</p>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">remove_scope_ip</code><span class="sig-paren">(</span><em>hostid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#remove_scope_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.remove_scope_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to add remove IP address allocation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hostid</strong> &#8211; Host id of the host to be deleted</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">String of HTTP response code. Should be 204 is successfull</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.termaccess</span> <span class="k">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_scope</span> <span class="o">=</span> <span class="n">add_ip_scope</span><span class="p">(</span><span class="s1">&#39;10.50.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.254&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;test group&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">add_host_to_segment</span><span class="p">(</span><span class="s1">&#39;10.50.0.5&#39;</span><span class="p">,</span> <span class="s1">&#39;cyoung&#39;</span><span class="p">,</span> <span class="s1">&#39;New Test Host&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.0/24&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">host_id</span> <span class="o">=</span> <span class="n">get_host_id</span><span class="p">(</span><span class="s1">&#39;10.50.0.5&#39;</span><span class="p">,</span> <span class="s1">&#39;10.50.0.0/24&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rem_host</span> <span class="o">=</span> <span class="n">remove_scope_ip</span><span class="p">(</span><span class="n">host_id</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">rem_host</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">rem_host</span> <span class="o">==</span> <span class="mi">204</span>
+</pre></div>
+</div>
 </dd></dl>
 
-</div>
 </div>
 
 
@@ -153,34 +681,19 @@ target host is currently connected to.
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">pyhpeimc.plat.termaccess package</a><ul>
-<li><a class="reference internal" href="#module-pyhpeimc.plat.termaccess">Module contents</a></li>
-</ul>
-</li>
-</ul>
-<div class="relations">
+        <div class="sphinxsidebarwrapper"><div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
   <li><a href="pyhpeimc.html">pyhpeimc package</a><ul>
   <li><a href="pyhpeimc.plat.html">pyhpeimc.plat package</a><ul>
-      <li>Previous: <a href="pyhpeimc.plat.operator.html" title="previous chapter">pyhpeimc.plat.operator package</a></li>
-      <li>Next: <a href="pyhpeimc.plat.vlanm.html" title="next chapter">pyhpeimc.plat.vlanm package</a></li>
+      <li>Previous: <a href="pyhpeimc.plat.system.html" title="previous chapter">pyhpeimc.plat.system module</a></li>
+      <li>Next: <a href="pyhpeimc.plat.vlanm.html" title="next chapter">pyhpeimc.plat.vlanm module</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/pyhpeimc.plat.termaccess.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -196,15 +709,12 @@ target host is currently connected to.
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2016, netmanchris.
+      &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
-      |
-      <a href="_sources/pyhpeimc.plat.termaccess.txt"
-          rel="nofollow">Page source</a>
     </div>
 
     
