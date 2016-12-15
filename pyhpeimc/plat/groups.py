@@ -16,7 +16,7 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 This section deals with HPE IMC Custom View functions
 """
 
-def get_custom_views(auth: object, url: object, name: object = None, headers: object = HEADERS) -> object:
+def get_custom_views(auth, url, name= None, headers = HEADERS):
     """
     function requires no input and returns a list of dictionaries of custom views from an HPE IMC. Optional name
     argument will return only the specified view.
