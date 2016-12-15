@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: <encoding-name> -*-
+# -*- coding: ascii -*-
 
 '''
 Copyright 2015 Hewlett Packard Enterprise Development LP
