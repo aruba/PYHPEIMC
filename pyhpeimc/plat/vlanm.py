@@ -271,6 +271,33 @@ def modify_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url
 
 
 def delete_hybrid_interface(ifindex, auth, url, devip=None):
+    """
+     Function takes devip ( ipv4 address ), ifIndex and pvid (vlanid) of specific device and 802.1q VLAN tag and issues a RESTFUL call to remove the
+    specified VLAN from the target device.
+    :param ifIndex: str value of ifIndex for a specific interface on the device
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+    :param devip: str Ipv4 address of target device
+    :return: int of 204 if successful or 409 if not succesful
+    :rtype: int
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.vlanm import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> delete_hybrid_interface('9', auth.creds, auth.url, devip='10.101.0.221')
+    409
+
+    >>> add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip='10.101.0.221')
+
+    >>> delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip='10.101.0.221')
+
+    >>> assert type(delete_hybrid) is int
+
+    >>> assert delete_hybrid == 204
+    """
     if devip is not None:
         devId=get_dev_details(devip, auth, url)['id']
     delete_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId="+devId+"&ifIndex="+ifindex
@@ -288,6 +315,34 @@ def delete_hybrid_interface(ifindex, auth, url, devip=None):
 # Section for working with Access Interfaces
 
 def set_access_interface_pvid(ifIndex, pvid, auth, url, devip=None):
+    """
+    Function takes devip ( ipv4 address ), ifIndex and pvid (vlanid) of specific device and 802.1q VLAN tag and issues a RESTFUL call to remove the
+    specified VLAN from the target device.
+    :param ifIndex: str value of ifIndex for a specific interface on the device
+    :param pvid:  str value of dot1q VLAN desired to apply to the device
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+    :param devip: str Ipv4 address of target device
+    :return: int of 204 if successful or 409 if not succesful
+    :rtype: int
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.vlanm import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> set_access_int_vlan = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip='10.101.0.221')
+
+    >>> set_access_int_vlan = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip='10.101.0.221')
+
+    >>> assert type(set_access_int_vlan) is int
+
+    >>> assert set_access_int_vlan == 204
+
+    >>> set_access_int_vlan = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip='10.101.0.221')
+
+    """
     if devip is not None:
         devId=get_dev_details(devip, auth, url)['id']
     set_access_interface_pvid_url = "/imcrs/vlan/access?devId="+devId+"&destVlanId="+pvid+"&ifIndex="+str(ifIndex)
@@ -307,6 +362,8 @@ def set_access_interface_pvid(ifIndex, pvid, auth, url, devip=None):
 
 def get_access_interface_vlan(ifIndex, accessinterfacelist, auth, url):
     """
+    Function which takes input of str of ifIndex value for target interface and accessinterfacelist ( output of
+    get_device_access_interfaces) to send against IMC REST interface. Function returns
 
     :param ifIndex: str object representing the numeric value of the iFindex for the interface
 
@@ -326,7 +383,7 @@ def get_access_interface_vlan(ifIndex, accessinterfacelist, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> access_interface_list = get_device_access_interfaces('10', auth.creds, auth.url)
+    >>> access_interface_list = get_device_access_interfaces(auth.creds, auth.url, devip='10.101.0.221')
 
     >>> get_access_interface_vlan('4', access_interface_list, auth.creds, auth.url)
     '1'
