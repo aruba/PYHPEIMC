@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.plat.operator &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.plat.operator</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># author: @netmanchris</span>
+
+<span class="c1"># This section imports required libraries</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+
+
+<span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This section deals with HPE IMC Operator Functions</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="create_operator"><a class="viewcode-back" href="../../../pyhpeimc.plat.operator.html#pyhpeimc.plat.operator.create_operator">[docs]</a><span class="k">def</span> <span class="nf">create_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function takes input of dictionary operator with the following keys</span>
+<span class="sd">    operator = { &quot;fullName&quot; : &quot;&quot;   ,</span>
+<span class="sd">             &quot;sessionTimeout&quot; : &quot;&quot;,</span>
+<span class="sd">             &quot;password&quot; :  &quot;&quot;,</span>
+<span class="sd">             &quot;operatorGroupId&quot; : &quot;&quot;,</span>
+<span class="sd">             &quot;name&quot; : &quot;&quot;,</span>
+<span class="sd">             &quot;desc&quot; : &quot;&quot;,</span>
+<span class="sd">             &quot;defaultAcl&quot; : &quot;&quot;,</span>
+<span class="sd">             &quot;authType&quot;  : &quot;&quot;}</span>
+<span class="sd">    converts to json and issues a HTTP POST request to the HPE IMC Restful API</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :param operator: dictionary with the required operator key-value pairs as defined above.</span>
+
+<span class="sd">    :param headers: json formated string. default values set in module</span>
+
+<span class="sd">    :return:</span>
+
+<span class="sd">    :rtype:</span>
+
+
+<span class="sd">    &gt;&gt;&gt; import json</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.operator import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; operator = &#39;&#39;&#39;{ &quot;fullName&quot; : &quot;test administrator&quot;, &quot;sessionTimeout&quot; : &quot;30&quot;,&quot;password&quot; :  &quot;password&quot;,&quot;operatorGroupId&quot; : &quot;1&quot;,&quot;name&quot; : &quot;testadmin&quot;,&quot;desc&quot; : &quot;test admin account&quot;,&quot;defaultAcl&quot; : &quot;&quot;,&quot;authType&quot;  : &quot;0&quot;}&#39;&#39;&#39;</span>
+
+<span class="sd">    &gt;&gt;&gt; operator = json.loads(operator)</span>
+
+<span class="sd">    &gt;&gt;&gt; delete_if_exists = delete_plat_operator(&#39;testadmin&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; new_operator = create_operator(operator, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(new_operator) is int</span>
+
+<span class="sd">    &gt;&gt;&gt; assert new_operator == 201</span>
+
+<span class="sd">    &gt;&gt;&gt; fail_operator_create = create_operator(operator, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(fail_operator_create) is int</span>
+
+<span class="sd">    &gt;&gt;&gt; assert fail_operator_create == 409</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">create_operator_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/plat/operator&#39;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">create_operator_url</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">409</span><span class="p">:</span>
+            <span class="c1">#print(&quot;Operator Already Exists&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">201</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; create_operator: An Error has occured&#39;</span></div>
+
+<div class="viewcode-block" id="set_operator_password"><a class="viewcode-back" href="../../../pyhpeimc.plat.operator.html#pyhpeimc.plat.operator.set_operator_password">[docs]</a><span class="k">def</span> <span class="nf">set_operator_password</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to set the password of an existing operator</span>
+
+<span class="sd">    :param operator: str Name of the operator account</span>
+
+<span class="sd">    :param password: str New password</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :param headers: json formated string. default values set in module</span>
+
+<span class="sd">    :return: int of 204 if successfull,</span>
+
+<span class="sd">    :rtype: int</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.operator import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; operator = &#39;&#39;&#39;{ &quot;fullName&quot; : &quot;test administrator&quot;, &quot;sessionTimeout&quot; : &quot;30&quot;,&quot;password&quot; :  &quot;password&quot;,&quot;operatorGroupId&quot; : &quot;1&quot;,&quot;name&quot; : &quot;testadmin&quot;,&quot;desc&quot; : &quot;test admin account&quot;,&quot;defaultAcl&quot; : &quot;&quot;,&quot;authType&quot;  : &quot;0&quot;}&#39;&#39;&#39;</span>
+
+<span class="sd">    &gt;&gt;&gt; operator = json.loads(operator)</span>
+
+<span class="sd">    &gt;&gt;&gt; new_operator = create_operator(operator, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; set_new_password = set_operator_password(&#39;testadmin&#39;, &#39;newpassword&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(set_new_password) is int</span>
+
+<span class="sd">    &gt;&gt;&gt; assert set_new_password == 204</span>
+
+<span class="sd">       &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
+            <span class="sd">&#39;&#39;&#39;\n What is the username you wish to change the password?&#39;&#39;&#39;</span><span class="p">)</span>
+    <span class="n">oper_id</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">plat_oper_list</span> <span class="o">=</span> <span class="n">get_plat_operator</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plat_oper_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">operator</span><span class="p">:</span>
+            <span class="n">oper_id</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+            <span class="n">authType</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;authType&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">oper_id</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">return</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> User does not exist&quot;</span><span class="p">)</span>
+    <span class="n">change_pw_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/operator/&quot;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">change_pw_url</span> <span class="o">+</span> <span class="n">oper_id</span>
+    <span class="k">if</span> <span class="n">password</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span>
+        <span class="sd">&#39;&#39;&#39;\n ============ Please input the operators new password:\n ============  &#39;&#39;&#39;</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="n">password</span> <span class="p">,</span> <span class="s1">&#39;authType&#39;</span><span class="p">:</span> <span class="n">authType</span><span class="p">})</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+            <span class="c1">#print(&quot;Operator:&quot; + operator +</span>
+                 <span class="c1"># &quot; password was successfully changed&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; set_operator_password: An Error has occured&#39;</span></div>
+
+<div class="viewcode-block" id="get_plat_operator"><a class="viewcode-back" href="../../../pyhpeimc.plat.operator.html#pyhpeimc.plat.operator.get_plat_operator">[docs]</a><span class="k">def</span> <span class="nf">get_plat_operator</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Funtion takes no inputs and returns a list of dictionaties of all of the operators currently configured on the HPE</span>
+<span class="sd">    IMC system</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :return: list of dictionaries where each element represents one operator</span>
+
+<span class="sd">    :rtype: list</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.operator import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; plat_operators = get_plat_operator(auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(plat_operators) is list</span>
+
+<span class="sd">    &gt;&gt;&gt; assert &#39;name&#39; in plat_operators[0]</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">get_operator_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/plat/operator?start=0&amp;size=1000&amp;orderBy=id&amp;desc=false&amp;total=false&#39;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_operator_url</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">plat_oper_list</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)[</span><span class="s1">&#39;operator&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">plat_oper_list</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+            <span class="n">oper_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">oper_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plat_oper_list</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">oper_list</span>
+        <span class="k">return</span> <span class="n">plat_oper_list</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; get_plat_operator: An Error has occured&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; get_plat_operator: An Error has occured&#39;</span></div>
+
+<div class="viewcode-block" id="delete_plat_operator"><a class="viewcode-back" href="../../../pyhpeimc.plat.operator.html#pyhpeimc.plat.operator.delete_plat_operator">[docs]</a><span class="k">def</span> <span class="nf">delete_plat_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Function to set the password of an existing operator</span>
+<span class="sd">    :param operator: str Name of the operator account</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :param headers: json formated string. default values set in module</span>
+
+<span class="sd">    :return: int of 204 if successfull</span>
+
+<span class="sd">    :rtype: int</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">    &gt;&gt;&gt; from pyhpeimc.plat.operator import *</span>
+
+<span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">    &gt;&gt;&gt; success_delete_operator = delete_plat_operator(&#39;testadmin&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(success_delete_operator) is int</span>
+
+<span class="sd">    &gt;&gt;&gt; assert success_delete_operator == 204</span>
+
+<span class="sd">    &gt;&gt;&gt; fail_delete_operator = delete_plat_operator(&#39;testadmin&#39;, auth.creds, auth.url)</span>
+
+<span class="sd">    &gt;&gt;&gt; assert type(fail_delete_operator) is int</span>
+
+<span class="sd">    &gt;&gt;&gt; assert fail_delete_operator == 409</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">plat_oper_list</span> <span class="o">=</span> <span class="n">get_plat_operator</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">plat_oper_list</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">operator</span> <span class="o">==</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>
+            <span class="n">oper_id</span> <span class="o">=</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">oper_id</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">oper_id</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1">#print (&quot;User does not exist&quot;)</span>
+        <span class="k">return</span> <span class="mi">409</span>
+    <span class="n">delete_plat_operator_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/operator/&quot;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">delete_plat_operator_url</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">oper_id</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
+            <span class="c1">#print(&quot;Operator: &quot; + operator +</span>
+                <span class="c1">#  &quot; was successfully deleted&quot;)</span>
+            <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; delete_plat_operator: An Error has occured&#39;</span></div>
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
