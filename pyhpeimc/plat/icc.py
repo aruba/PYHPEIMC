@@ -24,7 +24,9 @@ def get_cfg_template(auth, url, folder=None):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :param folder = str of target folder name
+    :param folder: optional str of name of target folder
+
+    :folder = str of target folder name
 
     :return: List of Dictionaries containing folders and configuration files in the ICC library.
 
@@ -100,6 +102,7 @@ def create_cfg_segment(filename, filecontent, description, auth, url):
 
     >>> assert type(template_id) is str
 
+    >>>
     """
     payload = {"confFileName": filename,
                "confFileType": "2",
@@ -183,9 +186,8 @@ def get_folder_id(folder_name, auth, url):
 
 
 def delete_cfg_template(template_name, auth, url):
-    """
-    Uses the get_template_id() funct to gather the template_id to craft a url which is sent to the IMC server using
-    a Delete Method
+    """Uses the get_template_id() funct to gather the template_id
+    to craft a url which is sent to the IMC server using a Delete Method
     :param template_name: str containing the entire contents of the configuration segment
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
@@ -221,9 +223,8 @@ def delete_cfg_template(template_name, auth, url):
 
 
 def get_template_details(template_name, auth, url):
-    """
-    Uses the get_template_id() funct to gather the template_id to craft a get_template_details_url
-    which is sent to the IMC server using
+    """Uses the get_template_id() funct to gather the template_id to craft a
+    get_template_details_url which is sent to the IMC server using
     a get Method
     :param template_name: str containing the entire contents of the configuration segment
 
