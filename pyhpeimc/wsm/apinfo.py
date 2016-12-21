@@ -82,7 +82,6 @@ def get_ap_info_all(auth, url):
     """
     get_ap_info_all_url = "/imcrs/wlan/apInfo/queryApBasicInfo"
     f_url = url + get_ap_info_all_url
-    payload = None
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     # print(r.status_code)
@@ -160,7 +159,6 @@ def get_ap_info(ipaddress, auth, url):
     """
     get_ap_info_url = "/imcrs/wlan/apInfo/queryApBasicInfoByCondition?ipAddress=" + str(ipaddress)
     f_url = url + get_ap_info_url
-    payload = None
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     # print(r.status_code)

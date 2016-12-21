@@ -19,7 +19,7 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 headers = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
 
-def get_dev_alarms(auth, url,devId= None, devIp= None):
+def get_dev_alarms(auth, url,devid= None, devip= None):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
     device.
@@ -40,16 +40,16 @@ def get_dev_alarms(auth, url,devId= None, devIp= None):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> dev_alarms = get_dev_alarms(auth.creds, auth.url, devIp='10.101.0.221')
+    >>> dev_alarms = get_dev_alarms(auth.creds, auth.url, devip='10.101.0.221')
 
     >>> assert 'ackStatus' in dev_alarms[0]
 
     """
     # checks to see if the imc credentials are already available
-    if devIp is not None:
-        devId = get_dev_details(devIp, auth, url)['id']
+    if devip is not None:
+        devid = get_dev_details(devip, auth, url)['id']
     get_dev_alarm_url = "/imcrs/fault/alarm?operatorName=admin&deviceId=" + \
-                        str(devId) + "&desc=false"
+                        str(devid) + "&desc=false"
     f_url = url + get_dev_alarm_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)

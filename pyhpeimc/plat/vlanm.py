@@ -69,7 +69,7 @@ def get_dev_vlans(auth, url, devid = None, devip= None):
             return "Error:\n" + str(e) + ' get_dev_vlans: An Error has occured'
 
 
-def get_trunk_interfaces( auth, url, devId=None, devip=None ):
+def get_trunk_interfaces( auth, url, devid=None, devip=None ):
     """Function takes devId as input to RESTFULL call to HP IMC platform
 
     :param devid: str requires devId as the only input parameter
@@ -107,7 +107,7 @@ def get_trunk_interfaces( auth, url, devId=None, devip=None ):
     if devip is not None:
         devId=get_dev_details(devip, auth, url)['id']
     # checks to see if the imc credentials are already available
-    get_trunk_interfaces_url = "/imcrs/vlan/trunk?devId=" + str(devId) + "&start=1&size=5000&total=false"
+    get_trunk_interfaces_url = "/imcrs/vlan/trunk?devId=" + str(devid) + "&start=1&size=5000&total=false"
     f_url = url + get_trunk_interfaces_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
@@ -158,7 +158,6 @@ def get_device_access_interfaces(auth, url, devId=None, devip = None):
         devId=get_dev_details(devip, auth, url)['id']
     get_access_interface_vlan_url = "/imcrs/vlan/access?devId=" + str(devId) + "&start=1&size=500&total=false"
     f_url = url + get_access_interface_vlan_url
-    payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
@@ -210,7 +209,6 @@ def get_device_hybrid_interfaces(auth, url, devId=None, devip = None):
         devId=get_dev_details(devip, auth, url)['id']
     get_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devId) + "&start=1&size=500&total=false"
     f_url = url + get_hybrid_interface_vlan_url
-    payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code

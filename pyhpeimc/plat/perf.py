@@ -7,18 +7,18 @@ capabilities of the HPE IMC NMS platform using the RESTful API
 
 """
 
-
 # This section imports required libraries
 import json
 import requests
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
+           'application/json', 'Accept-encoding': 'application/json'}
 
-#auth = IMCAuth('http://','10.101.0.201','8080', 'admin','admin')
+# auth = IMCAuth('http://','10.101.0.201','8080', 'admin','admin')
 
 headers = {'Accept': 'application/json', 'Content-Type':
     'application/json', 'Accept-encoding': 'application/json'}
+
 
 def add_perf_task(task, auth, url):
     """
@@ -50,7 +50,7 @@ def add_perf_task(task, auth, url):
     f_url = url + add_perf_task_url
     payload = json.dumps(task)
     # creates the URL using the payload variable as the contents
-    r = requests.post(f_url, data = payload, auth=auth, headers=headers)
+    r = requests.post(f_url, data=payload, auth=auth, headers=headers)
     try:
         return r.status_code
 
@@ -85,7 +85,7 @@ def get_perf_task(task_name, auth, url):
 
         >>> assert 'taskName' in selected_task
         """
-    get_perf_task_url = "/imcrs/perf/task?name="+task_name+"&orderBy=taskId&desc=false"
+    get_perf_task_url = "/imcrs/perf/task?name=" + task_name + "&orderBy=taskId&desc=false"
     f_url = url + get_perf_task_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=headers)
@@ -102,7 +102,7 @@ def get_perf_task(task_name, auth, url):
 
 
 def delete_perf_task(task_name, auth, url):
-    '''
+    """
     Function takes a str of the target task_name to be deleted and retrieves task_id using
     the get_perf_task function. Once the task_id has been successfully retrieved it is
     populated into the task_id variable and an DELETE call is made against the HPE IMC REST
@@ -117,19 +117,19 @@ def delete_perf_task(task_name, auth, url):
     :rtype: int
 
 
-    '''
+    """
     task_id = get_perf_task(task_name, auth, url)
     if type(task_id) is str:
-        print ("Perf task doesn't exist")
+        print("Perf task doesn't exist")
         return 403
     task_id = task_id['taskId']
-    get_perf_task_url = "/imcrs/perf/task/delete/"+str(task_id)
+    get_perf_task_url = "/imcrs/perf/task/delete/" + str(task_id)
     f_url = url + get_perf_task_url
     # creates the URL using the payload variable as the contents
     r = requests.delete(f_url, auth=auth, headers=headers)
     try:
         if r.status_code == 204:
-            print ("Perf Task successfully delete")
+            print("Perf Task successfully delete")
             return r.status_code
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + ' delete_perf_task: An Error has occured'

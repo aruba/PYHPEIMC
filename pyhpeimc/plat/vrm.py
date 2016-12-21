@@ -71,7 +71,6 @@ def get_vm_host_info(hostip, auth, url):
     hostId = get_dev_details(hostip, auth, url)['id']
     get_vm_host_info_url = "/imcrs/vrm/host?hostId=" + str(hostId)
     f_url = url + get_vm_host_info_url
-    payload = None
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     # print(r.status_code)
@@ -128,7 +127,6 @@ def get_vm_host_vnic(hostip, auth, url):
     hostId = get_dev_details(hostip, auth, url)['id']
     get_vm_host_vnic_url = "/imcrs/vrm/host/vnic?hostDevId=" + str(hostId)
     f_url = url + get_vm_host_vnic_url
-    payload = None
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     # print(r.status_code)
@@ -146,7 +144,7 @@ def get_host_vms(hostip, auth, url):
     """
     function takes hostId as input to RESTFUL call to HP IMC
 
-    :param hostId: int or string of HostId of Hypervisor host
+    :param hostip: string of ipv4 address of Hypervisor host
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -195,7 +193,6 @@ def get_host_vms(hostip, auth, url):
     hostId = get_dev_details(hostip, auth, url)['id']
     get_host_info_url = "/imcrs/vrm/host/vm?hostId=" + str(hostId)
     f_url = url + get_host_info_url
-    payload = None
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:

@@ -76,7 +76,6 @@ def get_client_info_all(auth, url):
     """
     get_client_info_all_url = "/imcrs/wlan/clientInfo/queryAllClientBasicInfo"
     f_url = url + get_client_info_all_url
-    payload = None
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     # print(r.status_code)
@@ -157,7 +156,6 @@ def get_client_online_history_all(auth, url):
     """
     get_client_online_history_all_url = "/imcrs/wlan/clientInfo/queryClientOnlineHistoryInfo"
     f_url = url + get_client_online_history_all_url
-    payload = None
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     # print(r.status_code)

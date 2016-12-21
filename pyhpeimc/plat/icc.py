@@ -99,7 +99,7 @@ def create_cfg_segment(filename, filecontent, description, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> filecontent = ("""sample file content""")
+    >>> filecontent = """sample file content"""
 
     >>> create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
 
@@ -153,9 +153,9 @@ def get_template_id(template_name, auth, url):
 
     """
     object_list = get_cfg_template(auth=auth, url=url)
-    for object in object_list:
-        if object['confFileName'] == template_name:
-            return int(object['confFileId'])
+    for template in object_list:
+        if template['confFileName'] == template_name:
+            return int(template['confFileId'])
     return "template not found"
 
 

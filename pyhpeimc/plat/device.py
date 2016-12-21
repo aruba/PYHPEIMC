@@ -576,7 +576,6 @@ def get_all_interface_details( auth, url, devId=None, devip=None):
         devId=get_dev_details(devip, auth, url)['id']
     get_all_interface_details_url = "/imcrs/plat/res/device/" + str(devId) + "/interface/?start=0&size=1000&desc=false&total=false"
     f_url = url + get_all_interface_details_url
-    payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
@@ -626,7 +625,6 @@ def get_interface_details(ifIndex, auth, url, devId = None, devip = None):
         devId=get_dev_details(devip, auth, url)['id']
     get_interface_details_url = "/imcrs/plat/res/device/" + str(devId) + "/interface/" + str(ifIndex)
     f_url = url + get_interface_details_url
-    payload = None
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code

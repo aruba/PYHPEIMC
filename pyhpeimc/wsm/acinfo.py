@@ -69,7 +69,6 @@ def get_ac_info_all(auth, url):
     """
     get_ac_info_all_url = "/imcrs/wlan/acInfo/queryAcBasicInfo"
     f_url = url + get_ac_info_all_url
-    payload = None
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     # print(r.status_code)
