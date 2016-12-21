@@ -105,7 +105,7 @@ def get_trunk_interfaces( auth, url, devid=None, devip=None ):
     ['No trunk inteface']
     """
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
+        devid=get_dev_details(devip, auth, url)['id']
     # checks to see if the imc credentials are already available
     get_trunk_interfaces_url = "/imcrs/vlan/trunk?devId=" + str(devid) + "&start=1&size=5000&total=false"
     f_url = url + get_trunk_interfaces_url
@@ -479,7 +479,6 @@ def delete_dev_vlans(vlanid, auth, url, devid=None, devip=None):
         devid=get_dev_details(devip, auth, url)['id']
     remove_dev_vlan_url = "/imcrs/vlan/delvlan?devId=" + str(devid) + "&vlanId=" + str(vlanid)
     f_url = url + remove_dev_vlan_url
-    payload = None
     r = requests.delete(f_url, auth=auth,
                         headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
