@@ -4,11 +4,11 @@ This module is used for testing the functions within the pyhpeimc.plat.alarms mo
 
 """
 
-
 from unittest import TestCase
-from pyhpeimc.tests.test_machine import auth
 
 from pyhpeimc.plat.alarms import *
+from tests import auth
+
 
 #TODO Remarked out failing tests
 class TestGet_dev_alarms(TestCase):

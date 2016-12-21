@@ -4,10 +4,10 @@ This module is used for testing the functions within the pyhpeimc.plat.icc modul
 
 """
 
-
 from unittest import TestCase
-from pyhpeimc.tests.test_machine import *
+
 from pyhpeimc.plat.icc import *
+
 
 #TODO remarked out failing test
 class TestGet_cfg_template(TestCase):

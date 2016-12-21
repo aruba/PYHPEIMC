@@ -4,11 +4,9 @@ This module is used for testing the functions within the pyhpeimc.wsm.clientinfo
 
 """
 
-
 from unittest import TestCase
-from pyhpeimc.tests.test_machine import *
-from pyhpeimc.wsm.clientinfo import *
 
+from pyhpeimc.wsm.clientinfo import *
 
 
 class Test_Get_client_info_all(TestCase):
