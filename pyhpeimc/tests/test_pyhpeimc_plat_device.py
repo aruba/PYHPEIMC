@@ -47,9 +47,9 @@ class TestGetAllDevs(TestCase):
         self.assertIn('mac', dev_list[0])
 
 
-#####Test Get_Dev_Details for Multiple Vendor Devices
+# Test Get_Dev_Details for Multiple Vendor Devices
 
-###Switches
+# Switches
 
 # CW3 Switch
 class TestGet_dev_details_CW3_Switch(TestCase):
@@ -324,7 +324,7 @@ class TestGet_dev_details_ArubaOS_Switch(TestCase):
         self.assertIn('id', dev_1)
 
 
-###Routers
+# Routers
 
 # Cisco Router
 class TestGet_dev_details_Cisco_Router(TestCase):
@@ -606,9 +606,9 @@ class TestGet_dev_details_HyperV(TestCase):
 """============================================================================================="""
 
 
-######Test TestGet_dev_interface for Multiple Vendor Devices
+# Test TestGet_dev_interface for Multiple Vendor Devices
 
-### Switches
+# Switches
 
 
 # CW3 Switch
@@ -842,7 +842,7 @@ class TestGet_dev_interface_ArubaOS_Switch(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-### Routers
+# Routers
 
 
 # Cisco Router
@@ -944,7 +944,7 @@ class TestGet_dev_interface_Juniper_Router(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-### Servers
+# Servers
 
 # Windows_Server
 class TestGet_dev_interface_Windows_Server(TestCase):
@@ -1012,7 +1012,7 @@ class TestGet_dev_interface_Linux_Server(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-### Hypervisors
+# Hypervisors
 
 
 # VMWare ESX Hypervisor
@@ -1084,9 +1084,9 @@ class TestGet_dev_interface_HyperV_Server(TestCase):
 """============================================================================================="""
 
 
-#####Test TestGet_dev_run_config for Multiple Vendor Devices
+# Test TestGet_dev_run_config for Multiple Vendor Devices
 
-###Switches
+# Switches
 
 # CW3 Switch
 class TestGet_dev_run_configCW3_Switch(TestCase):
@@ -1157,7 +1157,7 @@ class TestGet_dev_run_configArubaOS_Switch(TestCase):
         self.assertIs(type(run_config), str)
 
 
-###Routers
+# Routers
 
 # Cisco_Router
 class TestGet_dev_run_configCisco_Router(TestCase):
@@ -1186,7 +1186,7 @@ class TestGet_dev_run_configJuniper_Router(TestCase):
         self.assertIs(type(run_config), str)
 
 
-####Servers
+# Servers
 
 
 # Windows_Server
@@ -1207,7 +1207,7 @@ class TestGet_dev_run_configLinux_Server(TestCase):
         self.assertEqual(run_config, "This features is no supported on this device")
 
 
-###Hypervisors
+# Hypervisors
 
 
 # VMWare ESX
@@ -1233,9 +1233,9 @@ class TestGet_dev_run_configHyperV(TestCase):
 """============================================================================================="""
 
 
-#####Test TEST_NAME_HERE for Multiple Vendor Devices
+# Test get_dev_start_config for Multiple Vendor Devices
 
-###Switches
+# Switches
 
 # CW3_Switch
 class TestGet_dev_start_configCW3_Switch(TestCase):
@@ -1300,7 +1300,7 @@ class TestGet_dev_start_configArubaOS_Switch(TestCase):
         self.assertIs(type(start_config), str)
 
 
-###Routers
+# Routers
 
 # Cisco_Router
 class TestGet_dev_start_configCisco_Router(TestCase):
@@ -1329,7 +1329,7 @@ class TestGet_dev_start_configJuniper_Router(TestCase):
         self.assertIs(type(start_config), str)
 
 
-####Servers
+# Servers
 
 
 # Windows_Server
@@ -1350,7 +1350,7 @@ class TestGet_dev_start_configLinux_Server(TestCase):
         self.assertEqual(run_config, "This features is no supported on this device")
 
 
-###Hypervisors
+# Hypervisors
 
 
 # VMWare ESX
@@ -1377,9 +1377,9 @@ class TestGet_dev_start_configHyperV(TestCase):
 """============================================================================================="""
 
 
-#####Test TestGet_dev_mac_learn for Multiple Vendor Devices
+# Test TestGet_dev_mac_learn for Multiple Vendor Devices
 
-###Switches
+# Switches
 
 # CW3_Switch
 class TestGet_dev_mac_learnCW3_Switch(TestCase):
@@ -1549,7 +1549,7 @@ class TestGet_dev_mac_learnArubaOS_Switch(TestCase):
         self.assertIn('ifDesc', dev_mac_learn[0])
 
 
-###Routers
+# Routers
 
 # Cisco_Router
 class TestGet_dev_mac_learnCisco_Router(TestCase):
@@ -1623,7 +1623,7 @@ class TestGet_dev_mac_learnJuniper_Router(TestCase):
         self.assertIn('ifDesc', dev_mac_learn[0])
 
 
-####Servers
+# Servers
 
 
 # Windows_Server
@@ -1674,7 +1674,7 @@ class TestGet_dev_mac_learnLinux_Server(TestCase):
         self.assertIn('ifDesc', dev_mac_learn[0])
 
 
-###Hypervisors
+# Hypervisors
 
 
 # VMWare ESX
@@ -1729,9 +1729,9 @@ class TestGet_dev_mac_learnHyperV(TestCase):
 """============================================================================================="""
 
 
-#####Test TestRun_dev_cmd for Multiple Vendor Devices
+# Test TestRun_dev_cmd for Multiple Vendor Devices
 
-###Switches
+# Switches
 
 # CW3_Switch
 class TestRun_dev_cmd_CW3_Switch(TestCase):
@@ -1880,7 +1880,7 @@ class TestRun_dev_cmd_ArubaOS_Switch(TestCase):
         self.assertIn('deviceId', cmd_output)
 
 
-###Routers
+# Routers
 
 # Cisco_Router
 class TestRun_dev_cmd_Cisco_Router(TestCase):
@@ -1945,7 +1945,7 @@ class TestRun_dev_cmd_Juniper_Router(TestCase):
         self.assertIn('deviceId', cmd_output)
 
 
-####Servers
+# Servers
 
 
 # Windows_Server
@@ -1992,7 +1992,7 @@ class TestRun_dev_cmd_Linux_Server(TestCase):
         self.assertIn('errorMsg', cmd_output)
 
 
-###Hypervisors
+# Hypervisors
 
 
 # VMWare ESX
@@ -2042,9 +2042,9 @@ class TestRun_dev_cmd_VMWare(TestCase):
 """============================================================================================="""
 
 
-######Test TestGet_all_interface_details for Multiple Vendor Devices
+# Test TestGet_all_interface_details for Multiple Vendor Devices
 
-###Switches
+# Switches
 
 # CW3_Switch
 class TestGet_all_interface_details_CW3_Switch(TestCase):
@@ -2277,7 +2277,7 @@ class TestGet_all_interface_details_ArubaOS_Switch(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-###Routers
+# Routers
 
 # Cisco_Router
 class TestGet_all_interface_details_Cisco_Router(TestCase):
@@ -2378,7 +2378,7 @@ class TestGet_all_interface_details_Juniper_Router(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-####Servers
+# Servers
 
 
 # Windows_Server
@@ -2447,7 +2447,7 @@ class TestGet_all_interface_details_Linux_Server(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-###Hypervisors
+# Hypervisors
 
 
 # VMWare ESX
@@ -2520,10 +2520,10 @@ class TestGet_all_interface_details_HyperV(TestCase):
 """============================================================================================="""
 
 
-######Test TestGet_interface_details for Multiple Vendor Devices
+# Test TestGet_interface_details for Multiple Vendor Devices
 
 
-###Switches
+# Switches
 
 # CW3_Switch
 class TestGet_interface_details_CW3_Switch(TestCase):
@@ -2749,7 +2749,7 @@ class TestGet_interface_details_ArubaOS_Switch(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-###Routers
+# Routers
 
 # Cisco_Router
 class TestGet_interface_details_Cisco_Router(TestCase):
@@ -2847,7 +2847,7 @@ class TestGet_interface_details_Juniper_Router(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-####Servers
+# Servers
 
 
 # Windows_Server
@@ -2914,7 +2914,7 @@ class TestGet_interface_details_Linux_Server(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-###Hypervisors
+# Hypervisors
 
 
 # ESX
@@ -2984,10 +2984,10 @@ class TestGet_interface_details_HyperV(TestCase):
 """============================================================================================="""
 
 
-######Test TestSet_inteface_up for Multiple Vendor Devices
+# Test TestSet_inteface_up for Multiple Vendor Devices
 
 
-###Switches
+# Switches
 
 # CW3_Switch
 class TestSet_inteface_up_CW3_Switch(TestCase):
@@ -3080,12 +3080,12 @@ class TestSet_inteface_up_ArubaOS_Switch(TestCase):
         self.assertIs(int_up_response, 204)
 
 
-###Routers
+# Routers
 
 # Cisco_Router
 
-# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-# which will force manual intervention
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will
+# kill access to the machine which will force manual intervention
 class TestSet_inteface_up_Cisco_Router(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3099,8 +3099,8 @@ class TestSet_inteface_up_Cisco_Router(TestCase):
 
 
 # CW5_Router
-# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-# which will force manual intervention
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC
+# or you will kill access to the machine which will force manual intervention
 class TestSet_inteface_up_CW5_Router(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3114,8 +3114,8 @@ class TestSet_inteface_up_CW5_Router(TestCase):
 
 
 # Juniper_Router (SRV)
-# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-# which will force manual intervention
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC
+# or you will kill access to the machine which will force manual intervention
 class TestSet_inteface_up_Juniper_Router(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3128,7 +3128,7 @@ class TestSet_inteface_up_Juniper_Router(TestCase):
         self.assertIs(int_up_response, 204)
 
 
-####Servers
+# Servers
 
 
 # Windows_Server
@@ -3137,7 +3137,7 @@ class TestSet_inteface_up_Juniper_Router(TestCase):
 # Linux_Server
 # Deemed inappropriate to test
 
-###Hypervisors
+# Hypervisors
 
 
 # ESX
@@ -3150,9 +3150,9 @@ class TestSet_inteface_up_Juniper_Router(TestCase):
 """============================================================================================="""
 
 
-######Test TestSet_inteface_down for Multiple Vendor Devices
+# Test TestSet_inteface_down for Multiple Vendor Devices
 
-###Switches
+# Switches
 
 # CW3_Switch
 class TestSet_inteface_down_CW3_Switch(TestCase):
@@ -3252,11 +3252,11 @@ class TestSet_inteface_down_ArubaOS_Switch(TestCase):
         self.assertIs(int_down_response, 204)
 
 
-###Routers
+# Routers
 
 # Cisco_Router
-# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-# which will force manual intervention
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC
+# or you will kill access to the machine which will force manual intervention
 class TestSet_inteface_down_Cisco_Router(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3271,8 +3271,8 @@ class TestSet_inteface_down_Cisco_Router(TestCase):
 
 
 # CW5_Router
-# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-# which will force manual intervention
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC
+#  or you will kill access to the machine which will force manual intervention
 class TestSet_inteface_down_CW5_Router(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3287,8 +3287,8 @@ class TestSet_inteface_down_CW5_Router(TestCase):
 
 
 # Juniper_Router (SRV)
-# Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-# which will force manual intervention
+# Ensure that the ifIndex for this test is the far interface of the router away from IMC
+#  or you will kill access to the machine which will force manual intervention
 class TestSet_inteface_down_Juniper_Router(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3301,19 +3301,4 @@ class TestSet_inteface_down_Juniper_Router(TestCase):
         self.assertIs(type(int_down_response), int)
         self.assertIs(int_down_response, 204)
 
-####Servers
 
-
-# Windows_Server
-# Deemed inappropriate to test
-
-# Linux_Server
-# Deemed inappropriate to test
-###Hypervisors
-
-
-# ESX
-# Deemed inappropriate to test
-
-# HyperV
-# Deemed inappropriate to test
