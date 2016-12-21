@@ -28,6 +28,8 @@ def get_cfg_template(auth, url, folder = None):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
+    :folder = str of target folder name
+
     :return: List of Dictionaries containing folders and configuration files in the ICC library.
 
     :rtype: list

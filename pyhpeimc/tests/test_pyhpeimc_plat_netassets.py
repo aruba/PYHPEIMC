@@ -15,7 +15,7 @@ from pyhpeimc.plat.netassets import *
 ### Switches
 
 
-CW3_Switch
+#CW3_Switch
 class TestGet_dev_asset_detailsCW3_Switch(TestCase):
     def test_get_dev_asset_details_type(self):
         if CW3_Switch is None:

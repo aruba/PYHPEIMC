@@ -677,7 +677,7 @@ class Test_Get_device_access_interfaces_HyperV(TestCase):
     def test_get_device_access_interfaces_type(self):
         if HyperV is None:
             raise SkipTest
-        dev_access = get_device_access_interfaces(auth.creds, auth.url, devip=HyperVv)
+        dev_access = get_device_access_interfaces(auth.creds, auth.url, devip=HyperV)
         self.assertIs(type(dev_access), list)
 
     def test_get_device_access_interfaces_content(self):

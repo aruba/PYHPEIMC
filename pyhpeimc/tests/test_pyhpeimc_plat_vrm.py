@@ -23,7 +23,7 @@ class Test_Get_dev_vlans_ESX(TestCase):
         host = get_vm_host_info(ESX, auth.creds, auth.url)
         self.assertIs(type(host), dict)
 
-    def test_get_dev_vlans_type(self):
+    def test_get_dev_vlans_content(self):
         if ESX is None:
             raise SkipTest
         host = get_vm_host_info(ESX, auth.creds, auth.url)
