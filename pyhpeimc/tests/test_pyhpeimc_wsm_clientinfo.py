@@ -6,10 +6,9 @@ This module is used for testing the functions within the pyhpeimc.wsm.clientinfo
 
 
 from unittest import TestCase
-from nose.plugins.skip import Skip, SkipTest
 from pyhpeimc.tests.test_machine import *
 from pyhpeimc.wsm.clientinfo import *
-import ipaddress
+
 
 
 class Test_Get_client_info_all(TestCase):

@@ -8,7 +8,7 @@ This module is used for testing the functions within the pyhpeimc.plat.termacces
 
 
 from unittest import TestCase
-from nose.plugins.skip import Skip, SkipTest
+from nose.plugins.skip import SkipTest
 from pyhpeimc.tests.test_machine import *
 from pyhpeimc.plat.termaccess import *
 

@@ -12,11 +12,19 @@ from pyhpeimc.plat.alarms import *
 
 #TODO Remarked out failing tests
 class TestGet_dev_alarms(TestCase):
+    """
+    Test Case for pyhpeimc plat alarms get_dev_alarms functions
+    """
     def test_get_dev_alarms_type(self):
+        """
+        test case for get_dev_alarms type
+
+        """
         dev_alarms = get_dev_alarms(auth.creds, auth.url, devIp='10.101.0.231')
         self.assertIs(type(dev_alarms), list)
 
     def test_get_dev_alarms_content(self):
+
         dev_alarms = get_dev_alarms(auth.creds, auth.url, devIp='10.101.0.231')
         self.assertIs(len(dev_alarms[0]), 30)
         self.assertIn('ackStatus', dev_alarms[0])
