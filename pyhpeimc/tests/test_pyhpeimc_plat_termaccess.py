@@ -4,12 +4,13 @@ This module is used for testing the functions within the pyhpeimc.plat.termacces
 
 """
 
+
+
+
 from unittest import TestCase
-
 from nose.plugins.skip import SkipTest
-
+from pyhpeimc.tests.test_machine import *
 from pyhpeimc.plat.termaccess import *
-
 
 class TestGet_real_time_locate(TestCase):
     def test_get_real_time_locate_type(self):

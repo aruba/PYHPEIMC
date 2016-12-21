@@ -4,8 +4,9 @@ This module is used for testing the functions within the pyhpeimc.plat.groups mo
 
 """
 
-from unittest import TestCase
 
+from unittest import TestCase
+from pyhpeimc.tests.test_machine import *
 from pyhpeimc.plat.groups import *
 
 

@@ -4,12 +4,11 @@ This module is used for testing the functions within the pyhpeimc.plat.netassets
 
 """
 
+
 from unittest import TestCase
-
 from nose.plugins.skip import SkipTest
-
+from pyhpeimc.tests.test_machine import *
 from pyhpeimc.plat.netassets import *
-
 
 ##### Test get_dev_asset_details function for multiple vendors
 

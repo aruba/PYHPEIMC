@@ -4,10 +4,10 @@ This module is used for testing the functions within the pyhpeimc.plat.vlanm mod
 
 """
 
+
 from unittest import TestCase
-
 from nose.plugins.skip import SkipTest
-
+from pyhpeimc.tests.test_machine import *
 from pyhpeimc.plat.vlanm import *
 
 

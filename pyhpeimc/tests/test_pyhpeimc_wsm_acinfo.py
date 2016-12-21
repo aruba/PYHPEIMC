@@ -4,9 +4,12 @@ This module is used for testing the functions within the pyhpeimc.wsm.acinfo mod
 
 """
 
-from unittest import TestCase
 
+from unittest import TestCase
+from pyhpeimc.tests.test_machine import *
 from pyhpeimc.wsm.acinfo import *
+
+
 
 
 #test for get_ac_info_all
