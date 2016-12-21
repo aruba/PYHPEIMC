@@ -11,21 +11,18 @@ of the HPE IMC NMS platform using the RESTful API
 import json
 import requests
 
-
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
-
-#auth = None
-
+           'application/json', 'Accept-encoding': 'application/json'}
 
 """
 This section contains functions which operate at the system level
 This whole section has been moved to pyhpeimc.plat.system - functions left here for legacy.
-Intention is to remove by version 1.0.60 or greater. Please modify any scripts using functions in this section to use the
-new functions in the new module
+Intention is to remove by version 1.0.60 or greater. Please modify any scripts using functions
+in this section to use the new functions in the new module
 """
 
-#TODO Delete function when version => 1.60
+
+# TODO Delete function when version => 1.60
 def get_system_vendors(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -63,7 +60,8 @@ def get_system_vendors(auth, url):
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
-#TODO Delete function when version => 1.60
+
+# TODO Delete function when version => 1.60
 def get_system_category(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -101,7 +99,8 @@ def get_system_category(auth, url):
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
-#TODO Delete function when version => 1.60
+
+# TODO Delete function when version => 1.60
 def get_system_device_models(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -138,7 +137,8 @@ def get_system_device_models(auth, url):
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
-#TODO Delete function when version => 1.60
+
+# TODO Delete function when version => 1.60
 def get_system_series(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -177,11 +177,13 @@ def get_system_series(auth, url):
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_series: An Error has occured"
 
+
 """
 This section contains functions which operate at the device level.
 """
 
-def get_all_devs(auth, url, network_address= None):
+
+def get_all_devs(auth, url, network_address=None):
     """Takes string input of IP address to issue RESTUL call to HP IMC\n
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
@@ -209,14 +211,14 @@ def get_all_devs(auth, url, network_address= None):
 
     """
 
-    if network_address != None:
+    if network_address is not None:
         get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
-                          str(network_address) + "&start=0&size=1000&orderBy=id&desc=false&total=false"
+                           str(network_address) + "&start=0&size=1000&orderBy=id&desc=false&total=false"
     else:
         get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&start=0&size=1000&orderBy=id&desc=false&total=false&exact=false"
 
     f_url = url + get_all_devs_url
-        # creates the URL using the payload variable as the contents
+    # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
     try:
@@ -228,7 +230,7 @@ def get_all_devs(auth, url, network_address= None):
             else:
                 return dev_details['device']
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
 
 def get_dev_details(ip_address, auth, url):
@@ -267,7 +269,7 @@ def get_dev_details(ip_address, auth, url):
     get_dev_details_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
                           str(ip_address) + "&start=0&size=1000&orderBy=id&desc=false&total=false"
     f_url = url + get_dev_details_url
-        # creates the URL using the payload variable as the contents
+    # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
     try:
@@ -284,10 +286,10 @@ def get_dev_details(ip_address, auth, url):
             elif type(dev_details['device']) == dict:
                 return dev_details['device']
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
 
-def get_dev_interface(auth, url, devid= None, devip = None):
+def get_dev_interface(auth, url, devid=None, devip=None):
     """
     Function takes devid as input to RESTFUL call to HP IMC platform and returns list of device interfaces
 
@@ -332,15 +334,17 @@ def get_dev_interface(auth, url, devid= None, devip = None):
             int_list = (json.loads(r.text))['interface']
             return int_list
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_dev_interface: An Error has occured"
+        return "Error:\n" + str(e) + " get_dev_interface: An Error has occured"
 
 
-def get_dev_run_config( auth, url, devid=None, devip = None):
+def get_dev_run_config(auth, url, devid=None, devip=None):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
     file as known by the HP IMC Base Platform ICC module for the target device.
 
     :param devid:  int or str value of the target device
+
+    :param devip: str of ipv4 address of the target device
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -378,23 +382,23 @@ def get_dev_run_config( auth, url, devid=None, devip = None):
             run_conf = (json.loads(r.text))['content']
             return run_conf
         elif r.status_code == 404:
-                return "This features is no supported on this device"
+            return "This features is no supported on this device"
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
+        return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
 
 
-def get_dev_start_config(auth, url, devId= None, devip = None):
+def get_dev_start_config(auth, url, devid=None, devip=None):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the most current startup config
     file as known by the HP IMC Base Platform ICC module for the target device.
 
-    :param devId:  optional int or str value of the target device
-
-    :param devip:  optional ipv4 address of the target device
-
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param devid:  optional int or str value of the target device
+
+    :param devip:  optional ipv4 address of the target device
 
     :return: str which contains the entire content of the target device startup configuration. If the device is not
     currently supported in the HP IMC Base Platform ICC module, this call returns a string of "This feature is not
@@ -417,8 +421,8 @@ def get_dev_start_config(auth, url, devId= None, devip = None):
     """
     # checks to see if the imc credentials are already available
     if devip is not None:
-        devId = get_dev_details(devip, auth, url)['id']
-    get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devId) + "/currentStart"
+        devid = get_dev_details(devip, auth, url)['id']
+    get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devid) + "/currentStart"
     f_url = url + get_dev_run_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -430,11 +434,11 @@ def get_dev_start_config(auth, url, devId= None, devip = None):
             return "This features is no supported on this device"
 
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_dev_start_config: An Error has occured"
+        return "Error:\n" + str(e) + " get_dev_start_config: An Error has occured"
 
 
-def get_dev_mac_learn(auth, url, devid = None, devip= None):
-    '''
+def get_dev_mac_learn(auth, url, devid=None, devip=None):
+    """
     function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
     the target device.
 
@@ -464,11 +468,11 @@ def get_dev_mac_learn(auth, url, devid = None, devip= None):
 
     >>> assert 'deviceId' in dev_mac_learn[0]
 
-    '''
+    """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_dev_mac_learn_url='/imcrs/res/access/ipMacLearn/'+str(devid)
-    f_url = url+get_dev_mac_learn_url
+    get_dev_mac_learn_url = '/imcrs/res/access/ipMacLearn/' + str(devid)
+    f_url = url + get_dev_mac_learn_url
     try:
         r = requests.get(f_url, auth=auth, headers=HEADERS)
         if r.status_code == 200:
@@ -481,16 +485,22 @@ def get_dev_mac_learn(auth, url, devid = None, devip= None):
                     mac_learn_query = [mac_learn_query]
                 return mac_learn_query
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_dev_mac_learn: An Error has occured"
+        return "Error:\n" + str(e) + " get_dev_mac_learn: An Error has occured"
 
 
-def run_dev_cmd( cmd_list, auth, url, devid= None, devip = None):
-    '''
+def run_dev_cmd(cmd_list, auth, url, devid=None, devip=None):
+    """
     Function takes devid of target device and a sequential list of strings which define the specific commands to be run
     on the target device and returns a str object containing the output of the commands.
     :param devid: int devid of the target device
 
     :param cmd_list: list of strings
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param devip: str of ipv4 address of the target device
 
     :return: str containing the response of the commands
 
@@ -513,15 +523,15 @@ def run_dev_cmd( cmd_list, auth, url, devid= None, devip = None):
     >>> assert 'success' in cmd_output
 
 
-    '''
+    """
     if devip is not None:
-        devid= get_dev_details(devip, auth, url)['id']
+        devid = get_dev_details(devip, auth, url)['id']
     run_dev_cmd_url = '/imcrs/icc/confFile/executeCmd'
     f_url = url + run_dev_cmd_url
     cmd_list = _make_cmd_list(cmd_list)
-    payload = '''{ "deviceId" : "'''+str(devid) + '''",
+    payload = '''{ "deviceId" : "''' + str(devid) + '''",
                    "cmdlist" : { "cmd" :
-                   ['''+ cmd_list + ''']
+                   [''' + cmd_list + ''']
 
                    }
                    }'''
@@ -533,24 +543,25 @@ def run_dev_cmd( cmd_list, auth, url, devid= None, devip = None):
             return json.loads(r.text)
 
 
-
 """
 This section contains functions which operate at the interface level
 """
 
-def get_all_interface_details( auth, url, devId=None, devip=None):
+
+def get_all_interface_details(auth, url, devid=None, devip=None):
     """
     function takes the devId of a specific device and the ifindex value assigned to a specific interface
     and issues a RESTFUL call to get the interface details
     file as known by the HP IMC Base Platform ICC module for the target device.
 
-    :param devId:  int or str value of the devId of the target device
-
-    :param devip: ipv4 address of the target device
-
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param devid:  int or str value of the devId of the target device
+
+    :param devip: ipv4 address of the target device
+
 
     :return: list of dict objects which contains the details of all interfaces on the target device
 
@@ -573,8 +584,9 @@ def get_all_interface_details( auth, url, devId=None, devip=None):
 
      """
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
-    get_all_interface_details_url = "/imcrs/plat/res/device/" + str(devId) + "/interface/?start=0&size=1000&desc=false&total=false"
+        devid = get_dev_details(devip, auth, url)['id']
+    get_all_interface_details_url = "/imcrs/plat/res/device/" + str(
+        devid) + "/interface/?start=0&size=1000&desc=false&total=false"
     f_url = url + get_all_interface_details_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -584,22 +596,24 @@ def get_all_interface_details( auth, url, devId=None, devip=None):
             dev_details = (json.loads(r.text))
             return dev_details['interface']
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_all_interface_details: An Error has occured"
+        return "Error:\n" + str(e) + " get_all_interface_details: An Error has occured"
 
 
-def get_interface_details(ifIndex, auth, url, devId = None, devip = None):
+def get_interface_details(ifindex, auth, url, devid=None, devip=None):
     """
     function takes the devId of a specific device and the ifindex value assigned to a specific interface
     and issues a RESTFUL call to get the interface details
     file as known by the HP IMC Base Platform ICC module for the target device.
 
-    :param devId:  int or str value of the devId of the target device
-
-    :param ifIndex: int or str value of the ifIndex of the target interface
+    :param ifindex: int or str value of the ifIndex of the target interface
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param devid:  int or str value of the devId of the target device
+
+    :param devip: str of ipv4 address of the target device
 
     :return: dict which contains the details of the target interface"
 
@@ -622,8 +636,8 @@ def get_interface_details(ifIndex, auth, url, devId = None, devip = None):
 
      """
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
-    get_interface_details_url = "/imcrs/plat/res/device/" + str(devId) + "/interface/" + str(ifIndex)
+        devid = get_dev_details(devip, auth, url)['id']
+    get_interface_details_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex)
     f_url = url + get_interface_details_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -633,10 +647,10 @@ def get_interface_details(ifIndex, auth, url, devId = None, devip = None):
             dev_details = (json.loads(r.text))
             return dev_details
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_interface_details: An Error has occured"
+        return "Error:\n" + str(e) + " get_interface_details: An Error has occured"
 
 
-def set_interface_down( ifindex, auth, url, devid = None, devip = None):
+def set_interface_down(ifindex, auth, url, devid=None, devip=None):
     """
     function takest devid and ifindex of specific device and interface and issues a RESTFUL call to " shut" the specifie
     d interface on the target device.
@@ -677,7 +691,7 @@ def set_interface_down( ifindex, auth, url, devid = None, devip = None):
     >>> int_up_response = set_inteface_up('9', auth.creds, auth.url, devip = '10.101.0.221')
     """
     if devip is not None:
-        devid=get_dev_details(devip, auth, url)['id']
+        devid = get_dev_details(devip, auth, url)['id']
     set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/down"
     f_url = url + set_int_down_url
     try:
@@ -687,10 +701,10 @@ def set_interface_down( ifindex, auth, url, devid = None, devip = None):
         if r.status_code == 204:
             return r.status_code
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " set_inteface_down: An Error has occured"
+        return "Error:\n" + str(e) + " set_inteface_down: An Error has occured"
 
 
-def set_inteface_up(ifindex, auth, url, devid = None, devip = None):
+def set_inteface_up(ifindex, auth, url, devid=None, devip=None):
     """
     function takest devid and ifindex of specific device and interface and issues a RESTFUL call to "undo shut" the spec
     ified interface on the target device.
@@ -731,26 +745,26 @@ def set_inteface_up(ifindex, auth, url, devid = None, devip = None):
 
     """
     if devip is not None:
-        devid=get_dev_details(devip, auth, url)['id']
+        devid = get_dev_details(devip, auth, url)['id']
     set_int_up_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/up"
     f_url = url + set_int_up_url
     try:
         r = requests.put(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
+                         headers=HEADERS)  # creates the URL using the payload variable as the contents
         if r.status_code == 204:
             return r.status_code
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " set_inteface_up: An Error has occured"
+        return "Error:\n" + str(e) + " set_inteface_up: An Error has occured"
 
 
 def _make_cmd_list(cmd_list):
-    '''
+    """
     Helper function to easily create the proper json formated string from a list of strs
     :param cmd_list: list of strings
     :return: str json formatted
-    '''
+    """
     cmd = ''
     for i in cmd_list:
-         cmd= cmd+ '"' + i + '",'
+        cmd = cmd + '"' + i + '",'
     cmd = cmd[:-1]
     return cmd

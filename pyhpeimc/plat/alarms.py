@@ -8,16 +8,10 @@ of the HPE IMC NMS platform using the RESTful API
 """
 
 # This section imports required libraries
-import json
-import requests
 from pyhpeimc.plat.device import *
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-            'application/json', 'Accept-encoding': 'application/json'}
-
-
-headers = {'Accept': 'application/json', 'Content-Type':
-            'application/json', 'Accept-encoding': 'application/json'}
+           'application/json', 'Accept-encoding': 'application/json'}
 
 
 def get_dev_alarms(auth, url, devid=None, devip=None):
@@ -25,7 +19,9 @@ def get_dev_alarms(auth, url, devid=None, devip=None):
     function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
     device.
 
-    :param devId: int or str value of the target device
+    :param devid: int or str value of the target device
+
+    :param devip: str of ipv4 address of the target device
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -53,7 +49,7 @@ def get_dev_alarms(auth, url, devid=None, devip=None):
                         str(devid) + "&desc=false"
     f_url = url + get_dev_alarm_url
     # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=headers)
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             dev_alarm = (json.loads(r.text))
@@ -70,8 +66,6 @@ def get_realtime_alarm(username, auth, url):
 
     :param username OpeatorName, String type. Required. Default Value "admin". Checks the operator
      has the privileges to view the Real-Time Alarms.
-
-    :param devId: int or str value of the target device
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -97,7 +91,7 @@ def get_realtime_alarm(username, auth, url):
     """
     get_realtime_alarm_url = "/imcrs/fault/faultRealTime?operatorName=" + username
     f_url = url + get_realtime_alarm_url
-    r = requests.get(f_url, auth=auth, headers=headers)
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         realtime_alarm_list = (json.loads(r.text))
         return realtime_alarm_list['faultRealTime']['faultRealTimeList']
@@ -110,8 +104,6 @@ def get_alarms(username, auth, url):
 
     :param username OpeatorName, String type. Required. Default Value "admin". Checks the operator
      has the privileges to view the Real-Time Alarms.
-
-    :param devId: int or str value of the target device
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -138,7 +130,7 @@ def get_alarms(username, auth, url):
     get_alarms_url = "/imcrs/fault/alarm?operatorName=" + username + \
                      "&recStatus=0&ackStatus=0&timeRange=0&size=50&desc=true"
     f_url = url + get_alarms_url
-    r = requests.get(f_url, auth=auth, headers=headers)
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
     try:
         if r.status_code == 200:
