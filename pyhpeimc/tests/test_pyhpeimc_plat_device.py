@@ -4,18 +4,16 @@ This module is used for testing the functions within the pyhpeimc.plat.device mo
 
 """
 
-
 from unittest import TestCase
 from nose.plugins.skip import SkipTest
 from pyhpeimc.tests.test_machine import *
 from pyhpeimc.plat.device import *
 
 
-class TestGet_all_devs(TestCase):
+class TestGetAllDevs(TestCase):
     def test_get_all_devs_type(self):
         dev_list = get_all_devs(auth.creds, auth.url)
         self.assertIs(type(dev_list), list)
-
 
     def test_get_all_devs_network_address_filter_type(self):
         dev_list = get_all_devs(auth.creds, auth.url, network_address='10.11.')
@@ -48,11 +46,12 @@ class TestGet_all_devs(TestCase):
         self.assertIn('id', dev_list[0])
         self.assertIn('mac', dev_list[0])
 
+
 #####Test Get_Dev_Details for Multiple Vendor Devices
 
 ###Switches
 
-#CW3 Switch
+# CW3 Switch
 class TestGet_dev_details_CW3_Switch(TestCase):
     def test_get_dev_details_type(self):
         if CW3_Switch is None:
@@ -91,7 +90,7 @@ class TestGet_dev_details_CW3_Switch(TestCase):
         self.assertIn('id', dev_1)
 
 
-#CW5 Switch
+# CW5 Switch
 class TestGet_dev_details_CW5_Switch(TestCase):
     def test_get_dev_details_type(self):
         if CW5_Switch is None:
@@ -129,7 +128,8 @@ class TestGet_dev_details_CW5_Switch(TestCase):
         self.assertIn('statusDesc', dev_1)
         self.assertIn('id', dev_1)
 
-#CW7 Switch
+
+# CW7 Switch
 class TestGet_dev_details_CW7_Switch(TestCase):
     def test_get_dev_details_type(self):
         if CW7_Switch is None:
@@ -167,7 +167,8 @@ class TestGet_dev_details_CW7_Switch(TestCase):
         self.assertIn('statusDesc', dev_1)
         self.assertIn('id', dev_1)
 
-#Cisco Switch
+
+# Cisco Switch
 class TestGet_dev_details_Cisco_Switch(TestCase):
     def test_get_dev_details_type(self):
         if Cisco_Switch is None:
@@ -205,7 +206,8 @@ class TestGet_dev_details_Cisco_Switch(TestCase):
         self.assertIn('statusDesc', dev_1)
         self.assertIn('id', dev_1)
 
-#Arista Switch
+
+# Arista Switch
 class TestGet_dev_details_Arista_Switch(TestCase):
     def test_get_dev_details_type(self):
         if Arista_Switch is None:
@@ -243,7 +245,8 @@ class TestGet_dev_details_Arista_Switch(TestCase):
         self.assertIn('statusDesc', dev_1)
         self.assertIn('id', dev_1)
 
-#Juniper Switch
+
+# Juniper Switch
 class TestGet_dev_details_Juniper_Switch(TestCase):
     def test_get_dev_details_type(self):
         if Juniper_Switch is None:
@@ -281,7 +284,8 @@ class TestGet_dev_details_Juniper_Switch(TestCase):
         self.assertIn('statusDesc', dev_1)
         self.assertIn('id', dev_1)
 
-#ArubaOS Switch ( Previously Provision)
+
+# ArubaOS Switch ( Previously Provision)
 class TestGet_dev_details_ArubaOS_Switch(TestCase):
     def test_get_dev_details_type(self):
         if ArubaOS_Switch is None:
@@ -322,7 +326,7 @@ class TestGet_dev_details_ArubaOS_Switch(TestCase):
 
 ###Routers
 
-#Cisco Router
+# Cisco Router
 class TestGet_dev_details_Cisco_Router(TestCase):
     def test_get_dev_details_type(self):
         if Cisco_Router is None:
@@ -360,7 +364,8 @@ class TestGet_dev_details_Cisco_Router(TestCase):
         self.assertIn('statusDesc', dev_1)
         self.assertIn('id', dev_1)
 
-#CW5 Router
+
+# CW5 Router
 class TestGet_dev_details_CW5_Router(TestCase):
     def test_get_dev_details_type(self):
         if CW5_Router is None:
@@ -398,7 +403,8 @@ class TestGet_dev_details_CW5_Router(TestCase):
         self.assertIn('statusDesc', dev_1)
         self.assertIn('id', dev_1)
 
-#Juniper Router ( SRX )
+
+# Juniper Router ( SRX )
 class TestGet_dev_details_Juniper_Router(TestCase):
     def test_get_dev_details_type(self):
         if Juniper_Router is None:
@@ -437,9 +443,9 @@ class TestGet_dev_details_Juniper_Router(TestCase):
         self.assertIn('id', dev_1)
 
 
-#Servers
+# Servers
 
-#Windows Server
+# Windows Server
 class TestGet_dev_details_Windows_Server(TestCase):
     def test_get_dev_details_type(self):
         if Windows_Server is None:
@@ -477,7 +483,8 @@ class TestGet_dev_details_Windows_Server(TestCase):
         self.assertIn('statusDesc', dev_1)
         self.assertIn('id', dev_1)
 
-#Linux Server
+
+# Linux Server
 class TestGet_dev_details_Linux_Server(TestCase):
     def test_get_dev_details_type(self):
         if Linux_Server is None:
@@ -516,9 +523,9 @@ class TestGet_dev_details_Linux_Server(TestCase):
         self.assertIn('id', dev_1)
 
 
-#Hypervisors
+# Hypervisors
 
-#VMWare ESX Hypervisor
+# VMWare ESX Hypervisor
 class TestGet_dev_details_ESX(TestCase):
     def test_get_dev_details_type(self):
         if ESX is None:
@@ -557,7 +564,7 @@ class TestGet_dev_details_ESX(TestCase):
         self.assertIn('id', dev_1)
 
 
-#Microsoft HyperV Hypervisor
+# Microsoft HyperV Hypervisor
 class TestGet_dev_details_HyperV(TestCase):
     def test_get_dev_details_type(self):
         if HyperV is None:
@@ -598,17 +605,18 @@ class TestGet_dev_details_HyperV(TestCase):
 
 """============================================================================================="""
 
+
 ######Test TestGet_dev_interface for Multiple Vendor Devices
 
 ### Switches
 
 
-#CW3 Switch
+# CW3 Switch
 class TestGet_dev_interface_CW3_Switch(TestCase):
     def test_get_dev_interface_type(self):
         if CW3_Switch is None:
             raise SkipTest
-        dev_interfaces = get_dev_interface(auth.creds, auth.url, devip = CW3_Switch)
+        dev_interfaces = get_dev_interface(auth.creds, auth.url, devip=CW3_Switch)
         self.assertIs(type(dev_interfaces), list)
 
     def test_get_dev_interface_content(self):
@@ -636,7 +644,7 @@ class TestGet_dev_interface_CW3_Switch(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-#CW5 Switch
+# CW5 Switch
 class TestGet_dev_interface_CW5_Switch(TestCase):
     def test_get_dev_interface_type(self):
         if CW5_Switch is None:
@@ -669,7 +677,7 @@ class TestGet_dev_interface_CW5_Switch(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-#CW7 Switch
+# CW7 Switch
 class TestGet_dev_interface_CW7_Switch(TestCase):
     def test_get_dev_interface_type(self):
         if CW7_Switch is None:
@@ -702,7 +710,7 @@ class TestGet_dev_interface_CW7_Switch(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-#Cisco Switch
+# Cisco Switch
 class TestGet_dev_interface_Cisco_Switch(TestCase):
     def test_get_dev_interface_type(self):
         if Cisco_Switch is None:
@@ -735,7 +743,7 @@ class TestGet_dev_interface_Cisco_Switch(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-#Juniper Switch
+# Juniper Switch
 class TestGet_dev_interface_Juniper_Switch(TestCase):
     def test_get_dev_interface_type(self):
         if Juniper_Switch is None:
@@ -768,7 +776,7 @@ class TestGet_dev_interface_Juniper_Switch(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-#Arista Switch
+# Arista Switch
 class TestGet_dev_interface_Arista_Switch(TestCase):
     def test_get_dev_interface_type(self):
         if Arista_Switch is None:
@@ -801,7 +809,7 @@ class TestGet_dev_interface_Arista_Switch(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-#ArubaOS Switch ( Formerly Provision )
+# ArubaOS Switch ( Formerly Provision )
 class TestGet_dev_interface_ArubaOS_Switch(TestCase):
     def test_get_dev_interface_type(self):
         if ArubaOS_Switch is None:
@@ -837,7 +845,7 @@ class TestGet_dev_interface_ArubaOS_Switch(TestCase):
 ### Routers
 
 
-#Cisco Router
+# Cisco Router
 class TestGet_dev_interface_Cisco_Router(TestCase):
     def test_get_dev_interface_type(self):
         if Cisco_Router is None:
@@ -870,7 +878,7 @@ class TestGet_dev_interface_Cisco_Router(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-#CW5 Router
+# CW5 Router
 class TestGet_dev_interface_CW5_Router(TestCase):
     def test_get_dev_interface_type(self):
         if CW5_Router is None:
@@ -903,7 +911,7 @@ class TestGet_dev_interface_CW5_Router(TestCase):
         self.assertIn('ifType', dev_interfaces[0])
 
 
-#Juniper Router ( SRX )
+# Juniper Router ( SRX )
 class TestGet_dev_interface_Juniper_Router(TestCase):
     def test_get_dev_interface_type(self):
         if Juniper_Router is None:
@@ -1007,7 +1015,7 @@ class TestGet_dev_interface_Linux_Server(TestCase):
 ### Hypervisors
 
 
-#VMWare ESX Hypervisor
+# VMWare ESX Hypervisor
 class TestGet_dev_interface_ESX_Server(TestCase):
     def test_get_dev_interface_type(self):
         if ESX is None:
@@ -1075,11 +1083,12 @@ class TestGet_dev_interface_HyperV_Server(TestCase):
 
 """============================================================================================="""
 
+
 #####Test TestGet_dev_run_config for Multiple Vendor Devices
 
 ###Switches
 
-#CW3 Switch
+# CW3 Switch
 class TestGet_dev_run_configCW3_Switch(TestCase):
     def test_get_dev_run_config_supported(self):
         if CW3_Switch is None:
@@ -1088,7 +1097,7 @@ class TestGet_dev_run_configCW3_Switch(TestCase):
         self.assertIs(type(run_config), str)
 
 
-#CW5_Switch
+# CW5_Switch
 class TestGet_dev_run_configCW5_Switch(TestCase):
     def test_get_dev_run_config_supported(self):
         if CW5_Switch is None:
@@ -1097,7 +1106,7 @@ class TestGet_dev_run_configCW5_Switch(TestCase):
         self.assertIs(type(run_config), str)
 
 
-#CW7_Switch
+# CW7_Switch
 class TestGet_dev_run_configCW7_Switch(TestCase):
     def test_get_dev_run_config_supported(self):
         if CW7_Switch is None:
@@ -1106,7 +1115,7 @@ class TestGet_dev_run_configCW7_Switch(TestCase):
         self.assertIs(type(run_config), str)
 
 
-#Cisco_Switch
+# Cisco_Switch
 class TestGet_dev_run_configCisco_Switch(TestCase):
     def test_get_dev_run_config_supported(self):
         if Cisco_Switch is None:
@@ -1115,7 +1124,7 @@ class TestGet_dev_run_configCisco_Switch(TestCase):
         self.assertIs(type(run_config), str)
 
 
-#Juniper_Switch
+# Juniper_Switch
 class TestGet_dev_run_configJuniper_Switch(TestCase):
     def test_get_dev_run_config_supported(self):
         if Juniper_Switch is None:
@@ -1124,7 +1133,7 @@ class TestGet_dev_run_configJuniper_Switch(TestCase):
         self.assertIs(type(run_config), str)
 
 
-#Arista_Switch
+# Arista_Switch
 class TestGet_dev_run_configArista_Switch(TestCase):
     def test_get_dev_run_config_supported(self):
         if Arista_Switch is None:
@@ -1136,10 +1145,10 @@ class TestGet_dev_run_configArista_Switch(TestCase):
         if Arista_Switch is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=Arista_Switch)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        self.assertEqual(run_config, "This features is no supported on this device")
 
 
-#ArubaOS_Switch (Formerly Provision)
+# ArubaOS_Switch (Formerly Provision)
 class TestGet_dev_run_configArubaOS_Switch(TestCase):
     def test_get_dev_run_config_supported(self):
         if ArubaOS_Switch is None:
@@ -1150,7 +1159,7 @@ class TestGet_dev_run_configArubaOS_Switch(TestCase):
 
 ###Routers
 
-#Cisco_Router
+# Cisco_Router
 class TestGet_dev_run_configCisco_Router(TestCase):
     def test_get_dev_run_config_supported(self):
         if Cisco_Router is None:
@@ -1159,7 +1168,7 @@ class TestGet_dev_run_configCisco_Router(TestCase):
         self.assertIs(type(run_config), str)
 
 
-#CW5_Router
+# CW5_Router
 class TestGet_dev_run_configCW5_Router(TestCase):
     def test_get_dev_run_config_supported(self):
         if CW5_Router is None:
@@ -1168,7 +1177,7 @@ class TestGet_dev_run_configCW5_Router(TestCase):
         self.assertIs(type(run_config), str)
 
 
-#Juniper_Router (SRV)
+# Juniper_Router (SRV)
 class TestGet_dev_run_configJuniper_Router(TestCase):
     def test_get_dev_run_config_supported(self):
         if Juniper_Router is None:
@@ -1180,62 +1189,64 @@ class TestGet_dev_run_configJuniper_Router(TestCase):
 ####Servers
 
 
-#Windows_Server
+# Windows_Server
 class TestGet_dev_run_configWindows_Server(TestCase):
     def test_get_dev_run_config_unsupported(self):
         if Windows_Server is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=Windows_Server)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        self.assertEqual(run_config, "This features is no supported on this device")
 
-#Linux_Server
+
+# Linux_Server
 class TestGet_dev_run_configLinux_Server(TestCase):
     def test_get_dev_run_config_unsupported(self):
         if Linux_Server is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=Linux_Server)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        self.assertEqual(run_config, "This features is no supported on this device")
+
 
 ###Hypervisors
 
 
-#VMWare ESX
+# VMWare ESX
 class TestGet_dev_run_configVMWare(TestCase):
     def test_get_dev_run_config_unsupported(self):
         if ESX is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=ESX)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        self.assertEqual(run_config, "This features is no supported on this device")
 
 
-#HyperV
+# HyperV
 class TestGet_dev_run_configHyperV(TestCase):
     def test_get_dev_run_config_unsupported(self):
         if HyperV is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=HyperV)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        self.assertEqual(run_config, "This features is no supported on this device")
 
 
-
-#Test TestGet_dev_start_config for Multiple Vendor Devices
+# Test TestGet_dev_start_config for Multiple Vendor Devices
 
 """============================================================================================="""
+
 
 #####Test TEST_NAME_HERE for Multiple Vendor Devices
 
 ###Switches
 
-#CW3_Switch
+# CW3_Switch
 class TestGet_dev_start_configCW3_Switch(TestCase):
     def test_get_dev_run_start_supported(self):
         if CW3_Switch is None:
             raise SkipTest
-            start_config = get_dev_start_config(auth.creds, auth.url, devip=CW3_Switch)
+        start_config = get_dev_start_config(auth.creds, auth.url, devip=CW3_Switch)
         self.assertIs(type(start_config), str)
 
 
-#CW5_Switch
+# CW5_Switch
 class TestGet_dev_start_configCW5_Switch(TestCase):
     def test_get_dev__start_supported(self):
         if CW5_Switch is None:
@@ -1244,7 +1255,7 @@ class TestGet_dev_start_configCW5_Switch(TestCase):
         self.assertIs(type(start_config), str)
 
 
-#CW7_Switch
+# CW7_Switch
 class TestGet_dev_start_configCW7_Switch(TestCase):
     def test_get_dev_start_supported(self):
         if CW7_Switch is None:
@@ -1253,7 +1264,7 @@ class TestGet_dev_start_configCW7_Switch(TestCase):
         self.assertIs(type(start_config), str)
 
 
-#Cisco_Switch
+# Cisco_Switch
 class TestGet_dev_start_configCisco_Switch(TestCase):
     def test_get_dev_start_supported(self):
         if Cisco_Switch is None:
@@ -1262,7 +1273,7 @@ class TestGet_dev_start_configCisco_Switch(TestCase):
         self.assertIs(type(start_config), str)
 
 
-#Juniper_Switch
+# Juniper_Switch
 class TestGet_dev_start_configJuniper_Switch(TestCase):
     def test_get_dev_start_supported(self):
         if Juniper_Switch is None:
@@ -1271,7 +1282,7 @@ class TestGet_dev_start_configJuniper_Switch(TestCase):
         self.assertIs(type(start_config), str)
 
 
-#Arista_Switch
+# Arista_Switch
 class TestGet_dev_start_configArista_Switch(TestCase):
     def test_get_dev_start_supported(self):
         if Arista_Switch is None:
@@ -1280,7 +1291,7 @@ class TestGet_dev_start_configArista_Switch(TestCase):
         self.assertIs(type(start_config), str)
 
 
-#ArubaOS_Switch (Formerly Provision)
+# ArubaOS_Switch (Formerly Provision)
 class TestGet_dev_start_configArubaOS_Switch(TestCase):
     def test_get_dev_start_supported(self):
         if ArubaOS_Switch is None:
@@ -1291,7 +1302,7 @@ class TestGet_dev_start_configArubaOS_Switch(TestCase):
 
 ###Routers
 
-#Cisco_Router
+# Cisco_Router
 class TestGet_dev_start_configCisco_Router(TestCase):
     def test_get_dev_start_supported(self):
         if Cisco_Router is None:
@@ -1299,7 +1310,8 @@ class TestGet_dev_start_configCisco_Router(TestCase):
         start_config = get_dev_start_config(auth.creds, auth.url, devip=Cisco_Router)
         self.assertIs(type(start_config), str)
 
-#CW5_Router
+
+# CW5_Router
 class TestGet_dev_start_configCW5_Router(TestCase):
     def test_get_dev_start_supported(self):
         if CW5_Router is None:
@@ -1307,7 +1319,8 @@ class TestGet_dev_start_configCW5_Router(TestCase):
         start_config = get_dev_start_config(auth.creds, auth.url, devip=CW5_Router)
         self.assertIs(type(start_config), str)
 
-#Juniper_Router (SRV)
+
+# Juniper_Router (SRV)
 class TestGet_dev_start_configJuniper_Router(TestCase):
     def test_get_dev_start_supported(self):
         if Juniper_Router is None:
@@ -1315,57 +1328,60 @@ class TestGet_dev_start_configJuniper_Router(TestCase):
         start_config = get_dev_start_config(auth.creds, auth.url, devip=Juniper_Router)
         self.assertIs(type(start_config), str)
 
+
 ####Servers
 
 
-#Windows_Server
+# Windows_Server
 class TestGet_dev_start_configWindows_Server(TestCase):
     def test_get_dev_run_start_unsupported(self):
         if Windows_Server is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=Windows_Server)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        self.assertEqual(run_config, "This features is no supported on this device")
 
 
-#Linux_Server
+# Linux_Server
 class TestGet_dev_start_configLinux_Server(TestCase):
     def test_get_dev_run_start_unsupported(self):
         if Linux_Server is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=Linux_Server)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        self.assertEqual(run_config, "This features is no supported on this device")
 
 
 ###Hypervisors
 
 
-#VMWare ESX
+# VMWare ESX
 class TestGet_dev_start_configVMWare(TestCase):
     def test_get_dev_run_start_unsupported(self):
         if ESX is None:
             raise SkipTest
-        run_config = get_dev_run_config(auth.creds, auth.url, devip=VMWare)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        run_config = get_dev_run_config(auth.creds, auth.url, devip=ESX)
+        self.assertEqual(run_config, "This features is no supported on this device")
 
-#HyperV
+
+# HyperV
 class TestGet_dev_start_configHyperV(TestCase):
     def test_get_dev_run_start_unsupported(self):
         if HyperV is None:
             raise SkipTest
         run_config = get_dev_run_config(auth.creds, auth.url, devip=HyperV)
-        self.assertEqual(run_config,"This features is no supported on this device")
+        self.assertEqual(run_config, "This features is no supported on this device")
 
 
-#Test TestGet_dev_mac_learn for Multiple Vendor Devices
+# Test TestGet_dev_mac_learn for Multiple Vendor Devices
 
 
 """============================================================================================="""
+
 
 #####Test TestGet_dev_mac_learn for Multiple Vendor Devices
 
 ###Switches
 
-#CW3_Switch
+# CW3_Switch
 class TestGet_dev_mac_learnCW3_Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if CW3_Switch is None:
@@ -1388,7 +1404,8 @@ class TestGet_dev_mac_learnCW3_Switch(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#CW5_Switch
+
+# CW5_Switch
 class TestGet_dev_mac_learnCW5_Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if CW5_Switch is None:
@@ -1412,7 +1429,7 @@ class TestGet_dev_mac_learnCW5_Switch(TestCase):
         self.assertIn('ifDesc', dev_mac_learn[0])
 
 
-#CW7_Switch
+# CW7_Switch
 class TestGet_dev_mac_learnCW7_Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if CW7_Switch is None:
@@ -1435,7 +1452,8 @@ class TestGet_dev_mac_learnCW7_Switch(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#Cisco_Switch
+
+# Cisco_Switch
 class TestGet_dev_mac_learnCisco_Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if Cisco_Switch is None:
@@ -1458,7 +1476,8 @@ class TestGet_dev_mac_learnCisco_Switch(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#Juniper_Switch
+
+# Juniper_Switch
 class TestGet_dev_mac_learnJuniper_Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if Juniper_Switch is None:
@@ -1481,7 +1500,8 @@ class TestGet_dev_mac_learnJuniper_Switch(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#Arista_Switch
+
+# Arista_Switch
 class TestGet_dev_mac_learnArista_Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if Arista_Switch is None:
@@ -1504,7 +1524,8 @@ class TestGet_dev_mac_learnArista_Switch(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#ArubaOS_Switch (Formerly Provision)
+
+# ArubaOS_Switch (Formerly Provision)
 class TestGet_dev_mac_learnArubaOS_Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if ArubaOS_Switch is None:
@@ -1526,9 +1547,11 @@ class TestGet_dev_mac_learnArubaOS_Switch(TestCase):
         self.assertIn('device', dev_mac_learn[0])
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
+
+
 ###Routers
 
-#Cisco_Router
+# Cisco_Router
 class TestGet_dev_mac_learnCisco_Router(TestCase):
     def test_get_dev_mac_learnType(self):
         if Cisco_Router is None:
@@ -1551,7 +1574,8 @@ class TestGet_dev_mac_learnCisco_Router(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#CW5_Router
+
+# CW5_Router
 class TestGet_dev_mac_learnCW5_Router(TestCase):
     def test_get_dev_mac_learnType(self):
         if CW5_Router is None:
@@ -1574,7 +1598,8 @@ class TestGet_dev_mac_learnCW5_Router(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#Juniper_Router (SRV)
+
+# Juniper_Router (SRV)
 class TestGet_dev_mac_learnJuniper_Router(TestCase):
     def test_get_dev_mac_learnType(self):
         if Juniper_Router is None:
@@ -1597,10 +1622,11 @@ class TestGet_dev_mac_learnJuniper_Router(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
+
 ####Servers
 
 
-#Windows_Server
+# Windows_Server
 class TestGet_dev_mac_learnWindows_Server(TestCase):
     def test_get_dev_mac_learnType(self):
         if Windows_Server is None:
@@ -1623,7 +1649,8 @@ class TestGet_dev_mac_learnWindows_Server(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#Linux_Server
+
+# Linux_Server
 class TestGet_dev_mac_learnLinux_Server(TestCase):
     def test_get_dev_mac_learnType(self):
         if Linux_Server is None:
@@ -1650,7 +1677,7 @@ class TestGet_dev_mac_learnLinux_Server(TestCase):
 ###Hypervisors
 
 
-#VMWare ESX
+# VMWare ESX
 class TestGet_dev_mac_learnESX(TestCase):
     def test_get_dev_mac_learnType(self):
         if ESX is None:
@@ -1673,7 +1700,8 @@ class TestGet_dev_mac_learnESX(TestCase):
         self.assertIn('vlanId', dev_mac_learn[0])
         self.assertIn('ifDesc', dev_mac_learn[0])
 
-#HyperV
+
+# HyperV
 
 class TestGet_dev_mac_learnHyperV(TestCase):
     def test_get_dev_mac_learnType(self):
@@ -1698,9 +1726,8 @@ class TestGet_dev_mac_learnHyperV(TestCase):
         self.assertIn('ifDesc', dev_mac_learn[0])
 
 
-
-
 """============================================================================================="""
+
 
 #####Test TestRun_dev_cmd for Multiple Vendor Devices
 
@@ -1726,6 +1753,7 @@ class TestRun_dev_cmd_CW3_Switch(TestCase):
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
 
+
 # CW5_Switch
 class TestRun_dev_cmd_CW5_Switch(TestCase):
     def test_run_dev_cmd_type(self):
@@ -1745,6 +1773,7 @@ class TestRun_dev_cmd_CW5_Switch(TestCase):
         self.assertIn('content', cmd_output)
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
+
 
 # CW7_Switch
 class TestRun_dev_cmd_CW7_Switch(TestCase):
@@ -1787,6 +1816,7 @@ class TestRun_dev_cmd_Cisco_Switch(TestCase):
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
 
+
 # Juniper_Switch
 class TestRun_dev_cmd_Juniper_Switch(TestCase):
     def test_run_dev_cmd_type(self):
@@ -1806,6 +1836,7 @@ class TestRun_dev_cmd_Juniper_Switch(TestCase):
         self.assertIn('content', cmd_output)
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
+
 
 # Arista_Switch
 class TestRun_dev_cmd_Arista_Switch(TestCase):
@@ -1827,6 +1858,7 @@ class TestRun_dev_cmd_Arista_Switch(TestCase):
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
 
+
 # ArubaOS_Switch (Formerly Provision)
 class TestRun_dev_cmd_ArubaOS_Switch(TestCase):
     def test_run_dev_cmd_type(self):
@@ -1846,6 +1878,8 @@ class TestRun_dev_cmd_ArubaOS_Switch(TestCase):
         self.assertIn('content', cmd_output)
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
+
+
 ###Routers
 
 # Cisco_Router
@@ -1909,6 +1943,8 @@ class TestRun_dev_cmd_Juniper_Router(TestCase):
         self.assertIn('content', cmd_output)
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
+
+
 ####Servers
 
 
@@ -1933,6 +1969,7 @@ class TestRun_dev_cmd_Windows_Server(TestCase):
         self.assertIn('deviceId', cmd_output)
         self.assertIn('errorMsg', cmd_output)
 
+
 # Linux_Server
 class TestRun_dev_cmd_Linux_Server(TestCase):
     def test_run_dev_cmd_type(self):
@@ -1953,6 +1990,7 @@ class TestRun_dev_cmd_Linux_Server(TestCase):
         self.assertIn('cmdlist', cmd_output)
         self.assertIn('deviceId', cmd_output)
         self.assertIn('errorMsg', cmd_output)
+
 
 ###Hypervisors
 
@@ -2001,15 +2039,14 @@ class TestRun_dev_cmd_VMWare(TestCase):
         self.assertIn('errorMsg', cmd_output)
 
 
-
-
 """============================================================================================="""
+
 
 ######Test TestGet_all_interface_details for Multiple Vendor Devices
 
 ###Switches
 
-#CW3_Switch
+# CW3_Switch
 class TestGet_all_interface_details_CW3_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if CW3_Switch is None:
@@ -2041,7 +2078,8 @@ class TestGet_all_interface_details_CW3_Switch(TestCase):
         self.assertIn('adminStatus', all_interface_details[0])
         self.assertIn('ifspeed', all_interface_details[0])
 
-#CW5_Switch
+
+# CW5_Switch
 class TestGet_all_interface_details_CW5_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if CW5_Switch is None:
@@ -2073,7 +2111,8 @@ class TestGet_all_interface_details_CW5_Switch(TestCase):
         self.assertIn('adminStatus', all_interface_details[0])
         self.assertIn('ifspeed', all_interface_details[0])
 
-#CW7_Switch
+
+# CW7_Switch
 class TestGet_all_interface_details_CW7_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if CW7_Switch is None:
@@ -2106,7 +2145,7 @@ class TestGet_all_interface_details_CW7_Switch(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#Cisco_Switch
+# Cisco_Switch
 class TestGet_all_interface_details_Cisco_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if Cisco_Switch is None:
@@ -2139,7 +2178,7 @@ class TestGet_all_interface_details_Cisco_Switch(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#Juniper_Switch
+# Juniper_Switch
 class TestGet_all_interface_details_Juniper_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if Juniper_Switch is None:
@@ -2172,7 +2211,7 @@ class TestGet_all_interface_details_Juniper_Switch(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#Arista_Switch
+# Arista_Switch
 class TestGet_all_interface_details_Arista_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if Arista_Switch is None:
@@ -2205,7 +2244,7 @@ class TestGet_all_interface_details_Arista_Switch(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#ArubaOS_Switch (Formerly Provision)
+# ArubaOS_Switch (Formerly Provision)
 class TestGet_all_interface_details_ArubaOS_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if ArubaOS_Switch is None:
@@ -2240,7 +2279,7 @@ class TestGet_all_interface_details_ArubaOS_Switch(TestCase):
 
 ###Routers
 
-#Cisco_Router
+# Cisco_Router
 class TestGet_all_interface_details_Cisco_Router(TestCase):
     def test_get_all_interface_details_type(self):
         if Cisco_Router is None:
@@ -2273,7 +2312,7 @@ class TestGet_all_interface_details_Cisco_Router(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#CW5_Router
+# CW5_Router
 class TestGet_all_interface_details_CW5_Router(TestCase):
     def test_get_all_interface_details_type(self):
         if CW5_Router is None:
@@ -2306,7 +2345,7 @@ class TestGet_all_interface_details_CW5_Router(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#Juniper_Router (SRV)
+# Juniper_Router (SRV)
 class TestGet_all_interface_details_Juniper_Router(TestCase):
     def test_get_all_interface_details_type(self):
         if Juniper_Router is None:
@@ -2342,7 +2381,7 @@ class TestGet_all_interface_details_Juniper_Router(TestCase):
 ####Servers
 
 
-#Windows_Server
+# Windows_Server
 class TestGet_all_interface_details_Windows_Server(TestCase):
     def test_get_all_interface_details_type(self):
         if Windows_Server is None:
@@ -2375,7 +2414,7 @@ class TestGet_all_interface_details_Windows_Server(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#Linux_Server
+# Linux_Server
 class TestGet_all_interface_details_Linux_Server(TestCase):
     def test_get_all_interface_details_type(self):
         if Linux_Server is None:
@@ -2407,10 +2446,11 @@ class TestGet_all_interface_details_Linux_Server(TestCase):
         self.assertIn('adminStatus', all_interface_details[0])
         self.assertIn('ifspeed', all_interface_details[0])
 
+
 ###Hypervisors
 
 
-#VMWare ESX
+# VMWare ESX
 class TestGet_all_interface_details_VMWare(TestCase):
     def test_get_all_interface_details_type(self):
         if ESX is None:
@@ -2443,7 +2483,7 @@ class TestGet_all_interface_details_VMWare(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#HyperV
+# HyperV
 class TestGet_all_interface_details_HyperV(TestCase):
     def test_get_all_interface_details_type(self):
         if HyperV is None:
@@ -2476,15 +2516,16 @@ class TestGet_all_interface_details_HyperV(TestCase):
         self.assertIn('ifspeed', all_interface_details[0])
 
 
-#TODO
+# TODO
 """============================================================================================="""
+
 
 ######Test TestGet_interface_details for Multiple Vendor Devices
 
 
 ###Switches
 
-#CW3_Switch
+# CW3_Switch
 class TestGet_interface_details_CW3_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if CW3_Switch is None:
@@ -2516,11 +2557,7 @@ class TestGet_interface_details_CW3_Switch(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-
-
-
-#CW5_Switch
+# CW5_Switch
 class TestGet_interface_details_CW5_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if CW5_Switch is None:
@@ -2552,8 +2589,7 @@ class TestGet_interface_details_CW5_Switch(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-#CW7_Switch
+# CW7_Switch
 class TestGet_interface_details_CW7_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if CW7_Switch is None:
@@ -2585,8 +2621,7 @@ class TestGet_interface_details_CW7_Switch(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-#Cisco_Switch
+# Cisco_Switch
 class TestGet_interface_details_Cisco_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if Cisco_Switch is None:
@@ -2618,8 +2653,7 @@ class TestGet_interface_details_Cisco_Switch(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-#Juniper_Switch
+# Juniper_Switch
 class TestGet_interface_details_Juniper_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if Juniper_Switch is None:
@@ -2651,8 +2685,7 @@ class TestGet_interface_details_Juniper_Switch(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-#Arista_Switch
+# Arista_Switch
 class TestGet_interface_details_Arista_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if Arista_Switch is None:
@@ -2684,8 +2717,7 @@ class TestGet_interface_details_Arista_Switch(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-#ArubaOS_Switch (Formerly Provision)
+# ArubaOS_Switch (Formerly Provision)
 class TestGet_interface_details_ArubaOS_Switch(TestCase):
     def test_get_all_interface_details_type(self):
         if ArubaOS_Switch is None:
@@ -2717,11 +2749,9 @@ class TestGet_interface_details_ArubaOS_Switch(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-
 ###Routers
 
-#Cisco_Router
+# Cisco_Router
 class TestGet_interface_details_Cisco_Router(TestCase):
     def test_get_all_interface_details_type(self):
         if Cisco_Router is None:
@@ -2753,8 +2783,7 @@ class TestGet_interface_details_Cisco_Router(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-#CW5_Router
+# CW5_Router
 class TestGet_interface_details_CW5_Router(TestCase):
     def test_get_all_interface_details_type(self):
         if CW5_Router is None:
@@ -2786,8 +2815,7 @@ class TestGet_interface_details_CW5_Router(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-#Juniper_Router (SRV)
+# Juniper_Router (SRV)
 class TestGet_interface_details_Juniper_Router(TestCase):
     def test_get_all_interface_details_type(self):
         if Juniper_Router is None:
@@ -2822,7 +2850,7 @@ class TestGet_interface_details_Juniper_Router(TestCase):
 ####Servers
 
 
-#Windows_Server
+# Windows_Server
 class TestGet_interface_details_Windows_Server(TestCase):
     def test_get_all_interface_details_type(self):
         if Windows_Server is None:
@@ -2854,8 +2882,7 @@ class TestGet_interface_details_Windows_Server(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-
-#Linux_Server
+# Linux_Server
 class TestGet_interface_details_Linux_Server(TestCase):
     def test_get_all_interface_details_type(self):
         if Linux_Server is None:
@@ -2890,7 +2917,7 @@ class TestGet_interface_details_Linux_Server(TestCase):
 ###Hypervisors
 
 
-#ESX
+# ESX
 class TestGet_interface_details_ESX(TestCase):
     def test_get_all_interface_details_type(self):
         if ESX is None:
@@ -2922,7 +2949,7 @@ class TestGet_interface_details_ESX(TestCase):
         self.assertIn('ifAlias', interface_details)
 
 
-#HyperV
+# HyperV
 class TestGet_interface_details_HyperV(TestCase):
     def test_get_all_interface_details_type(self):
         if HyperV is None:
@@ -2956,12 +2983,13 @@ class TestGet_interface_details_HyperV(TestCase):
 
 """============================================================================================="""
 
+
 ######Test TestSet_inteface_up for Multiple Vendor Devices
 
 
 ###Switches
 
-#CW3_Switch
+# CW3_Switch
 class TestSet_inteface_up_CW3_Switch(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -2973,7 +3001,8 @@ class TestSet_inteface_up_CW3_Switch(TestCase):
         self.assertIs(type(int_up_response), int)
         self.assertIs(int_up_response, 204)
 
-#CW5_Switch
+
+# CW5_Switch
 class TestSet_inteface_up_CW5_Switch(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -2986,7 +3015,7 @@ class TestSet_inteface_up_CW5_Switch(TestCase):
         self.assertIs(int_up_response, 204)
 
 
-#CW7_Switch
+# CW7_Switch
 class TestSet_inteface_up_CW7_Switch(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -2999,7 +3028,7 @@ class TestSet_inteface_up_CW7_Switch(TestCase):
         self.assertIs(int_up_response, 204)
 
 
-#Cisco_Switch
+# Cisco_Switch
 class TestSet_inteface_up_Cisco_Switch(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3012,7 +3041,7 @@ class TestSet_inteface_up_Cisco_Switch(TestCase):
         self.assertIs(int_up_response, 204)
 
 
-#Juniper_Switch
+# Juniper_Switch
 class TestSet_inteface_up_Juniper_Switch(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3025,7 +3054,7 @@ class TestSet_inteface_up_Juniper_Switch(TestCase):
         self.assertIs(int_up_response, 204)
 
 
-#Arista_Switch
+# Arista_Switch
 class TestSet_inteface_up_Arista_Switch(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3038,7 +3067,7 @@ class TestSet_inteface_up_Arista_Switch(TestCase):
         self.assertIs(int_up_response, 204)
 
 
-#ArubaOS_Switch (Formerly Provision)
+# ArubaOS_Switch (Formerly Provision)
 class TestSet_inteface_up_ArubaOS_Switch(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3050,12 +3079,13 @@ class TestSet_inteface_up_ArubaOS_Switch(TestCase):
         self.assertIs(type(int_up_response), int)
         self.assertIs(int_up_response, 204)
 
+
 ###Routers
 
-#Cisco_Router
+# Cisco_Router
 
 # Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-#which will force manual intervention
+# which will force manual intervention
 class TestSet_inteface_up_Cisco_Router(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3068,9 +3098,9 @@ class TestSet_inteface_up_Cisco_Router(TestCase):
         self.assertIs(int_up_response, 204)
 
 
-#CW5_Router
+# CW5_Router
 # Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-#which will force manual intervention
+# which will force manual intervention
 class TestSet_inteface_up_CW5_Router(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3082,9 +3112,10 @@ class TestSet_inteface_up_CW5_Router(TestCase):
         self.assertIs(type(int_up_response), int)
         self.assertIs(int_up_response, 204)
 
-#Juniper_Router (SRV)
+
+# Juniper_Router (SRV)
 # Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-#which will force manual intervention
+# which will force manual intervention
 class TestSet_inteface_up_Juniper_Router(TestCase):
     def test_set_inteface_up(self):
         if test_interface_up is False:
@@ -3095,32 +3126,35 @@ class TestSet_inteface_up_Juniper_Router(TestCase):
         int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=Juniper_Router)
         self.assertIs(type(int_up_response), int)
         self.assertIs(int_up_response, 204)
+
+
 ####Servers
 
 
-#Windows_Server
-#Deemed inappropriate to test
+# Windows_Server
+# Deemed inappropriate to test
 
-#Linux_Server
-#Deemed inappropriate to test
+# Linux_Server
+# Deemed inappropriate to test
 
 ###Hypervisors
 
 
-#ESX
-#Deemed inappropriate to test
+# ESX
+# Deemed inappropriate to test
 
-#HyperV
-#Deemed inappropriate to test
+# HyperV
+# Deemed inappropriate to test
 
 
 """============================================================================================="""
+
 
 ######Test TestSet_inteface_down for Multiple Vendor Devices
 
 ###Switches
 
-#CW3_Switch
+# CW3_Switch
 class TestSet_inteface_down_CW3_Switch(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3133,7 +3167,8 @@ class TestSet_inteface_down_CW3_Switch(TestCase):
         self.assertIs(type(int_down_response), int)
         self.assertIs(int_down_response, 204)
 
-#CW5_Switch
+
+# CW5_Switch
 class TestSet_inteface_down_CW5_Switch(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3147,7 +3182,7 @@ class TestSet_inteface_down_CW5_Switch(TestCase):
         self.assertIs(int_down_response, 204)
 
 
-#CW7_Switch
+# CW7_Switch
 class TestSet_inteface_down_CW7_Switch(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3161,7 +3196,7 @@ class TestSet_inteface_down_CW7_Switch(TestCase):
         self.assertIs(int_down_response, 204)
 
 
-#Cisco_Switch
+# Cisco_Switch
 class TestSet_inteface_down_Cisco_Switch(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3174,7 +3209,8 @@ class TestSet_inteface_down_Cisco_Switch(TestCase):
         self.assertIs(type(int_down_response), int)
         self.assertIs(int_down_response, 204)
 
-#Juniper_Switch
+
+# Juniper_Switch
 class TestSet_inteface_down_Juniper_Switch(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3187,7 +3223,8 @@ class TestSet_inteface_down_Juniper_Switch(TestCase):
         self.assertIs(type(int_down_response), int)
         self.assertIs(int_down_response, 204)
 
-#Arista_Switch
+
+# Arista_Switch
 class TestSet_inteface_down_Arista_Switch(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3201,7 +3238,7 @@ class TestSet_inteface_down_Arista_Switch(TestCase):
         self.assertIs(int_down_response, 204)
 
 
-#ArubaOS_Switch (Formerly Provision)
+# ArubaOS_Switch (Formerly Provision)
 class TestSet_inteface_down_ArubaOS_Switch(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3215,13 +3252,11 @@ class TestSet_inteface_down_ArubaOS_Switch(TestCase):
         self.assertIs(int_down_response, 204)
 
 
-
-
 ###Routers
 
-#Cisco_Router
+# Cisco_Router
 # Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-#which will force manual intervention
+# which will force manual intervention
 class TestSet_inteface_down_Cisco_Router(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3234,9 +3269,10 @@ class TestSet_inteface_down_Cisco_Router(TestCase):
         self.assertIs(type(int_down_response), int)
         self.assertIs(int_down_response, 204)
 
-#CW5_Router
+
+# CW5_Router
 # Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-#which will force manual intervention
+# which will force manual intervention
 class TestSet_inteface_down_CW5_Router(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3249,9 +3285,10 @@ class TestSet_inteface_down_CW5_Router(TestCase):
         self.assertIs(type(int_down_response), int)
         self.assertIs(int_down_response, 204)
 
-#Juniper_Router (SRV)
+
+# Juniper_Router (SRV)
 # Ensure that the ifIndex for this test is the far interface of the router away from IMC or you will kill access to the machine
-#which will force manual intervention
+# which will force manual intervention
 class TestSet_inteface_down_Juniper_Router(TestCase):
     def test_set_inteface_down(self):
         if test_interface_down is False:
@@ -3267,16 +3304,16 @@ class TestSet_inteface_down_Juniper_Router(TestCase):
 ####Servers
 
 
-#Windows_Server
-#Deemed inappropriate to test
+# Windows_Server
+# Deemed inappropriate to test
 
-#Linux_Server
-#Deemed inappropriate to test
+# Linux_Server
+# Deemed inappropriate to test
 ###Hypervisors
 
 
-#ESX
-#Deemed inappropriate to test
+# ESX
+# Deemed inappropriate to test
 
-#HyperV
-#Deemed inappropriate to test
+# HyperV
+# Deemed inappropriate to test
