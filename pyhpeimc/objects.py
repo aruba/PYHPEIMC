@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # author: @netmanchris
+# -*- coding: utf-8 -*-
+"""
+This module contains class objects for working with the specific types of network infrastructure equipment in the HPE IMC
+NMS using the RESTful API. These objects rely on various other functions from within this library.
+
+"""
 
 
 

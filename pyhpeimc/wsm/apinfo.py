@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 # author: @netmanchris
+# -*- coding: utf-8 -*-
+"""
+This module contains functions for working with the access point information capabilities of the
+HPE IMC WSM Module using the RESTful API
 
+"""
 
 
 # This section imports required libraries

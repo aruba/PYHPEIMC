@@ -1,6 +1,14 @@
+# -*- coding: utf-8 -*-
+"""
+This module is used for testing the functions within the pyhpeimc.plat.groups module.
+
+"""
+
+
 from unittest import TestCase
 from pyhpeimc.tests.test_machine import *
 from pyhpeimc.plat.groups import *
+
 
 #TODO Remarked out failing test
 class TestGet_custom_views(TestCase):
@@ -10,7 +18,7 @@ class TestGet_custom_views(TestCase):
 
     def test_get_custom_views_content(self):
         all_views = get_custom_views(auth.creds, auth.url)
-        self.assertIs(len(all_views[0]), 6)
+        self.assertIs(len(all_views[0]), (6 or 7))
         #self.assertIn('upLevelSymbolId', all_views[0])
         self.assertIn('autoAddDevType', all_views[0])
         self.assertIn('symbolId', all_views[0])

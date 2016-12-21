@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 # author: @netmanchris
+# -*- coding: utf-8 -*-
+"""
+This module contains functions for working with the system operator capabilities of the HPE IMC NMS platform using the RESTful API
+
+"""
 
 # This section imports required libraries
 import requests

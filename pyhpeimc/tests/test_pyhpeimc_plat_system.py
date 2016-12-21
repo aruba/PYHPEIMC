@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+This module is used for testing the functions within the pyhpeimc.plat.system module.
+
+"""
+
+
 from unittest import TestCase
 from pyhpeimc.tests.test_machine import auth
 

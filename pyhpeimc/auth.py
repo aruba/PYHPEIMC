@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # author: @netmanchris
+# -*- coding: utf-8 -*-
+"""
+This module contains functions for authenticating to the HPE IMC NMS platform using the RESTful API
 
+"""
 
 
 # This section imports required libraries
