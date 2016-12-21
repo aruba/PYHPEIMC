@@ -58,7 +58,7 @@ def get_custom_views(auth, url, name=None):
         get_custom_view_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&name=' + name + \
                               '&desc=false&total=false'
     f_url = url + get_custom_view_url
-    r = requests.get(f_url, auth=auth, headers=headers)
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             custom_view_list = (json.loads(r.text))
