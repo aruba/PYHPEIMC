@@ -2,7 +2,8 @@
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
-This module contains functions for working with the groups capabilities of the HPE IMC NMS platform using the RESTful API
+This module contains functions for working with the groups capabilities of the HPE IMC
+NMS platform using the RESTful API
 
 """
 

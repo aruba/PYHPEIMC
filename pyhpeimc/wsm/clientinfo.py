@@ -2,8 +2,8 @@
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
-This module contains functions for working with the client information capabilities of the
-HPE IMC WSM Module using the RESTful API
+This module contains functions for working with the client information capabilities
+of the HPE IMC WSM Module using the RESTful API
 
 """
 
