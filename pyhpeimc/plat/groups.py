@@ -9,8 +9,8 @@ of the HPE IMC NMS platform using the RESTful API
 
 
 # This section imports required libraries
-import requests
-import json
+#import requests
+#import json
 from pyhpeimc.plat.device import *
 
 

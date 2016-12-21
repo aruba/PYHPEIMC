@@ -11,8 +11,8 @@ platform using the RESTful API
 
 # This section imports required libraries
 import json
-import requests
 import ipaddress
+import requests
 from pyhpeimc.plat.device import get_dev_details
 
 

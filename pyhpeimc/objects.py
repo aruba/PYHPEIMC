@@ -11,8 +11,8 @@ rely on various other functions from within this library.
 
 
 # This section imports required libraries
-import requests
 import json
+import requests
 from pyhpeimc.plat.device import *
 from pyhpeimc.plat.vlanm import *
 from pyhpeimc.plat.termaccess import *
