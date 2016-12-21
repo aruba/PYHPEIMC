@@ -13,13 +13,14 @@ import requests
 from pyhpeimc.plat.device import *
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
+            'application/json', 'Accept-encoding': 'application/json'}
 
 
 headers = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
+            'application/json', 'Accept-encoding': 'application/json'}
 
-def get_dev_alarms(auth, url,devid= None, devip= None):
+
+def get_dev_alarms(auth, url, devid=None, devip=None):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
     device.
@@ -134,7 +135,8 @@ def get_alarms(username, auth, url):
     >>> assert 'ackStatus' in all_alarms[0]
 
     """
-    get_alarms_url = "/imcrs/fault/alarm?operatorName=" + username + "&recStatus=0&ackStatus=0&timeRange=0&size=50&desc=true"
+    get_alarms_url = "/imcrs/fault/alarm?operatorName=" + username + \
+                     "&recStatus=0&ackStatus=0&timeRange=0&size=50&desc=true"
     f_url = url + get_alarms_url
     r = requests.get(f_url, auth=auth, headers=headers)
     # r.status_code
