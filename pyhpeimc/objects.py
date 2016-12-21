@@ -18,7 +18,7 @@ from pyhpeimc.plat.vlanm import *
 from pyhpeimc.plat.termaccess import *
 from pyhpeimc.plat.netassets import *
 from pyhpeimc.plat.alarms import *
-from requests.auth import HTTPDigestAuth
+
 
 
 headers = {'Accept': 'application/json', 'Content-Type':
@@ -28,44 +28,65 @@ headers = {'Accept': 'application/json', 'Content-Type':
 
 class IMCDev:
     """
-    imc_dev class takes in the ip_address which is used as the primary key to gather the following attributes
-         for a device which as been previously discovered in the HP IMC Network Management platform.
-         Each instance of this class should have the following attributes
+    imc_dev class takes in the ip_address which is used as the primary key to gather
+    the following attributes
+    for a device which as been previously discovered in the HP IMC Network Management
+    platform.
 
-         ip: The IP address used to manage the device in HP IMC
-         description: returns the description of the device as discovered in HP IMC
-         location: returns the location of the device as discovered in HP IMC
-         contact: returns the contact of the device as discovered in HP IMC
-         type: returns the type of the device as discovered in HP IMC
-         name: returns the name of the device as discovered in HP IMC
-         status: returns the current alarm status as discovered in HP IMC
-         devid: returns the current devid used to internally identify the device as discovered in HP IMC
-         interfacelist: returns the current list of interfaces for the device as discovered in HP IMC
-         numinterface: returns a count of the number of interfaces in the interfacelist attribute
-         vlans: returns the current vlans existing in the device as discovered in HP IMC. Device must be supported in the
-                HP IMC Platform VLAN manager module.
-         accessinterfaces: returns the device interfaces configured as access interfaces. Device must be supported in the
-                HP IMC Platform VLAN manager module.
-         trunkinterfaces: returns the device interfaces configured as trunk interfaces. Device must be supported in the
-                HP IMC Platform VLAN manager module.
-         alarm: returns the current unrecovered alarms as known by HP IMC.
-         num alarms: returns a count of the number of alarms as returned by the alarm attribute
-         serial: returns the network assets, including serial numbers for the device as discovered by HP IMC. The device
-                must support the ENTITY MIB ( rfc 4133 ) for this value to be returned.
-         runconfig: returns the most recent running configuration for the device as known by HP IMC. The device must be
-                be supported in the HP IMC platform ICC module.
-         startconfig: returns the most recent startup configuration for the device as known by HP IMC. The device must be
-                be supported in the HP IMC platform ICC module.
-         ipmacarp: returns the current device maciparp table as discovered by HP IMC.
+     Each instance of this class should have the following attributes
 
-         The imc_dev class supports the following methods which can be called upon an instance of this class
+     ip: The IP address used to manage the device in HP IMC
+     description: returns the description of the device as discovered in HP IMC
+     location: returns the location of the device as discovered in HP IMC
+     contact: returns the contact of the device as discovered in HP IMC
+     type: returns the type of the device as discovered in HP IMC
+     name: returns the name of the device as discovered in HP IMC
+     status: returns the current alarm status as discovered in HP IMC
+     devid: returns the current devid used to internally identify the device
+     as discovered in HP IMC
+     interfacelist: returns the current list of interfaces for the device as
+     discovered in HP IMC
+     numinterface: returns a count of the number of interfaces in the interfacelist
+     attribute
+     vlans: returns the current vlans existing in the device as discovered in HP IMC.
+     Device must be supported in the HP IMC Platform VLAN manager module.
+     accessinterfaces: returns the device interfaces configured as access interfaces.
+     Device must be supported in the HP IMC Platform VLAN manager module.
+     trunkinterfaces: returns the device interfaces configured as trunk interfaces.
+     Device must be supported in the HP IMC Platform VLAN manager module.
+     alarm: returns the current unrecovered alarms as known by HP IMC.
+     num alarms: returns a count of the number of alarms as returned by the alarm
+     attribute
+     serial: returns the network assets, including serial numbers for the device as
+     discovered by HP IMC. The device must support the ENTITY MIB ( rfc 4133 ) for
+     this value to be returned.
+     runconfig: returns the most recent running configuration for the device as known
+     by HP IMC. The device must be be supported in the HP IMC platform ICC module.
+     startconfig: returns the most recent startup configuration for the device as known
+     by HP IMC. The device must be supported in the HP IMC platform ICC module.
+     ipmacarp: returns the current device maciparp table as discovered by HP IMC.
 
-         addvlan: This method executes the addvlan function on the specific instance of the imc_dev object. Devices must
-                  supported in the HP IMC Platform VLAN Manager module.
+     The imc_dev class supports the following methods which can be called upon an instance of this class
 
-         """
+     getvlans: This method executes the getvlans function on the specific instance of the imc_dev
+     object and populates the return into the self.vlans attribute. Devices must be supported in
+     the HPE IMC Platform VLAN Manager module
+     addvlan: This method executes the addvlan function on the specific instance of the imc_dev
+     object. Devices must supported in the HP IMC Platform VLAN Manager module.
+
+     """
+
+    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, ip_address, auth, url):
+        """
+        Function take in input of ipv4 address, auth and url and returns and object of type IMCDev
+        :param ip_address: valid IPv4 address
+        :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+        :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+        :return IMCDev object
+        :rtype IMCDev
+        """
         self.ip = get_dev_details(ip_address, auth, url)['ip']
         self.description = get_dev_details(ip_address, auth, url)['sysDescription']
         self.location = get_dev_details(ip_address, auth, url)['location']
@@ -90,15 +111,42 @@ class IMCDev:
         self.url = url
 
     def getvlans(self):
+        """
+        Function operates on the IMCDev object and updates the vlans attribute
+        :return:
+        """
         self.vlans = get_dev_vlans(self.devid, self.auth, self.url)
 
     def addvlan(self, vlanid, vlan_name,auth, url):
+        """
+        Function operates on the IMCDev object. Takes input of vlanid (1-4094), str of vlan_name,
+        auth and url to execute the create_dev_vlan method on the IMCDev object. Device must be
+        supported in the HPE IMC Platform VLAN Manager module.
+        :param vlanid: str of VLANId ( valid 1-4094 )
+        :param vlan_name: str of vlan_name
+        :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+        :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+        :return:
+        """
         create_dev_vlan(self.devid, vlanid, vlan_name, auth, url)
 
     def delvlan(self, vlanid, auth, url):
+        """
+        Function operates on the IMCDev object. Takes input of vlanid (1-4094),
+        auth and url to execute the delete_dev_vlans method on the IMCDev object. Device must be
+        supported in the HPE IMC Platform VLAN Manager module.
+        :param vlanid: str of VLANId ( valid 1-4094 )
+        :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+        :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+        :return:
+        """
         delete_dev_vlans(self.devid, vlanid, auth, url)
 
     def getipmacarp(self):
+        """
+        Function operates on the IMCDev object and updates the ipmacarp attribute
+        :return:
+        """
         self.ipmacarp = get_ip_mac_arp_list(self.devid, auth, url)
 
 
