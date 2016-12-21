@@ -115,16 +115,16 @@ def get_trunk_interfaces( auth, url, devid=None, devip=None ):
     try:
         if r.status_code == 200:
             dev_trunk_interfaces = (json.loads(r.text))
-        if len(dev_trunk_interfaces) == 2:
-            return dev_trunk_interfaces['trunkIf']
-        else:
-            dev_trunk_interfaces['trunkIf'] = ["No trunk inteface"]
-            return dev_trunk_interfaces['trunkIf']
+            if len(dev_trunk_interfaces) == 2:
+                return dev_trunk_interfaces['trunkIf']
+            else:
+                dev_trunk_interfaces['trunkIf'] = ["No trunk inteface"]
+                return dev_trunk_interfaces['trunkIf']
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + ' get_trunk_interfaces: An Error has occured'
 
 
-def get_device_access_interfaces(auth, url, devId=None, devip = None):
+def get_device_access_interfaces(auth, url, devid=None, devip = None):
     """Function takes devId as input to RESTFUL call to HP IMC platform
     :param devid: str requires devId as the only input parameter
 
@@ -155,8 +155,8 @@ def get_device_access_interfaces(auth, url, devId=None, devip = None):
 
     """
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
-    get_access_interface_vlan_url = "/imcrs/vlan/access?devId=" + str(devId) + "&start=1&size=500&total=false"
+        devid=get_dev_details(devip, auth, url)['id']
+    get_access_interface_vlan_url = "/imcrs/vlan/access?devId=" + str(devid) + "&start=1&size=500&total=false"
     f_url = url + get_access_interface_vlan_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -175,7 +175,7 @@ def get_device_access_interfaces(auth, url, devId=None, devip = None):
 
 #Section for Hybrid Interfaces - Applies to Comware Devices only
 
-def get_device_hybrid_interfaces(auth, url, devId=None, devip = None):
+def get_device_hybrid_interfaces(auth, url, devid=None, devip = None):
     """Function takes devId as input to RESTFUL call to HP IMC platform
     :param devid: str requires devId as the only input parameter
 
@@ -206,8 +206,8 @@ def get_device_hybrid_interfaces(auth, url, devId=None, devip = None):
 
     """
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
-    get_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devId) + "&start=1&size=500&total=false"
+        devid=get_dev_details(devip, auth, url)['id']
+    get_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + "&start=1&size=500&total=false"
     f_url = url + get_hybrid_interface_vlan_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -227,10 +227,10 @@ def get_device_hybrid_interfaces(auth, url, devId=None, devip = None):
             return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
 
 
-def add_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url, devip=None):
+def add_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url, devip=None, devid=None):
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
-    add_hybrid_interface_url = "/imcrs/vlan/hybrid?devId=" + str(devId) + "&start=1&size=500&total=false"
+        devid=get_dev_details(devip, auth, url)['id']
+    add_hybrid_interface_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + "&start=1&size=500&total=false"
     f_url = url + add_hybrid_interface_url
     payload = '''{"ifIndex": "'''+ifindex+'''",
         "pvid": "'''+pvid+'''",
@@ -250,10 +250,10 @@ def add_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url, d
             return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
 
 
-def modify_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url, devip=None):
+def modify_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url, devip=None, devid=None):
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
-    modify_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devId) + "&start=1&size=500&total=false"
+        devid=get_dev_details(devip, auth, url)['id']
+    modify_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + "&start=1&size=500&total=false"
     f_url = url + modify_hybrid_interface_vlan_url
     payload = '''{"ifIndex": "'''+ifindex+'''",
         "pvid": "'''+pvid+'''",
@@ -273,11 +273,11 @@ def modify_hybrid_interface(ifindex, pvid, taggedVlans, untaggedVlans, auth, url
 
 
 
-def delete_hybrid_interface(ifindex, auth, url, devip=None):
+def delete_hybrid_interface(ifindex, auth, url, devip=None, devid=None):
     """
      Function takes devip ( ipv4 address ), ifIndex and pvid (vlanid) of specific device and 802.1q VLAN tag and issues a RESTFUL call to remove the
     specified VLAN from the target device.
-    :param ifIndex: str value of ifIndex for a specific interface on the device
+    :param ifindex: str value of ifIndex for a specific interface on the device
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
     :param devip: str Ipv4 address of target device
@@ -302,8 +302,8 @@ def delete_hybrid_interface(ifindex, auth, url, devip=None):
     >>> assert delete_hybrid == 204
     """
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
-    delete_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId="+devId+"&ifIndex="+ifindex
+        devid=get_dev_details(devip, auth, url)['id']
+    delete_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId="+devid+"&ifIndex="+ifindex
     f_url = url + delete_hybrid_interface_vlan_url
     r = requests.delete(f_url, auth=auth, headers=HEADERS)
     # r.status_code
@@ -317,7 +317,7 @@ def delete_hybrid_interface(ifindex, auth, url, devip=None):
 
 # Section for working with Access Interfaces
 
-def set_access_interface_pvid(ifIndex, pvid, auth, url, devip=None):
+def set_access_interface_pvid(ifIndex, pvid, auth, url, devip=None, devid=None):
     """
     Function takes devip ( ipv4 address ), ifIndex and pvid (vlanid) of specific device and 802.1q VLAN tag and issues a RESTFUL call to remove the
     specified VLAN from the target device.
@@ -347,8 +347,8 @@ def set_access_interface_pvid(ifIndex, pvid, auth, url, devip=None):
 
     """
     if devip is not None:
-        devId=get_dev_details(devip, auth, url)['id']
-    set_access_interface_pvid_url = "/imcrs/vlan/access?devId="+devId+"&destVlanId="+pvid+"&ifIndex="+str(ifIndex)
+        devid=get_dev_details(devip, auth, url)['id']
+    set_access_interface_pvid_url = "/imcrs/vlan/access?devId="+devid+"&destVlanId="+pvid+"&ifIndex="+str(ifIndex)
     f_url = url + set_access_interface_pvid_url
     # creates the URL using the payload variable as the contents
     r = requests.put(f_url, auth=auth, headers=HEADERS)
