@@ -40,7 +40,7 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
         :return:
         returns HTTPDigestauth object
         """
-        super(HTTPDigestAuth, self).__init__()
+        super(IMCAuth, self).__init__(username, password)
         self.h_url = h_url
         self.server = server
         self.port = port
