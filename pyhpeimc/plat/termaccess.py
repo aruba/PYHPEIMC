@@ -19,13 +19,13 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
            'application/json', 'Accept-encoding': 'application/json'}
 
 
-def get_real_time_locate(ipAddress, auth, url):
+def get_real_time_locate(host_ipaddress, auth, url):
     """
     function takes the ipAddress of a specific host and issues a RESTFUL call to get the device and interface that the
     target host is currently connected to. Note: Although intended to return a single location, Multiple locations may
     be returned for a single host due to a partially discovered network or misconfigured environment.
 
-    :param ipAddress: str value valid IPv4 IP address
+    :param host_ipaddress: str value valid IPv4 IP address
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -60,7 +60,7 @@ def get_real_time_locate(ipAddress, auth, url):
     >>> assert len(no_device) == 0
 
     """
-    real_time_locate_url = "/imcrs/res/access/realtimeLocate?type=2&value=" + str(ipAddress) + "&total=false"
+    real_time_locate_url = "/imcrs/res/access/realtimeLocate?type=2&value=" + str(host_ipaddress) + "&total=false"
     f_url = url + real_time_locate_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
@@ -139,12 +139,12 @@ def get_ip_mac_arp_list(auth, url, devid=None, devip=None):
 
 
 # Following functions deal with IP scopes
-def get_ip_scope(auth, url, scopeId=None, ):
+def get_ip_scope(auth, url, scopeid=None, ):
     """
     function requires no inputs and returns all IP address scopes currently configured on the HPE IMC server. If the
-    optional scopeId parameter is included, this will automatically return only the desired scope id.
+    optional scopeid parameter is included, this will automatically return only the desired scope id.
 
-    :param scopeId: integer of the desired scope id ( optional )
+    :param scopeid: integer of the desired scope id ( optional )
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -167,10 +167,10 @@ def get_ip_scope(auth, url, scopeId=None, ):
     >>> assert 'ip' in ip_scope_list[0]
 
     """
-    if scopeId is None:
+    if scopeid is None:
         get_ip_scope_url = "/imcrs/res/access/assignedIpScope"
     else:
-        get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?ipScopeId=" + str(scopeId)
+        get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?ipScopeId=" + str(scopeid)
 
     f_url = url + get_ip_scope_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
@@ -225,7 +225,7 @@ def get_ip_scope_detail(auth, url, scopeid=None, network_address=None):
         return "Error:\n" + str(e) + " get_ip_scope: An Error has occured"
 
 
-def add_ip_scope(name, description, auth, url, startIp=None, endIp=None, network_address=None):
+def add_ip_scope(name, description, auth, url, startip=None, endip=None, network_address=None):
     """
     Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
     in the HPE IMC base platform
@@ -238,9 +238,9 @@ def add_ip_scope(name, description, auth, url, startIp=None, endIp=None, network
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :param startIp: str Start of IP address scope ex. '10.101.0.1'
+    :param startip: str Start of IP address scope ex. '10.101.0.1'
 
-    :param endIp: str End of IP address scope ex. '10.101.0.254'
+    :param endip: str End of IP address scope ex. '10.101.0.254'
 
     :param network_address: ipv4 network address + subnet bits of target scope
 
@@ -273,12 +273,12 @@ def add_ip_scope(name, description, auth, url, startIp=None, endIp=None, network
     """
     if network_address is not None:
         nw_address = ipaddress.IPv4Network(network_address)
-        startIp = nw_address[1]
-        endIp = nw_address[-2]
+        startip = nw_address[1]
+        endip = nw_address[-2]
     add_ip_scope_url = "/imcrs/res/access/assignedIpScope"
     f_url = url + add_ip_scope_url
     payload = ('''{  "startIp": "%s", "endIp": "%s","name": "%s","description": "%s" }'''
-               % (str(startIp), str(endIp), str(name), str(description)))
+               % (str(startip), str(endip), str(name), str(description)))
     r = requests.post(f_url, auth=auth, headers=HEADERS,
                       data=payload)  # creates the URL using the payload variable as the contents
     try:
@@ -292,7 +292,7 @@ def add_ip_scope(name, description, auth, url, startIp=None, endIp=None, network
         return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
 
 
-def add_child_ip_scope(name, description, auth, url, startIp=None, endIp=None, parent_scopeid=None,
+def add_child_ip_scope(name, description, auth, url, startip=None, endip=None, parent_scopeid=None,
                        network_address=None, parent_network_address=None):
     """
     Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
@@ -308,9 +308,9 @@ def add_child_ip_scope(name, description, auth, url, startIp=None, endIp=None, p
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :param startIp: str Start of IP address scope ex. '10.101.0.1'
+    :param startip: str Start of IP address scope ex. '10.101.0.1'
 
-    :param endIp: str End of IP address scope ex. '10.101.0.254'
+    :param endip: str End of IP address scope ex. '10.101.0.254'
 
     :param network_address: ipv4 network address + subnet bits of target scope
 
@@ -333,12 +333,12 @@ def add_child_ip_scope(name, description, auth, url, startIp=None, endIp=None, p
         parent_scopeid = get_scope_id(parent_network_address, auth, url)
     if network_address is not None:
         nw_address = ipaddress.IPv4Network(network_address)
-        startIp = nw_address[1]
-        endIp = nw_address[-2]
+        startip = nw_address[1]
+        endip = nw_address[-2]
     add_ip_scope_url = "/imcrs/res/access/assignedIpScope/" + str(parent_scopeid)
     f_url = url + add_ip_scope_url
     payload = ('''{  "startIp": "%s", "endIp": "%s","name": "%s","description": "%s", "parentId" : "%s"}'''
-               % (str(startIp), str(endIp), str(name), str(description), str(parent_scopeid)))
+               % (str(startip), str(endip), str(name), str(description), str(parent_scopeid)))
     r = requests.post(f_url, auth=auth, headers=HEADERS,
                       data=payload)  # creates the URL using the payload variable as the contents
     try:
@@ -387,11 +387,11 @@ def delete_ip_scope(network_address, auth, url):
 
 # Following functions deal with hosts assigned to IP scopes
 
-def add_scope_ip(ipaddress, name, description, auth, url, scopeid=None, network_address=None):
+def add_scope_ip(hostipaddress, name, description, auth, url, scopeid=None, network_address=None):
     """
     Function to add new host IP address allocation to existing scope ID
 
-    :param ipaddress:
+    :param hostipaddress: ipv4 address of the target host to be added to the target scope
 
     :param name: name of the owner of this host
 
@@ -422,7 +422,7 @@ def add_scope_ip(ipaddress, name, description, auth, url, scopeid=None, network_
         scopeid = get_scope_id(network_address, auth, url)
         if scopeid == "Scope Doesn't Exist":
             return scopeid
-    new_ip = {"ip": ipaddress,
+    new_ip = {"ip": hostipaddress,
               "name": name,
               "description": description}
     add_scope_ip_url = '/imcrs/res/access/assignedIpScope/ip?ipScopeId=' + str(scopeid)
@@ -488,7 +488,7 @@ def remove_scope_ip(hostid, auth, url):
         return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
 
 
-def get_ip_scope_hosts(auth, url, scopeId=None, network_address=None):
+def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
     """
     Function requires input of scope ID and returns list of allocated IP address for the specified scope
 
@@ -496,7 +496,7 @@ def get_ip_scope_hosts(auth, url, scopeId=None, network_address=None):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :param scopeId: Integer of the desired scope id
+    :param scopeid: Integer of the desired scope id
 
     :param network_address: ipv4 network address + subnet bits of target scope
 
@@ -526,10 +526,10 @@ def get_ip_scope_hosts(auth, url, scopeId=None, network_address=None):
 
     """
     if network_address is not None:
-        scopeId = get_scope_id(network_address, auth, url)
-        if scopeId == "Scope Doesn't Exist":
-            return scopeId
-    get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?size=10000&ipScopeId=" + str(scopeId)
+        scopeid = get_scope_id(network_address, auth, url)
+        if scopeid == "Scope Doesn't Exist":
+            return scopeid
+    get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?size=10000&ipScopeId=" + str(scopeid)
     f_url = url + get_ip_scope_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
@@ -547,11 +547,11 @@ def get_ip_scope_hosts(auth, url, scopeId=None, network_address=None):
         return "Error:\n" + str(e) + " get_ip_scope: An Error has occured"
 
 
-def add_host_to_segment(ipaddress, name, description, network_address, auth, url):
+def add_host_to_segment(hostipaddress, name, description, network_address, auth, url):
     """
     Function to abstract existing add_scope_ip_function. Allows for use of network address rather than forcing human
     to learn the scope_id
-    :param ipaddress:
+    :param hostipaddress: str ipv4 address of target host to be added to target scope
 
     :param name: name of the owner of this host
 
@@ -573,14 +573,25 @@ def add_host_to_segment(ipaddress, name, description, network_address, auth, url
 
     """
     scope_id = get_scope_id(network_address, auth, url)
-    add_scope_ip(ipaddress, name, description, scope_id, auth, url)
+    add_scope_ip(hostipaddress, name, description, scope_id, auth, url)
 
 
-def delete_host_from_segment(ipaddress, networkaddress, auth, url):
-    """Function to abstract delete_host for easier human interaction
+def delete_host_from_segment(hostipaddress, networkaddress, auth, url):
+    """
+    :param hostipaddress: str ipv4 address of the target host to be deleted
+
+    :param networkaddress: ipv4 network address + subnet bits of target scope
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :return: String of HTTP response code. Should be 204 is successfull
+
+    :rtype: str
 
     """
-    host_id = get_host_id(ipaddress, networkaddress, auth, url)
+    host_id = get_host_id(hostipaddress, networkaddress, auth, url)
     delete_host = remove_scope_ip(host_id, auth, url)
     return delete_host
 
@@ -674,7 +685,7 @@ def get_host_id(host_address, network_address, auth, url):
     scope_id = get_scope_id(network_address, auth, url)
     if scope_id == "Scope Doesn't Exist":
         return scope_id
-    all_scope_hosts = get_ip_scope_hosts(auth, url, scopeId=scope_id)
+    all_scope_hosts = get_ip_scope_hosts(auth, url, scopeid=scope_id)
     if len(all_scope_hosts) == 0:
         return "Host Doesn't Exist"
     for host in all_scope_hosts:
