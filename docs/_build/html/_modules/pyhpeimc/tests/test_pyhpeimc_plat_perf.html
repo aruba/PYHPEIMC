@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.tests.test_pyhpeimc_plat_perf &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.tests.test_pyhpeimc_plat_perf</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is used for testing the functions within the pyhpeimc.plat.perf module.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.tests.test_machine</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.perf</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="TestAdd_perf_task"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestAdd_perf_task">[docs]</a><span class="k">class</span> <span class="nc">TestAdd_perf_task</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestAdd_perf_task.test_add_perf_task"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestAdd_perf_task.test_add_perf_task">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_perf_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">delete_task</span> <span class="o">=</span> <span class="n">delete_perf_task</span><span class="p">(</span><span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">new_task</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;indexDesc&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;indexType&#39;</span><span class="p">:</span> <span class="s1">&#39;[index1[0]:ciscoEnvMonTemperatureStatusValue:1:0]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;itemFunction&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span> <span class="s1">&#39;itemName&#39;</span><span class="p">:</span> <span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;selectDefaultUnit&#39;</span><span class="p">:</span> <span class="s1">&#39;400&#39;</span><span class="p">,</span> <span class="s1">&#39;unit&#39;</span><span class="p">:</span> <span class="s1">&#39;Celsius&#39;</span><span class="p">}</span>
+
+        <span class="n">new_perf_task</span> <span class="o">=</span> <span class="n">add_perf_task</span><span class="p">(</span><span class="n">new_task</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">new_perf_task</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">new_perf_task</span><span class="p">,</span> <span class="mi">204</span><span class="p">)</span>
+        <span class="n">delete_task</span> <span class="o">=</span> <span class="n">delete_perf_task</span><span class="p">(</span><span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestAdd_perf_task.test_add_perf_task_already_exists"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestAdd_perf_task.test_add_perf_task_already_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_perf_task_already_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new_task</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;indexDesc&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;indexType&#39;</span><span class="p">:</span> <span class="s1">&#39;[index1[0]:ciscoEnvMonTemperatureStatusValue:1:0]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;itemFunction&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span> <span class="s1">&#39;itemName&#39;</span><span class="p">:</span> <span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;selectDefaultUnit&#39;</span><span class="p">:</span> <span class="s1">&#39;400&#39;</span><span class="p">,</span> <span class="s1">&#39;unit&#39;</span><span class="p">:</span> <span class="s1">&#39;Celsius&#39;</span><span class="p">}</span>
+
+        <span class="n">new_perf_task</span> <span class="o">=</span> <span class="n">add_perf_task</span><span class="p">(</span><span class="n">new_task</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">new_perf_task</span> <span class="o">=</span> <span class="n">add_perf_task</span><span class="p">(</span><span class="n">new_task</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">new_perf_task</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">new_perf_task</span><span class="p">,</span> <span class="mi">404</span><span class="p">)</span>
+        <span class="n">delete_task</span> <span class="o">=</span> <span class="n">delete_perf_task</span><span class="p">(</span><span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestGet_perf_task"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestGet_perf_task">[docs]</a><span class="k">class</span> <span class="nc">TestGet_perf_task</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_perf_task.test_get_perf_task_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestGet_perf_task.test_get_perf_task_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_perf_task_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new_task</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;indexDesc&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;indexType&#39;</span><span class="p">:</span> <span class="s1">&#39;[index1[0]:ciscoEnvMonTemperatureStatusValue:1:0]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;itemFunction&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span> <span class="s1">&#39;itemName&#39;</span><span class="p">:</span> <span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;selectDefaultUnit&#39;</span><span class="p">:</span> <span class="s1">&#39;400&#39;</span><span class="p">,</span> <span class="s1">&#39;unit&#39;</span><span class="p">:</span> <span class="s1">&#39;Celsius&#39;</span><span class="p">}</span>
+
+        <span class="n">new_perf_task</span> <span class="o">=</span> <span class="n">add_perf_task</span><span class="p">(</span><span class="n">new_task</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">task_details</span> <span class="o">=</span> <span class="n">get_perf_task</span><span class="p">(</span><span class="s2">&quot;Test_Task&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">task_details</span><span class="p">),</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">task_details</span><span class="p">[</span><span class="s1">&#39;taskDescr&#39;</span><span class="p">],</span> <span class="s2">&quot;Test_Task&quot;</span><span class="p">)</span>
+        <span class="n">delete_task</span> <span class="o">=</span> <span class="n">delete_perf_task</span><span class="p">(</span><span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_perf_task.test_get_perf_task_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestGet_perf_task.test_get_perf_task_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_perf_task_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new_task</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;indexDesc&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;indexType&#39;</span><span class="p">:</span> <span class="s1">&#39;[index1[0]:ciscoEnvMonTemperatureStatusValue:1:0]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;itemFunction&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span> <span class="s1">&#39;itemName&#39;</span><span class="p">:</span> <span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;selectDefaultUnit&#39;</span><span class="p">:</span> <span class="s1">&#39;400&#39;</span><span class="p">,</span> <span class="s1">&#39;unit&#39;</span><span class="p">:</span> <span class="s1">&#39;Celsius&#39;</span><span class="p">}</span>
+
+        <span class="n">new_perf_task</span> <span class="o">=</span> <span class="n">add_perf_task</span><span class="p">(</span><span class="n">new_task</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">task_details</span> <span class="o">=</span> <span class="n">get_perf_task</span><span class="p">(</span><span class="s2">&quot;Test_Task&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">task_details</span><span class="p">),</span> <span class="mi">24</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmTwoTimes&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;taskName&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmTwoMode&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;enableAlterTwo&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmTwoThresholdSecond&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmOneTimes&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;perfTemplate&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmOneLevel&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;componentID&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;taskId&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmOneThresholdFirst&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;tempId&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmOneMode&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;sumId&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;taskDescr&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmTwoThresholdFirst&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;tempUnit&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;groupId&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;collectInterval&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;unitId&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmOneThresholdSecond&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;tempUnitDependList&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;enableAlterOne&#39;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span>
+        <span class="n">delete_task</span> <span class="o">=</span> <span class="n">delete_perf_task</span><span class="p">(</span><span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestGet_perf_task.test_get_perf_task_doesnt_exist"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestGet_perf_task.test_get_perf_task_doesnt_exist">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_perf_task_doesnt_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">task_details</span> <span class="o">=</span> <span class="n">get_perf_task</span><span class="p">(</span><span class="s2">&quot;doesnt_exist&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">task_details</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s2">&quot;Task Doesn&#39;t Exist&quot;</span><span class="p">,</span> <span class="n">task_details</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestDelete_perf_task"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestDelete_perf_task">[docs]</a><span class="k">class</span> <span class="nc">TestDelete_perf_task</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_delete_perf_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new_task</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;indexDesc&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;indexType&#39;</span><span class="p">:</span> <span class="s1">&#39;[index1[0]:ciscoEnvMonTemperatureStatusValue:1:0]&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;itemFunction&#39;</span><span class="p">:</span> <span class="s1">&#39;1.3.6.1.4.1.9.9.13.1.3.1.3&#39;</span><span class="p">,</span> <span class="s1">&#39;itemName&#39;</span><span class="p">:</span> <span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;selectDefaultUnit&#39;</span><span class="p">:</span> <span class="s1">&#39;400&#39;</span><span class="p">,</span> <span class="s1">&#39;unit&#39;</span><span class="p">:</span> <span class="s1">&#39;Celsius&#39;</span><span class="p">}</span>
+
+        <span class="n">new_perf_task</span> <span class="o">=</span> <span class="n">add_perf_task</span><span class="p">(</span><span class="n">new_task</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">delete_task</span> <span class="o">=</span> <span class="n">delete_perf_task</span><span class="p">(</span><span class="s1">&#39;Test_Task&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">delete_task</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">delete_task</span><span class="p">,</span> <span class="mi">204</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TestDelete_perf_task.test_delete_perf_task"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_perf.html#pyhpeimc.tests.test_pyhpeimc_plat_perf.TestDelete_perf_task.test_delete_perf_task">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_perf_task</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">delete_task</span> <span class="o">=</span> <span class="n">delete_perf_task</span><span class="p">(</span><span class="s1">&#39;doesnt_exist&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">delete_task</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">delete_task</span><span class="p">,</span> <span class="mi">403</span><span class="p">)</span></div></div>
+
+
+
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

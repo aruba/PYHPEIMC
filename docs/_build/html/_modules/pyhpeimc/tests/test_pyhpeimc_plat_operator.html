@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.tests.test_pyhpeimc_plat_operator &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.tests.test_pyhpeimc_plat_operator</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is used for testing the functions within the pyhpeimc.plat.operator module.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.tests.test_machine</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.operator</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="TestCreate_operator"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestCreate_operator">[docs]</a><span class="k">class</span> <span class="nc">TestCreate_operator</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCreate_operator.test_create_operator"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestCreate_operator.test_create_operator">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{ &quot;fullName&quot; : &quot;test administrator&quot;, &quot;sessionTimeout&quot; : &quot;30&quot;,&quot;password&quot; :  &quot;password&quot;,&quot;operatorGroupId&quot; : &quot;1&quot;,&quot;name&quot; : &quot;testadmin&quot;,&quot;desc&quot; : &quot;test admin account&quot;,&quot;defaultAcl&quot; : &quot;&quot;,&quot;authType&quot;  : &quot;0&quot;}&#39;&#39;&#39;</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
+        <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">new_operator</span> <span class="o">=</span> <span class="n">create_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">new_operator</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">new_operator</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+        <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCreate_operator.test_create_operator_already_exists"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestCreate_operator.test_create_operator_already_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_operator_already_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{ &quot;fullName&quot; : &quot;test administrator&quot;, &quot;sessionTimeout&quot; : &quot;30&quot;,&quot;password&quot; :  &quot;password&quot;,&quot;operatorGroupId&quot; : &quot;1&quot;,&quot;name&quot; : &quot;testadmin&quot;,&quot;desc&quot; : &quot;test admin account&quot;,&quot;defaultAcl&quot; : &quot;&quot;,&quot;authType&quot;  : &quot;0&quot;}&#39;&#39;&#39;</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
+        <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">new_operator</span> <span class="o">=</span> <span class="n">create_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">new_operator</span> <span class="o">=</span> <span class="n">create_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">new_operator</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">new_operator</span><span class="p">,</span> <span class="mi">409</span><span class="p">)</span>
+        <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestSet_operator_password"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestSet_operator_password">[docs]</a><span class="k">class</span> <span class="nc">TestSet_operator_password</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestSet_operator_password.test_set_operator_password"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestSet_operator_password.test_set_operator_password">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_operator_password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{ &quot;fullName&quot; : &quot;test administrator&quot;, &quot;sessionTimeout&quot; : &quot;30&quot;,&quot;password&quot; :  &quot;password&quot;,&quot;operatorGroupId&quot; : &quot;1&quot;,&quot;name&quot; : &quot;testadmin&quot;,&quot;desc&quot; : &quot;test admin account&quot;,&quot;defaultAcl&quot; : &quot;&quot;,&quot;authType&quot;  : &quot;0&quot;}&#39;&#39;&#39;</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
+        <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">new_operator</span> <span class="o">=</span> <span class="n">create_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">set_new_password</span> <span class="o">=</span> <span class="n">set_operator_password</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="s1">&#39;newpassword&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">new_operator</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">new_operator</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+        <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestSet_operator_password.test_set_operator_password_doesnt_exists"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestSet_operator_password.test_set_operator_password_doesnt_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_set_operator_password_doesnt_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">set_new_password</span> <span class="o">=</span> <span class="n">set_operator_password</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="s1">&#39;newpassword&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">set_new_password</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">set_new_password</span><span class="p">,</span> <span class="s2">&quot;User does not exist&quot;</span><span class="p">)</span>
+        <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestGet_plat_operator"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestGet_plat_operator">[docs]</a><span class="k">class</span> <span class="nc">TestGet_plat_operator</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_plat_operator.test_get_plat_operator_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestGet_plat_operator.test_get_plat_operator_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_plat_operator_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">plat_operators</span> <span class="o">=</span> <span class="n">get_plat_operator</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">plat_operators</span><span class="p">),</span> <span class="nb">list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_plat_operator.test_get_plat_operator_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestGet_plat_operator.test_get_plat_operator_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_plat_operator_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">plat_operators</span> <span class="o">=</span> <span class="n">get_plat_operator</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">9</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;defaultManagedDefinedView&#39;</span><span class="p">,</span> <span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;authType&#39;</span><span class="p">,</span> <span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;defaultManagedGroup&#39;</span><span class="p">,</span> <span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;desc&#39;</span><span class="p">,</span> <span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;operatorGroupId&#39;</span><span class="p">,</span> <span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;fullName&#39;</span><span class="p">,</span> <span class="n">plat_operators</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="TestDelete_plat_operator"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestDelete_plat_operator">[docs]</a><span class="k">class</span> <span class="nc">TestDelete_plat_operator</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestDelete_plat_operator.test_delete_plat_operator"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestDelete_plat_operator.test_delete_plat_operator">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_plat_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{ &quot;fullName&quot; : &quot;test administrator&quot;, &quot;sessionTimeout&quot; : &quot;30&quot;,&quot;password&quot; :  &quot;password&quot;,&quot;operatorGroupId&quot; : &quot;1&quot;,&quot;name&quot; : &quot;testadmin&quot;,&quot;desc&quot; : &quot;test admin account&quot;,&quot;defaultAcl&quot; : &quot;&quot;,&quot;authType&quot;  : &quot;0&quot;}&#39;&#39;&#39;</span>
+        <span class="n">operator</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">operator</span><span class="p">)</span>
+        <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">new_operator</span> <span class="o">=</span> <span class="n">create_operator</span><span class="p">(</span><span class="n">operator</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">delete_operator</span> <span class="o">=</span> <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">delete_operator</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">delete_operator</span><span class="p">,</span> <span class="mi">204</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestDelete_plat_operator.test_delete_plat_operator_doesnt_exists"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_operator.html#pyhpeimc.tests.test_pyhpeimc_plat_operator.TestDelete_plat_operator.test_delete_plat_operator_doesnt_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_plat_operator_doesnt_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">delete_if_exists</span> <span class="o">=</span> <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">delete_dont_exist</span> <span class="o">=</span> <span class="n">delete_plat_operator</span><span class="p">(</span><span class="s1">&#39;testadmin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">delete_dont_exist</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">delete_dont_exist</span><span class="p">,</span> <span class="mi">409</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

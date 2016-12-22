@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.tests.test_pyhpeimc_plat_alarms &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.tests.test_pyhpeimc_plat_alarms</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is used for testing the functions within the pyhpeimc.plat.alarms module.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.tests.test_machine</span> <span class="k">import</span> <span class="n">auth</span>
+
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.alarms</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="c1">#TODO Remarked out failing tests</span>
+<div class="viewcode-block" id="TestGet_dev_alarms"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_alarms.html#pyhpeimc.tests.test_pyhpeimc_plat_alarms.TestGet_dev_alarms">[docs]</a><span class="k">class</span> <span class="nc">TestGet_dev_alarms</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test Case for pyhpeimc plat alarms get_dev_alarms functions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestGet_dev_alarms.test_get_dev_alarms_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_alarms.html#pyhpeimc.tests.test_pyhpeimc_plat_alarms.TestGet_dev_alarms.test_get_dev_alarms_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_dev_alarms_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        test case for get_dev_alarms type</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dev_alarms</span> <span class="o">=</span> <span class="n">get_dev_alarms</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.231&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dev_alarms</span><span class="p">),</span> <span class="nb">list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_dev_alarms.test_get_dev_alarms_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_alarms.html#pyhpeimc.tests.test_pyhpeimc_plat_alarms.TestGet_dev_alarms.test_get_dev_alarms_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_dev_alarms_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">dev_alarms</span> <span class="o">=</span> <span class="n">get_dev_alarms</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.231&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">30</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;ackStatus&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;recTimeDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;originalTypeDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;ackStatusDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;ackTimeDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;ackTime&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;deviceIp&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;recTime&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;faultTimeDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;faultTime&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1">#self.assertIn(&#39;holdInfo&#39;, dev_alarms[0])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;originalType&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;recStatus&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmDetail&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmLevelDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;remark&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;ackUserName&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmCategoryDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;recUserName&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmCategory&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;parentId&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;recStatusDesc&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;alarmLevel&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;somState&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;deviceName&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;paras&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;OID&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;deviceId&#39;</span><span class="p">,</span> <span class="n">dev_alarms</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div>
+
+
+<div class="viewcode-block" id="TestGet_realtime_alarm"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_alarms.html#pyhpeimc.tests.test_pyhpeimc_plat_alarms.TestGet_realtime_alarm">[docs]</a><span class="k">class</span> <span class="nc">TestGet_realtime_alarm</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_realtime_alarm.test_get_realtime_alarm_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_alarms.html#pyhpeimc.tests.test_pyhpeimc_plat_alarms.TestGet_realtime_alarm.test_get_realtime_alarm_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_realtime_alarm_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">real_time_alarm</span> <span class="o">=</span> <span class="n">get_realtime_alarm</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">real_time_alarm</span><span class="p">),</span><span class="nb">list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_realtime_alarm.test_get_realtime_alarm_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_alarms.html#pyhpeimc.tests.test_pyhpeimc_plat_alarms.TestGet_realtime_alarm.test_get_realtime_alarm_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_realtime_alarm_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">real_time_alarm</span> <span class="o">=</span> <span class="n">get_realtime_alarm</span><span class="p">(</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span> <span class="p">(</span><span class="n">real_time_alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="mi">7</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;faultTime&#39;</span><span class="p">,</span><span class="n">real_time_alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;userAckUserName&#39;</span><span class="p">,</span><span class="n">real_time_alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span><span class="n">real_time_alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;deviceDisplay&#39;</span><span class="p">,</span><span class="n">real_time_alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;faultDesc&#39;</span><span class="p">,</span><span class="n">real_time_alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;userAckType&#39;</span><span class="p">,</span><span class="n">real_time_alarm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div></div>
+
+
+<span class="c1">#TODO Remarked out failing test</span>
+<span class="c1">#TODO Get_all_alarms testing - Need to investigate</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">class TestGet_all_alarm(TestCase):</span>
+<span class="sd">    def test_get_alarms_type(self):</span>
+<span class="sd">        all_alarms = get_alarms(&#39;admin&#39;, auth.creds, auth.url)</span>
+<span class="sd">        self.assertIs(type(all_alarms), list)</span>
+<span class="sd">    def test_get_alarms_content(self):</span>
+<span class="sd">        all_alarms = get_alarms(&#39;admin&#39;, auth.creds, auth.url)</span>
+<span class="sd">        #self.assertIs(len(all_alarms[0]), 29)</span>
+<span class="sd">        self.assertIn(&#39;ackStatus&#39;,all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;parentId&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;recUserName&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;alarmCategory&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;deviceId&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;alarmCategoryDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;originalType&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;ackStatusDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;recTimeDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;alarmDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;deviceIp&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;recStatusDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;alarmLevel&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;ackTime&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;alarmDetail&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;remark&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;ackTimeDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;originalTypeDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;alarmLevelDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;recStatus&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;deviceName&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;faultTime&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;faultTimeDesc&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;somState&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;id&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;OID&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;paras&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;recTime&#39;, all_alarms[0])</span>
+<span class="sd">        self.assertIn(&#39;ackUserName&#39;, all_alarms[0])</span>
+<span class="sd">        #self.assertIn(&#39;holdInfo&#39;, all_alarms[0])</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

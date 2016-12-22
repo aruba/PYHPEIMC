@@ -1,0 +1,263 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.plat.system &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.plat.system</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="c1"># author: @netmanchris</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions for working with the system configuration</span>
+<span class="sd">capabilities of the HPE IMC NMS platform using the RESTful API</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c1"># This section imports required libraries</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
+    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+
+<span class="c1">#auth = None</span>
+
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This section contains functions which operate at the system level</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="get_system_vendors"><a class="viewcode-back" href="../../../pyhpeimc.plat.system.html#pyhpeimc.plat.system.get_system_vendors">[docs]</a><span class="k">def</span> <span class="nf">get_system_vendors</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes string no input to issue RESTUL call to HP IMC\n</span>
+
+<span class="sd">      :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">      :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">      :return: list of dictionaries where each dictionary represents a single vendor</span>
+
+<span class="sd">      :rtype: list</span>
+
+<span class="sd">      &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">      &gt;&gt;&gt; from pyhpeimc.plat.system import *</span>
+
+<span class="sd">      &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">      &gt;&gt;&gt; vendors = get_system_vendors(auth.creds, auth.url)</span>
+
+<span class="sd">      &gt;&gt;&gt; assert type(vendors) is list</span>
+
+<span class="sd">      &gt;&gt;&gt; assert &#39;name&#39; in vendors[0]</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">get_system_vendors_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/plat/res/vendor?start=0&amp;size=10000&amp;orderBy=id&amp;desc=false&amp;total=false&#39;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_system_vendors_url</span>
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
+    <span class="c1"># r.status_code</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">system_vendors</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">system_vendors</span><span class="p">[</span><span class="s1">&#39;deviceVendor&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
+
+
+<div class="viewcode-block" id="get_system_category"><a class="viewcode-back" href="../../../pyhpeimc.plat.system.html#pyhpeimc.plat.system.get_system_category">[docs]</a><span class="k">def</span> <span class="nf">get_system_category</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes string no input to issue RESTUL call to HP IMC\n</span>
+
+<span class="sd">      :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">      :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">      :return: list of dictionaries where each dictionary represents a single device category</span>
+
+<span class="sd">      :rtype: list</span>
+
+<span class="sd">      &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">      &gt;&gt;&gt; from pyhpeimc.plat.device import *</span>
+
+<span class="sd">      &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">      &gt;&gt;&gt; categories = get_system_category(auth.creds, auth.url)</span>
+
+<span class="sd">      &gt;&gt;&gt; assert type(categories) is list</span>
+
+<span class="sd">      &gt;&gt;&gt; assert &#39;name&#39; in categories[0]</span>
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">get_system_category_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/plat/res/category?start=0&amp;size=10000&amp;orderBy=id&amp;desc=false&amp;total=false&#39;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_system_category_url</span>
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
+    <span class="c1"># r.status_code</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">system_category</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">system_category</span><span class="p">[</span><span class="s1">&#39;deviceCategory&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
+
+
+<div class="viewcode-block" id="get_system_device_models"><a class="viewcode-back" href="../../../pyhpeimc.plat.system.html#pyhpeimc.plat.system.get_system_device_models">[docs]</a><span class="k">def</span> <span class="nf">get_system_device_models</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes string no input to issue RESTUL call to HP IMC\n</span>
+<span class="sd">:rtype: list</span>
+
+<span class="sd">      :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">      :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">      :return: list of dictionaries where each dictionary represents a single device model</span>
+
+
+<span class="sd">      &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">      &gt;&gt;&gt; from pyhpeimc.plat.device import *</span>
+
+<span class="sd">      &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">      &gt;&gt;&gt; device_models = get_system_device_models(auth.creds, auth.url)</span>
+
+<span class="sd">      &gt;&gt;&gt; assert type(device_models) is list</span>
+
+<span class="sd">      &gt;&gt;&gt; assert &#39;virtualDeviceName&#39; in device_models[0]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">get_system_device_model_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/plat/res/model?start=0&amp;size=10000&amp;orderBy=id&amp;desc=false&amp;total=false&#39;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_system_device_model_url</span>
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
+    <span class="c1"># r.status_code</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">system_device_model</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">system_device_model</span><span class="p">[</span><span class="s1">&#39;deviceModel&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
+
+
+<div class="viewcode-block" id="get_system_series"><a class="viewcode-back" href="../../../pyhpeimc.plat.system.html#pyhpeimc.plat.system.get_system_series">[docs]</a><span class="k">def</span> <span class="nf">get_system_series</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Takes string no input to issue RESTUL call to HP IMC\n</span>
+
+<span class="sd">      :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">      :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">      :return: list of dictionaries where each dictionary represents a single device series</span>
+
+<span class="sd">      :rtype: list</span>
+
+<span class="sd">      &gt;&gt;&gt; from pyhpeimc.auth import *</span>
+
+<span class="sd">      &gt;&gt;&gt; from pyhpeimc.plat.device import *</span>
+
+<span class="sd">      &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
+
+<span class="sd">      &gt;&gt;&gt; series = get_system_series(auth.creds, auth.url)</span>
+
+<span class="sd">      &gt;&gt;&gt; assert type(series) is list</span>
+
+<span class="sd">      &gt;&gt;&gt; assert &#39;name&#39; in series[0]</span>
+
+
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">get_system_series_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/plat/res/series?managedOnly=false&amp;start=0&amp;size=10000&amp;orderBy=id&amp;desc=false&amp;total=false&#39;</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_system_series_url</span>
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
+    <span class="c1"># r.status_code</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+            <span class="n">system_series</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">system_series</span><span class="p">[</span><span class="s1">&#39;deviceSeries&#39;</span><span class="p">]</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_series: An Error has occured&quot;</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
