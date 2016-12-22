@@ -11,18 +11,15 @@ capabilities of the HPE IMC NMS platform using the RESTful API
 import json
 import requests
 
-
-
-
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
-
+           'application/json', 'Accept-encoding': 'application/json'}
 
 """
 This section deals with HPE IMC Operator Functions
 """
 
-def create_operator(operator, auth, url,headers=HEADERS):
+
+def create_operator(operator, auth, url, headers=HEADERS):
     """
     Function takes input of dictionary operator with the following keys
     operator = { "fullName" : ""   ,
@@ -82,14 +79,14 @@ def create_operator(operator, auth, url,headers=HEADERS):
     r = requests.post(f_url, data=payload, auth=auth, headers=headers)
     try:
         if r.status_code == 409:
-            #print("Operator Already Exists")
             return r.status_code
         elif r.status_code == 201:
             return r.status_code
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + ' create_operator: An Error has occured'
+        return "Error:\n" + str(e) + ' create_operator: An Error has occured'
 
-def set_operator_password(operator, password, auth, url,headers=HEADERS):
+
+def set_operator_password(operator, password, auth, url):
     """
     Function to set the password of an existing operator
 
@@ -100,8 +97,6 @@ def set_operator_password(operator, password, auth, url,headers=HEADERS):
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
-
-    :param headers: json formated string. default values set in module
 
     :return: int of 204 if successfull,
 
@@ -126,34 +121,36 @@ def set_operator_password(operator, password, auth, url,headers=HEADERS):
     >>> assert set_new_password == 204
 
        """
-    if operator == None:
+    if operator is None:
         operator = input(
             '''\n What is the username you wish to change the password?''')
     oper_id = ''
+    authtype = None
     plat_oper_list = get_plat_operator(auth, url)
     for i in plat_oper_list:
         if i['name'] == operator:
             oper_id = i['id']
-            authType = i['authType']
+            authtype = i['authType']
     if oper_id == '':
-        return("User does not exist")
+        return "User does not exist"
     change_pw_url = "/imcrs/plat/operator/"
     f_url = url + change_pw_url + oper_id
     if password is None:
         password = input(
-        '''\n ============ Please input the operators new password:\n ============  ''')
-    payload = json.dumps({'password': password , 'authType': authType})
-    r = requests.put(f_url, data=payload, auth=auth, headers=headers)
+            '''\n ============ Please input the operators new password:\n ============  ''')
+    payload = json.dumps({'password': password, 'authType': authtype})
+    r = requests.put(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 204:
-            #print("Operator:" + operator +
-                 # " password was successfully changed")
+            # print("Operator:" + operator +
+            # " password was successfully changed")
             return r.status_code
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + ' set_operator_password: An Error has occured'
 
-def get_plat_operator(auth, url,headers=HEADERS):
-    '''
+
+def get_plat_operator(auth, url):
+    """
     Funtion takes no inputs and returns a list of dictionaties of all of the operators currently configured on the HPE
     IMC system
 
@@ -177,22 +174,22 @@ def get_plat_operator(auth, url,headers=HEADERS):
 
     >>> assert 'name' in plat_operators[0]
 
-    '''
+    """
     get_operator_url = '/imcrs/plat/operator?start=0&size=1000&orderBy=id&desc=false&total=false'
     f_url = url + get_operator_url
     try:
-        r = requests.get(f_url, auth=auth, headers=headers)
+        r = requests.get(f_url, auth=auth, headers=HEADERS)
         plat_oper_list = json.loads(r.text)['operator']
         if type(plat_oper_list) is dict:
-            oper_list = []
-            oper_list.append(plat_oper_list)
+            oper_list = [plat_oper_list]
             return oper_list
         return plat_oper_list
     except requests.exceptions.RequestException as e:
-        print ("Error:\n" + str(e) + ' get_plat_operator: An Error has occured')
+        print("Error:\n" + str(e) + ' get_plat_operator: An Error has occured')
         return "Error:\n" + str(e) + ' get_plat_operator: An Error has occured'
 
-def delete_plat_operator(operator,auth, url, headers=HEADERS):
+
+def delete_plat_operator(operator, auth, url, headers=HEADERS):
     """
     Function to set the password of an existing operator
     :param operator: str Name of the operator account
@@ -226,24 +223,23 @@ def delete_plat_operator(operator,auth, url, headers=HEADERS):
     >>> assert fail_delete_operator == 409
 
     """
+    oper_id = None
     plat_oper_list = get_plat_operator(auth, url)
     for i in plat_oper_list:
         if operator == i['name']:
             oper_id = i['id']
         else:
             oper_id = None
-    if oper_id == None:
-        #print ("User does not exist")
+    if oper_id is None:
+        # print ("User does not exist")
         return 409
     delete_plat_operator_url = "/imcrs/plat/operator/"
     f_url = url + delete_plat_operator_url + str(oper_id)
     r = requests.delete(f_url, auth=auth, headers=headers)
     try:
         if r.status_code == 204:
-            #print("Operator: " + operator +
-                #  " was successfully deleted")
+            # print("Operator: " + operator +
+            #  " was successfully deleted")
             return r.status_code
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + ' delete_plat_operator: An Error has occured'
-
-
