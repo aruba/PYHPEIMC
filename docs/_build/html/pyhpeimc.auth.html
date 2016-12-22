@@ -45,6 +45,8 @@
             
   <div class="section" id="module-pyhpeimc.auth">
 <span id="pyhpeimc-auth-module"></span><h1>pyhpeimc.auth module<a class="headerlink" href="#module-pyhpeimc.auth" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions for authenticating to the HPE IMC NMS platform
+using the RESTful API</p>
 <dl class="class">
 <dt id="pyhpeimc.auth.IMCAuth">
 <em class="property">class </em><code class="descclassname">pyhpeimc.auth.</code><code class="descname">IMCAuth</code><span class="sig-paren">(</span><em>h_url</em>, <em>server</em>, <em>port</em>, <em>username</em>, <em>password</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#IMCAuth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.IMCAuth" title="Permalink to this definition">¶</a></dt>
@@ -68,6 +70,19 @@ requests.auth.HTTPDigestAuth.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="pyhpeimc.auth.check_imc_creds">
+<code class="descclassname">pyhpeimc.auth.</code><code class="descname">check_imc_creds</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#check_imc_creds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.check_imc_creds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function takes input of auth class object auth object and URL and returns a BOOL of TRUE if the authentication was successful.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">check_imc_creds</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
 <dt id="pyhpeimc.auth.print_to_file">
 <code class="descclassname">pyhpeimc.auth.</code><code class="descname">print_to_file</code><span class="sig-paren">(</span><em>object</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#print_to_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.print_to_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes in object of type str, list, or dict and prints out to current working directory as pyoutput.txt
@@ -80,19 +95,6 @@ requests.auth.HTTPDigestAuth.</p>
 <code class="descclassname">pyhpeimc.auth.</code><code class="descname">set_imc_creds</code><span class="sig-paren">(</span><em>h_url=None</em>, <em>imc_server=None</em>, <em>imc_port=None</em>, <em>imc_user=None</em>, <em>imc_pw=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#set_imc_creds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.set_imc_creds" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function prompts user for IMC server information and credentuials and stores
 values in url and auth global variables</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="pyhpeimc.auth.test_imc_creds">
-<code class="descclassname">pyhpeimc.auth.</code><code class="descname">test_imc_creds</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/auth.html#test_imc_creds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.auth.test_imc_creds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function takes input of auth class object auth object and URL and returns a BOOL of TRUE if the authentication was successful.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">test_imc_creds</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
-<span class="go">True</span>
-</pre></div>
-</div>
 </dd></dl>
 
 </div>
@@ -131,7 +133,7 @@ values in url and auth global variables</p>
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

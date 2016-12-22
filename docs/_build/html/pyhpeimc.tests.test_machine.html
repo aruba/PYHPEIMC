@@ -43,8 +43,63 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="pyhpeimc-tests-test-machine-module">
-<h1>pyhpeimc.tests.test_machine module<a class="headerlink" href="#pyhpeimc-tests-test-machine-module" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-pyhpeimc.tests.test_machine">
+<span id="pyhpeimc-tests-test-machine-module"></span><h1>pyhpeimc.tests.test_machine module<a class="headerlink" href="#module-pyhpeimc.tests.test_machine" title="Permalink to this headline">¶</a></h1>
+<p>This file is used to populate values to select what specific vendors to test various vendors
+specific functionality again. If you do not have a specific vendors device, or don&#8217;t wish to test against
+a specific vendors device, change the value of that specific variable to None and all
+tests associated with that specific vendor will automatically be skipped.</p>
+<dl class="data">
+<dt id="pyhpeimc.tests.test_machine.test_interface_down">
+<code class="descclassname">pyhpeimc.tests.test_machine.</code><code class="descname">test_interface_down</code><em class="property"> = False</em><a class="headerlink" href="#pyhpeimc.tests.test_machine.test_interface_down" title="Permalink to this definition">¶</a></dt>
+<dd><p>#Template for building Multiple Vendor Tests</p>
+<p>&#8220;&#8221;&#8220;=============================================================================================&#8221;&#8220;&#8221;</p>
+<p>#####Test TEST_NAME_HERE for Multiple Vendor Devices</p>
+<p>###Switches</p>
+<p>#CW3_Switch</p>
+<p>#CW5_Switch
+class Test_Function_Name_CW5_Switch(TestCase):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def test_Function_Name_type(self):</dt>
+<dd><dl class="first docutils">
+<dt>if CW5_Switch is None:</dt>
+<dd>raise SkipTest</dd>
+</dl>
+<p class="last">self.fail()</p>
+</dd>
+<dt>def test_Function_Name_content(self):</dt>
+<dd><dl class="first last docutils">
+<dt>if CW5_Switch is None:</dt>
+<dd>raise SkipTest
+self.fail()</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p>#CW7_Switch</p>
+<p>#Cisco_Switch</p>
+<p>#Juniper_Switch</p>
+<p>#Arista_Switch</p>
+<p>#ArubaOS_Switch (Formerly Provision)</p>
+<p>###Routers</p>
+<p>#Cisco_Router</p>
+<p>#CW5_Router</p>
+<p>#Juniper_Router (SRV)</p>
+<p>#Wireless</p>
+<p>#CW5_Wireless</p>
+<p>#Aruba</p>
+<p>#MSM</p>
+<p>#CiscoWireless</p>
+<p>####Servers</p>
+<p>#Windows_Server</p>
+<p>#Linux_Server</p>
+<p>###Hypervisors</p>
+<p>#ESX</p>
+<p>#HyperV</p>
+<p>#DoesntExist</p>
+</dd></dl>
+
 </div>
 
 
@@ -83,7 +138,7 @@
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

@@ -45,14 +45,13 @@
             
   <div class="section" id="module-pyhpeimc.plat.perf">
 <span id="pyhpeimc-plat-perf-module"></span><h1>pyhpeimc.plat.perf module<a class="headerlink" href="#module-pyhpeimc.plat.perf" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions for working with the performance management
+capabilities of the HPE IMC NMS platform using the RESTful API</p>
 <dl class="function">
 <dt id="pyhpeimc.plat.perf.add_perf_task">
 <code class="descclassname">pyhpeimc.plat.perf.</code><code class="descname">add_perf_task</code><span class="sig-paren">(</span><em>task</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/perf.html#add_perf_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.perf.add_perf_task" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>function takes the a python dict containing all necessary fields for a performance tasks, transforms the dict into</dt>
-<dd>JSON and issues a RESTFUL call to create the performance task.</dd>
-</dl>
-<p>device.</p>
+<dd><p>function takes the a python dict containing all necessary fields for a performance tasks, transforms the dict into
+JSON and issues a RESTFUL call to create the performance task. device.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -87,6 +86,29 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_perf_task</span> <span class="o">=</span> <span class="n">add_perf_task</span><span class="p">(</span><span class="n">new_task</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyhpeimc.plat.perf.delete_perf_task">
+<code class="descclassname">pyhpeimc.plat.perf.</code><code class="descname">delete_perf_task</code><span class="sig-paren">(</span><em>task_name</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/perf.html#delete_perf_task"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.perf.delete_perf_task" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function takes a str of the target task_name to be deleted and retrieves task_id using
+the get_perf_task function. Once the task_id has been successfully retrieved it is
+populated into the task_id variable and an DELETE call is made against the HPE IMC REST
+interface to delete the target task.
+:param task_name: str of task name
+:param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int of 204 if successful, str of &#8220;Perf Task doesn&#8217;t exist&#8221; i</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -171,7 +193,7 @@ to the IMC REST service. It will return a list</p>
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

@@ -45,6 +45,8 @@
             
   <div class="section" id="module-pyhpeimc.plat.operator">
 <span id="pyhpeimc-plat-operator-module"></span><h1>pyhpeimc.plat.operator module<a class="headerlink" href="#module-pyhpeimc.plat.operator" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions for working with the system operator
+capabilities of the HPE IMC NMS platform using the RESTful API</p>
 <dl class="data">
 <dt id="pyhpeimc.plat.operator.HEADERS">
 <code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">HEADERS</code><em class="property"> = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Accept-encoding': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.operator.HEADERS" title="Permalink to this definition">¶</a></dt>
@@ -181,7 +183,7 @@ operator = { &#8220;fullName&#8221; : &#8220;&#8221;   ,</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.operator.get_plat_operator">
-<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">get_plat_operator</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>headers={'Content-Type': 'application/json'</em>, <em>'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/operator.html#get_plat_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.operator.get_plat_operator" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">get_plat_operator</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/operator.html#get_plat_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.operator.get_plat_operator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Funtion takes no inputs and returns a list of dictionaties of all of the operators currently configured on the HPE
 IMC system</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -224,7 +226,7 @@ IMC system</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.operator.set_operator_password">
-<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">set_operator_password</code><span class="sig-paren">(</span><em>operator</em>, <em>password</em>, <em>auth</em>, <em>url</em>, <em>headers={'Content-Type': 'application/json'</em>, <em>'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'}</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/operator.html#set_operator_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.operator.set_operator_password" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.operator.</code><code class="descname">set_operator_password</code><span class="sig-paren">(</span><em>operator</em>, <em>password</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/operator.html#set_operator_password"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.operator.set_operator_password" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to set the password of an existing operator</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -235,7 +237,6 @@ IMC system</p>
 <li><strong>password</strong> &#8211; str New password</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
-<li><strong>headers</strong> &#8211; json formated string. default values set in module</li>
 </ul>
 </td>
 </tr>
@@ -314,7 +315,7 @@ IMC system</p>
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

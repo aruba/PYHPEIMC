@@ -45,10 +45,15 @@
             
   <div class="section" id="module-pyhpeimc.plat.device">
 <span id="pyhpeimc-plat-device-module"></span><h1>pyhpeimc.plat.device module<a class="headerlink" href="#module-pyhpeimc.plat.device" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions for working with the device capabilities
+of the HPE IMC NMS platform using the RESTful API</p>
 <dl class="data">
 <dt id="pyhpeimc.plat.device.HEADERS">
 <code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">HEADERS</code><em class="property"> = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Accept-encoding': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.device.HEADERS" title="Permalink to this definition">¶</a></dt>
-<dd><p>This section contains functions which operate at the system level</p>
+<dd><p>This section contains functions which operate at the system level
+This whole section has been moved to pyhpeimc.plat.system - functions left here for legacy.
+Intention is to remove by version 1.0.60 or greater. Please modify any scripts using functions
+in this section to use the new functions in the new module</p>
 </dd></dl>
 
 <dl class="function">
@@ -100,7 +105,7 @@
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_all_interface_details">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_all_interface_details</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_all_interface_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_all_interface_details" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_all_interface_details</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_all_interface_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_all_interface_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes the devId of a specific device and the ifindex value assigned to a specific interface
 and issues a RESTFUL call to get the interface details
 file as known by the HP IMC Base Platform ICC module for the target device.</p>
@@ -109,9 +114,10 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>devId</strong> &#8211; int or str value of the devId of the target device</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+<li><strong>devid</strong> &#8211; int or str value of the devId of the target device</li>
+<li><strong>devip</strong> &#8211; ipv4 address of the target device</li>
 </ul>
 </td>
 </tr>
@@ -132,7 +138,10 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_interface_details</span> <span class="o">=</span> <span class="n">get_all_interface_details</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_interface_details</span> <span class="o">=</span> <span class="n">get_all_interface_details</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devId</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">all_interface_details</span> <span class="o">=</span> <span class="n">get_all_interface_details</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">all_interface_details</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
@@ -195,14 +204,15 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_interface">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_interface</code><span class="sig-paren">(</span><em>devid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_dev_interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_interface" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_interface</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_dev_interface"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_interface" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes devid as input to RESTFUL call to HP IMC platform and returns list of device interfaces</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>devid</strong> &#8211; requires devid as the only input</li>
+<li><strong>devid</strong> &#8211; optional devid as the input</li>
+<li><strong>devip</strong> &#8211; optional devip as input</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
 </ul>
@@ -225,7 +235,10 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dev_interfaces</span> <span class="o">=</span> <span class="n">get_dev_interface</span><span class="p">(</span><span class="s1">&#39;15&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dev_interfaces</span> <span class="o">=</span> <span class="n">get_dev_interface</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="s1">&#39;15&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dev_interfaces</span> <span class="o">=</span> <span class="n">get_dev_interface</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">dev_interfaces</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
@@ -238,7 +251,7 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_mac_learn">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_mac_learn</code><span class="sig-paren">(</span><em>devid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_dev_mac_learn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_mac_learn" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_mac_learn</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_dev_mac_learn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_mac_learn" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
 the target device.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -247,6 +260,7 @@ the target device.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>devid</strong> &#8211; int value of the target device</li>
+<li><strong>devip</strong> &#8211; ipv4 address of the target device</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
 </ul>
@@ -269,7 +283,10 @@ the target device.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dev_mac_learn</span> <span class="o">=</span> <span class="n">get_dev_mac_learn</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dev_mac_learn</span> <span class="o">=</span> <span class="n">get_dev_mac_learn</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dev_mac_learn</span> <span class="o">=</span> <span class="n">get_dev_mac_learn</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">dev_mac_learn</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
@@ -282,7 +299,7 @@ the target device.</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_run_config">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_run_config</code><span class="sig-paren">(</span><em>devid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_dev_run_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_run_config" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_run_config</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_dev_run_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_run_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
 file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -291,6 +308,7 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>devid</strong> &#8211; int or str value of the target device</li>
+<li><strong>devip</strong> &#8211; str of ipv4 address of the target device</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
 </ul>
@@ -320,7 +338,10 @@ supported on this device&#8221;</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">run_config</span> <span class="o">=</span> <span class="n">get_dev_run_config</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">run_config</span> <span class="o">=</span> <span class="n">get_dev_run_config</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">run_config</span> <span class="o">=</span> <span class="n">get_dev_run_config</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">run_config</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
@@ -330,7 +351,7 @@ supported on this device&#8221;</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_dev_start_config">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_start_config</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_dev_start_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_start_config" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_dev_start_config</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_dev_start_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_dev_start_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes the devId of a specific device and issues a RESTFUL call to get the most current startup config
 file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -338,9 +359,10 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>devId</strong> &#8211; int or str value of the target device</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+<li><strong>devid</strong> &#8211; optional int or str value of the target device</li>
+<li><strong>devip</strong> &#8211; optional ipv4 address of the target device</li>
 </ul>
 </td>
 </tr>
@@ -368,7 +390,10 @@ supported on this device&#8221;</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">start_config</span> <span class="o">=</span> <span class="n">get_dev_start_config</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">start_config</span> <span class="o">=</span> <span class="n">get_dev_start_config</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devId</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">start_config</span> <span class="o">=</span> <span class="n">get_dev_start_config</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">start_config</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
@@ -378,7 +403,7 @@ supported on this device&#8221;</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.get_interface_details">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_interface_details</code><span class="sig-paren">(</span><em>devId</em>, <em>ifIndex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_interface_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_interface_details" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">get_interface_details</code><span class="sig-paren">(</span><em>ifindex</em>, <em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#get_interface_details"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.get_interface_details" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes the devId of a specific device and the ifindex value assigned to a specific interface
 and issues a RESTFUL call to get the interface details
 file as known by the HP IMC Base Platform ICC module for the target device.</p>
@@ -387,10 +412,11 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>devId</strong> &#8211; int or str value of the devId of the target device</li>
-<li><strong>ifIndex</strong> &#8211; int or str value of the ifIndex of the target interface</li>
+<li><strong>ifindex</strong> &#8211; int or str value of the ifIndex of the target interface</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+<li><strong>devid</strong> &#8211; int or str value of the devId of the target device</li>
+<li><strong>devip</strong> &#8211; str of ipv4 address of the target device</li>
 </ul>
 </td>
 </tr>
@@ -411,7 +437,10 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">interface_details</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">interface_details</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devId</span> <span class="o">=</span> <span class="s1">&#39;10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">interface_details</span> <span class="o">=</span> <span class="n">get_interface_details</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span> <span class="o">=</span> <span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">interface_details</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span>
@@ -592,7 +621,7 @@ file as known by the HP IMC Base Platform ICC module for the target device.</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.run_dev_cmd">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">run_dev_cmd</code><span class="sig-paren">(</span><em>devid</em>, <em>cmd_list</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#run_dev_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.run_dev_cmd" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">run_dev_cmd</code><span class="sig-paren">(</span><em>cmd_list</em>, <em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#run_dev_cmd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.run_dev_cmd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes devid of target device and a sequential list of strings which define the specific commands to be run
 on the target device and returns a str object containing the output of the commands.
 :param devid: int devid of the target device</p>
@@ -600,9 +629,16 @@ on the target device and returns a str object containing the output of the comma
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cmd_list</strong> &#8211; list of strings</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cmd_list</strong> &#8211; list of strings</li>
+<li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
+<li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+<li><strong>devip</strong> &#8211; str of ipv4 address of the target device</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">str containing the response of the commands</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">str containing the response of the commands</p>
+</td>
 </tr>
 </tbody>
 </table>
@@ -618,7 +654,10 @@ on the target device and returns a str object containing the output of the comma
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cmd_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;display version&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cmd_output</span> <span class="o">=</span> <span class="n">run_dev_cmd</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">cmd_list</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cmd_output</span> <span class="o">=</span> <span class="n">run_dev_cmd</span><span class="p">(</span> <span class="n">cmd_list</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devid</span> <span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cmd_output</span> <span class="o">=</span> <span class="n">run_dev_cmd</span><span class="p">(</span> <span class="n">cmd_list</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">cmd_output</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span>
@@ -634,7 +673,7 @@ on the target device and returns a str object containing the output of the comma
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.set_inteface_up">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">set_inteface_up</code><span class="sig-paren">(</span><em>devid</em>, <em>ifindex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#set_inteface_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.set_inteface_up" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">set_inteface_up</code><span class="sig-paren">(</span><em>ifindex</em>, <em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#set_inteface_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.set_inteface_up" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takest devid and ifindex of specific device and interface and issues a RESTFUL call to &#8220;undo shut&#8221; the spec
 ified interface on the target device.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -643,6 +682,7 @@ ified interface on the target device.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>devid</strong> &#8211; int or str value of the target device</li>
+<li><strong>devip</strong> &#8211; ipv4 address of the target devices</li>
 <li><strong>ifindex</strong> &#8211; int or str value of the target interface</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
@@ -666,7 +706,18 @@ ified interface on the target device.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_up_response</span> <span class="o">=</span> <span class="n">set_inteface_up</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_down_response</span> <span class="o">=</span> <span class="n">set_interface_down</span><span class="p">(</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devid</span> <span class="o">=</span> <span class="s1">&#39;10&#39;</span><span class="p">)</span>
+<span class="go">204</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_up_response</span> <span class="o">=</span> <span class="n">set_inteface_up</span><span class="p">(</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devid</span> <span class="o">=</span> <span class="s1">&#39;10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_down_response</span> <span class="o">=</span> <span class="n">set_interface_down</span><span class="p">(</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devid</span> <span class="o">=</span> <span class="s1">&#39;10&#39;</span><span class="p">)</span>
+<span class="go">204</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_up_response</span> <span class="o">=</span> <span class="n">set_inteface_up</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span> <span class="o">=</span> <span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">int_up_response</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span>
@@ -679,7 +730,7 @@ ified interface on the target device.</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.device.set_interface_down">
-<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">set_interface_down</code><span class="sig-paren">(</span><em>devid</em>, <em>ifindex</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#set_interface_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.set_interface_down" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.device.</code><code class="descname">set_interface_down</code><span class="sig-paren">(</span><em>ifindex</em>, <em>auth</em>, <em>url</em>, <em>devid=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/device.html#set_interface_down"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.device.set_interface_down" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takest devid and ifindex of specific device and interface and issues a RESTFUL call to &#8221; shut&#8221; the specifie
 d interface on the target device.
 :param devid: int or str value of the target device</p>
@@ -688,6 +739,7 @@ d interface on the target device.
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>devip</strong> &#8211; ipv4 address of the target devices</li>
 <li><strong>ifindex</strong> &#8211; int or str value of the target interface</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
@@ -709,7 +761,17 @@ d interface on the target device.
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_down_response</span> <span class="o">=</span> <span class="n">set_interface_down</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_up_response</span> <span class="o">=</span> <span class="n">set_inteface_up</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span> <span class="o">=</span> <span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_down_response</span> <span class="o">=</span> <span class="n">set_interface_down</span><span class="p">(</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devid</span> <span class="o">=</span> <span class="s1">&#39;10&#39;</span><span class="p">)</span>
+<span class="go">204</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_up_response</span> <span class="o">=</span> <span class="n">set_inteface_up</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span> <span class="o">=</span> <span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_down_response</span> <span class="o">=</span> <span class="n">set_interface_down</span><span class="p">(</span> <span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span> <span class="o">=</span> <span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 <span class="go">204</span>
 </pre></div>
 </div>
@@ -717,6 +779,9 @@ d interface on the target device.
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">int_down_response</span> <span class="ow">is</span> <span class="mi">204</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">int_up_response</span> <span class="o">=</span> <span class="n">set_inteface_up</span><span class="p">(</span><span class="s1">&#39;9&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span> <span class="o">=</span> <span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -759,7 +824,7 @@ d interface on the target device.
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>
