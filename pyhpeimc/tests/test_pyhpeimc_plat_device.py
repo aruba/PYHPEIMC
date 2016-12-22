@@ -1274,7 +1274,7 @@ class TestGetDevStartConfigCiscoSwitch(TestCase):
 
 
 # Juniper_Switch
-class TestGet_dev_start_configJuniper_Switch(TestCase):
+class TestGetDevStartConfigJuniperSwitch(TestCase):
     def test_get_dev_start_supported(self):
         if Juniper_Switch is None:
             raise SkipTest
@@ -1283,7 +1283,7 @@ class TestGet_dev_start_configJuniper_Switch(TestCase):
 
 
 # Arista_Switch
-class TestGet_dev_start_configArista_Switch(TestCase):
+class TestGetDevStartConfigAristaSwitch(TestCase):
     def test_get_dev_start_supported(self):
         if Arista_Switch is None:
             raise SkipTest
@@ -1292,7 +1292,7 @@ class TestGet_dev_start_configArista_Switch(TestCase):
 
 
 # ArubaOS_Switch (Formerly Provision)
-class TestGet_dev_start_configArubaOS_Switch(TestCase):
+class TestGetDevStartConfigArubaOSSwitch(TestCase):
     def test_get_dev_start_supported(self):
         if ArubaOS_Switch is None:
             raise SkipTest
@@ -1303,7 +1303,7 @@ class TestGet_dev_start_configArubaOS_Switch(TestCase):
 # Routers
 
 # Cisco_Router
-class TestGet_dev_start_configCisco_Router(TestCase):
+class TestGetDevStartConfigCiscoRouter(TestCase):
     def test_get_dev_start_supported(self):
         if Cisco_Router is None:
             raise SkipTest
@@ -1312,7 +1312,7 @@ class TestGet_dev_start_configCisco_Router(TestCase):
 
 
 # CW5_Router
-class TestGet_dev_start_configCW5_Router(TestCase):
+class TestGetDevStartConfigCW5Router(TestCase):
     def test_get_dev_start_supported(self):
         if CW5_Router is None:
             raise SkipTest
@@ -1321,7 +1321,7 @@ class TestGet_dev_start_configCW5_Router(TestCase):
 
 
 # Juniper_Router (SRV)
-class TestGet_dev_start_configJuniper_Router(TestCase):
+class TestGetDevStartConfigJuniperRouter(TestCase):
     def test_get_dev_start_supported(self):
         if Juniper_Router is None:
             raise SkipTest
@@ -1333,7 +1333,7 @@ class TestGet_dev_start_configJuniper_Router(TestCase):
 
 
 # Windows_Server
-class TestGet_dev_start_configWindows_Server(TestCase):
+class TestGetDevStartConfigWindowsServer(TestCase):
     def test_get_dev_run_start_unsupported(self):
         if Windows_Server is None:
             raise SkipTest
@@ -1342,7 +1342,7 @@ class TestGet_dev_start_configWindows_Server(TestCase):
 
 
 # Linux_Server
-class TestGet_dev_start_configLinux_Server(TestCase):
+class TestGetDevStartConfigLinuxServer(TestCase):
     def test_get_dev_run_start_unsupported(self):
         if Linux_Server is None:
             raise SkipTest
@@ -1354,7 +1354,7 @@ class TestGet_dev_start_configLinux_Server(TestCase):
 
 
 # VMWare ESX
-class TestGet_dev_start_configVMWare(TestCase):
+class TestGetDevStartConfigVMWare(TestCase):
     def test_get_dev_run_start_unsupported(self):
         if ESX is None:
             raise SkipTest
@@ -1363,7 +1363,7 @@ class TestGet_dev_start_configVMWare(TestCase):
 
 
 # HyperV
-class TestGet_dev_start_configHyperV(TestCase):
+class TestGetDevStartConfigHyperV(TestCase):
     def test_get_dev_run_start_unsupported(self):
         if HyperV is None:
             raise SkipTest
@@ -1382,7 +1382,7 @@ class TestGet_dev_start_configHyperV(TestCase):
 # Switches
 
 # CW3_Switch
-class TestGet_dev_mac_learnCW3_Switch(TestCase):
+class TestGetDevMacLearnCW3Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if CW3_Switch is None:
             raise SkipTest
@@ -1406,7 +1406,7 @@ class TestGet_dev_mac_learnCW3_Switch(TestCase):
 
 
 # CW5_Switch
-class TestGet_dev_mac_learnCW5_Switch(TestCase):
+class TestGetDevMacLearnCW5Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if CW5_Switch is None:
             raise SkipTest
@@ -1430,7 +1430,7 @@ class TestGet_dev_mac_learnCW5_Switch(TestCase):
 
 
 # CW7_Switch
-class TestGet_dev_mac_learnCW7_Switch(TestCase):
+class TestGetDevMacLearnCW7Switch(TestCase):
     def test_get_dev_mac_learnType(self):
         if CW7_Switch is None:
             raise SkipTest
@@ -1454,7 +1454,7 @@ class TestGet_dev_mac_learnCW7_Switch(TestCase):
 
 
 # Cisco_Switch
-class TestGet_dev_mac_learnCisco_Switch(TestCase):
+class TestGetDevMacLearnCiscoSwitch(TestCase):
     def test_get_dev_mac_learnType(self):
         if Cisco_Switch is None:
             raise SkipTest
@@ -1478,7 +1478,7 @@ class TestGet_dev_mac_learnCisco_Switch(TestCase):
 
 
 # Juniper_Switch
-class TestGet_dev_mac_learnJuniper_Switch(TestCase):
+class TestGetDevMacLearnJuniperSwitch(TestCase):
     def test_get_dev_mac_learnType(self):
         if Juniper_Switch is None:
             raise SkipTest
@@ -1502,7 +1502,7 @@ class TestGet_dev_mac_learnJuniper_Switch(TestCase):
 
 
 # Arista_Switch
-class TestGet_dev_mac_learnArista_Switch(TestCase):
+class TestGetDevMacLearnAristaSwitch(TestCase):
     def test_get_dev_mac_learnType(self):
         if Arista_Switch is None:
             raise SkipTest
@@ -1526,7 +1526,7 @@ class TestGet_dev_mac_learnArista_Switch(TestCase):
 
 
 # ArubaOS_Switch (Formerly Provision)
-class TestGet_dev_mac_learnArubaOS_Switch(TestCase):
+class TestGetDevMacLearnArubaOSSwitch(TestCase):
     def test_get_dev_mac_learnType(self):
         if ArubaOS_Switch is None:
             raise SkipTest
@@ -1552,7 +1552,7 @@ class TestGet_dev_mac_learnArubaOS_Switch(TestCase):
 # Routers
 
 # Cisco_Router
-class TestGet_dev_mac_learnCisco_Router(TestCase):
+class TestGetDevMacLearnCiscoRouter(TestCase):
     def test_get_dev_mac_learnType(self):
         if Cisco_Router is None:
             raise SkipTest
@@ -1576,7 +1576,7 @@ class TestGet_dev_mac_learnCisco_Router(TestCase):
 
 
 # CW5_Router
-class TestGet_dev_mac_learnCW5_Router(TestCase):
+class TestGetDevMacLearnCW5Router(TestCase):
     def test_get_dev_mac_learnType(self):
         if CW5_Router is None:
             raise SkipTest
@@ -1600,7 +1600,7 @@ class TestGet_dev_mac_learnCW5_Router(TestCase):
 
 
 # Juniper_Router (SRV)
-class TestGet_dev_mac_learnJuniper_Router(TestCase):
+class TestGetDevMacLearnJuniperRouter(TestCase):
     def test_get_dev_mac_learnType(self):
         if Juniper_Router is None:
             raise SkipTest
@@ -1627,7 +1627,7 @@ class TestGet_dev_mac_learnJuniper_Router(TestCase):
 
 
 # Windows_Server
-class TestGet_dev_mac_learnWindows_Server(TestCase):
+class TestGetDevMacLearnWindowsServer(TestCase):
     def test_get_dev_mac_learnType(self):
         if Windows_Server is None:
             raise SkipTest
@@ -1651,7 +1651,7 @@ class TestGet_dev_mac_learnWindows_Server(TestCase):
 
 
 # Linux_Server
-class TestGet_dev_mac_learnLinux_Server(TestCase):
+class TestGetDevMacLearnLinuxServer(TestCase):
     def test_get_dev_mac_learnType(self):
         if Linux_Server is None:
             raise SkipTest
@@ -1678,7 +1678,7 @@ class TestGet_dev_mac_learnLinux_Server(TestCase):
 
 
 # VMWare ESX
-class TestGet_dev_mac_learnESX(TestCase):
+class TestGetDevMacLearnVMware(TestCase):
     def test_get_dev_mac_learnType(self):
         if ESX is None:
             raise SkipTest
@@ -1703,7 +1703,7 @@ class TestGet_dev_mac_learnESX(TestCase):
 
 # HyperV
 
-class TestGet_dev_mac_learnHyperV(TestCase):
+class TestGetDevMacLearnHyperV(TestCase):
     def test_get_dev_mac_learnType(self):
         if HyperV is None:
             raise SkipTest
@@ -1734,7 +1734,7 @@ class TestGet_dev_mac_learnHyperV(TestCase):
 # Switches
 
 # CW3_Switch
-class TestRun_dev_cmd_CW3_Switch(TestCase):
+class TestRunDevCmdCW3Switch(TestCase):
     def test_run_dev_cmd_type(self):
         if CW3_Switch is None:
             raise SkipTest
@@ -1755,7 +1755,7 @@ class TestRun_dev_cmd_CW3_Switch(TestCase):
 
 
 # CW5_Switch
-class TestRun_dev_cmd_CW5_Switch(TestCase):
+class TestRunDevCmdCW5Switch(TestCase):
     def test_run_dev_cmd_type(self):
         if CW5_Switch is None:
             raise SkipTest
@@ -1776,7 +1776,7 @@ class TestRun_dev_cmd_CW5_Switch(TestCase):
 
 
 # CW7_Switch
-class TestRun_dev_cmd_CW7_Switch(TestCase):
+class TestRunDevCmdCW7Switch(TestCase):
     def test_run_dev_cmd_type(self):
         if CW7_Switch is None:
             raise SkipTest
@@ -1797,7 +1797,7 @@ class TestRun_dev_cmd_CW7_Switch(TestCase):
 
 
 # Cisco_Switch
-class TestRun_dev_cmd_Cisco_Switch(TestCase):
+class TestRunDevCmdCiscoSwitch(TestCase):
     def test_run_dev_cmd_type(self):
         if Cisco_Switch is None:
             raise SkipTest
@@ -1818,7 +1818,7 @@ class TestRun_dev_cmd_Cisco_Switch(TestCase):
 
 
 # Juniper_Switch
-class TestRun_dev_cmd_Juniper_Switch(TestCase):
+class TestRunDevCmdJuniperSwitch(TestCase):
     def test_run_dev_cmd_type(self):
         if Juniper_Switch is None:
             raise SkipTest
@@ -1839,7 +1839,7 @@ class TestRun_dev_cmd_Juniper_Switch(TestCase):
 
 
 # Arista_Switch
-class TestRun_dev_cmd_Arista_Switch(TestCase):
+class TestRunDevCmdAristaSwitch(TestCase):
     def test_run_dev_cmd_type(self):
         if Arista_Switch is None:
             raise SkipTest
@@ -1850,7 +1850,7 @@ class TestRun_dev_cmd_Arista_Switch(TestCase):
     def test_run_dev_cmd_content(self):
         if Arista_Switch is None:
             raise SkipTest
-        cmd_list = ['display version']
+        cmd_list = ['show version']
         cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Arista_Switch)
         self.assertIs(len(cmd_output), 4)
         self.assertIn('success', cmd_output)
@@ -1860,7 +1860,7 @@ class TestRun_dev_cmd_Arista_Switch(TestCase):
 
 
 # ArubaOS_Switch (Formerly Provision)
-class TestRun_dev_cmd_ArubaOS_Switch(TestCase):
+class TestRunDevCmdArubaOSSwitch(TestCase):
     def test_run_dev_cmd_type(self):
         if ArubaOS_Switch is None:
             raise SkipTest
@@ -1871,7 +1871,7 @@ class TestRun_dev_cmd_ArubaOS_Switch(TestCase):
     def test_run_dev_cmd_content(self):
         if ArubaOS_Switch is None:
             raise SkipTest
-        cmd_list = ['display version']
+        cmd_list = ['show version']
         cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=ArubaOS_Switch)
         self.assertIs(len(cmd_output), 4)
         self.assertIn('success', cmd_output)
@@ -1883,7 +1883,7 @@ class TestRun_dev_cmd_ArubaOS_Switch(TestCase):
 # Routers
 
 # Cisco_Router
-class TestRun_dev_cmd_Cisco_Router(TestCase):
+class TestRunDevCmdCiscoRouter(TestCase):
     def test_run_dev_cmd_type(self):
         if Cisco_Router is None:
             raise SkipTest
@@ -1894,7 +1894,7 @@ class TestRun_dev_cmd_Cisco_Router(TestCase):
     def test_run_dev_cmd_content(self):
         if Cisco_Router is None:
             raise SkipTest
-        cmd_list = ['display version']
+        cmd_list = ['show version']
         cmd_output = run_dev_cmd(cmd_list, auth.creds, auth.url, devip=Cisco_Router)
         self.assertIs(len(cmd_output), 4)
         self.assertIn('success', cmd_output)
@@ -1904,7 +1904,7 @@ class TestRun_dev_cmd_Cisco_Router(TestCase):
 
 
 # CW5_Router
-class TestRun_dev_cmd_CW5_Router(TestCase):
+class TestRunDevCmdCW5Router(TestCase):
     def test_run_dev_cmd_type(self):
         if CW5_Router is None:
             raise SkipTest
@@ -1925,7 +1925,7 @@ class TestRun_dev_cmd_CW5_Router(TestCase):
 
 
 # Juniper_Router (SRX)
-class TestRun_dev_cmd_Juniper_Router(TestCase):
+class TestRunDevCmdJuniperRouter(TestCase):
     def test_run_dev_cmd_type(self):
         if Juniper_Router is None:
             raise SkipTest
@@ -1949,7 +1949,7 @@ class TestRun_dev_cmd_Juniper_Router(TestCase):
 
 
 # Windows_Server
-class TestRun_dev_cmd_Windows_Server(TestCase):
+class TestRunDevCmdWindowsServer(TestCase):
     def test_run_dev_cmd_type(self):
         if Windows_Server is None:
             raise SkipTest
@@ -1971,7 +1971,7 @@ class TestRun_dev_cmd_Windows_Server(TestCase):
 
 
 # Linux_Server
-class TestRun_dev_cmd_Linux_Server(TestCase):
+class TestRunDevCmdLinuxServer(TestCase):
     def test_run_dev_cmd_type(self):
         if Linux_Server is None:
             raise SkipTest
@@ -1996,7 +1996,7 @@ class TestRun_dev_cmd_Linux_Server(TestCase):
 
 
 # VMWare ESX
-class TestRun_dev_cmd_ESX(TestCase):
+class TestRunDevCmdVMware(TestCase):
     def test_run_dev_cmd_type(self):
         if ESX is None:
             raise SkipTest
@@ -2018,7 +2018,7 @@ class TestRun_dev_cmd_ESX(TestCase):
 
 
 # HyperV
-class TestRun_dev_cmd_VMWare(TestCase):
+class TestRunDevCmdHyperV(TestCase):
     def test_run_dev_cmd_type(self):
         if HyperV is None:
             raise SkipTest
