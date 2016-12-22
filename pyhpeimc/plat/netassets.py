@@ -12,10 +12,8 @@ import requests
 import json
 from pyhpeimc.plat.device import get_dev_details
 
-
-
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
+           'application/json', 'Accept-encoding': 'application/json'}
 
 
 def get_dev_asset_details(ipaddress, auth, url):
@@ -44,11 +42,11 @@ def get_dev_asset_details(ipaddress, auth, url):
     >>> assert 'name' in single_asset[0]
 
     """
-    ipaddress = get_dev_details(ipaddress, auth,url)
+    ipaddress = get_dev_details(ipaddress, auth, url)
     if type(ipaddress) is dict:
         ipaddress = ipaddress['ip']
     else:
-        print ("Asset Doens't Exist")
+        print("Asset Doesn't Exist")
         return 403
     get_dev_asset_url = "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
     f_url = url + get_dev_asset_url
@@ -66,7 +64,8 @@ def get_dev_asset_details(ipaddress, auth, url):
                 dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') == ipaddress]
             return dev_asset_info
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
+        return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
+
 
 def get_dev_asset_details_all(auth, url):
     """Takes no input to fetch device assett details from HP IMC RESTFUL API
@@ -102,7 +101,4 @@ def get_dev_asset_details_all(auth, url):
             dev_asset_info = (json.loads(r.text))['netAsset']
             return dev_asset_info
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
-
-
-
+        return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
