@@ -47,6 +47,7 @@ class Test_Get_get_ap_info_all(TestCase):
 class Test_Get_ap_info(TestCase):
     def test_get_ap_info_all_type(self):
         aps = get_ap_info_all(auth.creds, auth.url)
+        ip = ''
         for ap in aps:
             try:
                 ip = ipaddress.ip_address(ap['ipAddress'])
@@ -59,6 +60,7 @@ class Test_Get_ap_info(TestCase):
 
     def test_get_ap_info_all_content(self):
         aps = get_ap_info_all(auth.creds, auth.url)
+        ip = ''
         for ap in aps:
             try:
                 ip = ipaddress.ip_address(ap['ipAddress'])

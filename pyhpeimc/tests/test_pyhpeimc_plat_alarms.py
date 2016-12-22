@@ -4,17 +4,20 @@ This module is used for testing the functions within the pyhpeimc.plat.alarms mo
 
 """
 
-
 from unittest import TestCase
 from pyhpeimc.tests.test_machine import auth
 
 from pyhpeimc.plat.alarms import *
 
-#TODO Remarked out failing tests
-class TestGet_dev_alarms(TestCase):
+
+# TODO Remarked out failing tests
+
+
+class TestGetDevAlarms(TestCase):
     """
     Test Case for pyhpeimc plat alarms get_dev_alarms functions
     """
+
     def test_get_dev_alarms_type(self):
         """
         test case for get_dev_alarms type
@@ -24,7 +27,6 @@ class TestGet_dev_alarms(TestCase):
         self.assertIs(type(dev_alarms), list)
 
     def test_get_dev_alarms_content(self):
-
         dev_alarms = get_dev_alarms(auth.creds, auth.url, devip='10.101.0.231')
         self.assertIs(len(dev_alarms[0]), 30)
         self.assertIn('ackStatus', dev_alarms[0])
@@ -38,7 +40,7 @@ class TestGet_dev_alarms(TestCase):
         self.assertIn('id', dev_alarms[0])
         self.assertIn('faultTimeDesc', dev_alarms[0])
         self.assertIn('faultTime', dev_alarms[0])
-        #self.assertIn('holdInfo', dev_alarms[0])
+        # self.assertIn('holdInfo', dev_alarms[0])
         self.assertIn('originalType', dev_alarms[0])
         self.assertIn('recStatus', dev_alarms[0])
         self.assertIn('alarmDesc', dev_alarms[0])
@@ -59,26 +61,26 @@ class TestGet_dev_alarms(TestCase):
         self.assertIn('deviceId', dev_alarms[0])
 
 
-class TestGet_realtime_alarm(TestCase):
+class TestGetRealtimeAlarm(TestCase):
     def test_get_realtime_alarm_type(self):
         real_time_alarm = get_realtime_alarm('admin', auth.creds, auth.url)
-        self.assertIs(type(real_time_alarm),list)
+        self.assertIs(type(real_time_alarm), list)
 
     def test_get_realtime_alarm_content(self):
         real_time_alarm = get_realtime_alarm('admin', auth.creds, auth.url)
-        self.assertIs(len (real_time_alarm[0]),7)
-        self.assertIn('faultTime',real_time_alarm[0])
-        self.assertIn('userAckUserName',real_time_alarm[0])
-        self.assertIn('id',real_time_alarm[0])
-        self.assertIn('deviceDisplay',real_time_alarm[0])
-        self.assertIn('faultDesc',real_time_alarm[0])
-        self.assertIn('userAckType',real_time_alarm[0])
+        self.assertIs(len(real_time_alarm[0]), 7)
+        self.assertIn('faultTime', real_time_alarm[0])
+        self.assertIn('userAckUserName', real_time_alarm[0])
+        self.assertIn('id', real_time_alarm[0])
+        self.assertIn('deviceDisplay', real_time_alarm[0])
+        self.assertIn('faultDesc', real_time_alarm[0])
+        self.assertIn('userAckType', real_time_alarm[0])
 
 
-#TODO Remarked out failing test
-#TODO Get_all_alarms testing - Need to investigate
+# TODO Remarked out failing test
+# TODO Get_all_alarms testing - Need to investigate
 """
-class TestGet_all_alarm(TestCase):
+class TestGetAllAlarm(TestCase):
     def test_get_alarms_type(self):
         all_alarms = get_alarms('admin', auth.creds, auth.url)
         self.assertIs(type(all_alarms), list)
@@ -116,9 +118,3 @@ class TestGet_all_alarm(TestCase):
         self.assertIn('ackUserName', all_alarms[0])
         #self.assertIn('holdInfo', all_alarms[0])
 """
-
-
-
-
-
-

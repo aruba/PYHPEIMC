@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
@@ -7,15 +8,13 @@ capabilities of the HPE IMC WSM Module using the RESTful API
 
 """
 
-
 # This section imports required libraries
 import json
 import requests
 
-
-
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
+           'application/json', 'Accept-encoding': 'application/json'}
+
 
 def get_ac_info_all(auth, url):
     """
@@ -77,4 +76,4 @@ def get_ac_info_all(auth, url):
             if len(r.text) > 0:
                 return json.loads(r.text)['acBasicInfo']
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_ac_info_all: An Error has occured"
+        return "Error:\n" + str(e) + " get_ac_info_all: An Error has occured"

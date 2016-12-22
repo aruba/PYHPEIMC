@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
@@ -11,10 +12,9 @@ capabilities of the HPE IMC WSM Module using the RESTful API
 import json
 import requests
 
-
-
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
+           'application/json', 'Accept-encoding': 'application/json'}
+
 
 def get_client_info_all(auth, url):
     """
@@ -24,8 +24,8 @@ def get_client_info_all(auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents one client as discovered by the HPE IMC
-    Wireless Services Management module.
+    :return: list of dictionaries where each element of the list represents one client as
+    discovered by the HPE IMC Wireless Services Management module.
 
     :rtype: list
 
@@ -84,7 +84,7 @@ def get_client_info_all(auth, url):
             if len(r.text) > 0:
                 return json.loads(r.text)['clientBasicInfo']
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_client_info_all: An Error has occured"
+        return "Error:\n" + str(e) + " get_client_info_all: An Error has occured"
 
 
 def get_client_online_history_all(auth, url):
@@ -164,4 +164,4 @@ def get_client_online_history_all(auth, url):
             if len(r.text) > 0:
                 return json.loads(r.text)['clientOnlineHistoryInfo']
     except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_client_online_history_all: An Error has occured"
+        return "Error:\n" + str(e) + " get_client_online_history_all: An Error has occured"

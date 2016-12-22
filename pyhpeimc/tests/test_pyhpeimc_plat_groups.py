@@ -29,7 +29,6 @@ class TestGet_custom_views(TestCase):
 
 
     def test_get_custom_views_doesnt_exist(self):
-        all_views = get_custom_views(auth.creds, auth.url)
         non_existant_view = get_custom_views(auth.creds, auth.url, name='''Doesn't Exist''')
         self.assertEqual(non_existant_view, None)
 
@@ -74,7 +73,7 @@ class TestCreate_custom_views(TestCase):
         delete_custom_view(auth.creds, auth.url, name="L1 View")
 
     def test_create_custom_view_already_exists(self):
-        new_view = create_custom_views(auth.creds, auth.url, name='L1 View')
+        create_custom_views(auth.creds, auth.url, name='L1 View')
         new_view = create_custom_views(auth.creds, auth.url, name='L1 View')
         self.assertEqual(new_view, 409)
         delete_custom_view(auth.creds, auth.url, name="L1 View")

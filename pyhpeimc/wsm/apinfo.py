@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
@@ -13,9 +14,9 @@ import json
 import requests
 
 
-
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
+           'application/json', 'Accept-encoding': 'application/json'}
+
 
 def get_ap_info_all(auth, url):
     """
@@ -24,7 +25,8 @@ def get_ap_info_all(auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents a single wireless access point which has been
+    :return: list of dictionaries where each element of the list represents a single wireless
+    access point which has been
     discovered in the HPE IMC WSM module
 
     :rtype: list
@@ -91,6 +93,7 @@ def get_ap_info_all(auth, url):
                 return json.loads(r.text)['apBasicInfo']
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_ap_info_all: An Error has occured"
+
 
 def get_ap_info(ipaddress, auth, url):
     """

@@ -45,9 +45,6 @@ def create_operator(operator, auth, url, headers=HEADERS):
 
     :rtype:
 
-
-    >>> import json
-
     >>> from pyhpeimc.auth import *
 
     >>> from pyhpeimc.plat.operator import *
