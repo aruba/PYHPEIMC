@@ -5,21 +5,16 @@
 """
 This module contains functions for working with the Virtual Resource Manager
 capabilities of the HPE IMC NMS platform using the RESTful API
-
 """
 
 
-
 # This section imports required libraries
-#import json
-#import requests
+
 from pyhpeimc.plat.device import *
 
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
-
-
+           'application/json', 'Accept-encoding': 'application/json'}
 
 
 def get_vm_host_info(hostip, auth, url):
@@ -69,8 +64,8 @@ def get_vm_host_info(hostip, auth, url):
     >>> assert 'vendor' in host_info
 
     """
-    hostId = get_dev_details(hostip, auth, url)['id']
-    get_vm_host_info_url = "/imcrs/vrm/host?hostId=" + str(hostId)
+    hostid = get_dev_details(hostip, auth, url)['id']
+    get_vm_host_info_url = "/imcrs/vrm/host?hostId=" + str(hostid)
     f_url = url + get_vm_host_info_url
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
@@ -84,6 +79,7 @@ def get_vm_host_info(hostip, auth, url):
             return "Device is not a supported Hypervisor"
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_vm_host_info: An Error has occured"
+
 
 def get_vm_host_vnic(hostip, auth, url):
     """
@@ -125,8 +121,8 @@ def get_vm_host_vnic(hostip, auth, url):
 
 
     """
-    hostId = get_dev_details(hostip, auth, url)['id']
-    get_vm_host_vnic_url = "/imcrs/vrm/host/vnic?hostDevId=" + str(hostId)
+    hostid = get_dev_details(hostip, auth, url)['id']
+    get_vm_host_vnic_url = "/imcrs/vrm/host/vnic?hostDevId=" + str(hostid)
     f_url = url + get_vm_host_vnic_url
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
@@ -140,6 +136,7 @@ def get_vm_host_vnic(hostip, auth, url):
             return "Device is not a supported Hypervisor"
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + " get_vm_host_info: An Error has occured"
+
 
 def get_host_vms(hostip, auth, url):
     """
@@ -191,8 +188,8 @@ def get_host_vms(hostip, auth, url):
     >>> assert 'vmTools' in host_vms[0]
 
     """
-    hostId = get_dev_details(hostip, auth, url)['id']
-    get_host_info_url = "/imcrs/vrm/host/vm?hostId=" + str(hostId)
+    hostid = get_dev_details(hostip, auth, url)['id']
+    get_host_info_url = "/imcrs/vrm/host/vm?hostId=" + str(hostid)
     f_url = url + get_host_info_url
     r = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents

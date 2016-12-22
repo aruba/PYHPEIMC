@@ -18,18 +18,18 @@ auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 DoesntExist = '8.8.8.8' #Chose an IP address which you know doesn't exist in your IMC system
 term_access_host = '10.101.0.51'
 
-#Used for pyhpeimc.plat.termaccess to test IP address manager functions. Suggest using
-#IP address range that does not exist on the managed network
+# Used for pyhpeimc.plat.termaccess to test IP address manager functions. Suggest using
+# IP address range that does not exist on the managed network
 term_access_ipam_network_scope = '10.50.0.0/16' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
 term_access_ipam_child_scope = '10.50.0.0/24' #used for pyhpeimc_plat_termaccess IP address Manager functions
 term_access_ipam_host = '10.50.0.5' #Used for pyhpeimc_plat_termaccess IP Address Manager Functions
 
 
-#used for testing VLAN functions to create and destroy vlans during tests
+# used for testing VLAN functions to create and destroy vlans during tests
 vlanid = '500'
 vlan_name = 'Test_Vlan'
 
-#Switches
+# Switches
 CW3_Switch = None
 CW5_Switch = '10.101.0.221'
 CW7_Switch = None
@@ -39,31 +39,31 @@ Arista_Switch = None
 ArubaOS_Switch = None
 
 
-#Routers
+# Routers
 Cisco_Router = None
 CW5_Router = None
 Juniper_Router = None
 
 
-#Servers
+# Servers
 Windows_Server = None
 Linux_Server = None
 
-#Wireless
+# Wireless
 CW5_Wireless = None
 Aruba = None
 MSM = None
 CiscoWireless = None
 
 
-#Hypervisor
+# Hypervisor
 ESX= None
 HyperV = None
 
 
-#Set to True if you wish to test the set_interface_up and set_interface_down functions in the test_pyhpeimc_plat_device test file.
-#Warning - Setting these values to True may disrupt access to your network devices and require manual intervention to repair if
-#connectivity to the IMC system is lost.
+# Set to True if you wish to test the set_interface_up and set_interface_down functions in the test_pyhpeimc_plat_device test file.
+# Warning - Setting these values to True may disrupt access to your network devices and require manual intervention to repair if
+# connectivity to the IMC system is lost.
 test_interface_up = False
 
 test_interface_down = False
