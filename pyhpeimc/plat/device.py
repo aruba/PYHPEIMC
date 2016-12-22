@@ -298,7 +298,7 @@ def get_dev_interface(auth, url, devid=None, devip=None):
 
     :param devid: optional devid as the input
 
-    :param devip: optional devip as input
+    :param devip: str of ipv4 address of the target device
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
