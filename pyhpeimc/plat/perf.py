@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
@@ -36,7 +37,12 @@ def add_perf_task(task, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> new_task = {'indexDesc': '1.3.6.1.4.1.9.9.13.1.3.1.3','indexType': '[index1[0]:ciscoEnvMonTemperatureStatusValue:1:0]','itemFunction': '1.3.6.1.4.1.9.9.13.1.3.1.3','itemName': 'Cisco_Temperature','selectDefaultUnit': '400','unit': 'Celsius'}
+    >>> new_task = {'indexDesc': '1.3.6.1.4.1.9.9.13.1.3.1.3',
+                    'indexType': '[index1[0]:ciscoEnvMonTemperatureStatusValue:1:0]',
+                    'itemFunction': '1.3.6.1.4.1.9.9.13.1.3.1.3',
+                    'itemName': 'Cisco_Temperature',
+                    'selectDefaultUnit': '400',
+                    'unit': 'Celsius'}
 
     >>> new_perf_task = add_perf_task(new_task, auth.creds, auth.url)
     """

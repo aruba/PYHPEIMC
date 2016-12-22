@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
@@ -165,7 +166,8 @@ def get_system_series(auth, url):
 
 
     """
-    get_system_series_url = '/imcrs/plat/res/series?managedOnly=false&start=0&size=10000&orderBy=id&desc=false&total=false'
+    get_system_series_url = ('/imcrs/plat/res/series?managedOnly=false'
+                             '&start=0&size=10000&orderBy=id&desc=false&total=false')
     f_url = url + get_system_series_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -215,7 +217,8 @@ def get_all_devs(auth, url, network_address=None):
         get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
                            str(network_address) + "&start=0&size=1000&orderBy=id&desc=false&total=false"
     else:
-        get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&start=0&size=1000&orderBy=id&desc=false&total=false&exact=false"
+        get_all_devs_url = ("/imcrs/plat/res/device?resPrivilegeFilter=false&start=0"
+                            "&size=1000&orderBy=id&desc=false&total=false&exact=false")
 
     f_url = url + get_all_devs_url
     # creates the URL using the payload variable as the contents

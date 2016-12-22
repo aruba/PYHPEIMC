@@ -85,15 +85,17 @@ def get_real_time_locate(ipAddress, auth, url):
             return "Error:\n" + str(e) + " get_real_time_locate: An Error has occured"
 
 
-def get_ip_mac_arp_list(auth,url, devId = None, devip = None):
+def get_ip_mac_arp_list(auth,url, devid = None, devip = None):
     """
     function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list from the target device.
-
-    :param devId: int or str value of the target device.
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param devid: int or str value of the target device.
+
+    :param devip: str of ipv4 address of the target device
 
     :return: list of dictionaries containing the IP/MAC/ARP list of the target device.
 
@@ -105,7 +107,7 @@ def get_ip_mac_arp_list(auth,url, devId = None, devip = None):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> ip_mac_list = get_ip_mac_arp_list( auth.creds, auth.url, devId='10')
+    >>> ip_mac_list = get_ip_mac_arp_list( auth.creds, auth.url, devid='10')
 
     >>> ip_mac_list = get_ip_mac_arp_list( auth.creds, auth.url, devip='10.101.0.221')
 
@@ -117,12 +119,12 @@ def get_ip_mac_arp_list(auth,url, devId = None, devip = None):
     if devip is not None:
         dev_details = get_dev_details(devip, auth,url)
         if type(dev_details) is not str:
-            devId = get_dev_details(devip, auth,url)['id']
+            devid = get_dev_details(devip, auth,url)['id']
         elif type(dev_details) is str:
             print ("Device not found")
             return 403
 
-    ip_mac_arp_list_url = "/imcrs/res/access/ipMacArp/" + str(devId)
+    ip_mac_arp_list_url = "/imcrs/res/access/ipMacArp/" + str(devid)
     f_url = url + ip_mac_arp_list_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
@@ -210,7 +212,7 @@ def get_ip_scope_detail( auth, url, scopeId= None, network_address = None ):
     >>> assert 'startIp' in ip_scope_detail
 
     """
-    if network_address != None:
+    if network_address is not None:
         scopeId = get_scope_id(network_address, auth, url)
     get_ip_scope_url = "/imcrs/res/access/assignedIpScope/"+str(scopeId)
     f_url = url + get_ip_scope_url
@@ -266,7 +268,7 @@ def add_ip_scope(name, description, auth, url, startIp = None , endIp = None, ne
 
 
     """
-    if network_address != None:
+    if network_address is not None:
         nw_address = ipaddress.IPv4Network(network_address)
         startIp = nw_address[1]
         endIp = nw_address[-2]
@@ -317,9 +319,9 @@ def add_child_ip_scope(name, description, auth, url,startIp=None, endIp=None, pa
     >>> add_child_ip_scope('10.50.0.1', '10.50.0.126', 'cyoung', 'test sub scope', '175', auth.creds, auth.url)
 
     """
-    if parent_network_address != None:
+    if parent_network_address is not None:
         parent_scopeid = get_scope_id(parent_network_address, auth, url)
-    if network_address != None:
+    if network_address is not None:
         nw_address = ipaddress.IPv4Network(network_address)
         startIp = nw_address[1]
         endIp = nw_address[-2]
@@ -400,7 +402,7 @@ def add_scope_ip(ipaddress, name, description, auth, url, scopeid=None, network_
     >>> new_host = add_scope_ip('10.50.0.5', 'cyoung', 'New Test Host','175', auth.creds, auth.url)
 
     """
-    if network_address != None:
+    if network_address is not None:
         scopeid = get_scope_id(network_address, auth, url)
         if scopeid == "Scope Doesn't Exist":
             return scopeid
@@ -505,7 +507,7 @@ def get_ip_scope_hosts( auth, url, scopeId=None, network_address=None):
     >>> assert 'id' in ip_scope_hosts[0]
 
     """
-    if network_address != None:
+    if network_address is not None:
         scopeId = get_scope_id(network_address, auth, url)
         if scopeId == "Scope Doesn't Exist":
             return scopeId

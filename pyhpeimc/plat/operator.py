@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
@@ -53,9 +54,14 @@ def create_operator(operator, auth, url, headers=HEADERS):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> operator = '''{ "fullName" : "test administrator", "sessionTimeout" : "30","password" :  "password","operatorGroupId" : "1","name" : "testadmin","desc" : "test admin account","defaultAcl" : "","authType"  : "0"}'''
-
-    >>> operator = json.loads(operator)
+    >>> operator = { "fullName" : "test administrator",
+                     "sessionTimeout" : "30",
+                     "password" :  "password",
+                     "operatorGroupId" : "1",
+                     "name" : "testadmin",
+                     "desc" : "test admin account",
+                     "defaultAcl" : "",
+                     "authType"  : "0"}
 
     >>> delete_if_exists = delete_plat_operator('testadmin', auth.creds, auth.url)
 

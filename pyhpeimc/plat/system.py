@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
@@ -14,9 +15,7 @@ import requests
 
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
-
-#auth = None
+           'application/json', 'Accept-encoding': 'application/json'}
 
 
 """
@@ -163,7 +162,8 @@ def get_system_series(auth, url):
 
 
     """
-    get_system_series_url = '/imcrs/plat/res/series?managedOnly=false&start=0&size=10000&orderBy=id&desc=false&total=false'
+    get_system_series_url = ('/imcrs/plat/res/series?managedOnly=false&start='
+                             '0&size=10000&orderBy=id&desc=false&total=false')
     f_url = url + get_system_series_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
