@@ -4,19 +4,17 @@ This module is used for testing the functions within the pyhpeimc.plat.vrm modul
 
 """
 
-
 from unittest import TestCase
 from nose.plugins.skip import SkipTest
 from pyhpeimc.tests.test_machine import *
 from pyhpeimc.plat.vrm import *
 
 
+# Test get_vm_host_info for Multiple Vendor Devices
 
-#####Test get_vm_host_info for Multiple Vendor Devices
 
-
-#ESX
-class Test_Get_dev_vlans_ESX(TestCase):
+# ESX
+class TestGetDevVlanESX(TestCase):
     def test_get_dev_vlans_type(self):
         if ESX is None:
             raise SkipTest
@@ -40,15 +38,15 @@ class Test_Get_dev_vlans_ESX(TestCase):
         self.assertIn('diskSize', host)
 
 
-#HyperV
-class Test_Get_dev_vlans_HyperV(TestCase):
+# HyperV
+class TestGetDevVLANsHyperV(TestCase):
     def test_get_dev_vlans_type(self):
         if HyperV is None:
             raise SkipTest
         host = get_vm_host_info(HyperV, auth.creds, auth.url)
         self.assertIs(type(host), dict)
 
-    def test_get_dev_vlans_type(self):
+    def test_get_dev_vlans_content(self):
         if HyperV is None:
             raise SkipTest
         host = get_vm_host_info(HyperV, auth.creds, auth.url)
@@ -65,18 +63,18 @@ class Test_Get_dev_vlans_HyperV(TestCase):
         self.assertIn('diskSize', host)
 
 
-#####Test get_vm_host_vnic for Multiple Vendor Devices
+# Test get_vm_host_vnic for Multiple Vendor Devices
 
 
-#ESX
-class Test_Get_vm_host_vnicESX(TestCase):
+# ESX
+class TestGetVMHostVnicESX(TestCase):
     def test_get_vm_host_vnic_type(self):
         if ESX is None:
             raise SkipTest
         host = get_vm_host_vnic(ESX, auth.creds, auth.url)
-        self.assertIs(type(host), dict)
+        self.assertIs(type(host), list)
 
-    def test_get_vm_host_vnic_type(self):
+    def test_get_vm_host_vnic_content(self):
         if ESX is None:
             raise SkipTest
         host = get_vm_host_vnic(ESX, auth.creds, auth.url)
@@ -89,15 +87,15 @@ class Test_Get_vm_host_vnicESX(TestCase):
         self.assertIn('nicName', host[0])
 
 
-#HyperV
-class Test_Get_vm_host_vnicHyperV(TestCase):
+# HyperV
+class TestGetVMHostVnicHyperV(TestCase):
     def test_get_vm_host_vnic_type(self):
         if HyperV is None:
             raise SkipTest
         host = get_vm_host_vnic(HyperV, auth.creds, auth.url)
         self.assertIs(type(host), dict)
 
-    def test_get_vm_host_vnic_type(self):
+    def test_get_vm_host_vnic_content(self):
         if HyperV is None:
             raise SkipTest
         host = get_vm_host_vnic(HyperV, auth.creds, auth.url)
@@ -110,11 +108,11 @@ class Test_Get_vm_host_vnicHyperV(TestCase):
         self.assertIn('nicName', host[0])
 
 
-#####Test get_host_vms for Multiple Vendor Devices
+# Test get_host_vms for Multiple Vendor Devices
 
 # TODO Removed len test need to investigate
-#ESX
-class Test_Get_host_vmsESX(TestCase):
+# ESX
+class TestGetHostVMsESX(TestCase):
     def test_get_vm_host_vnic_type(self):
         if ESX is None:
             raise SkipTest
@@ -125,7 +123,7 @@ class Test_Get_host_vmsESX(TestCase):
         if ESX is None:
             raise SkipTest
         vms = get_host_vms(ESX, auth.creds, auth.url)
-        #self.assertIs(len(vms), (16 or 17))
+        # self.assertIs(len(vms), (16 or 17))
         self.assertIn('vmIP', vms[0])
         self.assertIn('memory', vms[0])
         self.assertIn('osDesc', vms[0])
@@ -140,8 +138,8 @@ class Test_Get_host_vmsESX(TestCase):
         self.assertIn('coresPerCpu', vms[0])
 
 
-#HyperV
-class Test_Get_host_vmsHyperV(TestCase):
+# HyperV
+class TestGetHostVMsHyperV(TestCase):
     def test_get_vm_host_vnic_type(self):
         if HyperV is None:
             raise SkipTest
