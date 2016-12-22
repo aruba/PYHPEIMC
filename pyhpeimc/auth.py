@@ -65,8 +65,8 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
                 set_imc_creds()
             return r.status_code
             # checks for reqeusts exceptions
-        except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + '\n\nThe IMC server address is invalid. Please try again'
+        except requests.exceptions.RequestException as error:
+            return "Error:\n" + str(error) + '\n\nThe IMC server address is invalid. Please try again'
 
 
 def check_imc_creds(auth, url):
@@ -83,18 +83,14 @@ def check_imc_creds(auth, url):
     f_url = url + test_url
     try:
         r = requests.get(f_url, auth=auth, headers=headers, verify=False)
-        if r.status_code == 200:
-            return True
-        else:
-            return False
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " test_imc_creds: An Error has occured"
+        return bool(r.status_code == 200)
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " test_imc_creds: An Error has occured"
 
 
 def set_imc_creds(h_url=None, imc_server=None, imc_port=None, imc_user=None, imc_pw=None):
     """ This function prompts user for IMC server information and credentuials and stores
     values in url and auth global variables"""
-    global auth, url
     if h_url is None:
         imc_protocol = input("What protocol would you like to use to connect to the "
                              "IMC server: \n Press 1 for HTTP: \n Press 2 for HTTPS:")
@@ -115,8 +111,8 @@ def set_imc_creds(h_url=None, imc_server=None, imc_port=None, imc_user=None, imc
         print(r.status_code)
         return auth
     # checks for reqeusts exceptions
-    except requests.exceptions.RequestException as e:
-        print("Error:\n" + str(e))
+    except requests.exceptions.RequestException as error:
+        print("Error:\n" + str(error))
         print("\n\nThe IMC server address is invalid. Please try again\n\n")
         set_imc_creds()
     if r.status_code != 200:  # checks for valid IMC credentials
@@ -137,12 +133,12 @@ def print_to_file(object_name):
     :param:  Object: object of type str, list, or dict
     :return: No return. Just prints out to file handler and save to current working directory as pyoutput.txt
     """
-    with open('pyoutput.txt', 'w') as fh:
-        x = None
+    with open('pyoutput.txt', 'w') as filehandler:
+        output = None
         if type(object_name) is list:
-            x = json.dumps(object, indent=4)
+            output = json.dumps(object, indent=4)
         if type(object_name) is dict:
-            x = json.dumps(object, indent=4)
+            output = json.dumps(object, indent=4)
         if type(object_name) is str:
-            x = object_name
-        fh.write(x)
+            output = object_name
+        filehandler.write(output)
