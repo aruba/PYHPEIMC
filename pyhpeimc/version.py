@@ -20,4 +20,4 @@ def version():
     >>> version()
     1.0.36
     """
-    print ('1.0.36')
+    print('1.0.36')
