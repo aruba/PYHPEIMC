@@ -10,6 +10,7 @@ using the RESTful API
 
 # This section imports required libraries
 import json
+
 import requests
 from requests.auth import HTTPDigestAuth
 

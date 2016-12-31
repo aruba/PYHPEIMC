@@ -10,6 +10,7 @@ of the HPE IMC NMS platform using the RESTful API
 
 # This section imports required libraries
 import json
+
 import requests
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
@@ -334,8 +335,11 @@ def get_dev_interface(auth, url, devid=None, devip=None):
     # r.status_code
     try:
         if r.status_code == 200:
-            int_list = (json.loads(r.text))['interface']
-            return int_list
+            int_list = json.loads(r.text)
+            if 'interface' in int_list:
+                return int_list['interface']
+            else:
+                return []
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_interface: An Error has occured"
 
@@ -479,7 +483,7 @@ def get_dev_mac_learn(auth, url, devid=None, devip=None):
     try:
         r = requests.get(f_url, auth=auth, headers=HEADERS)
         if r.status_code == 200:
-            if len(r.text) < 1:
+            if len(json.loads(r.text)) < 1:
                 mac_learn_query = []
                 return mac_learn_query
             else:

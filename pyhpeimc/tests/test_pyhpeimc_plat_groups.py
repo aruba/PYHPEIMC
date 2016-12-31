@@ -4,10 +4,10 @@ This module is used for testing the functions within the pyhpeimc.plat.groups mo
 
 """
 
-
 from unittest import TestCase
-from pyhpeimc.tests.test_machine import *
+
 from pyhpeimc.plat.groups import *
+from pyhpeimc.tests.test_machine import *
 
 
 #TODO Remarked out failing test

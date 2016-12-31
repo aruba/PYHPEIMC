@@ -10,6 +10,7 @@ capabilities of the HPE IMC WSM Module using the RESTful API
 
 # This section imports required libraries
 import json
+
 import requests
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
@@ -68,12 +69,12 @@ def get_ac_info_all(auth, url):
     """
     get_ac_info_all_url = "/imcrs/wlan/acInfo/queryAcBasicInfo"
     f_url = url + get_ac_info_all_url
-    r = requests.get(f_url, auth=auth,
+    response = requests.get(f_url, auth=auth,
                      headers=HEADERS)  # creates the URL using the payload variable as the contents
     # print(r.status_code)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)['acBasicInfo']
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)['acBasicInfo']
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_ac_info_all: An Error has occured"

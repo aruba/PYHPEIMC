@@ -10,10 +10,10 @@ rely on various other functions from within this library.
 """
 
 # This section imports required libraries
-from pyhpeimc.plat.vlanm import *
-from pyhpeimc.plat.termaccess import *
-from pyhpeimc.plat.netassets import *
 from pyhpeimc.plat.alarms import *
+from pyhpeimc.plat.netassets import *
+from pyhpeimc.plat.termaccess import *
+from pyhpeimc.plat.vlanm import *
 
 headers = {'Accept': 'application/json', 'Content-Type':
            'application/json', 'Accept-encoding': 'application/json'}

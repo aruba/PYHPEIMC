@@ -25,31 +25,31 @@ vlanid = '500'
 vlan_name = 'Test_Vlan'
 
 # Switches
-CW3_Switch = None
+CW3_Switch = '10.101.0.227'
 CW5_Switch = '10.101.0.221'
-CW7_Switch = None
+CW7_Switch = '10.20.10.10'
 Cisco_Switch = None
 Juniper_Switch = None
-Arista_Switch = None
+Arista_Switch = '10.101.0.249'
 ArubaOS_Switch = None
 
 # Routers
-Cisco_Router = None
+Cisco_Router = '10.101.0.1'
 CW5_Router = None
 Juniper_Router = None
 
 # Servers
-Windows_Server = None
-Linux_Server = None
+Windows_Server = '10.101.0.20'
+Linux_Server = '10.101.0.51'
 
 # Wireless
-CW5_Wireless = None
+CW5_Wireless = '10.101.0.231'
 Aruba = None
 MSM = None
 CiscoWireless = None
 
 # Hypervisor
-ESX = None
+ESX = '10.101.0.6'
 HyperV = None
 
 # Set to True if you wish to test the set_interface_up and set_interface_down functions in

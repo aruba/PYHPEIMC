@@ -4,11 +4,11 @@ This module is used for testing the functions within the pyhpeimc.wsm.apinfo mod
 
 """
 
-
+import ipaddress
 from unittest import TestCase
+
 from pyhpeimc.tests.test_machine import *
 from pyhpeimc.wsm.apinfo import *
-import ipaddress
 
 
 #test for get_ac_info_all

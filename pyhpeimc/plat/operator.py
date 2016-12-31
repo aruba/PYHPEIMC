@@ -10,6 +10,7 @@ capabilities of the HPE IMC NMS platform using the RESTful API
 
 # This section imports required libraries
 import json
+
 import requests
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
@@ -111,9 +112,10 @@ def set_operator_password(operator, password, auth, url):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> operator = '''{ "fullName" : "test administrator", "sessionTimeout" : "30","password" :  "password","operatorGroupId" : "1","name" : "testadmin","desc" : "test admin account","defaultAcl" : "","authType"  : "0"}'''
-
-    >>> operator = json.loads(operator)
+    >>> operator = { "fullName" : "test administrator", "sessionTimeout" : "30",
+                     "password" :  "password","operatorGroupId" : "1",
+                     "name" : "testadmin","desc" : "test admin account",
+                     "defaultAcl" : "","authType"  : "0"}
 
     >>> new_operator = create_operator(operator, auth.creds, auth.url)
 

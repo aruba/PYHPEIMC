@@ -4,10 +4,11 @@ This module is used for testing the functions within the pyhpeimc.plat.perf modu
 
 """
 
-
 from unittest import TestCase
-from pyhpeimc.tests.test_machine import *
+
 from pyhpeimc.plat.perf import *
+from pyhpeimc.tests.test_machine import *
+
 
 class TestAdd_perf_task(TestCase):
     def test_add_perf_task(self):

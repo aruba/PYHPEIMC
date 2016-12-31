@@ -5,9 +5,11 @@ This module is used for testing the functions within the pyhpeimc.plat.vrm modul
 """
 
 from unittest import TestCase
+
 from nose.plugins.skip import SkipTest
-from pyhpeimc.tests.test_machine import *
+
 from pyhpeimc.plat.vrm import *
+from pyhpeimc.tests.test_machine import *
 
 
 # Test get_vm_host_info for Multiple Vendor Devices
