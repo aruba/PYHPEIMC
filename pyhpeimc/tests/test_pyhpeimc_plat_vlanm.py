@@ -774,6 +774,8 @@ class Test_Create_dev_vlan_Juniper_Switch(TestCase):
 
 
 # Arista_Switch
+# TODO Remarked Test until Arista VLANM is supported
+'''
 class Test_Create_dev_vlan_Arista_Switch(TestCase):
     def test_create_dev_vlan(self):
         if Arista_Switch is None:
@@ -781,6 +783,7 @@ class Test_Create_dev_vlan_Arista_Switch(TestCase):
         set_vlan = create_dev_vlan(vlanid, vlan_name, auth.creds, auth.url, devip=Arista_Switch)
         self.assertEqual(set_vlan, 201)
         delete_dev_vlans(vlanid, auth.creds, auth.url, devip=Arista_Switch)
+'''
 
 
 # ArubaOS_Switch (Formerly Provision)
@@ -944,6 +947,8 @@ class Test_Delete_dev_vlans_Juniper_Switch(TestCase):
 
 
 # Arista_Switch
+# TODO Remarked test until Arista VLANM is supported
+'''
 class Test_Delete_dev_vlans_Arista_Switch(TestCase):
     def test_delete_dev_vlans(self):
         if Arista_Switch is None:
@@ -957,7 +962,7 @@ class Test_Delete_dev_vlans_Arista_Switch(TestCase):
             raise SkipTest
         del_vlan = delete_dev_vlans(vlanid, auth.creds, auth.url, devip=Arista_Switch)
         self.assertEqual(del_vlan, 409)
-
+'''
 
 # ArubaOS_Switch (Formerly Provision)
 class Test_Delete_dev_vlans_ArubaOS_Switch(TestCase):
@@ -1056,6 +1061,8 @@ class Test_Delete_dev_vlans_HyperV(TestCase):
 # Section for get_device_hybrid_interfaces function for multi-vendor testing
 
 # CW3_Switch
+# TODO Remarked test until cW3 interface is chosen
+'''
 class Test_Get_device_hybrid_interfaces_CW3_Switch(TestCase):
     def test_get_device_hybrid_interfaces_type(self):
         if CW3_Switch is None:
@@ -1076,6 +1083,7 @@ class Test_Get_device_hybrid_interfaces_CW3_Switch(TestCase):
         self.assertIn('ifIndex', dev_hybrid[0])
         self.assertIn('pvid', dev_hybrid[0])
         delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+'''
 
 
 # CW5_Switch
@@ -1129,6 +1137,8 @@ class Test_Get_device_hybrid_interfaces_CW7_Switch(TestCase):
 # Testing add_hybrid_interface for Comware Switches
 
 # CW3_Switch
+# TODO Investigate which interace to use for CW3 switch remove test until then
+'''
 class Test_Add_hybrid_interface_CW3_Switch(TestCase):
     def test_add_hybrid_interface(self):
         if CW3_Switch is None:
@@ -1146,6 +1156,7 @@ class Test_Add_hybrid_interface_CW3_Switch(TestCase):
         add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW3_Switch)
         self.assertEqual(add_hybrid, 409)
         delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+'''
 
 
 # CW5_Switch
@@ -1191,6 +1202,8 @@ class Test_Add_hybrid_interface_CW7_Switch(TestCase):
 # Testing modify_hybrid_interface for Comware Switches
 
 # CW3_Switch
+# TODO Remarked test until cw3 interface selected
+'''
 class Test_Modify_hybrid_interface_CW3_Switch(TestCase):
     def test_modify_hybrid_interface(self):
         if CW3_Switch is None:
@@ -1200,6 +1213,7 @@ class Test_Modify_hybrid_interface_CW3_Switch(TestCase):
         modify_hybrid = modify_hybrid_interface('9', '1', '10,15', '1', auth.creds, auth.url, devip=CW3_Switch)
         self.assertEqual(modify_hybrid, 204)
         delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
+'''
 
 
 # CW5_Switch
@@ -1221,7 +1235,7 @@ class Test_Modify_hybrid_interface_CW7_Switch(TestCase):
             raise SkipTest
         delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
         add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip=CW7_Switch)
-        modify_hybrid = modify_hybrid_interface('9', '1', '10,15', '1', auth.creds, auth.url, devip=CW7_Switch)
+        modify_hybrid = modify_hybrid_interface('9', '1', '10,16', '1', auth.creds, auth.url, devip=CW7_Switch)
         self.assertEqual(modify_hybrid, 204)
         delete_hybrid_interface('9', auth.creds, auth.url, devip=CW7_Switch)
 
@@ -1229,6 +1243,8 @@ class Test_Modify_hybrid_interface_CW7_Switch(TestCase):
 # Testing delete_hybrid_interface for Comware Switches
 
 # CW3_Switch
+# TODO Remarked test until CW3 interface is chosen
+'''
 class Test_Delete_hybrid_interface_CW3_Switch(TestCase):
     def test_delete_hybrid_interface(self):
         if CW3_Switch is None:
@@ -1244,6 +1260,7 @@ class Test_Delete_hybrid_interface_CW3_Switch(TestCase):
         delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
         delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip=CW3_Switch)
         self.assertEqual(delete_hybrid, 409)
+'''
 
 
 # CW5_Switch
@@ -1286,6 +1303,8 @@ class Test_Delete_hybrid_interface_CW7_Switch(TestCase):
 # Test set_access_interface_pvid for Multi-Vendor Devices
 
 # CW3_Switch
+# TODO REmarked out test until cw3 interface selected
+'''
 class Test_Set_access_interface_pvid_CW3_Switch(TestCase):
     def test_set_access_interface_pvid(self):
         if CW3_Switch is None:
@@ -1293,6 +1312,7 @@ class Test_Set_access_interface_pvid_CW3_Switch(TestCase):
         change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=CW3_Switch)
         self.assertEqual(change_pvid, 204)
         set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=CW3_Switch)
+'''
 
 
 # CW5_Switch
@@ -1336,6 +1356,8 @@ class Test_Set_access_interface_pvid_Juniper_Switch(TestCase):
 
 
 # Arista_Switch
+# TODO Remarked out test until VLANM supports Arista
+'''
 class Test_Set_access_interface_pvid_Arista_Switch(TestCase):
     def test_set_access_interface_pvid(self):
         if Arista_Switch is None:
@@ -1343,6 +1365,7 @@ class Test_Set_access_interface_pvid_Arista_Switch(TestCase):
         change_pvid = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip=Arista_Switch)
         self.assertEqual(change_pvid, 204)
         set_access_interface_pvid('9', '1', auth.creds, auth.url, devip=Arista_Switch)
+'''
 
 
 # ArubaOS_Switch (Formerly Provision)

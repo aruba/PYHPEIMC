@@ -119,7 +119,11 @@ def get_trunk_interfaces(auth, url, devid=None, devip=None):
         if r.status_code == 200:
             dev_trunk_interfaces = (json.loads(r.text))
             if len(dev_trunk_interfaces) == 2:
-                return dev_trunk_interfaces['trunkIf']
+                if type(dev_trunk_interfaces['trunkIf']) is list:
+                    return dev_trunk_interfaces['trunkIf']
+                elif type(dev_trunk_interfaces['trunkIf']) is dict:
+                    return [dev_trunk_interfaces['trunkIf']]
+
             else:
                 dev_trunk_interfaces['trunkIf'] = ["No trunk inteface"]
                 return dev_trunk_interfaces['trunkIf']
