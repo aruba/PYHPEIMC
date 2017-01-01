@@ -72,20 +72,16 @@ def get_client_info_all(auth, url):
 
     >>> assert 'userName' in all_client_info[0]
 
-
-
     """
     get_client_info_all_url = "/imcrs/wlan/clientInfo/queryAllClientBasicInfo"
     f_url = url + get_client_info_all_url
-    response = requests.get(f_url, auth=auth,
-                            headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
             if len(response.text) > 0:
                 return json.loads(response.text)['clientBasicInfo']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_client_info_all: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_client_info_all: An Error has occured"
 
 
 def get_client_online_history_all(auth, url):
@@ -157,12 +153,10 @@ def get_client_online_history_all(auth, url):
     """
     get_client_online_history_all_url = "/imcrs/wlan/clientInfo/queryClientOnlineHistoryInfo"
     f_url = url + get_client_online_history_all_url
-    response = requests.get(f_url, auth=auth,
-                            headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
             if len(response.text) > 0:
                 return json.loads(response.text)['clientOnlineHistoryInfo']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_client_online_history_all: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_client_online_history_all: An Error has occured"

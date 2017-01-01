@@ -88,8 +88,8 @@ def get_ap_info_all(auth, url):
         if response.status_code == 200:
             if len(response.text) > 0:
                 return json.loads(response.text)['apBasicInfo']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_ap_info_all: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ap_info_all: An Error has occured"
 
 
 def get_ap_info(ipaddress, auth, url):
@@ -166,5 +166,5 @@ def get_ap_info(ipaddress, auth, url):
         if r.status_code == 200:
             if len(r.text) > 0:
                 return json.loads(r.text)['apBasicInfo']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_ap_info_all: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ap_info_all: An Error has occured"

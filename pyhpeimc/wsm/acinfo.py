@@ -25,8 +25,8 @@ def get_ac_info_all(auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents a single wireless controller which has been
-    discovered in the HPE IMC WSM module
+    :return: list of dictionaries where each element of the list represents a single wireless
+    controller which has been discovered in the HPE IMC WSM module
 
     :rtype: list
 
@@ -74,5 +74,5 @@ def get_ac_info_all(auth, url):
         if response.status_code == 200:
             if len(response.text) > 0:
                 return json.loads(response.text)['acBasicInfo']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_ac_info_all: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ac_info_all: An Error has occured"
