@@ -7,7 +7,7 @@ This module is used for testing the functions within the pyhpeimc.plat.icc modul
 from unittest import TestCase
 
 from pyhpeimc.plat.icc import *
-test_machine import *
+from test_machine import *
 
 
 #TODO remarked out failing test

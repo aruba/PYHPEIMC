@@ -110,17 +110,18 @@ def set_imc_creds(h_url=None, imc_server=None, imc_port=None, imc_user=None, imc
     try:
         r = requests.get(f_url, auth=auth, headers=headers, verify=False)
         print(r.status_code)
-        return auth
+        if r.status_code != 200:  # checks for valid IMC credentials
+            print("Error: \n You're credentials are invalid. Please try again\n\n")
+            set_imc_creds()
+        else:
+            print("You've successfully access the IMC eAPI")
+            return auth
     # checks for reqeusts exceptions
     except requests.exceptions.RequestException as error:
         print("Error:\n" + str(error))
         print("\n\nThe IMC server address is invalid. Please try again\n\n")
         set_imc_creds()
-    if r.status_code != 200:  # checks for valid IMC credentials
-        print("Error: \n You're credentials are invalid. Please try again\n\n")
-        set_imc_creds()
-    else:
-        print("You've successfully access the IMC eAPI")
+
 
 
 """
