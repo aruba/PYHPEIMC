@@ -10,7 +10,6 @@ of the HPE IMC NMS platform using the RESTful API
 
 # This section imports required libraries
 import json
-
 import requests
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':

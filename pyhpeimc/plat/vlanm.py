@@ -34,7 +34,8 @@ def get_dev_vlans(auth, url, devid=None, devip=None):
 
     :param devip: str of ipv4 address of the target device
 
-    :return: list of dictionaries where each element of the list represents one vlan on the target device
+    :return: list of dictionaries where each element of the list represents one vlan on the
+    target device
 
     :rtype: list
 
@@ -81,7 +82,8 @@ def get_trunk_interfaces(auth, url, devid=None, devip=None):
 
     :param devip: str of ipv4 address of the target device
 
-    :return: list of dictionaries where each element of the list represents an interface which has been configured as a
+    :return: list of dictionaries where each element of the list represents an interface which
+    has been configured as a
     VLAN trunk port
 
     :rtype: list
@@ -110,7 +112,8 @@ def get_trunk_interfaces(auth, url, devid=None, devip=None):
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
     # checks to see if the imc credentials are already available
-    get_trunk_interfaces_url = "/imcrs/vlan/trunk?devId=" + str(devid) + "&start=1&size=5000&total=false"
+    get_trunk_interfaces_url = "/imcrs/vlan/trunk?devId=" + str(devid) + \
+                               "&start=1&size=5000&total=false"
     f_url = url + get_trunk_interfaces_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
@@ -143,7 +146,8 @@ def get_device_access_interfaces(auth, url, devid=None, devip=None):
 
     :param devip: str of ipv4 address of the target device
 
-    :return: list of dictionaries where each element of the list represents an interface which has been configured as a
+    :return: list of dictionaries where each element of the list represents an interface which
+    has been configured as a
     VLAN access port
 
     :rtype: list
@@ -167,7 +171,8 @@ def get_device_access_interfaces(auth, url, devid=None, devip=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_access_interface_vlan_url = "/imcrs/vlan/access?devId=" + str(devid) + "&start=1&size=500&total=false"
+    get_access_interface_vlan_url = "/imcrs/vlan/access?devId=" + str(devid) + \
+                                    "&start=1&size=500&total=false"
     f_url = url + get_access_interface_vlan_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -198,7 +203,8 @@ def get_device_hybrid_interfaces(auth, url, devid=None, devip=None):
 
     :param devip: str of ipv4 address of the target device
 
-    :return: list of dictionaries where each element of the list represents an interface which has been configured as a
+    :return: list of dictionaries where each element of the list represents an interface which
+    has been configured as a
     VLAN access port
 
     :rtype: list
@@ -222,7 +228,8 @@ def get_device_hybrid_interfaces(auth, url, devid=None, devip=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + "&start=1&size=500&total=false"
+    get_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + \
+                                    "&start=1&size=500&total=false"
     f_url = url + get_hybrid_interface_vlan_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -242,10 +249,11 @@ def get_device_hybrid_interfaces(auth, url, devid=None, devip=None):
         return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
 
 
-def add_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, devip=None, devid=None):
+def add_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, devip=None,
+                         devid=None):
     """
-    Function takes ifindex, pvid, tagged vlans untagged vlans as input values to add a hybrid port to a HPE Comware
-    based switch. These functions only apply to HPE Comware based devices.
+    Function takes ifindex, pvid, tagged vlans untagged vlans as input values to add a hybrid
+    port to a HPE Comware based switch. These functions only apply to HPE Comware based devices.
     :param ifindex: str ifIndex value of target interface
     :param pvid: str 802.1q value (1-4094) of target VLAN
     :param taggedvlans:  str 802.1q value, seperated by commas, of target tagged VLANs
@@ -259,7 +267,8 @@ def add_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, d
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    add_hybrid_interface_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + "&start=1&size=500&total=false"
+    add_hybrid_interface_url = "/imcrs/vlan/hybrid?devId=" + str(devid) +  \
+                               "&start=1&size=500&total=false"
     f_url = url + add_hybrid_interface_url
     payload = '''{"ifIndex": "''' + ifindex + '''",
         "pvid": "''' + pvid + '''",
@@ -279,10 +288,12 @@ def add_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, d
         return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
 
 
-def modify_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, devip=None, devid=None):
+def modify_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, devip=None,
+                            devid=None):
     """
-        Function takes ifindex, pvid, tagged vlans untagged vlans as input values to modify a hybrid port
-        to a HPE Comware based switch. These functions only apply to HPE Comware based devices.
+        Function takes ifindex, pvid, tagged vlans untagged vlans as input values to modify a
+        hybrid port to a HPE Comware based switch. These functions only apply to HPE Comware
+        based devices.
         :param ifindex: str ifIndex value of target interface
         :param pvid: str 802.1q value (1-4094) of target VLAN
         :param taggedvlans:  str 802.1q value, seperated by commas, of target tagged VLANs
@@ -296,7 +307,8 @@ def modify_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url
         """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    modify_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + "&start=1&size=500&total=false"
+    modify_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + \
+                                       "&start=1&size=500&total=false"
     f_url = url + modify_hybrid_interface_vlan_url
     payload = '''{"ifIndex": "''' + ifindex + '''",
         "pvid": "''' + pvid + '''",
@@ -408,8 +420,8 @@ def set_access_interface_pvid(ifindex, pvid, auth, url, devip=None, devid=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    set_access_interface_pvid_url = "/imcrs/vlan/access?devId=" + devid + "&destVlanId=" + pvid + "&ifIndex=" + str(
-        ifindex)
+    set_access_interface_pvid_url = "/imcrs/vlan/access?devId=" + devid + "&destVlanId=" + pvid \
+                                    + "&ifIndex=" + str(ifindex)
     f_url = url + set_access_interface_pvid_url
     # creates the URL using the payload variable as the contents
     r = requests.put(f_url, auth=auth, headers=HEADERS)
@@ -424,12 +436,14 @@ def set_access_interface_pvid(ifindex, pvid, auth, url, devip=None, devid=None):
 
 def get_access_interface_vlan(ifindex, accessinterfacelist):
     """
-    Function which takes input of str of ifIndex value for target interface and accessinterfacelist ( output of
-    get_device_access_interfaces) to send against IMC REST interface. Function returns
+    Function which takes input of str of ifIndex value for target interface and
+    accessinterfacelist ( output of get_device_access_interfaces) to send against IMC REST
+    interface. Function returns str representing the PVD of the target interface
 
     :param ifindex: str object representing the numeric value of the iFindex for the interface
 
-    :param accessinterfacelist: list object, intended to be the output of the get_device_access_interfaces function
+    :param accessinterfacelist: list object, intended to be the output of the
+    get_device_access_interfaces function
 
     :return: str representing the numeric value of the PVID for the target interface.
 
@@ -493,15 +507,14 @@ def create_dev_vlan(vlanid, vlan_name, auth, url, devid=None, devip=None):
     print(f_url)
     payload = '''{ "vlanId": "''' + str(vlanid) + '''", "vlanName" : "''' + str(vlan_name) + '''"}'''
     print(payload)
-    r = requests.post(f_url, data=payload, auth=auth,
-                      headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
-
         if r.status_code == 201:
             print('Vlan Created')
             return 201
         elif r.status_code == 409:
-            print('''Unable to create VLAN.\nVLAN Already Exists\nDevice does not support VLAN function''')
+            print('''Unable to create VLAN.\nVLAN Already Exists\nDevice does not support  VLAN
+            function''')
             return 409
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " create_dev_vlan: An Error has occured"
@@ -509,8 +522,8 @@ def create_dev_vlan(vlanid, vlan_name, auth, url, devid=None, devip=None):
 
 def delete_dev_vlans(vlanid, auth, url, devid=None, devip=None):
     """
-    function takes devid and vlanid of specific device and 802.1q VLAN tag and issues a RESTFUL call to remove the
-    specified VLAN from the target device.
+    function takes devid and vlanid of specific device and 802.1q VLAN tag and issues a RESTFUL
+    call to remove the specified VLAN from the target device.
     :param vlanid:int or str value of target 802.1q VLAN
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
@@ -537,14 +550,14 @@ def delete_dev_vlans(vlanid, auth, url, devid=None, devip=None):
         devid = get_dev_details(devip, auth, url)['id']
     remove_dev_vlan_url = "/imcrs/vlan/delvlan?devId=" + str(devid) + "&vlanId=" + str(vlanid)
     f_url = url + remove_dev_vlan_url
-    r = requests.delete(f_url, auth=auth,
-                        headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 204:
             print('Vlan deleted')
             return r.status_code
         elif r.status_code == 409:
-            print('Unable to delete VLAN.\nVLAN does not Exist\nDevice does not support VLAN function')
+            print('Unable to delete VLAN.\nVLAN does not Exist\nDevice does not support  VLAN '
+                  'function')
             return r.status_code
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " delete_dev_vlans: An Error has occured"
