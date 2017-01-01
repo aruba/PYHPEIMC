@@ -62,7 +62,7 @@ def get_dev_alarms(auth, url, devid=None, devip=None):
             else:
                 return "Device has no alarms"
     except requests.exceptions.RequestException as error:
-            return "Error:\n" + str(error) + ' get_dev_alarms: An Error has occured'
+        return "Error:\n" + str(error) + ' get_dev_alarms: An Error has occured'
 
 
 def get_realtime_alarm(username, auth, url):
@@ -140,4 +140,4 @@ def get_alarms(username, auth, url):
             alarm_list = (json.loads(response.text))
             return alarm_list['alarm']
     except requests.exceptions.RequestException as error:
-            return "Error:\n" + str(error) + ' get_alarms: An Error has occured'
+        return "Error:\n" + str(error) + ' get_alarms: An Error has occured'

@@ -49,14 +49,12 @@ def add_perf_task(task, auth, url):
     """
     add_perf_task_url = "/imcrs/perf/task"
     f_url = url + add_perf_task_url
-    payload = json.dumps(task)
-    # creates the URL using the payload variable as the contents
-    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
+    payload = json.dumps(task
+    response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
-        return r.status_code
-
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' add_perf_task: An Error has occured'
+        return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' add_perf_task: An Error has occured'
 
 
 def get_perf_task(task_name, auth, url):
@@ -88,17 +86,17 @@ def get_perf_task(task_name, auth, url):
         """
     get_perf_task_url = "/imcrs/perf/task?name=" + task_name + "&orderBy=taskId&desc=false"
     f_url = url + get_perf_task_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            perf_task_info = (json.loads(r.text))
+        if response.status_code == 200:
+            perf_task_info = (json.loads(response.text))
             if 'task' in perf_task_info:
-                perf_task_info = (json.loads(r.text))['task']
+                perf_task_info = (json.loads(response.text))['task']
             else:
                 perf_task_info = "Task Doesn't Exist"
             return perf_task_info
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_perf_task: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_perf_task: An Error has occured'
 
 
 def delete_perf_task(task_name, auth, url):
@@ -124,11 +122,10 @@ def delete_perf_task(task_name, auth, url):
     task_id = task_id['taskId']
     get_perf_task_url = "/imcrs/perf/task/delete/" + str(task_id)
     f_url = url + get_perf_task_url
-    # creates the URL using the payload variable as the contents
-    r = requests.delete(f_url, auth=auth, headers=HEADERS)
+    response = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             print("Perf Task successfully delete")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' delete_perf_task: An Error has occured'
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' delete_perf_task: An Error has occured'
