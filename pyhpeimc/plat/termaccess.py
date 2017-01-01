@@ -121,15 +121,14 @@ def get_ip_mac_arp_list(auth, url, devid=None, devip=None):
         elif type(dev_details) is str:
             print("Device not found")
             return 403
-
     ip_mac_arp_list_url = "/imcrs/res/access/ipMacArp/" + str(devid)
     f_url = url + ip_mac_arp_list_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
     try:
         if r.status_code == 200:
-            macarplist = (json.loads(r.text))
-            if len(macarplist) > 1:
-                return macarplist['ipMacArp']
+            ipmacarplist = (json.loads(r.text))
+            if 'ipMacArp' in ipmacarplist:
+                return ipmacarplist['ipMacArp']
             else:
                 return ['this function is unsupported']
 
