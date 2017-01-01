@@ -10,10 +10,11 @@ of the HPE IMC NMS platform using the RESTful API
 
 # This section imports required libraries
 import json
+
 import requests
 
 HEADERS = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
+    'application/json', 'Accept-encoding': 'application/json'}
 
 """
 This section contains functions which operate at the system level
@@ -49,21 +50,20 @@ def get_system_vendors(auth, url):
 
 
     """
-    get_system_vendors_url =  '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false' \
-                              '&total=false'
+    get_system_vendors_url = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false' \
+                             '&total=false'
     f_url = url + get_system_vendors_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
     try:
-        if r.status_code == 200:
-            system_vendors = (json.loads(r.text))
+        if response.status_code == 200:
+            system_vendors = (json.loads(response.text))
             return system_vendors['deviceVendor']
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
 
 
-# TODO Delete function when version => 1.60
+# TODO remove function when version => 1.60
 def get_system_category(auth, url):
     """Takes string no input to issue RESTUL call to HP IMC\n
 
@@ -89,15 +89,14 @@ def get_system_category(auth, url):
 
 
     """
-    get_system_category_url =  '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false' \
-                               '&total=false'
+    get_system_category_url = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false' \
+                              '&total=false'
     f_url = url + get_system_category_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
     try:
-        if r.status_code == 200:
-            system_category = (json.loads(r.text))
+        if response.status_code == 200:
+            system_category = (json.loads(response.text))
             return system_category['deviceCategory']
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
@@ -128,15 +127,13 @@ def get_system_device_models(auth, url):
       >>> assert 'virtualDeviceName' in device_models[0]
 
     """
-    get_system_device_model_url =  '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc' \
-                                   '=false&total=false'
+    get_system_device_model_url = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc' \
+                                  '=false&total=false'
     f_url = url + get_system_device_model_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_device_model = (json.loads(r.text))
+        if response.status_code == 200:
+            system_device_model = (json.loads(response.text))
             return system_device_model['deviceModel']
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
@@ -170,12 +167,10 @@ def get_system_series(auth, url):
     get_system_series_url = ('/imcrs/plat/res/series?managedOnly=false'
                              '&start=0&size=10000&orderBy=id&desc=false&total=false')
     f_url = url + get_system_series_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_series = (json.loads(r.text))
+        if response.status_code == 200:
+            system_series = (json.loads(response.text))
             return system_series['deviceSeries']
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_series: An Error has occured"
@@ -216,19 +211,17 @@ def get_all_devs(auth, url, network_address=None):
 
     if network_address is not None:
         get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
-                            str(network_address) + \
+                           str(network_address) + \
                            "&start=0&size=1000&orderBy=id&desc=false&total=false"
     else:
         get_all_devs_url = ("/imcrs/plat/res/device?resPrivilegeFilter=false&start=0"
                             "&size=1000&orderBy=id&desc=false&total=false&exact=false")
 
     f_url = url + get_all_devs_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_details = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_details = (json.loads(response.text))
             if len(dev_details) == 0:
                 print("Device not found")
                 return "Device not found"
@@ -270,16 +263,13 @@ def get_dev_details(ip_address, auth, url):
 
 
     """
-
     get_dev_details_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
                           str(ip_address) + "&start=0&size=1000&orderBy=id&desc=false&total=false"
     f_url = url + get_dev_details_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_details = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_details = (json.loads(response.text))
             if len(dev_details) == 0:
                 print("Device not found")
                 return "Device not found"
@@ -332,12 +322,10 @@ def get_dev_interface(auth, url, devid=None, devip=None):
     get_dev_interface_url = "/imcrs/plat/res/device/" + str(devid) + \
                             "/interface?start=0&size=1000&desc=false&total=false"
     f_url = url + get_dev_interface_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            int_list = json.loads(r.text)
+        if response.status_code == 200:
+            int_list = json.loads(response.text)
             if 'interface' in int_list:
                 return int_list['interface']
             else:
@@ -379,19 +367,16 @@ def get_dev_run_config(auth, url, devid=None, devip=None):
     >>> assert type(run_config) is str
 
     """
-    # checks to see if the imc credentials are already available
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
     get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devid) + "/currentRun"
     f_url = url + get_dev_run_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # print (r.status_code)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            run_conf = (json.loads(r.text))['content']
+        if response.status_code == 200:
+            run_conf = (json.loads(response.text))['content']
             return run_conf
-        elif r.status_code == 404:
+        elif response.status_code == 404:
             return "This features is no supported on this device"
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
@@ -485,13 +470,13 @@ def get_dev_mac_learn(auth, url, devid=None, devip=None):
     get_dev_mac_learn_url = '/imcrs/res/access/ipMacLearn/' + str(devid)
     f_url = url + get_dev_mac_learn_url
     try:
-        r = requests.get(f_url, auth=auth, headers=HEADERS)
-        if r.status_code == 200:
-            if len(json.loads(r.text)) < 1:
+        response = requests.get(f_url, auth=auth, headers=HEADERS)
+        if response.status_code == 200:
+            if len(json.loads(response.text)) < 1:
                 mac_learn_query = []
                 return mac_learn_query
             else:
-                mac_learn_query = (json.loads(r.text))['ipMacLearnResult']
+                mac_learn_query = (json.loads(response.text))['ipMacLearnResult']
                 if type(mac_learn_query) is dict:
                     mac_learn_query = [mac_learn_query]
                 return mac_learn_query
@@ -548,12 +533,12 @@ def run_dev_cmd(cmd_list, auth, url, devid=None, devip=None):
 
                    }
                    }'''
-    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
-    if r.status_code == 200:
-        if len(r.text) < 1:
+    response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
+    if response.status_code == 200:
+        if len(response.text) < 1:
             return ''
         else:
-            return json.loads(r.text)
+            return json.loads(response.text)
 
 
 """
@@ -601,12 +586,10 @@ def get_all_interface_details(auth, url, devid=None, devip=None):
     get_all_interface_details_url = "/imcrs/plat/res/device/" + str(
         devid) + "/interface/?start=0&size=1000&desc=false&total=false"
     f_url = url + get_all_interface_details_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_details = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_details = (json.loads(response.text))
             return dev_details['interface']
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_all_interface_details: An Error has occured"
@@ -650,15 +633,13 @@ def get_interface_details(ifindex, auth, url, devid=None, devip=None):
      """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_interface_details_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/"  +          \
+    get_interface_details_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + \
                                 str(ifindex)
     f_url = url + get_interface_details_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_details = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_details = (json.loads(response.text))
             return dev_details
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " get_interface_details: An Error has occured"
@@ -706,14 +687,14 @@ def set_interface_down(ifindex, auth, url, devid=None, devip=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex)  + \
+    set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + \
                        "/down"
     f_url = url + set_int_down_url
     try:
-        r = requests.put(f_url, auth=auth, headers=HEADERS)
-        print(r.status_code)
-        if r.status_code == 204:
-            return r.status_code
+        response = requests.put(f_url, auth=auth, headers=HEADERS)
+        print(response.status_code)
+        if response.status_code == 204:
+            return response.status_code
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " set_inteface_down: An Error has occured"
 
@@ -763,9 +744,9 @@ def set_inteface_up(ifindex, auth, url, devid=None, devip=None):
     set_int_up_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/up"
     f_url = url + set_int_up_url
     try:
-        r = requests.put(f_url, auth=auth, headers=HEADERS)
-        if r.status_code == 204:
-            return r.status_code
+        response = requests.put(f_url, auth=auth, headers=HEADERS)
+        if response.status_code == 204:
+            return response.status_code
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + " set_inteface_up: An Error has occured"
 
