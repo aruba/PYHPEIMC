@@ -17,8 +17,8 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 
 def get_dev_alarms(auth, url, devid=None, devip=None):
     """
-    function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target
-    device.
+    function takes the devId of a specific device and issues a RESTFUL call to get the current
+    alarms for the target device.
 
     :param devid: int or str value of the target device
 
@@ -72,8 +72,8 @@ def get_realtime_alarm(username, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return:list of dictionaries where each element of the list represents a single alarm as pulled from the the current
-     list of realtime alarms in the HPE IMC Platform
+    :return:list of dictionaries where each element of the list represents a single alarm as
+    pulled  from the the current list of realtime alarms in the HPE IMC Platform
 
     :rtype: list
 
@@ -110,8 +110,8 @@ def get_alarms(username, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return:list of dictionaries where each element of the list represents a single alarm as pulled from the the current
-     list of browse alarms in the HPE IMC Platform
+    :return:list of dictionaries where each element of the list represents a single alarm as
+    pulled  from the the current list of browse alarms in the HPE IMC Platform
 
     :rtype: list
 

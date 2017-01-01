@@ -23,9 +23,10 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 
 def get_real_time_locate(host_ipaddress, auth, url):
     """
-    function takes the ipAddress of a specific host and issues a RESTFUL call to get the device and interface that the
-    target host is currently connected to. Note: Although intended to return a single location, Multiple locations may
-    be returned for a single host due to a partially discovered network or misconfigured environment.
+    function takes the ipAddress of a specific host and issues a RESTFUL call to get the device and
+    interface that the target host is currently connected to. Note: Although intended to return a
+    single location, Multiple locations may be returned for a single host due to a partially
+    discovered network or misconfigured environment.
 
     :param host_ipaddress: str value valid IPv4 IP address
 
@@ -33,7 +34,8 @@ def get_real_time_locate(host_ipaddress, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents the location of the target host
+    :return: list of dictionaries where each element of the list represents the location of the
+    target host
 
     :rtype: list
 
@@ -62,9 +64,10 @@ def get_real_time_locate(host_ipaddress, auth, url):
     >>> assert len(no_device) == 0
 
     """
-    real_time_locate_url = "/imcrs/res/access/realtimeLocate?type=2&value=" + str(host_ipaddress) + "&total=false"
+    real_time_locate_url = "/imcrs/res/access/realtimeLocate?type=2&value=" + str(host_ipaddress) \
+                           + "&total=false"
     f_url = url + real_time_locate_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             response = json.loads(r.text)
@@ -85,7 +88,8 @@ def get_real_time_locate(host_ipaddress, auth, url):
 
 def get_ip_mac_arp_list(auth, url, devid=None, devip=None):
     """
-    function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list from the target device.
+    function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list
+    from the target device.
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -123,7 +127,7 @@ def get_ip_mac_arp_list(auth, url, devid=None, devip=None):
             return 403
     ip_mac_arp_list_url = "/imcrs/res/access/ipMacArp/" + str(devid)
     f_url = url + ip_mac_arp_list_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             ipmacarplist = (json.loads(r.text))
@@ -136,14 +140,16 @@ def get_ip_mac_arp_list(auth, url, devid=None, devip=None):
         return "Error:\n" + str(e) + " get_ip_mac_arp_list: An Error has occured"
 
 
-# this section deals with the IP Address Manager functions with terminal access of HPE IMC Base platform
+# this section deals with the IP Address Manager functions with terminal access of HPE IMC Base
+# platform
 
 
 # Following functions deal with IP scopes
 def get_ip_scope(auth, url, scopeid=None, ):
     """
-    function requires no inputs and returns all IP address scopes currently configured on the HPE IMC server. If the
-    optional scopeid parameter is included, this will automatically return only the desired scope id.
+    function requires no inputs and returns all IP address scopes currently configured on the HPE
+    IMC server. If the optional scopeid parameter is included, this will automatically return
+    only the desired scope id.
 
     :param scopeid: integer of the desired scope id ( optional )
 
@@ -174,7 +180,7 @@ def get_ip_scope(auth, url, scopeid=None, ):
         get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?ipScopeId=" + str(scopeid)
 
     f_url = url + get_ip_scope_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             ipscopelist = (json.loads(r.text))
@@ -185,8 +191,9 @@ def get_ip_scope(auth, url, scopeid=None, ):
 
 def get_ip_scope_detail(auth, url, scopeid=None, network_address=None):
     """
-    function requires no inputs and returns all IP address scopes currently configured on the HPE IMC server. If the
-    optional scopeId parameter is included, this will automatically return only the desired scope id.
+    function requires no inputs and returns all IP address scopes currently configured on the HPE
+    IMC server. If the optional scopeId parameter is included, this will automatically return
+    only the desired scope id.
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -217,7 +224,7 @@ def get_ip_scope_detail(auth, url, scopeid=None, network_address=None):
         scopeid = get_scope_id(network_address, auth, url)
     get_ip_scope_url = "/imcrs/res/access/assignedIpScope/" + str(scopeid)
     f_url = url + get_ip_scope_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             ipscopelist = (json.loads(r.text))
@@ -228,8 +235,8 @@ def get_ip_scope_detail(auth, url, scopeid=None, network_address=None):
 
 def add_ip_scope(name, description, auth, url, startip=None, endip=None, network_address=None):
     """
-    Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
-    in the HPE IMC base platform
+    Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope
+    to terminal access in the HPE IMC base platform
 
     :param name: str Name of the owner of this IP scope  ex. 'admin'
 
@@ -296,8 +303,8 @@ def add_ip_scope(name, description, auth, url, startip=None, endip=None, network
 def add_child_ip_scope(name, description, auth, url, startip=None, endip=None, parent_scopeid=None,
                        network_address=None, parent_network_address=None):
     """
-    Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
-    in the HPE IMC base platform
+    Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope
+    to terminal access in the HPE IMC base platform
 
     :param name: str Name of the owner of this IP scope  ex. 'admin'
 
@@ -338,7 +345,8 @@ def add_child_ip_scope(name, description, auth, url, startip=None, endip=None, p
         endip = nw_address[-2]
     add_ip_scope_url = "/imcrs/res/access/assignedIpScope/" + str(parent_scopeid)
     f_url = url + add_ip_scope_url
-    payload = ('''{  "startIp": "%s", "endIp": "%s","name": "%s","description": "%s", "parentId" : "%s"}'''
+    payload = ('''{ "startIp": "%s", "endIp": "%s","name": "%s","description": "%s",
+                    "parentId" : "%s"}'''
                % (str(startip), str(endip), str(name), str(description), str(parent_scopeid)))
     r = requests.post(f_url, auth=auth, headers=HEADERS,
                       data=payload)  # creates the URL using the payload variable as the contents
@@ -491,7 +499,8 @@ def remove_scope_ip(hostid, auth, url):
 
 def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
     """
-    Function requires input of scope ID and returns list of allocated IP address for the specified scope
+    Function requires input of scope ID and returns list of allocated IP address for the
+    specified scope
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -501,7 +510,8 @@ def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
 
     :param network_address: ipv4 network address + subnet bits of target scope
 
-    :return: list of dictionary objects where each element of the list represents a single host assigned to the IP scope
+    :return: list of dictionary objects where each element of the list represents a single host
+    assigned to the IP scope
 
     :rtype: list
 
@@ -532,7 +542,7 @@ def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
             return scopeid
     get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?size=10000&ipScopeId=" + str(scopeid)
     f_url = url + get_ip_scope_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             ipscopelist = (json.loads(r.text))
@@ -550,8 +560,8 @@ def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
 
 def add_host_to_segment(hostipaddress, name, description, network_address, auth, url):
     """
-    Function to abstract existing add_scope_ip_function. Allows for use of network address rather than forcing human
-    to learn the scope_id
+    Function to abstract existing add_scope_ip_function. Allows for use of network address rather
+    than forcing human to learn the scope_id
     :param hostipaddress: str ipv4 address of target host to be added to target scope
 
     :param name: name of the owner of this host
@@ -560,9 +570,9 @@ def add_host_to_segment(hostipaddress, name, description, network_address, auth,
 
     :param network_address: ipv4 network address + subnet bits of target scope
 
-    :param: network_address: network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the
-    network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written
-    as 10.50.0.0/24
+    :param: network_address: network address of the target scope in format x.x.x.x/yy  where
+    x.x.x.x  representents the network address and yy represents the length of the subnet mask.
+    Example:  10.50.0.0 255.255.255.0 would be written as 10.50.0.0/24
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -606,9 +616,9 @@ internal keys for working with IPscopes and hosts
 def get_scope_id(network_address, auth, url):
     """
 
-    :param network_address: network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the
-    network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written
-    as 10.50.0.0/24
+    :param network_address: network address of the target scope in format x.x.x.x/yy  where
+    x.x.x.x  representents the network address and yy represents the length of the subnet mask.
+    Example:  10.50.0.0 255.255.255.0 would be written as 10.50.0.0/24
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -652,14 +662,17 @@ def get_scope_id(network_address, auth, url):
 
 def get_host_id(host_address, network_address, auth, url):
     """
+    Function takes str of ipv4 host address and str of ipv4 networkaddress (CIDR format) with
+    auth and url and sends restul call to HPE IMC NMS. Expected return is a str value which
+    represents the numerical ID of the target scope
 
     :param host_address: str describing network address of the target scope in format x.x.x.x
-    where x.x.x.x representents the full ipv4 address.  Example:  10.50.0.5 255.255.255.0 would be written
-    as 10.50.0.5
+    where x.x.x.x representents the full ipv4 address.  Example:  10.50.0.5 255.255.255.0 would
+    be written as 10.50.0.5
 
-    :param network_address: network address of the target scope in format x.x.x.x/yy  where x.x.x.x representents the
-    network address and yy represents the length of the subnet mask.  Example:  10.50.0.0 255.255.255.0 would be written
-    as 10.50.0.0/24
+    :param network_address: network address of the target scope in format x.x.x.x/yy  where
+    x.x.x.x  representents the network address and yy represents the length of the subnet mask.
+    Example:  10.50.0.0 255.255.255.0 would be written as 10.50.0.0/24
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 

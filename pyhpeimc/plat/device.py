@@ -50,7 +50,8 @@ def get_system_vendors(auth, url):
 
 
     """
-    get_system_vendors_url = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false&total=false'
+    get_system_vendors_url =  '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false' \
+                              '&total=false'
     f_url = url + get_system_vendors_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -89,7 +90,8 @@ def get_system_category(auth, url):
 
 
     """
-    get_system_category_url = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false&total=false'
+    get_system_category_url =  '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false' \
+                               '&total=false'
     f_url = url + get_system_category_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -127,7 +129,8 @@ def get_system_device_models(auth, url):
       >>> assert 'virtualDeviceName' in device_models[0]
 
     """
-    get_system_device_model_url = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc=false&total=false'
+    get_system_device_model_url =  '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc' \
+                                   '=false&total=false'
     f_url = url + get_system_device_model_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -163,8 +166,6 @@ def get_system_series(auth, url):
       >>> assert type(series) is list
 
       >>> assert 'name' in series[0]
-
-
 
     """
     get_system_series_url = ('/imcrs/plat/res/series?managedOnly=false'
@@ -216,7 +217,8 @@ def get_all_devs(auth, url, network_address=None):
 
     if network_address is not None:
         get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
-                           str(network_address) + "&start=0&size=1000&orderBy=id&desc=false&total=false"
+                            str(network_address) + \
+                           "&start=0&size=1000&orderBy=id&desc=false&total=false"
     else:
         get_all_devs_url = ("/imcrs/plat/res/device?resPrivilegeFilter=false&start=0"
                             "&size=1000&orderBy=id&desc=false&total=false&exact=false")
@@ -238,7 +240,7 @@ def get_all_devs(auth, url, network_address=None):
 
 
 def get_dev_details(ip_address, auth, url):
-    """Takes string input of IP address to issue RESTUL call to HP IMC\n
+    """Takes string input of IP address to issue RESTUL call to HP IMC
 
     :param ip_address: string object of dotted decimal notation of IPv4 address
 
@@ -295,7 +297,8 @@ def get_dev_details(ip_address, auth, url):
 
 def get_dev_interface(auth, url, devid=None, devip=None):
     """
-    Function takes devid as input to RESTFUL call to HP IMC platform and returns list of device interfaces
+    Function takes devid as input to RESTFUL call to HP IMC platform and returns list of device
+    interfaces
 
     :param devid: optional devid as the input
 
@@ -346,8 +349,9 @@ def get_dev_interface(auth, url, devid=None, devip=None):
 
 def get_dev_run_config(auth, url, devid=None, devip=None):
     """
-    function takes the devId of a specific device and issues a RESTFUL call to get the most current running config
-    file as known by the HP IMC Base Platform ICC module for the target device.
+    function takes the devId of a specific device and issues a RESTFUL call to get the most
+    current  running config file as known by the HP IMC Base Platform ICC module for the target
+    device.
 
     :param devid:  int or str value of the target device
 
@@ -357,9 +361,9 @@ def get_dev_run_config(auth, url, devid=None, devip=None):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: str which contains the entire content of the target device running configuration. If the device is not
-    currently supported in the HP IMC Base Platform ICC module, this call returns a string of "This feature is not
-    supported on this device"
+    :return: str which contains the entire content of the target device running configuration.
+    If the device is not currently supported in the HP IMC Base Platform ICC module, this call
+    returns a string of "This feature is not supported on this device"
 
     :rtype: str
 
@@ -396,8 +400,9 @@ def get_dev_run_config(auth, url, devid=None, devip=None):
 
 def get_dev_start_config(auth, url, devid=None, devip=None):
     """
-    function takes the devId of a specific device and issues a RESTFUL call to get the most current startup config
-    file as known by the HP IMC Base Platform ICC module for the target device.
+    function takes the devId of a specific device and issues a RESTFUL call to get the most
+    current startup config  file as known by the HP IMC Base Platform ICC module for the target
+    device.
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -407,9 +412,9 @@ def get_dev_start_config(auth, url, devid=None, devip=None):
 
     :param devip:  optional ipv4 address of the target device
 
-    :return: str which contains the entire content of the target device startup configuration. If the device is not
-    currently supported in the HP IMC Base Platform ICC module, this call returns a string of "This feature is not
-    supported on this device"
+    :return: str which contains the entire content of the target device startup configuration.
+    If the device is not currently supported in the HP IMC Base Platform ICC module, this call
+    returns a string of "This feature is not supported on this device"
 
     :retype: str
 
@@ -446,8 +451,8 @@ def get_dev_start_config(auth, url, devid=None, devip=None):
 
 def get_dev_mac_learn(auth, url, devid=None, devip=None):
     """
-    function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on
-    the target device.
+    function takes devid of specific device and issues a RESTFUL call to gather the current
+    IP-MAC  learning entries on the target device.
 
     :param devid: int value of the target device
 
@@ -497,8 +502,10 @@ def get_dev_mac_learn(auth, url, devid=None, devip=None):
 
 def run_dev_cmd(cmd_list, auth, url, devid=None, devip=None):
     """
-    Function takes devid of target device and a sequential list of strings which define the specific commands to be run
-    on the target device and returns a str object containing the output of the commands.
+    Function takes devid of target device and a sequential list of strings which define the
+    specific commands to be run on the target device and returns a str object containing the
+    output of the commands.
+
     :param devid: int devid of the target device
 
     :param cmd_list: list of strings
@@ -557,9 +564,9 @@ This section contains functions which operate at the interface level
 
 def get_all_interface_details(auth, url, devid=None, devip=None):
     """
-    function takes the devId of a specific device and the ifindex value assigned to a specific interface
-    and issues a RESTFUL call to get the interface details
-    file as known by the HP IMC Base Platform ICC module for the target device.
+    function takes the devId of a specific device and the ifindex value assigned to a specific
+    interface and issues a RESTFUL call to get the interface details file as known by the HP IMC
+    Base Platform ICC module for the target device.
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -608,8 +615,8 @@ def get_all_interface_details(auth, url, devid=None, devip=None):
 
 def get_interface_details(ifindex, auth, url, devid=None, devip=None):
     """
-    function takes the devId of a specific device and the ifindex value assigned to a specific interface
-    and issues a RESTFUL call to get the interface details
+    function takes the devId of a specific device and the ifindex value assigned to a specific
+    interface  and issues a RESTFUL call to get the interface details
     file as known by the HP IMC Base Platform ICC module for the target device.
 
     :param ifindex: int or str value of the ifIndex of the target interface
@@ -644,7 +651,8 @@ def get_interface_details(ifindex, auth, url, devid=None, devip=None):
      """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_interface_details_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex)
+    get_interface_details_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/"  +          \
+                                str(ifindex)
     f_url = url + get_interface_details_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -659,8 +667,8 @@ def get_interface_details(ifindex, auth, url, devid=None, devip=None):
 
 def set_interface_down(ifindex, auth, url, devid=None, devip=None):
     """
-    function takest devid and ifindex of specific device and interface and issues a RESTFUL call to " shut" the specifie
-    d interface on the target device.
+    function takest devid and ifindex of specific device and interface and issues a RESTFUL call
+    to " shut" the specified interface on the target device.
     :param devid: int or str value of the target device
 
     :param devip: ipv4 address of the target devices
@@ -699,11 +707,11 @@ def set_interface_down(ifindex, auth, url, devid=None, devip=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/down"
+    set_int_down_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex)  + \
+                       "/down"
     f_url = url + set_int_down_url
     try:
-        r = requests.put(f_url, auth=auth,
-                         headers=HEADERS)  # creates the URL using the payload variable as the contents
+        r = requests.put(f_url, auth=auth, headers=HEADERS)
         print(r.status_code)
         if r.status_code == 204:
             return r.status_code
@@ -713,8 +721,8 @@ def set_interface_down(ifindex, auth, url, devid=None, devip=None):
 
 def set_inteface_up(ifindex, auth, url, devid=None, devip=None):
     """
-    function takest devid and ifindex of specific device and interface and issues a RESTFUL call to "undo shut" the spec
-    ified interface on the target device.
+    function takest devid and ifindex of specific device and interface and issues a RESTFUL call
+    to "undo shut" the specified interface on the target device.
 
     :param devid: int or str value of the target device
 
@@ -756,8 +764,7 @@ def set_inteface_up(ifindex, auth, url, devid=None, devip=None):
     set_int_up_url = "/imcrs/plat/res/device/" + str(devid) + "/interface/" + str(ifindex) + "/up"
     f_url = url + set_int_up_url
     try:
-        r = requests.put(f_url, auth=auth,
-                         headers=HEADERS)  # creates the URL using the payload variable as the contents
+        r = requests.put(f_url, auth=auth, headers=HEADERS)
         if r.status_code == 204:
             return r.status_code
     except requests.exceptions.RequestException as e:
