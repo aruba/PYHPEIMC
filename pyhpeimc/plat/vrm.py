@@ -71,9 +71,7 @@ def get_vm_host_info(hostip, auth, url):
     hostid = get_dev_details(hostip, auth, url)['id']
     get_vm_host_info_url = "/imcrs/vrm/host?hostId=" + str(hostid)
     f_url = url + get_vm_host_info_url
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             if len(r.text) > 0:
@@ -95,7 +93,8 @@ def get_vm_host_vnic(hostip, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents a single NIC on the target host
+    :return: list of dictionaries where each element of the list represents a single NIC on the
+    target host
 
     :rtype: list
 
@@ -128,9 +127,7 @@ def get_vm_host_vnic(hostip, auth, url):
     hostid = get_dev_details(hostip, auth, url)['id']
     get_vm_host_vnic_url = "/imcrs/vrm/host/vnic?hostDevId=" + str(hostid)
     f_url = url + get_vm_host_vnic_url
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             if len(r.text) > 0:
@@ -152,8 +149,8 @@ def get_host_vms(hostip, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents a single virtual machine which is currently
-    located on the target host.
+    :return: list of dictionaries where each element of the list represents a single virtual
+    machine which is currently located on the target host.
 
     :rtype: list
 
@@ -195,8 +192,7 @@ def get_host_vms(hostip, auth, url):
     hostid = get_dev_details(hostip, auth, url)['id']
     get_host_info_url = "/imcrs/vrm/host/vm?hostId=" + str(hostid)
     f_url = url + get_host_info_url
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             if len(json.loads(r.text)) > 1:

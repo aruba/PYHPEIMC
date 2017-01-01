@@ -79,7 +79,6 @@ def create_operator(operator, auth, url, headers=HEADERS):
     create_operator_url = '/imcrs/plat/operator'
     f_url = url + create_operator_url
     payload = json.dumps(operator, indent=4)
-    # creates the URL using the payload variable as the contents
     r = requests.post(f_url, data=payload, auth=auth, headers=headers)
     try:
         if r.status_code == 409:
@@ -156,8 +155,8 @@ def set_operator_password(operator, password, auth, url):
 
 def get_plat_operator(auth, url):
     """
-    Funtion takes no inputs and returns a list of dictionaties of all of the operators currently configured on the HPE
-    IMC system
+    Funtion takes no inputs and returns a list of dictionaties of all of the operators currently
+    configured on the HPE IMC system
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 

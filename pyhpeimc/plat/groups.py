@@ -24,8 +24,8 @@ This section deals with HPE IMC Custom View functions
 
 def get_custom_views(auth, url, name=None):
     """
-    function requires no input and returns a list of dictionaries of custom views from an HPE IMC. Optional name
-    argument will return only the specified view.
+    function requires no input and returns a list of dictionaries of custom views from an HPE
+    IMC. Optional name argument will return only the specified view.
     :param name: str containing the name of the desired custom view
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
@@ -58,10 +58,11 @@ def get_custom_views(auth, url, name=None):
     """
     get_custom_view_url = None
     if name is None:
-        get_custom_view_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&desc=false&total=false'
+        get_custom_view_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&desc=false' \
+                               '&total=false'
     elif name is not None:
-        get_custom_view_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&name=' + name + \
-                              '&desc=false&total=false'
+        get_custom_view_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&name=' + \
+                               name + '&desc=false&total=false'
     f_url = url + get_custom_view_url
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
@@ -80,8 +81,8 @@ def get_custom_views(auth, url, name=None):
 
 def get_custom_view_details(name, auth, url):
     """
-    function requires no input and returns a list of dictionaries of custom views from an HPE IMC. Optional name
-    argument will return only the specified view.
+    function requires no input and returns a list of dictionaries of custom views from an HPE
+    IMC. Optional name argument will return only the specified view.
     :param name: str containing the name of the desired custom view
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
@@ -113,8 +114,7 @@ def get_custom_view_details(name, auth, url):
     view_id = get_custom_views(auth, url, name=name)[0]['symbolId']
     get_custom_view_details_url = '/imcrs/plat/res/view/custom/' + str(view_id)
     f_url = url + get_custom_view_details_url
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
             current_devices = (json.loads(r.text))
@@ -128,8 +128,8 @@ def get_custom_view_details(name, auth, url):
 
 def create_custom_views(auth, url, name=None, upperview=None):
     """
-    function takes no input and issues a RESTFUL call to get a list of custom views from HPE IMC. Optional Name input
-    will return only the specified view.
+    function takes no input and issues a RESTFUL call to get a list of custom views from HPE IMC.
+    Optional Name input will return only the specified view.
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -170,7 +170,8 @@ def create_custom_views(auth, url, name=None, upperview=None):
     >>> assert view_2[0]['name'] == 'L2 View'
 
     """
-    create_custom_views_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&desc=false&total=false'
+    create_custom_views_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&desc=false' \
+                               '&total=false'
     f_url = url + create_custom_views_url
     if upperview is None:
         payload = '''{ "name": "''' + name + '''",
@@ -179,8 +180,7 @@ def create_custom_views(auth, url, name=None, upperview=None):
         parentviewid = get_custom_views(auth, url, upperview)[0]['symbolId']
         payload = '''{ "name": "''' + name + '''",
         "upLevelSymbolId" : "''' + str(parentviewid) + '''"}'''
-    r = requests.post(f_url, data=payload, auth=auth,
-                      headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 201:
             print('View ' + name + ' created successfully')
@@ -194,12 +194,12 @@ def create_custom_views(auth, url, name=None, upperview=None):
         return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
 
 
-# TODO Need to add tests and examples for add_devs_custom_views
+
 
 def add_devs_custom_views(custom_view_name, dev_list, auth, url):
     """
-    function takes a list of devIDs from devices discovered in the HPE IMC platform and and issues a RESTFUL call to
-     add the list of devices to a specific custom views from HPE IMC.
+    function takes a list of devIDs from devices discovered in the HPE IMC platform and issues a
+    RESTFUL call to add the list of devices to a specific custom views from HPE IMC.
 
     :param custom_view_name: str of the target custom view name
 
@@ -231,8 +231,7 @@ def add_devs_custom_views(custom_view_name, dev_list, auth, url):
     payload = '''{"device" : ''' + json.dumps(device_list) + '''}'''
     print(payload)
     f_url = url + add_devs_custom_views_url
-    r = requests.put(f_url, data=payload, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.put(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 204:
             print('View ' + custom_view_name + ' : Devices Successfully Added')
@@ -243,7 +242,8 @@ def add_devs_custom_views(custom_view_name, dev_list, auth, url):
 
 def delete_custom_view(auth, url, name):
     """
-    function takes input of auth, url, and name and issues a RESTFUL call to delete a specific of custom views from HPE
+    function takes input of auth, url, and name and issues a RESTFUL call to delete a specific
+    of custom views from HPE
     IMC.
     :param name: string containg the name of the desired custom view
 
@@ -283,7 +283,7 @@ def delete_custom_view(auth, url, name):
     view_id = get_custom_views(auth, url, name)[0]['symbolId']
     delete_custom_view_url = '/imcrs/plat/res/view/custom/' + str(view_id)
     f_url = url + delete_custom_view_url
-    r = requests.delete(f_url, auth=auth, headers=HEADERS)  # creates the URL using the payload variable as the contents
+    r = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 204:
             print('View ' + name + ' deleted successfully')

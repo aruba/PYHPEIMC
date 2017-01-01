@@ -48,7 +48,8 @@ def get_system_vendors(auth, url):
 
 
     """
-    get_system_vendors_url = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false&total=false'
+    get_system_vendors_url = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false' \
+                              '&total=false'
     f_url = url + get_system_vendors_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -86,9 +87,9 @@ def get_system_category(auth, url):
 
 
     """
-    get_system_category_url = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false&total=false'
+    get_system_category_url = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false' \
+                               '&total=false'
     f_url = url + get_system_category_url
-    # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     # r.status_code
     try:
@@ -100,14 +101,15 @@ def get_system_category(auth, url):
 
 
 def get_system_device_models(auth, url):
-    """Takes string no input to issue RESTUL call to HP IMC\n
-:rtype: list
+    """Takes string no input to issue RESTUL call to HP IMC
 
       :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
       :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
       :return: list of dictionaries where each dictionary represents a single device model
+
+      :rtype: list
 
 
       >>> from pyhpeimc.auth import *
@@ -123,7 +125,8 @@ def get_system_device_models(auth, url):
       >>> assert 'virtualDeviceName' in device_models[0]
 
     """
-    get_system_device_model_url = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc=false&total=false'
+    get_system_device_model_url = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc' \
+                                   '=false&total=false'
     f_url = url + get_system_device_model_url
     # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
@@ -137,7 +140,7 @@ def get_system_device_models(auth, url):
 
 
 def get_system_series(auth, url):
-    """Takes string no input to issue RESTUL call to HP IMC\n
+    """Takes no input to issue RESTUL call to HP IMC
 
       :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 

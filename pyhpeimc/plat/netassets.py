@@ -28,7 +28,8 @@ def get_dev_asset_details(ipaddress, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: object of type list containing the device asset details, with each asset contained in a dictionary
+    :return: object of type list containing the device asset details, with each asset contained
+    in a dictionary
 
     :rtype: list
 
@@ -64,7 +65,8 @@ def get_dev_asset_details(ipaddress, auth, url):
             if type(dev_asset_info) == dict:
                 dev_asset_info = [dev_asset_info]
             if type(dev_asset_info) == list:
-                dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') == ipaddress]
+                dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') ==
+                                      ipaddress]
             return dev_asset_info
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'

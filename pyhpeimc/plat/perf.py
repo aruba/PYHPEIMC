@@ -19,8 +19,8 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 
 def add_perf_task(task, auth, url):
     """
-    function takes the a python dict containing all necessary fields for a performance tasks, transforms the dict into
-    JSON and issues a RESTFUL call to create the performance task. device.
+    function takes the a python dict containing all necessary fields for a performance tasks,
+    transforms the dict into JSON and issues a RESTFUL call to create the performance task. device.
 
     :param task: dictionary containing all required fields for performance tasks
 
@@ -61,8 +61,8 @@ def add_perf_task(task, auth, url):
 
 def get_perf_task(task_name, auth, url):
     """
-        function takes the a str object containing the name of an existing performance tasks and issues a RESTFUL call
-        to the IMC REST service. It will return a list
+        function takes the a str object containing the name of an existing performance tasks and
+        issues a RESTFUL call to the IMC REST service. It will return a list
 
         :param task_name: str containing the name of the performance task
 
@@ -88,7 +88,6 @@ def get_perf_task(task_name, auth, url):
         """
     get_perf_task_url = "/imcrs/perf/task?name=" + task_name + "&orderBy=taskId&desc=false"
     f_url = url + get_perf_task_url
-    # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
@@ -116,7 +115,6 @@ def delete_perf_task(task_name, auth, url):
     :return: int of 204 if successful, str of "Perf Task doesn't exist" i
 
     :rtype: int
-
 
     """
     task_id = get_perf_task(task_name, auth, url)

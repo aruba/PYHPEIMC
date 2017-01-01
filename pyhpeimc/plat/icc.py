@@ -19,8 +19,8 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 
 def get_cfg_template(auth, url, folder=None):
     """
-    Function takes no input and returns a list of dictionaries containing the configuration templates in the root folder
-    of the icc configuration template library.
+    Function takes no input and returns a list of dictionaries containing the configuration
+    templates in the root folder of the icc configuration template library.
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -74,8 +74,9 @@ def get_cfg_template(auth, url, folder=None):
 
 def create_cfg_segment(filename, filecontent, description, auth, url):
     """
-    Takes a str into var filecontent which represents the entire content of a configuration segment, or partial
-    configuration file. Takes a str into var description which represents the description of the configuration segment
+    Takes a str into var filecontent which represents the entire content of a configuration
+    segment, or partial configuration file. Takes a str into var description which represents the
+    description of the configuration segment
     :param filename: str containing the name of the configuration segment.
 
     :param filecontent: str containing the entire contents of the configuration segment
@@ -258,7 +259,6 @@ def get_template_details(template_name, auth, url):
         return file_id
     get_template_details_url = "/imcrs/icc/confFile/" + str(file_id)
     f_url = url + get_template_details_url
-    # creates the URL using the payload variable as the contents
     r = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if r.status_code == 200:
