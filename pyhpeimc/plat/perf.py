@@ -49,7 +49,7 @@ def add_perf_task(task, auth, url):
     """
     add_perf_task_url = "/imcrs/perf/task"
     f_url = url + add_perf_task_url
-    payload = json.dumps(task
+    payload = json.dumps(task)
     response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
         return response.status_code
