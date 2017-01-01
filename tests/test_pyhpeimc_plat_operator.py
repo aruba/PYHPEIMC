@@ -7,7 +7,7 @@ This module is used for testing the functions within the pyhpeimc.plat.operator 
 from unittest import TestCase
 
 from pyhpeimc.plat.operator import *
-from pyhpeimc.tests.test_machine import *
+from test_machine import *
 
 
 class TestCreate_operator(TestCase):

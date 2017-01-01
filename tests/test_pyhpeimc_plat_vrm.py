@@ -9,7 +9,7 @@ from unittest import TestCase
 from nose.plugins.skip import SkipTest
 
 from pyhpeimc.plat.vrm import *
-from pyhpeimc.tests.test_machine import *
+from test_machine import *
 
 
 # Test get_vm_host_info for Multiple Vendor Devices

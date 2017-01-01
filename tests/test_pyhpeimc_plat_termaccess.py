@@ -9,7 +9,7 @@ from unittest import TestCase
 from nose.plugins.skip import SkipTest
 
 from pyhpeimc.plat.termaccess import *
-from pyhpeimc.tests.test_machine import *
+from test_machine import *
 
 
 class TestGet_real_time_locate(TestCase):

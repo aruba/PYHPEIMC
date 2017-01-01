@@ -7,12 +7,12 @@ This module is used for testing the functions within the pyhpeimc.wsm.apinfo mod
 import ipaddress
 from unittest import TestCase
 
-from pyhpeimc.tests.test_machine import *
+
 from pyhpeimc.wsm.apinfo import *
+from test_machine import *
 
 
-#test for get_ac_info_all
-
+# test for get_ac_info_all
 class Test_Get_get_ap_info_all(TestCase):
     def test_get_ap_info_all_type(self):
         aps = get_ap_info_all(auth.creds, auth.url)
@@ -42,7 +42,7 @@ class Test_Get_get_ap_info_all(TestCase):
         self.assertIn('softwareVersion', aps[0])
 
 
-#test for get_ac_info_all
+# test for get_ac_info_all
 
 class Test_Get_ap_info(TestCase):
     def test_get_ap_info_all_type(self):
@@ -56,7 +56,6 @@ class Test_Get_ap_info(TestCase):
                 continue
         ap = get_ap_info(ip, auth.creds, auth.url)
         self.assertIs(type(ap), dict)
-
 
     def test_get_ap_info_all_content(self):
         aps = get_ap_info_all(auth.creds, auth.url)
@@ -89,4 +88,3 @@ class Test_Get_ap_info(TestCase):
         self.assertIn('apAlias', ap)
         self.assertIn('acLabel', ap)
         self.assertIn('softwareVersion', ap)
-

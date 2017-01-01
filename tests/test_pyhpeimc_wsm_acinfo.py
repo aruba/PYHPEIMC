@@ -6,11 +6,12 @@ This module is used for testing the functions within the pyhpeimc.wsm.acinfo mod
 
 from unittest import TestCase
 
-from pyhpeimc.tests.test_machine import *
+from test_machine import *
+
 from pyhpeimc.wsm.acinfo import *
 
 
-#test for get_ac_info_all
+# test for get_ac_info_all
 
 class Test_Get_ac_info_all(TestCase):
     def test_get_ac_info_all_type(self):
@@ -32,6 +33,3 @@ class Test_Get_ac_info_all(TestCase):
         self.assertIn('onlineApCount', acs[0])
         self.assertIn('sysName', acs[0])
         self.assertIn('softwareVersion', acs[0])
-
-
-

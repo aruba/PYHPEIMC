@@ -7,7 +7,7 @@ This module is used for testing the functions within the pyhpeimc.plat.system mo
 from unittest import TestCase
 
 from pyhpeimc.plat.system import *
-from pyhpeimc.tests.test_machine import auth
+from test_machine import auth
 
 
 class TestGet_system_vendors(TestCase):
