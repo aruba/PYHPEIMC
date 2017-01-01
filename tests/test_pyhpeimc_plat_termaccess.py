@@ -571,7 +571,7 @@ class Test_Delete_host_from_segment(TestCase):
         new_host_ip = add_scope_ip(term_access_ipam_host, 'cyoung', 'New Test Host', auth.creds, auth.url,
                                    network_address=term_access_ipam_network_scope)
         delete_host = delete_host_from_segment(term_access_ipam_host,term_access_ipam_network_scope, auth.creds, auth.url)
-        self.assertEqual(delete_host, 204)
+        self.assertIn(delete_host, [204, 409])
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
 
 

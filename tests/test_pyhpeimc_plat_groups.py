@@ -125,9 +125,3 @@ class TestAdd_devs_custom_views(TestCase):
         self.assertIn('10.101.0.51', view_dev_list)
         delete_custom_view(auth.creds, auth.url, name="L1 View")
 
-
-
-
-
-
-
