@@ -62,13 +62,13 @@ def get_cfg_template(auth, url, folder=None):
         folder_id = get_folder_id(folder, auth, url)
         get_cfg_template_url = "/imcrs/icc/confFile/list/" + str(folder_id)
     f_url = url + get_cfg_template_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            cfg_template_list = (json.loads(r.text))
+        if response.status_code == 200:
+            cfg_template_list = (json.loads(response.text))
             return cfg_template_list['confFile']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_cfg_template: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_cfg_template: An Error has occured"
 
 
 def create_cfg_segment(filename, filecontent, description, auth, url):
@@ -111,18 +111,16 @@ def create_cfg_segment(filename, filecontent, description, auth, url):
                "cfgFileParent": "-1",
                "confFileDesc": description,
                "content": filecontent}
-    create_cfg_segment_url = "/imcrs/icc/confFile"
-    f_url = url + create_cfg_segment_url
-    # creates the URL using the payload variable as the contents
-    r = requests.post(f_url, data=(json.dumps(payload)), auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/icc/confFile"
+    response = requests.post(f_url, data=(json.dumps(payload)), auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 201:
+        if response.status_code == 201:
             print("Template successfully created")
-            return r.status_code
-        elif r.status_code is not 201:
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " create_cfg_segment: An Error has occured"
+            return response.status_code
+        elif response.status_code is not 201:
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " create_cfg_segment: An Error has occured"
 
 
 def get_template_id(template_name, auth, url):
@@ -211,17 +209,14 @@ def delete_cfg_template(template_name, auth, url):
 
     """
     file_id = get_template_id(template_name, auth, url)
-    delete_cfg_template_url = "/imcrs/icc/confFile/" + str(file_id)
-    f_url = url + delete_cfg_template_url
-    # creates the URL using the payload variable as the contents
-    r = requests.delete(f_url, auth=auth, headers=HEADERS)
-    # print (r.status_code)
+    f_url = url + "/imcrs/icc/confFile/" + str(file_id)
+    response = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             print("Template successfully Deleted")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " delete_cfg_template: An Error has occured"
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " delete_cfg_template: An Error has occured"
 
 
 def get_template_details(template_name, auth, url):
@@ -254,14 +249,13 @@ def get_template_details(template_name, auth, url):
 
     """
     file_id = get_template_id(template_name, auth, url)
-    if type(file_id) is str:
+    if isinstance(file_id, str):
         return file_id
-    get_template_details_url = "/imcrs/icc/confFile/" + str(file_id)
-    f_url = url + get_template_details_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/icc/confFile/" + str(file_id)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            template_details = json.loads(r.text)
+        if response.status_code == 200:
+            template_details = json.loads(response.text)
             return template_details
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_template_contents: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_template_contents: An Error has occured"

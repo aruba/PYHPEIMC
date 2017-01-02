@@ -14,6 +14,7 @@ import json
 import requests
 
 from pyhpeimc.auth import HEADERS
+
 from pyhpeimc.plat.device import get_dev_details
 
 
@@ -50,8 +51,7 @@ def get_dev_asset_details(ipaddress, auth, url):
     else:
         print("Asset Doesn't Exist")
         return 403
-    get_dev_asset_url = "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
-    f_url = url + get_dev_asset_url
+    f_url = url + "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
@@ -62,7 +62,7 @@ def get_dev_asset_details(ipaddress, auth, url):
                 dev_asset_info = [dev_asset_info]
             if type(dev_asset_info) == list:
                 dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') ==
-                                      ipaddress]
+                                     ipaddress]
             return dev_asset_info
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + ' get_dev_asset_details: An Error has occured'
@@ -92,8 +92,7 @@ def get_dev_asset_details_all(auth, url):
     >>> assert 'asset' in all_assets[0]
 
     """
-    GET_DEV_ASSET_DETAILS_ALL_URL = "/imcrs/netasset/asset?start=0&size=15000"
-    f_url = url + GET_DEV_ASSET_DETAILS_ALL_URL
+    f_url = url + "/imcrs/netasset/asset?start=0&size=15000"
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
