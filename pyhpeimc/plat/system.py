@@ -48,9 +48,7 @@ def get_system_vendors(auth, url):
 
 
     """
-    GET_SYSTEM_VENDORS_URL = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false' \
-                              '&total=false'
-    f_url = url + GET_SYSTEM_VENDORS_URL
+    f_url = url + '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false&total=false'
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
