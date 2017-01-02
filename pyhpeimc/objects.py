@@ -15,8 +15,7 @@ from pyhpeimc.plat.netassets import *
 from pyhpeimc.plat.termaccess import *
 from pyhpeimc.plat.vlanm import *
 
-headers = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
+from pyhpeimc.auth import HEADERS
 
 
 # IMC Device Class
@@ -62,7 +61,8 @@ class IMCDev:
      by HP IMC. The device must be supported in the HP IMC platform ICC module.
      ipmacarp: returns the current device maciparp table as discovered by HP IMC.
 
-     The imc_dev class supports the following methods which can be called upon an instance of this class
+     The imc_dev class supports the following methods which can be called upon an instance of
+     this class
 
      getvlans: This method executes the getvlans function on the specific instance of the imc_dev
      object and populates the return into the self.vlans attribute. Devices must be supported in
@@ -72,7 +72,6 @@ class IMCDev:
 
      """
 
-    # pylint: disable=too-many-instance-attributes
 
     def __init__(self, ip_address, auth, url):
         """
@@ -101,7 +100,8 @@ class IMCDev:
         self.alarm = get_dev_alarms(self.devid, auth, url)
         self.numalarm = len(get_dev_alarms(self.devid, auth, url))
         self.assets = get_dev_asset_details(self.ip, auth, url)
-        self.serials = [({'name': asset['name'], 'serialNum': asset['serialNum']}) for asset in self.assets]
+        self.serials = [({'name': asset['name'], 'serialNum': asset['serialNum']}) for asset in
+                         self.assets]
         self.runconfig = get_dev_run_config(self.devid, auth, url)
         self.startconfig = get_dev_start_config(self.devid, auth, url)
         self.ipmacarp = get_ip_mac_arp_list(self.devid, auth, url)
@@ -148,8 +148,8 @@ class IMCDev:
 
 class IMCInterface:
     """
-    Class instantiates an object to gather and manipulate attributes and methods of a single interface on a single
-    infrastructure device, such as a switch or router.
+    Class instantiates an object to gather and manipulate attributes and methods of a single
+    interface on a single infrastructure device, such as a switch or router.
     """
 
     def __init__(self, ip_address, ifindex, auth, url):
@@ -158,15 +158,19 @@ class IMCInterface:
         self.ip = get_dev_details(ip_address, self.auth, self.url)['ip']
         self.devid = get_dev_details(ip_address, self.auth, self.url)['id']
         self.ifIndex = get_interface_details(self.devid, ifindex, self.auth, self.url)['ifIndex']
-        self.macaddress = get_interface_details(self.devid, ifindex, self.auth, self.url)['phyAddress']
+        self.macaddress = get_interface_details(self.devid, ifindex, self.auth, self.url)[
+            'phyAddress']
         self.status = get_interface_details(self.devid, ifindex, self.auth, self.url)['statusDesc']
-        self.adminstatus = get_interface_details(self.devid, ifindex, self.auth, self.url)['adminStatusDesc']
+        self.adminstatus = get_interface_details(self.devid, ifindex, self.auth, self.url)[
+            'adminStatusDesc']
         self.name = get_interface_details(self.devid, ifindex, self.auth, self.url)['ifDescription']
-        self.description = get_interface_details(self.devid, ifindex, self.auth, self.url)['ifAlias']
+        self.description = get_interface_details(self.devid, ifindex, self.auth, self.url)[
+            'ifAlias']
         self.mtu = get_interface_details(self.devid, ifindex, self.auth, self.url)['mtu']
         self.speed = get_interface_details(self.devid, ifindex, self.auth, self.url)['ifspeed']
         self.accessinterfaces = get_device_access_interfaces(self.devid, self.auth, self.url)
-        self.pvid = get_access_interface_vlan(self.ifIndex, self.accessinterfaces, self.auth, self.url)
+        self.pvid = get_access_interface_vlan(self.ifIndex, self.accessinterfaces, self.auth,
+                                               self.url)
 
 
 # TODO refactor deallocateIp method for human consumption
@@ -174,8 +178,8 @@ class IMCInterface:
 
 class IPScope:
     """
-        Class instantiates an object to gather and manipulate attributes and methods of a IP scope as configured
-        in the HPE IMC Platform Terminal Access module.
+        Class instantiates an object to gather and manipulate attributes and methods of a IP
+        scope as configured in the HPE IMC Platform Terminal Access module.
         """
 
     def __init__(self, netaddr, auth, url):
@@ -192,7 +196,8 @@ class IPScope:
 
     def allocate_ip(self, hostipaddress, name, description):
         """
-        Object method takes in input of hostipaddress, name and description and adds them to the parent ip scope.
+        Object method takes in input of hostipaddress, name and description and adds them to the
+        parent ip scope.
         :param hostipaddress: str of ipv4 address of the target host ip record
         :param name: str of the name of the owner of the target host ip record
         :param description: str of a description of the target host ip record
@@ -219,7 +224,8 @@ class IPScope:
 
     def nextfreeip(self):
         """
-        Method searches for the next free ip address in the scope object and returns it as a str value.
+        Method searches for the next free ip address in the scope object and returns it as a str
+        value.
         :return:
         """
         allocated_ips = [ipaddress.ip_address(host['ip']) for host in self.hosts]
