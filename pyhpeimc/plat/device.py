@@ -16,12 +16,11 @@ import requests
 from pyhpeimc.auth import HEADERS
 
 
-"""
-This section contains functions which operate at the system level
-This whole section has been moved to pyhpeimc.plat.system - functions left here for legacy.
-Intention is to remove by version 1.0.60 or greater. Please modify any scripts using functions
-in this section to use the new functions in the new module
-"""
+# This section contains functions which operate at the system level
+# This whole section has been moved to pyhpeimc.plat.system - functions left here for legacy.
+# Intention is to remove by version 1.0.60 or greater. Please modify any scripts using functions
+# in this section to use the new functions in the new module
+
 
 
 # TODO Delete function when version => 1.60
@@ -166,9 +165,7 @@ def get_system_series(auth, url):
         return "Error:\n" + str(error) + " get_dev_series: An Error has occured"
 
 
-"""
-This section contains functions which operate at the device level.
-"""
+# This section contains functions which operate at the device level.
 
 
 def get_all_devs(auth, url, network_address=None):
@@ -196,9 +193,7 @@ def get_all_devs(auth, url, network_address=None):
 
     >>> assert 'sysName' in dev_list[0]
 
-
     """
-
     if network_address is not None:
         get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
                            str(network_address) + \
@@ -250,7 +245,6 @@ def get_dev_details(ip_address, auth, url):
     Device not found
 
     >>> assert type(dev_2) is str
-
 
     """
     get_dev_details_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
@@ -404,7 +398,6 @@ def get_dev_start_config(auth, url, devid=None, devip=None):
     >>> assert type(start_config) is str
 
     """
-    # checks to see if the imc credentials are already available
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
     f_url = url + "/imcrs/icc/deviceCfg/" + str(devid) + "/currentStart"
@@ -505,7 +498,6 @@ def run_dev_cmd(cmd_list, auth, url, devid=None, devip=None):
 
     >>> assert 'success' in cmd_output
 
-
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
@@ -515,7 +507,6 @@ def run_dev_cmd(cmd_list, auth, url, devid=None, devip=None):
     payload = '''{ "deviceId" : "''' + str(devid) + '''",
                    "cmdlist" : { "cmd" :
                    [''' + cmd_list + ''']
-
                    }
                    }'''
     try:
@@ -529,9 +520,7 @@ def run_dev_cmd(cmd_list, auth, url, devid=None, devip=None):
         return "Error:\n" + str(error) + " run_dev_cmd: An Error has occured"
 
 
-"""
-This section contains functions which operate at the interface level
-"""
+# This section contains functions which operate at the interface level
 
 
 def get_all_interface_details(auth, url, devid=None, devip=None):
@@ -547,7 +536,6 @@ def get_all_interface_details(auth, url, devid=None, devip=None):
     :param devid:  int or str value of the devId of the target device
 
     :param devip: ipv4 address of the target device
-
 
     :return: list of dict objects which contains the details of all interfaces on the target device
 
@@ -566,7 +554,6 @@ def get_all_interface_details(auth, url, devid=None, devip=None):
     >>> assert type(all_interface_details) is list
 
     >>> assert 'ifAlias' in all_interface_details[0]
-
 
      """
     if devip is not None:
@@ -616,7 +603,6 @@ def get_interface_details(ifindex, auth, url, devid=None, devip=None):
     >>> assert type(interface_details) is dict
 
     >>> assert 'ifAlias' in interface_details
-
 
      """
     if devip is not None:
