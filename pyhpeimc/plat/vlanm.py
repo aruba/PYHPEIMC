@@ -54,21 +54,17 @@ def get_dev_vlans(auth, url, devid=None, devip=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    # checks to see if the imc credentials are already available
     get_dev_vlans_url = "/imcrs/vlan?devId=" + str(devid) + "&start=0&size=5000&total=false"
     f_url = url + get_dev_vlans_url
-
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_vlans = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_vlans = (json.loads(response.text))
             return dev_vlans['vlan']
-        elif r.status_code == 409:
+        elif response.status_code == 409:
             return {'vlan': 'no vlans'}
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_dev_vlans: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_dev_vlans: An Error has occured'
 
 
 def get_trunk_interfaces(auth, url, devid=None, devip=None):
@@ -111,27 +107,23 @@ def get_trunk_interfaces(auth, url, devid=None, devip=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    # checks to see if the imc credentials are already available
     get_trunk_interfaces_url = "/imcrs/vlan/trunk?devId=" + str(devid) + \
                                "&start=1&size=5000&total=false"
     f_url = url + get_trunk_interfaces_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
-    print(f_url)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_trunk_interfaces = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_trunk_interfaces = (json.loads(response.text))
             if len(dev_trunk_interfaces) == 2:
                 if type(dev_trunk_interfaces['trunkIf']) is list:
                     return dev_trunk_interfaces['trunkIf']
                 elif type(dev_trunk_interfaces['trunkIf']) is dict:
                     return [dev_trunk_interfaces['trunkIf']]
-
             else:
                 dev_trunk_interfaces['trunkIf'] = ["No trunk inteface"]
                 return dev_trunk_interfaces['trunkIf']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_trunk_interfaces: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_trunk_interfaces: An Error has occured'
 
 
 def get_device_access_interfaces(auth, url, devid=None, devip=None):
@@ -174,19 +166,17 @@ def get_device_access_interfaces(auth, url, devid=None, devip=None):
     get_access_interface_vlan_url = "/imcrs/vlan/access?devId=" + str(devid) + \
                                     "&start=1&size=500&total=false"
     f_url = url + get_access_interface_vlan_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_access_interfaces = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_access_interfaces = (json.loads(response.text))
             if len(dev_access_interfaces) == 2:
                 return dev_access_interfaces['accessIf']
             else:
                 dev_access_interfaces['accessIf'] = ["No access inteface"]
                 return dev_access_interfaces['accessIf']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_device_access_interfaces: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_device_access_interfaces: An Error has occured"
 
 
 # Section for Hybrid Interfaces - Applies to Comware Devices only
@@ -231,12 +221,10 @@ def get_device_hybrid_interfaces(auth, url, devid=None, devip=None):
     get_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + \
                                     "&start=1&size=500&total=false"
     f_url = url + get_hybrid_interface_vlan_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_hybrid_interfaces = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_hybrid_interfaces = (json.loads(response.text))
             if len(dev_hybrid_interfaces) == 2:
                 dev_hybrid = dev_hybrid_interfaces['hybridIf']
                 if type(dev_hybrid) == dict:
@@ -245,8 +233,8 @@ def get_device_hybrid_interfaces(auth, url, devid=None, devip=None):
             else:
                 dev_hybrid_interfaces['hybridIf'] = ["No hybrid inteface"]
                 return dev_hybrid_interfaces['hybridIf']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_device_hybrid_interfaces: An Error has occured"
 
 
 def add_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, devip=None,
@@ -276,16 +264,14 @@ def add_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, d
         "untagVlanFlag": "true",
         "untaggedVlans": "''' + untaggedvlans + '''"
     }'''
-    # creates the URL using the payload variable as the contents
-    r = requests.post(f_url, auth=auth, data=payload, headers=HEADERS)
-    # r.status_code
+    response = requests.post(f_url, auth=auth, data=payload, headers=HEADERS)
     try:
-        if r.status_code == 201:
+        if response.status_code == 201:
             return 201
-        if r.status_code == 409:
+        if response.status_code == 409:
             return 409
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_device_hybrid_interfaces: An Error has occured"
 
 
 def modify_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url, devip=None,
@@ -316,15 +302,14 @@ def modify_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url
         "untagVlanFlag": "true",
         "untaggedVlans": "''' + untaggedvlans + '''"
     }'''
-    # creates the URL using the payload variable as the contents
-    r = requests.put(f_url, auth=auth, data=payload, headers=HEADERS)
+    response = requests.put(f_url, auth=auth, data=payload, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             return 204
-        if r.status_code == 409:
+        if response.status_code == 409:
             return 409
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_device_hybrid_interfaces: An Error has occured"
 
 
 def delete_hybrid_interface(ifindex, auth, url, devip=None, devid=None):
@@ -367,15 +352,14 @@ def delete_hybrid_interface(ifindex, auth, url, devip=None, devid=None):
         devid = get_dev_details(devip, auth, url)['id']
     delete_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + devid + "&ifIndex=" + ifindex
     f_url = url + delete_hybrid_interface_vlan_url
-    r = requests.delete(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             return 204
-        if r.status_code == 409:
+        if response.status_code == 409:
             return 409
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_device_hybrid_interfaces: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_device_hybrid_interfaces: An Error has occured"
 
 
 # Section for working with Access Interfaces
@@ -423,15 +407,14 @@ def set_access_interface_pvid(ifindex, pvid, auth, url, devip=None, devid=None):
     set_access_interface_pvid_url = "/imcrs/vlan/access?devId=" + devid + "&destVlanId=" + pvid \
                                     + "&ifIndex=" + str(ifindex)
     f_url = url + set_access_interface_pvid_url
-    # creates the URL using the payload variable as the contents
-    r = requests.put(f_url, auth=auth, headers=HEADERS)
+    response = requests.put(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             return 204
-        if r.status_code == 409:
+        if response.status_code == 409:
             return 409
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " set_access_interface_pvid: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " set_access_interface_pvid: An Error has occured"
 
 
 def get_access_interface_vlan(ifindex, accessinterfacelist):
@@ -504,20 +487,18 @@ def create_dev_vlan(vlanid, vlan_name, auth, url, devid=None, devip=None):
         devid = get_dev_details(devip, auth, url)['id']
     create_dev_vlan_url = "/imcrs/vlan?devId=" + str(devid)
     f_url = url + create_dev_vlan_url
-    print(f_url)
     payload = '''{ "vlanId": "''' + str(vlanid) + '''", "vlanName" : "''' + str(vlan_name) + '''"}'''
-    print(payload)
-    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
+    response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 201:
+        if response.status_code == 201:
             print('Vlan Created')
             return 201
-        elif r.status_code == 409:
+        elif response.status_code == 409:
             print('''Unable to create VLAN.\nVLAN Already Exists\nDevice does not support  VLAN
             function''')
             return 409
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " create_dev_vlan: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " create_dev_vlan: An Error has occured"
 
 
 def delete_dev_vlans(vlanid, auth, url, devid=None, devip=None):
@@ -550,17 +531,17 @@ def delete_dev_vlans(vlanid, auth, url, devid=None, devip=None):
         devid = get_dev_details(devip, auth, url)['id']
     remove_dev_vlan_url = "/imcrs/vlan/delvlan?devId=" + str(devid) + "&vlanId=" + str(vlanid)
     f_url = url + remove_dev_vlan_url
-    r = requests.delete(f_url, auth=auth, headers=HEADERS)
+    response = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             print('Vlan deleted')
-            return r.status_code
-        elif r.status_code == 409:
+            return response.status_code
+        elif response.status_code == 409:
             print('Unable to delete VLAN.\nVLAN does not Exist\nDevice does not support  VLAN '
                   'function')
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " delete_dev_vlans: An Error has occured"
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " delete_dev_vlans: An Error has occured"
 
 
 """
