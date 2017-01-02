@@ -73,8 +73,8 @@ def get_client_info_all(auth, url):
     >>> assert 'userName' in all_client_info[0]
 
     """
-    get_client_info_all_url = "/imcrs/wlan/clientInfo/queryAllClientBasicInfo"
-    f_url = url + get_client_info_all_url
+    GET_CLIENT_INFO_ALL_URL = "/imcrs/wlan/clientInfo/queryAllClientBasicInfo"
+    f_url = url + GET_CLIENT_INFO_ALL_URL
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
@@ -91,8 +91,8 @@ def get_client_online_history_all(auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents one client as discovered by the HPE IMC
-    Wireless Services Management module.
+    :return: list of dictionaries where each element of the list represents one client as
+    discovered by the HPE IMC Wireless Services Management module.
 
     :rtype: list
 
@@ -151,8 +151,8 @@ def get_client_online_history_all(auth, url):
     >>> assert 'userName' in online_client_info[0]
 
     """
-    get_client_online_history_all_url = "/imcrs/wlan/clientInfo/queryClientOnlineHistoryInfo"
-    f_url = url + get_client_online_history_all_url
+    GET_CLIENT_ONLINE_HISTORY_ALL_URL = "/imcrs/wlan/clientInfo/queryClientOnlineHistoryInfo"
+    f_url = url + GET_CLIENT_ONLINE_HISTORY_ALL_URL
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:

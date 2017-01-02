@@ -116,7 +116,7 @@ def delete_perf_task(task_name, auth, url):
 
     """
     task_id = get_perf_task(task_name, auth, url)
-    if type(task_id) is str:
+    if isinstance(task_id, str):
         print("Perf task doesn't exist")
         return 403
     task_id = task_id['taskId']
