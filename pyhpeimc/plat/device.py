@@ -48,19 +48,15 @@ def get_system_vendors(auth, url):
 
       >>> assert 'name' in vendors[0]
 
-
     """
-    get_system_vendors_url = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false' \
-                             '&total=false'
-    f_url = url + get_system_vendors_url
+    f_url = url + '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false&total=false'
     response = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
     try:
         if response.status_code == 200:
             system_vendors = (json.loads(response.text))
             return system_vendors['deviceVendor']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 # TODO remove function when version => 1.60
@@ -89,17 +85,14 @@ def get_system_category(auth, url):
 
 
     """
-    get_system_category_url = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false' \
-                              '&total=false'
-    f_url = url + get_system_category_url
+    f_url = url + '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false&total=false'
     response = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
     try:
         if response.status_code == 200:
             system_category = (json.loads(response.text))
             return system_category['deviceCategory']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 # TODO Delete function when version => 1.60
@@ -127,16 +120,14 @@ def get_system_device_models(auth, url):
       >>> assert 'virtualDeviceName' in device_models[0]
 
     """
-    get_system_device_model_url = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc' \
-                                  '=false&total=false'
-    f_url = url + get_system_device_model_url
+    f_url = url + '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc=false&total=false'
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
             system_device_model = (json.loads(response.text))
             return system_device_model['deviceModel']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 # TODO Delete function when version => 1.60
@@ -164,16 +155,15 @@ def get_system_series(auth, url):
       >>> assert 'name' in series[0]
 
     """
-    get_system_series_url = ('/imcrs/plat/res/series?managedOnly=false'
-                             '&start=0&size=10000&orderBy=id&desc=false&total=false')
-    f_url = url + get_system_series_url
+    f_url = url + '/imcrs/plat/res/series?managedOnly=false&start=0&size=10000&orderBy=id&desc' \
+                   '=false&total=false'
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
             system_series = (json.loads(response.text))
             return system_series['deviceSeries']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_series: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_series: An Error has occured"
 
 
 """
@@ -227,8 +217,8 @@ def get_all_devs(auth, url, network_address=None):
                 return "Device not found"
             else:
                 return dev_details['device']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 def get_dev_details(ip_address, auth, url):
@@ -280,8 +270,8 @@ def get_dev_details(ip_address, auth, url):
                         return dev_details
             elif type(dev_details['device']) == dict:
                 return dev_details['device']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 def get_dev_interface(auth, url, devid=None, devip=None):
@@ -330,8 +320,8 @@ def get_dev_interface(auth, url, devid=None, devip=None):
                 return int_list['interface']
             else:
                 return []
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_interface: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_interface: An Error has occured"
 
 
 def get_dev_run_config(auth, url, devid=None, devip=None):
@@ -369,8 +359,7 @@ def get_dev_run_config(auth, url, devid=None, devip=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devid) + "/currentRun"
-    f_url = url + get_dev_run_url
+    f_url = url + "/imcrs/icc/deviceCfg/" + str(devid) + "/currentRun"
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
@@ -378,8 +367,8 @@ def get_dev_run_config(auth, url, devid=None, devip=None):
             return run_conf
         elif response.status_code == 404:
             return "This features is no supported on this device"
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_run_config: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_run_config: An Error has occured"
 
 
 def get_dev_start_config(auth, url, devid=None, devip=None):
@@ -418,19 +407,16 @@ def get_dev_start_config(auth, url, devid=None, devip=None):
     # checks to see if the imc credentials are already available
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_dev_run_url = "/imcrs/icc/deviceCfg/" + str(devid) + "/currentStart"
-    f_url = url + get_dev_run_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/icc/deviceCfg/" + str(devid) + "/currentStart"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            start_conf = (json.loads(r.text))['content']
+        if response.status_code == 200:
+            start_conf = (json.loads(response.text))['content']
             return start_conf
-        elif r.status_code == 404:
+        elif response.status_code == 404:
             return "This features is no supported on this device"
-
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_start_config: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_start_config: An Error has occured"
 
 
 def get_dev_mac_learn(auth, url, devid=None, devip=None):
@@ -467,8 +453,7 @@ def get_dev_mac_learn(auth, url, devid=None, devip=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_dev_mac_learn_url = '/imcrs/res/access/ipMacLearn/' + str(devid)
-    f_url = url + get_dev_mac_learn_url
+    f_url = url + '/imcrs/res/access/ipMacLearn/' + str(devid)
     try:
         response = requests.get(f_url, auth=auth, headers=HEADERS)
         if response.status_code == 200:
@@ -480,8 +465,8 @@ def get_dev_mac_learn(auth, url, devid=None, devip=None):
                 if type(mac_learn_query) is dict:
                     mac_learn_query = [mac_learn_query]
                 return mac_learn_query
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_mac_learn: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_mac_learn: An Error has occured"
 
 
 def run_dev_cmd(cmd_list, auth, url, devid=None, devip=None):
@@ -533,12 +518,15 @@ def run_dev_cmd(cmd_list, auth, url, devid=None, devip=None):
 
                    }
                    }'''
-    response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
-    if response.status_code == 200:
-        if len(response.text) < 1:
-            return ''
-        else:
-            return json.loads(response.text)
+    try:
+        response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
+        if response.status_code == 200:
+            if len(response.text) < 1:
+                return ''
+            else:
+                return json.loads(response.text)
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " run_dev_cmd: An Error has occured"
 
 
 """
@@ -591,8 +579,8 @@ def get_all_interface_details(auth, url, devid=None, devip=None):
         if response.status_code == 200:
             dev_details = (json.loads(response.text))
             return dev_details['interface']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_all_interface_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_all_interface_details: An Error has occured"
 
 
 def get_interface_details(ifindex, auth, url, devid=None, devip=None):
@@ -641,8 +629,8 @@ def get_interface_details(ifindex, auth, url, devid=None, devip=None):
         if response.status_code == 200:
             dev_details = (json.loads(response.text))
             return dev_details
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_interface_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_interface_details: An Error has occured"
 
 
 def set_interface_down(ifindex, auth, url, devid=None, devip=None):
@@ -695,8 +683,8 @@ def set_interface_down(ifindex, auth, url, devid=None, devip=None):
         print(response.status_code)
         if response.status_code == 204:
             return response.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " set_inteface_down: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " set_inteface_down: An Error has occured"
 
 
 def set_inteface_up(ifindex, auth, url, devid=None, devip=None):
@@ -747,8 +735,8 @@ def set_inteface_up(ifindex, auth, url, devid=None, devip=None):
         response = requests.put(f_url, auth=auth, headers=HEADERS)
         if response.status_code == 204:
             return response.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " set_inteface_up: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " set_inteface_up: An Error has occured"
 
 
 def _make_cmd_list(cmd_list):
