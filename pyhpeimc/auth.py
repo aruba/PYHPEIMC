@@ -14,8 +14,7 @@ import json
 import requests
 from requests.auth import HTTPDigestAuth
 
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
+from pyhpeimc.auth import HEADERS
 
 
 class IMCAuth(requests.auth.HTTPDigestAuth):
@@ -62,9 +61,9 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
         auth = requests.auth.HTTPDigestAuth(self.username, self.password)
         f_url = url + "/imcrs"
         try:
-            response = requests.get(f_url, auth=auth, headers=headers, verify=False)
+            response = requests.get(f_url, auth=auth, headers=HEADERS, verify=False)
             if response.status_code != 200:  # checks for valid IMC credentials
-                print("Error:\n" + str(e) + "Error: \n You're credentials are invalid. Please "
+                print("Error:\n" + "Error: \n You're credentials are invalid. Please "
                                              "try again\n\n")
                 set_imc_creds()
             return response.status_code
@@ -85,7 +84,7 @@ def check_imc_creds(auth, url):
     test_url = '/imcrs'
     f_url = url + test_url
     try:
-        response = requests.get(f_url, auth=auth, headers=headers, verify=False)
+        response = requests.get(f_url, auth=auth, headers=HEADERS, verify=False)
         return bool(response.status_code == 200)
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + " test_imc_creds: An Error has occured"
@@ -110,7 +109,7 @@ def set_imc_creds(h_url=None, imc_server=None, imc_port=None, imc_user=None, imc
     test_url = '/imcrs'
     f_url = url + test_url
     try:
-        response = requests.get(f_url, auth=auth, headers=headers, verify=False)
+        response = requests.get(f_url, auth=auth, headers=HEADERS, verify=False)
         print(response.status_code)
         if response.status_code != 200:  # checks for valid IMC credentials
             print("Error: \n You're credentials are invalid. Please try again\n\n")
@@ -118,7 +117,6 @@ def set_imc_creds(h_url=None, imc_server=None, imc_port=None, imc_user=None, imc
         else:
             print("You've successfully access the IMC eAPI")
             return auth
-    # checks for reqeusts exceptions
     except requests.exceptions.RequestException as error:
         print("Error:\n" + str(error))
         print("\n\nThe IMC server address is invalid. Please try again\n\n")
