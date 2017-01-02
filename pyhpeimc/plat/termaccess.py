@@ -62,26 +62,24 @@ def get_real_time_locate(host_ipaddress, auth, url):
     >>> assert len(no_device) == 0
 
     """
-    real_time_locate_url = "/imcrs/res/access/realtimeLocate?type=2&value=" + str(host_ipaddress) \
-                           + "&total=false"
-    f_url = url + real_time_locate_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/res/access/realtimeLocate?type=2&value=" + str(host_ipaddress)  + \
+            "&total=false"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            response = json.loads(r.text)
+        if response.status_code == 200:
+            response = json.loads(response.text)
             if 'realtimeLocation' in response:
-                real_time_locate = json.loads(r.text)['realtimeLocation']
+                real_time_locate = response['realtimeLocation']
                 if type(real_time_locate) is dict:
                     real_time_locate = [real_time_locate]
                     return real_time_locate
                 else:
-                    return json.loads(r.text)['realtimeLocation']
+                    return json.loads(response)['realtimeLocation']
             else:
                 print("Host not found")
                 return 403
-
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_real_time_locate: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_real_time_locate: An Error has occured"
 
 
 def get_ip_mac_arp_list(auth, url, devid=None, devip=None):
@@ -123,19 +121,17 @@ def get_ip_mac_arp_list(auth, url, devid=None, devip=None):
         elif type(dev_details) is str:
             print("Device not found")
             return 403
-    ip_mac_arp_list_url = "/imcrs/res/access/ipMacArp/" + str(devid)
-    f_url = url + ip_mac_arp_list_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/res/access/ipMacArp/" + str(devid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            ipmacarplist = (json.loads(r.text))
+        if response.status_code == 200:
+            ipmacarplist = (json.loads(response.text))
             if 'ipMacArp' in ipmacarplist:
                 return ipmacarplist['ipMacArp']
             else:
                 return ['this function is unsupported']
-
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_ip_mac_arp_list: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ip_mac_arp_list: An Error has occured"
 
 
 # this section deals with the IP Address Manager functions with terminal access of HPE IMC Base
@@ -178,13 +174,13 @@ def get_ip_scope(auth, url, scopeid=None, ):
         get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?ipScopeId=" + str(scopeid)
 
     f_url = url + get_ip_scope_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            ipscopelist = (json.loads(r.text))
+        if response.status_code == 200:
+            ipscopelist = (json.loads(response.text))
             return ipscopelist['assignedIpScope']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_ip_scope: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ip_scope: An Error has occured"
 
 
 def get_ip_scope_detail(auth, url, scopeid=None, network_address=None):
@@ -220,15 +216,14 @@ def get_ip_scope_detail(auth, url, scopeid=None, network_address=None):
     """
     if network_address is not None:
         scopeid = get_scope_id(network_address, auth, url)
-    get_ip_scope_url = "/imcrs/res/access/assignedIpScope/" + str(scopeid)
-    f_url = url + get_ip_scope_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/res/access/assignedIpScope/" + str(scopeid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            ipscopelist = (json.loads(r.text))
+        if response.status_code == 200:
+            ipscopelist = (json.loads(response.text))
             return ipscopelist
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_ip_scope: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ip_scope: An Error has occured"
 
 
 def add_ip_scope(name, description, auth, url, startip=None, endip=None, network_address=None):
@@ -281,21 +276,19 @@ def add_ip_scope(name, description, auth, url, startip=None, endip=None, network
         nw_address = ipaddress.IPv4Network(network_address)
         startip = nw_address[1]
         endip = nw_address[-2]
-    add_ip_scope_url = "/imcrs/res/access/assignedIpScope"
-    f_url = url + add_ip_scope_url
+    f_url = url + "/imcrs/res/access/assignedIpScope"
     payload = ('''{  "startIp": "%s", "endIp": "%s","name": "%s","description": "%s" }'''
                % (str(startip), str(endip), str(name), str(description)))
-    r = requests.post(f_url, auth=auth, headers=HEADERS,
-                      data=payload)  # creates the URL using the payload variable as the contents
+    response = requests.post(f_url, auth=auth, headers=HEADERS, data=payload)
     try:
-        if r.status_code == 200:
+        if response.status_code == 200:
             # print("IP Scope Successfully Created")
-            return r.status_code
-        elif r.status_code == 409:
+            return response.status_code
+        elif response.status_code == 409:
             # print ("IP Scope Already Exists")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " add_ip_scope: An Error has occured"
 
 
 def add_child_ip_scope(name, description, auth, url, startip=None, endip=None, parent_scopeid=None,
@@ -341,22 +334,20 @@ def add_child_ip_scope(name, description, auth, url, startip=None, endip=None, p
         nw_address = ipaddress.IPv4Network(network_address)
         startip = nw_address[1]
         endip = nw_address[-2]
-    add_ip_scope_url = "/imcrs/res/access/assignedIpScope/" + str(parent_scopeid)
-    f_url = url + add_ip_scope_url
+    f_url = url + "/imcrs/res/access/assignedIpScope/" + str(parent_scopeid)
     payload = ('''{ "startIp": "%s", "endIp": "%s","name": "%s","description": "%s",
                     "parentId" : "%s"}'''
                % (str(startip), str(endip), str(name), str(description), str(parent_scopeid)))
-    r = requests.post(f_url, auth=auth, headers=HEADERS,
-                      data=payload)  # creates the URL using the payload variable as the contents
+    response = requests.post(f_url, auth=auth, headers=HEADERS, data=payload)
     try:
-        if r.status_code == 200:
+        if response.status_code == 200:
             # print("IP Scope Successfully Created")
-            return r.status_code
-        elif r.status_code == 409:
+            return response.status_code
+        elif response.status_code == 409:
             # print ("Conflict with Current Scope")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " add_ip_scope: An Error has occured"
 
 
 def delete_ip_scope(network_address, auth, url):
@@ -381,15 +372,14 @@ def delete_ip_scope(network_address, auth, url):
     scope_id = get_scope_id(network_address, auth, url)
     if scope_id == "Scope Doesn't Exist":
         return scope_id
-    delete_ip_address_url = '''/imcrs/res/access/assignedIpScope/''' + str(scope_id)
-    f_url = url + delete_ip_address_url
-    r = requests.delete(f_url, auth=auth, headers=HEADERS)
+    f_url = url + '''/imcrs/res/access/assignedIpScope/''' + str(scope_id)
+    response = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             # print("IP Segment Successfully Deleted")
             return 204
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " delete_ip_scope: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " delete_ip_scope: An Error has occured"
 
 
 # Following functions deal with hosts assigned to IP scopes
@@ -432,20 +422,18 @@ def add_scope_ip(hostipaddress, name, description, auth, url, scopeid=None, netw
     new_ip = {"ip": hostipaddress,
               "name": name,
               "description": description}
-    add_scope_ip_url = '/imcrs/res/access/assignedIpScope/ip?ipScopeId=' + str(scopeid)
-    f_url = url + add_scope_ip_url
+    f_url = url + '/imcrs/res/access/assignedIpScope/ip?ipScopeId=' + str(scopeid)
     payload = json.dumps(new_ip)
-    r = requests.post(f_url, auth=auth, headers=HEADERS,
-                      data=payload)  # creates the URL using the payload variable as the contents
+    response = requests.post(f_url, auth=auth, headers=HEADERS, data=payload)
     try:
-        if r.status_code == 200:
+        if response.status_code == 200:
             # print("IP Host Successfully Created")
-            return r.status_code
-        elif r.status_code == 409:
+            return response.status_code
+        elif response.status_code == 409:
             # print("IP Host Already Exists")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " add_ip_scope: An Error has occured"
 
 
 def remove_scope_ip(hostid, auth, url):
@@ -481,18 +469,17 @@ def remove_scope_ip(hostid, auth, url):
     >>> assert rem_host == 204
 
     """
-    delete_scope_ip_url = '/imcrs/res/access/assignedIpScope/ip/' + str(hostid)
-    f_url = url + delete_scope_ip_url
-    r = requests.delete(f_url, auth=auth, headers=HEADERS, )
+    f_url = url + '/imcrs/res/access/assignedIpScope/ip/' + str(hostid)
+    response = requests.delete(f_url, auth=auth, headers=HEADERS, )
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             # print("Host Successfully Deleted")
-            return r.status_code
-        elif r.status_code == 409:
+            return response.status_code
+        elif response.status_code == 409:
             # print("IP Scope Already Exists")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " add_ip_scope: An Error has occured"
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " add_ip_scope: An Error has occured"
 
 
 def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
@@ -538,12 +525,11 @@ def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
         scopeid = get_scope_id(network_address, auth, url)
         if scopeid == "Scope Doesn't Exist":
             return scopeid
-    get_ip_scope_url = "/imcrs/res/access/assignedIpScope/ip?size=10000&ipScopeId=" + str(scopeid)
-    f_url = url + get_ip_scope_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/res/access/assignedIpScope/ip?size=10000&ipScopeId=" + str(scopeid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            ipscopelist = (json.loads(r.text))
+        if response.status_code == 200:
+            ipscopelist = (json.loads(response.text))
             if ipscopelist == {}:
                 return ipscopelist
             else:
@@ -552,8 +538,8 @@ def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
                 ipscope = [ipscopelist]
                 return ipscope
             return ipscopelist
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_ip_scope: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ip_scope: An Error has occured"
 
 
 def add_host_to_segment(hostipaddress, name, description, network_address, auth, url):
