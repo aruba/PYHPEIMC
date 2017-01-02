@@ -20,8 +20,8 @@ HEADERS = {'Accept': 'application/json', 'Content-Type':
 
 class IMCAuth(requests.auth.HTTPDigestAuth):
     """
-    This class handles authentication against the HPE IMC API and uses the Requests API. IMCAuth derives from
-    requests.auth.HTTPDigestAuth.
+    This class handles authentication against the HPE IMC API and uses the Requests API. IMCAuth
+    derives from requests.auth.HTTPDigestAuth.
 
     >>> auth = IMCAuth("http://", "10.101.0.204", "8080", "admin", "admin")
 
@@ -35,8 +35,10 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
         Initializes the class. Set the h_url, server, username, and password variables.
         :param h_url: str value. Must be equal to "http://" or "https://
         :param server: str value. Must be valid IPv4 address or FQDN
-        :param port: str value. Equal to listening port of IMC server. example "8080" for http or "8443" for HTTPS
-        :param username: str value. Equal to username of IMC operator with privileges to access RESTUL API
+        :param port: str value. Equal to listening port of IMC server. example "8080" for http
+        or "8443" for HTTPS
+        :param username: str value. Equal to username of IMC operator with privileges to access
+        RESTUL API
         :param password: str value. Equal to valid password of username defined above
         :return:
         returns HTTPDigestauth object
@@ -52,22 +54,22 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
 
     def get_auth(self):
         """
-        This method requests an authentication object from the HPE IMC NMS and returns an HTTPDigest Auth Object
+        This method requests an authentication object from the HPE IMC NMS and returns an
+        HTTPDigest Auth Object
         :return:
         """
         url = self.h_url + self.server + ":" + self.port
         auth = requests.auth.HTTPDigestAuth(self.username, self.password)
-        auth_url = "/imcrs"
-        f_url = url + auth_url
+        f_url = url + "/imcrs"
         try:
-            r = requests.get(f_url, auth=auth, headers=headers, verify=False)
-            if r.status_code != 200:  # checks for valid IMC credentials
-                print("Error:\n" + str(e) + "Error: \n You're credentials are invalid. Please try again\n\n")
+            response = requests.get(f_url, auth=auth, headers=headers, verify=False)
+            if response.status_code != 200:  # checks for valid IMC credentials
+                print("Error:\n" + str(e) + "Error: \n You're credentials are invalid. Please "
+                                             "try again\n\n")
                 set_imc_creds()
-            return r.status_code
-            # checks for reqeusts exceptions
+            return response.status_code
         except requests.exceptions.RequestException as error:
-            return "Error:\n" + str(error) + '\n\nThe IMC server address is invalid. Please try again'
+            return "Error:\n" + str(error) + 'The IMC server address is invalid. Please try again'
 
 
 def check_imc_creds(auth, url):
@@ -83,8 +85,8 @@ def check_imc_creds(auth, url):
     test_url = '/imcrs'
     f_url = url + test_url
     try:
-        r = requests.get(f_url, auth=auth, headers=headers, verify=False)
-        return bool(r.status_code == 200)
+        response = requests.get(f_url, auth=auth, headers=headers, verify=False)
+        return bool(response.status_code == 200)
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + " test_imc_creds: An Error has occured"
 
@@ -108,9 +110,9 @@ def set_imc_creds(h_url=None, imc_server=None, imc_port=None, imc_user=None, imc
     test_url = '/imcrs'
     f_url = url + test_url
     try:
-        r = requests.get(f_url, auth=auth, headers=headers, verify=False)
-        print(r.status_code)
-        if r.status_code != 200:  # checks for valid IMC credentials
+        response = requests.get(f_url, auth=auth, headers=headers, verify=False)
+        print(response.status_code)
+        if response.status_code != 200:  # checks for valid IMC credentials
             print("Error: \n You're credentials are invalid. Please try again\n\n")
             set_imc_creds()
         else:
@@ -131,9 +133,11 @@ This section contains misc helper functions as needed.
 
 def print_to_file(object_name):
     """
-    Function takes in object of type str, list, or dict and prints out to current working directory as pyoutput.txt
+    Function takes in object of type str, list, or dict and prints out to current working
+    directory as pyoutput.txt
     :param:  Object: object of type str, list, or dict
-    :return: No return. Just prints out to file handler and save to current working directory as pyoutput.txt
+    :return: No return. Just prints out to file handler and save to current working directory as
+    pyoutput.txt
     """
     with open('pyoutput.txt', 'w') as filehandler:
         output = None
