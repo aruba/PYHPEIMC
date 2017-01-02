@@ -17,9 +17,7 @@ import requests
 from pyhpeimc.auth import HEADERS
 
 
-"""
-This section contains functions which operate at the system level
-"""
+# This section contains functions which operate at the system level
 
 
 def get_system_vendors(auth, url):
@@ -82,9 +80,7 @@ def get_system_category(auth, url):
 
 
     """
-    GET_SYSTEM_CATEGORY_URL = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false' \
-                               '&total=false'
-    f_url = url + GET_SYSTEM_CATEGORY_URL
+    f_url = url + '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false&total=false'
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
@@ -154,12 +150,9 @@ def get_system_series(auth, url):
 
       >>> assert 'name' in series[0]
 
-
-
     """
-    GET_SYSTEM_SERIES_URL = ('/imcrs/plat/res/series?managedOnly=false&start='
-                             '0&size=10000&orderBy=id&desc=false&total=false')
-    f_url = url + GET_SYSTEM_SERIES_URL
+    f_url = url + '/imcrs/plat/res/series?managedOnly=false&start=0&size=10000&orderBy=id&desc' \
+                   '=false&total=false'
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
