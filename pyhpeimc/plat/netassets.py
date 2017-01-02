@@ -58,9 +58,9 @@ def get_dev_asset_details(ipaddress, auth, url):
             dev_asset_info = (json.loads(response.text))
             if len(dev_asset_info) > 0:
                 dev_asset_info = dev_asset_info['netAsset']
-            if type(dev_asset_info) == dict:
+            if isinstance(dev_asset_info, dict):
                 dev_asset_info = [dev_asset_info]
-            if type(dev_asset_info) == list:
+            if isinstance(dev_asset_info, list):
                 dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') ==
                                      ipaddress]
             return dev_asset_info

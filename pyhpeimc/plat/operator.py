@@ -19,7 +19,7 @@ from pyhpeimc.auth import HEADERS
 
 
 
-def create_operator(operator, auth, url, headers=HEADERS):
+def create_operator(operator, auth, url):
     """
     Function takes input of dictionary operator with the following keys
     operator = { "fullName" : ""   ,
@@ -180,7 +180,7 @@ def get_plat_operator(auth, url):
     try:
         response = requests.get(f_url, auth=auth, headers=HEADERS)
         plat_oper_list = json.loads(response.text)['operator']
-        if type(plat_oper_list) is dict:
+        if isinstance(plat_oper_list, dict):
             oper_list = [plat_oper_list]
             return oper_list
         return plat_oper_list
@@ -189,7 +189,7 @@ def get_plat_operator(auth, url):
         return "Error:\n" + str(error) + ' get_plat_operator: An Error has occured'
 
 
-def delete_plat_operator(operator, auth, url, headers=HEADERS):
+def delete_plat_operator(operator, auth, url):
     """
     Function to set the password of an existing operator
     :param operator: str Name of the operator account

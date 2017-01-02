@@ -115,9 +115,7 @@ def get_system_device_models(auth, url):
       >>> assert 'virtualDeviceName' in device_models[0]
 
     """
-    GET_SYSTEM_DEVICE_MODEL_URL = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc' \
-                                   '=false&total=false'
-    f_url = url + GET_SYSTEM_DEVICE_MODEL_URL
+    f_url = url + '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc=false&total=false'
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
