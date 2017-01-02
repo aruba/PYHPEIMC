@@ -15,10 +15,8 @@ import json
 
 import requests
 
+from pyhpeimc.auth import HEADERS
 from pyhpeimc.plat.device import get_dev_details
-
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
 
 
 def get_real_time_locate(host_ipaddress, auth, url):

@@ -13,8 +13,7 @@ import json
 
 import requests
 
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
+from pyhpeimc.auth import HEADERS
 
 """
 This section deals with HPE IMC Operator Functions

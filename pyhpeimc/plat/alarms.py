@@ -13,10 +13,8 @@ import json
 
 import requests
 
+from pyhpeimc.auth import HEADERS
 from pyhpeimc.plat.device import get_dev_details
-
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
 
 
 def get_dev_alarms(auth, url, devid=None, devip=None):
@@ -50,9 +48,8 @@ def get_dev_alarms(auth, url, devid=None, devip=None):
     # checks to see if the imc credentials are already available
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    get_dev_alarm_url = "/imcrs/fault/alarm?operatorName=admin&deviceId=" + \
+    f_url = url + "/imcrs/fault/alarm?operatorName=admin&deviceId=" + \
                         str(devid) + "&desc=false"
-    f_url = url + get_dev_alarm_url
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
@@ -93,8 +90,7 @@ def get_realtime_alarm(username, auth, url):
     >>> assert 'faultDesc' in real_time_alarm[0]
 
     """
-    get_realtime_alarm_url = "/imcrs/fault/faultRealTime?operatorName=" + username
-    f_url = url + get_realtime_alarm_url
+    f_url = url + "/imcrs/fault/faultRealTime?operatorName=" + username
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         realtime_alarm_list = (json.loads(response.text))
@@ -131,9 +127,8 @@ def get_alarms(username, auth, url):
     >>> assert 'ackStatus' in all_alarms[0]
 
     """
-    get_alarms_url = "/imcrs/fault/alarm?operatorName=" + username + \
+    f_url = url + "/imcrs/fault/alarm?operatorName=" + username + \
                      "&recStatus=0&ackStatus=0&timeRange=0&size=50&desc=true"
-    f_url = url + get_alarms_url
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:

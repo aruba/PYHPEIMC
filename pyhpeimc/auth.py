@@ -14,7 +14,7 @@ import json
 import requests
 from requests.auth import HTTPDigestAuth
 
-headers = {'Accept': 'application/json', 'Content-Type':
+HEADERS = {'Accept': 'application/json', 'Content-Type':
            'application/json', 'Accept-encoding': 'application/json'}
 
 

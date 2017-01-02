@@ -14,11 +14,8 @@ import json
 
 import requests
 
+from pyhpeimc.auth import HEADERS
 from pyhpeimc.plat.device import get_dev_details
-
-
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
 
 
 def get_vm_host_info(hostip, auth, url):
