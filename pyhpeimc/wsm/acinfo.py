@@ -13,8 +13,7 @@ import json
 
 import requests
 
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
+from pyhpeimc.auth import HEADERS
 
 
 def get_ac_info_all(auth, url):
@@ -39,8 +38,7 @@ def get_ac_info_all(auth, url):
     >>> ac_info_all = get_ac_info_all(auth.creds, auth.url)
 
     """
-    get_ac_info_all_url = "/imcrs/wlan/acInfo/queryAcBasicInfo"
-    f_url = url + get_ac_info_all_url
+    f_url = url + "/imcrs/wlan/acInfo/queryAcBasicInfo"
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:

@@ -13,8 +13,7 @@ import json
 
 import requests
 
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-           'application/json', 'Accept-encoding': 'application/json'}
+from pyhpeimc.auth import HEADERS
 
 
 def get_client_info_all(auth, url):
@@ -73,8 +72,7 @@ def get_client_info_all(auth, url):
     >>> assert 'userName' in all_client_info[0]
 
     """
-    GET_CLIENT_INFO_ALL_URL = "/imcrs/wlan/clientInfo/queryAllClientBasicInfo"
-    f_url = url + GET_CLIENT_INFO_ALL_URL
+    f_url = url +  "/imcrs/wlan/clientInfo/queryAllClientBasicInfo"
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
@@ -151,8 +149,7 @@ def get_client_online_history_all(auth, url):
     >>> assert 'userName' in online_client_info[0]
 
     """
-    GET_CLIENT_ONLINE_HISTORY_ALL_URL = "/imcrs/wlan/clientInfo/queryClientOnlineHistoryInfo"
-    f_url = url + GET_CLIENT_ONLINE_HISTORY_ALL_URL
+    f_url = url + "/imcrs/wlan/clientInfo/queryClientOnlineHistoryInfo"
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
