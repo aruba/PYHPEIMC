@@ -16,9 +16,8 @@ from pyhpeimc.auth import HEADERS
 from pyhpeimc.plat.device import get_dev_details
 
 
-"""
-This section deals with HPE IMC Custom View functions
-"""
+
+# This section deals with HPE IMC Custom View functions
 
 
 def get_custom_views(auth, url, name=None):
@@ -63,10 +62,10 @@ def get_custom_views(auth, url, name=None):
         get_custom_view_url = '/imcrs/plat/res/view/custom?resPrivilegeFilter=false&name=' + \
                                name + '&desc=false&total=false'
     f_url = url + get_custom_view_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            custom_view_list = (json.loads(r.text))
+        if response.status_code == 200:
+            custom_view_list = (json.loads(response.text))
             if 'customView' in custom_view_list:
                 custom_view_list = custom_view_list['customView']
                 if type(custom_view_list) == dict:
@@ -74,8 +73,8 @@ def get_custom_views(auth, url, name=None):
                     return custom_view_list
                 else:
                     return custom_view_list
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_custom_views: An Error has occured'
 
 
 def get_custom_view_details(name, auth, url):
@@ -113,16 +112,16 @@ def get_custom_view_details(name, auth, url):
     view_id = get_custom_views(auth, url, name=name)[0]['symbolId']
     get_custom_view_details_url = '/imcrs/plat/res/view/custom/' + str(view_id)
     f_url = url + get_custom_view_details_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            current_devices = (json.loads(r.text))
+        if response.status_code == 200:
+            current_devices = (json.loads(response.text))
             if 'device' in current_devices:
                 return current_devices['device']
             else:
                 return []
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_custom_views: An Error has occured'
 
 
 def create_custom_views(auth, url, name=None, upperview=None):
@@ -179,18 +178,18 @@ def create_custom_views(auth, url, name=None, upperview=None):
         parentviewid = get_custom_views(auth, url, upperview)[0]['symbolId']
         payload = '''{ "name": "''' + name + '''",
         "upLevelSymbolId" : "''' + str(parentviewid) + '''"}'''
-    r = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
+    response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 201:
+        if response.status_code == 201:
             print('View ' + name + ' created successfully')
-            return r.status_code
-        elif r.status_code == 409:
+            return response.status_code
+        elif response.status_code == 409:
             print("View " + name + " already exists")
-            return r.status_code
+            return response.status_code
         else:
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_custom_views: An Error has occured'
 
 
 
@@ -230,13 +229,13 @@ def add_devs_custom_views(custom_view_name, dev_list, auth, url):
     payload = '''{"device" : ''' + json.dumps(device_list) + '''}'''
     print(payload)
     f_url = url + add_devs_custom_views_url
-    r = requests.put(f_url, data=payload, auth=auth, headers=HEADERS)
+    response = requests.put(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             print('View ' + custom_view_name + ' : Devices Successfully Added')
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_custom_views: An Error has occured'
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_custom_views: An Error has occured'
 
 
 def delete_custom_view(auth, url, name):
@@ -282,12 +281,12 @@ def delete_custom_view(auth, url, name):
     view_id = get_custom_views(auth, url, name)[0]['symbolId']
     delete_custom_view_url = '/imcrs/plat/res/view/custom/' + str(view_id)
     f_url = url + delete_custom_view_url
-    r = requests.delete(f_url, auth=auth, headers=HEADERS)
+    response = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             print('View ' + name + ' deleted successfully')
-            return r.status_code
+            return response.status_code
         else:
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' delete_custom_view: An Error has occured'
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' delete_custom_view: An Error has occured'
