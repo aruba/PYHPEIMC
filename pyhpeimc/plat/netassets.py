@@ -47,19 +47,17 @@ def get_dev_asset_details(ipaddress, auth, url):
 
     """
     ipaddress = get_dev_details(ipaddress, auth, url)
-    if type(ipaddress) is dict:
+    if isinstance(ipaddress, dict):
         ipaddress = ipaddress['ip']
     else:
         print("Asset Doesn't Exist")
         return 403
     get_dev_asset_url = "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
     f_url = url + get_dev_asset_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_asset_info = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_asset_info = (json.loads(response.text))
             if len(dev_asset_info) > 0:
                 dev_asset_info = dev_asset_info['netAsset']
             if type(dev_asset_info) == dict:
@@ -68,8 +66,8 @@ def get_dev_asset_details(ipaddress, auth, url):
                 dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') ==
                                       ipaddress]
             return dev_asset_info
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_dev_asset_details: An Error has occured'
 
 
 def get_dev_asset_details_all(auth, url):
@@ -96,14 +94,12 @@ def get_dev_asset_details_all(auth, url):
     >>> assert 'asset' in all_assets[0]
 
     """
-    get_dev_asset_details_all_url = "/imcrs/netasset/asset?start=0&size=15000"
-    f_url = url + get_dev_asset_details_all_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    GET_DEV_ASSET_DETAILS_ALL_URL = "/imcrs/netasset/asset?start=0&size=15000"
+    f_url = url + GET_DEV_ASSET_DETAILS_ALL_URL
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_asset_info = (json.loads(r.text))['netAsset']
+        if response.status_code == 200:
+            dev_asset_info = (json.loads(response.text))['netAsset']
             return dev_asset_info
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_dev_asset_details: An Error has occured'

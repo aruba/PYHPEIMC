@@ -48,18 +48,16 @@ def get_system_vendors(auth, url):
 
 
     """
-    get_system_vendors_url = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false' \
+    GET_SYSTEM_VENDORS_URL = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false' \
                               '&total=false'
-    f_url = url + get_system_vendors_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + GET_SYSTEM_VENDORS_URL
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_vendors = (json.loads(r.text))
+        if response.status_code == 200:
+            system_vendors = (json.loads(response.text))
             return system_vendors['deviceVendor']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 def get_system_category(auth, url):
@@ -87,17 +85,16 @@ def get_system_category(auth, url):
 
 
     """
-    get_system_category_url = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false' \
+    GET_SYSTEM_CATEGORY_URL = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false' \
                                '&total=false'
-    f_url = url + get_system_category_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + GET_SYSTEM_CATEGORY_URL
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_category = (json.loads(r.text))
+        if response.status_code == 200:
+            system_category = (json.loads(response.text))
             return system_category['deviceCategory']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 def get_system_device_models(auth, url):
@@ -125,18 +122,16 @@ def get_system_device_models(auth, url):
       >>> assert 'virtualDeviceName' in device_models[0]
 
     """
-    get_system_device_model_url = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc' \
+    GET_SYSTEM_DEVICE_MODEL_URL = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc' \
                                    '=false&total=false'
-    f_url = url + get_system_device_model_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + GET_SYSTEM_DEVICE_MODEL_URL
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_device_model = (json.loads(r.text))
+        if response.status_code == 200:
+            system_device_model = (json.loads(response.text))
             return system_device_model['deviceModel']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 def get_system_series(auth, url):
@@ -165,15 +160,13 @@ def get_system_series(auth, url):
 
 
     """
-    get_system_series_url = ('/imcrs/plat/res/series?managedOnly=false&start='
+    GET_SYSTEM_SERIES_URL = ('/imcrs/plat/res/series?managedOnly=false&start='
                              '0&size=10000&orderBy=id&desc=false&total=false')
-    f_url = url + get_system_series_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + GET_SYSTEM_SERIES_URL
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_series = (json.loads(r.text))
+        if response.status_code == 200:
+            system_series = (json.loads(response.text))
             return system_series['deviceSeries']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_series: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_series: An Error has occured"
