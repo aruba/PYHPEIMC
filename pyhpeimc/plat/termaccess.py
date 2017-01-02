@@ -70,7 +70,7 @@ def get_real_time_locate(host_ipaddress, auth, url):
             response = json.loads(response.text)
             if 'realtimeLocation' in response:
                 real_time_locate = response['realtimeLocation']
-                if type(real_time_locate) is dict:
+                if isinstance(real_time_locate, dict):
                     real_time_locate = [real_time_locate]
                     return real_time_locate
                 else:
@@ -116,11 +116,11 @@ def get_ip_mac_arp_list(auth, url, devid=None, devip=None):
     """
     if devip is not None:
         dev_details = get_dev_details(devip, auth, url)
-        if type(dev_details) is not str:
-            devid = get_dev_details(devip, auth, url)['id']
-        elif type(dev_details) is str:
+        if isinstance(dev_details, str):
             print("Device not found")
             return 403
+        else:
+            devid = get_dev_details(devip, auth, url)['id']
     f_url = url + "/imcrs/res/access/ipMacArp/" + str(devid)
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
@@ -534,7 +534,7 @@ def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
                 return ipscopelist
             else:
                 ipscopelist = ipscopelist['assignedIpInfo']
-            if type(ipscopelist) is dict:
+            if isinstance(ipscopelist, dict):
                 ipscope = [ipscopelist]
                 return ipscope
             return ipscopelist
@@ -591,10 +591,9 @@ def delete_host_from_segment(hostipaddress, networkaddress, auth, url):
     return delete_host
 
 
-"""
-Following Section are Helper functions to help translate human readable IPv4 address to IMC
-internal keys for working with IPscopes and hosts
-"""
+
+# Following Section are Helper functions to help translate human readable IPv4 address to IMC
+# internal keys for working with IPscopes and hosts
 
 
 def get_scope_id(network_address, auth, url):
@@ -632,7 +631,7 @@ def get_scope_id(network_address, auth, url):
         if int(parent_scope['id']) > 0:
             if "assignedIpScope" in parent_scope:
                 child_scope = parent_scope['assignedIpScope']
-                if type(child_scope) is dict:
+                if isinstance(child_scope,dict):
                     child_scope = [child_scope]
                 for scope in child_scope:
                     if ipaddress.ip_address(scope['startIp']) == netaddr[1] \

@@ -15,9 +15,8 @@ import requests
 
 from pyhpeimc.auth import HEADERS
 
-"""
-This section deals with HPE IMC Operator Functions
-"""
+# This section deals with HPE IMC Operator Functions
+
 
 
 def create_operator(operator, auth, url, headers=HEADERS):
@@ -75,17 +74,16 @@ def create_operator(operator, auth, url, headers=HEADERS):
     >>> assert fail_operator_create == 409
 
     """
-    create_operator_url = '/imcrs/plat/operator'
-    f_url = url + create_operator_url
+    f_url = url + '/imcrs/plat/operator'
     payload = json.dumps(operator, indent=4)
-    r = requests.post(f_url, data=payload, auth=auth, headers=headers)
+    response = requests.post(f_url, data=payload, auth=auth, headers=headers)
     try:
-        if r.status_code == 409:
-            return r.status_code
-        elif r.status_code == 201:
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' create_operator: An Error has occured'
+        if response.status_code == 409:
+            return response.status_code
+        elif response.status_code == 201:
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' create_operator: An Error has occured'
 
 
 def set_operator_password(operator, password, auth, url):
@@ -142,14 +140,14 @@ def set_operator_password(operator, password, auth, url):
         password = input(
             '''\n ============ Please input the operators new password:\n ============  ''')
     payload = json.dumps({'password': password, 'authType': authtype})
-    r = requests.put(f_url, data=payload, auth=auth, headers=HEADERS)
+    response = requests.put(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             # print("Operator:" + operator +
             # " password was successfully changed")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' set_operator_password: An Error has occured'
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' set_operator_password: An Error has occured'
 
 
 def get_plat_operator(auth, url):
@@ -178,18 +176,17 @@ def get_plat_operator(auth, url):
     >>> assert 'name' in plat_operators[0]
 
     """
-    get_operator_url = '/imcrs/plat/operator?start=0&size=1000&orderBy=id&desc=false&total=false'
-    f_url = url + get_operator_url
+    f_url = url + '/imcrs/plat/operator?start=0&size=1000&orderBy=id&desc=false&total=false'
     try:
-        r = requests.get(f_url, auth=auth, headers=HEADERS)
-        plat_oper_list = json.loads(r.text)['operator']
+        response = requests.get(f_url, auth=auth, headers=HEADERS)
+        plat_oper_list = json.loads(response.text)['operator']
         if type(plat_oper_list) is dict:
             oper_list = [plat_oper_list]
             return oper_list
         return plat_oper_list
-    except requests.exceptions.RequestException as e:
-        print("Error:\n" + str(e) + ' get_plat_operator: An Error has occured')
-        return "Error:\n" + str(e) + ' get_plat_operator: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        print("Error:\n" + str(error) + ' get_plat_operator: An Error has occured')
+        return "Error:\n" + str(error) + ' get_plat_operator: An Error has occured'
 
 
 def delete_plat_operator(operator, auth, url, headers=HEADERS):
@@ -236,13 +233,12 @@ def delete_plat_operator(operator, auth, url, headers=HEADERS):
     if oper_id is None:
         # print ("User does not exist")
         return 409
-    delete_plat_operator_url = "/imcrs/plat/operator/"
-    f_url = url + delete_plat_operator_url + str(oper_id)
-    r = requests.delete(f_url, auth=auth, headers=headers)
+    f_url = url + "/imcrs/plat/operator/" + str(oper_id)
+    response = requests.delete(f_url, auth=auth, headers=headers)
     try:
-        if r.status_code == 204:
+        if response.status_code == 204:
             # print("Operator: " + operator +
             #  " was successfully deleted")
-            return r.status_code
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + ' delete_plat_operator: An Error has occured'
+            return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' delete_plat_operator: An Error has occured'

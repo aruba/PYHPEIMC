@@ -38,34 +38,6 @@ def get_ac_info_all(auth, url):
 
     >>> ac_info_all = get_ac_info_all(auth.creds, auth.url)
 
-    >>> assert type(ac_info_all) is list
-
-    >>> assert len(ac_info_all[0]) == 12
-
-    >>> assert 'hardwareVersion' in ac_info_all[0]
-
-    >>> assert 'ipAddress' in ac_info_all[0]
-
-    >>> assert 'label' in ac_info_all[0]
-
-    >>> assert 'macAddress' in ac_info_all[0]
-
-    >>> assert 'onlineApCount' in ac_info_all[0]
-
-    >>> assert 'onlineClientCount' in ac_info_all[0]
-
-    >>> assert 'pingStatus' in ac_info_all[0]
-
-    >>> assert 'serialId' in ac_info_all[0]
-
-    >>> assert 'softwareVersion' in ac_info_all[0]
-
-    >>> assert 'status' in ac_info_all[0]
-
-    >>> assert 'sysName' in ac_info_all[0]
-
-    >>> assert 'type' in ac_info_all[0]
-    
     """
     get_ac_info_all_url = "/imcrs/wlan/acInfo/queryAcBasicInfo"
     f_url = url + get_ac_info_all_url
