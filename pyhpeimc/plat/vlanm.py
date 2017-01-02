@@ -17,9 +17,7 @@ from pyhpeimc.auth import HEADERS
 from pyhpeimc.plat.device import get_dev_details
 
 
-"""
-This section contains functions which operate at the device level
-"""
+# This section contains functions which operate at the device level
 
 
 def get_dev_vlans(auth, url, devid=None, devip=None):
@@ -114,9 +112,9 @@ def get_trunk_interfaces(auth, url, devid=None, devip=None):
         if response.status_code == 200:
             dev_trunk_interfaces = (json.loads(response.text))
             if len(dev_trunk_interfaces) == 2:
-                if type(dev_trunk_interfaces['trunkIf']) is list:
+                if isinstance(dev_trunk_interfaces['trunkIf'], list):
                     return dev_trunk_interfaces['trunkIf']
-                elif type(dev_trunk_interfaces['trunkIf']) is dict:
+                elif isinstance(dev_trunk_interfaces['trunkIf'], dict):
                     return [dev_trunk_interfaces['trunkIf']]
             else:
                 dev_trunk_interfaces['trunkIf'] = ["No trunk inteface"]
@@ -226,7 +224,7 @@ def get_device_hybrid_interfaces(auth, url, devid=None, devip=None):
             dev_hybrid_interfaces = (json.loads(response.text))
             if len(dev_hybrid_interfaces) == 2:
                 dev_hybrid = dev_hybrid_interfaces['hybridIf']
-                if type(dev_hybrid) == dict:
+                if isinstance(dev_hybrid, dict):
                     dev_hybrid = [dev_hybrid]
                 return dev_hybrid
             else:
@@ -292,9 +290,7 @@ def modify_hybrid_interface(ifindex, pvid, taggedvlans, untaggedvlans, auth, url
         """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    modify_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + str(devid) + \
-                                       "&start=1&size=500&total=false"
-    f_url = url + modify_hybrid_interface_vlan_url
+    f_url = url + "/imcrs/vlan/hybrid?devId=" + str(devid) + "&start=1&size=500&total=false"
     payload = '''{"ifIndex": "''' + ifindex + '''",
         "pvid": "''' + pvid + '''",
         "taggedVlans": "''' + taggedvlans + '''",
@@ -349,8 +345,7 @@ def delete_hybrid_interface(ifindex, auth, url, devip=None, devid=None):
     """
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
-    delete_hybrid_interface_vlan_url = "/imcrs/vlan/hybrid?devId=" + devid + "&ifIndex=" + ifindex
-    f_url = url + delete_hybrid_interface_vlan_url
+    f_url = url + "/imcrs/vlan/hybrid?devId=" + devid + "&ifIndex=" + ifindex
     response = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 204:
@@ -543,6 +538,5 @@ def delete_dev_vlans(vlanid, auth, url, devid=None, devip=None):
         return "Error:\n" + str(error) + " delete_dev_vlans: An Error has occured"
 
 
-"""
-This section contains functions which operate at the interface level
-"""
+# This section contains functions which operate at the interface level
+
