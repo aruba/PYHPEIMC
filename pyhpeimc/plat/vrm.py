@@ -66,18 +66,17 @@ def get_vm_host_info(hostip, auth, url):
 
     """
     hostid = get_dev_details(hostip, auth, url)['id']
-    get_vm_host_info_url = "/imcrs/vrm/host?hostId=" + str(hostid)
-    f_url = url + get_vm_host_info_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/vrm/host?hostId=" + str(hostid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)
-        elif r.status_code == 204:
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)
+        elif response.status_code == 204:
             print("Device is not a supported Hypervisor")
             return "Device is not a supported Hypervisor"
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_vm_host_info: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_vm_host_info: An Error has occured"
 
 
 def get_vm_host_vnic(hostip, auth, url):
@@ -122,18 +121,17 @@ def get_vm_host_vnic(hostip, auth, url):
 
     """
     hostid = get_dev_details(hostip, auth, url)['id']
-    get_vm_host_vnic_url = "/imcrs/vrm/host/vnic?hostDevId=" + str(hostid)
-    f_url = url + get_vm_host_vnic_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/vrm/host/vnic?hostDevId=" + str(hostid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)['Nic']
-        elif r.status_code == 204:
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)['Nic']
+        elif response.status_code == 204:
             print("Device is not a supported Hypervisor")
             return "Device is not a supported Hypervisor"
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_vm_host_info: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_vm_host_info: An Error has occured"
 
 
 def get_host_vms(hostip, auth, url):
@@ -187,14 +185,13 @@ def get_host_vms(hostip, auth, url):
 
     """
     hostid = get_dev_details(hostip, auth, url)['id']
-    get_host_info_url = "/imcrs/vrm/host/vm?hostId=" + str(hostid)
-    f_url = url + get_host_info_url
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
+    f_url = url + "/imcrs/vrm/host/vm?hostId=" + str(hostid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(json.loads(r.text)) > 1:
-                return json.loads(r.text)['vmDevice']
+        if response.status_code == 200:
+            if len(json.loads(response.text)) > 1:
+                return json.loads(response.text)['vmDevice']
             else:
                 return "Device is not a supported Hypervisor"
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_host_vms: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_host_vms: An Error has occured"
