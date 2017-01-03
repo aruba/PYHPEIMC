@@ -257,12 +257,12 @@ def get_dev_details(ip_address, auth, url):
             if len(dev_details) == 0:
                 print("Device not found")
                 return "Device not found"
-            elif type(dev_details['device']) == list:
+            elif isinstance(dev_details['device'], list):
                 for i in dev_details['device']:
                     if i['ip'] == ip_address:
                         dev_details = i
                         return dev_details
-            elif type(dev_details['device']) == dict:
+            elif isinstance(dev_details['device'], dict):
                 return dev_details['device']
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
@@ -455,7 +455,7 @@ def get_dev_mac_learn(auth, url, devid=None, devip=None):
                 return mac_learn_query
             else:
                 mac_learn_query = (json.loads(response.text))['ipMacLearnResult']
-                if type(mac_learn_query) is dict:
+                if isinstance(mac_learn_query, dict):
                     mac_learn_query = [mac_learn_query]
                 return mac_learn_query
     except requests.exceptions.RequestException as error:
@@ -549,7 +549,8 @@ def get_all_interface_details(auth, url, devid=None, devip=None):
 
     >>> all_interface_details = get_all_interface_details( auth.creds, auth.url, devId='10')
 
-    >>> all_interface_details = get_all_interface_details( auth.creds, auth.url, devip='10.101.0.221')
+    >>> all_interface_details = get_all_interface_details( auth.creds, auth.url,
+                                                           devip='10.101.0.221')
 
     >>> assert type(all_interface_details) is list
 
