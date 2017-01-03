@@ -18,7 +18,7 @@ import requests
 from pyhpeimc.auth import HEADERS
 from pyhpeimc.plat.device import get_dev_details
 
-#pylint: disable-msg=R0913
+#pylint: disable=R0913
 
 def get_real_time_locate(host_ipaddress, auth, url):
     """

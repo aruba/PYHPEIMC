@@ -16,7 +16,7 @@ import requests
 from pyhpeimc.auth import HEADERS
 from pyhpeimc.plat.device import get_dev_details
 
-
+#pylint: disable=R0913
 # This section contains functions which operate at the device level
 
 
