@@ -98,7 +98,11 @@ def create_cfg_segment(filename, filecontent, description, auth, url):
 
     >>> filecontent = 'sample file content'
 
-    >>> create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
+    >>> create_new_file = create_cfg_segment('CW7SNMP.cfg',
+                                              filecontent,
+                                              'My New Template',
+                                               auth.creds,
+                                               auth.url)
 
     >>> template_id = get_template_id('CW7SNMP.cfg', auth.creds, auth.url)
 
@@ -241,7 +245,11 @@ def get_template_details(template_name, auth, url):
 
     >>> filecontent = 'sample file content'
 
-    >>> create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
+    >>> create_new_file = create_cfg_segment('CW7SNMP.cfg',
+                                              filecontent,
+                                              'My New Template',
+                                               auth.creds,
+                                               auth.url)
 
     >>> template_contents = get_template_details('CW7SNMP.cfg', auth.creds, auth.url)
 

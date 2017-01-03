@@ -13,7 +13,7 @@ import json
 import requests
 
 from pyhpeimc.auth import HEADERS
-from pyhpeimc.plat.device import get_dev_details
+
 
 
 

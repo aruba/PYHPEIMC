@@ -7,6 +7,7 @@ This module is used for testing the functions within the pyhpeimc.plat.groups mo
 from unittest import TestCase
 
 from pyhpeimc.plat.groups import *
+from pyhpeimc.plat.device import get_dev_details
 from test_machine import *
 
 
