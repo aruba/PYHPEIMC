@@ -68,7 +68,7 @@ def get_custom_views(auth, url, name=None):
             custom_view_list = (json.loads(response.text))
             if 'customView' in custom_view_list:
                 custom_view_list = custom_view_list['customView']
-                if type(custom_view_list) == dict:
+                if isinstance(custom_view_list, dict):
                     custom_view_list = [custom_view_list]
                     return custom_view_list
                 else:
