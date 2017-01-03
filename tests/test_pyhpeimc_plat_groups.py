@@ -116,7 +116,7 @@ class TestAdd_devs_custom_views(TestCase):
         self.assertIs(add_devs, 204)
         self.assertIs(type(add_devs), int)
         view_details = get_custom_view_details('L1 View', auth.creds, auth.url)
-        view_details
+        print (view_details)
         self.assertIs(len(view_details), 3)
         view_dev_list = []
         for dev in view_details:
