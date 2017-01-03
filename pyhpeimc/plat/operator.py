@@ -38,8 +38,6 @@ def create_operator(operator, auth, url):
 
     :param operator: dictionary with the required operator key-value pairs as defined above.
 
-    :param headers: json formated string. default values set in module
-
     :return:
 
     :rtype:
@@ -76,7 +74,7 @@ def create_operator(operator, auth, url):
     """
     f_url = url + '/imcrs/plat/operator'
     payload = json.dumps(operator, indent=4)
-    response = requests.post(f_url, data=payload, auth=auth, headers=headers)
+    response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 409:
             return response.status_code
@@ -198,8 +196,6 @@ def delete_plat_operator(operator, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :param headers: json formated string. default values set in module
-
     :return: int of 204 if successfull
 
     :rtype: int
@@ -234,7 +230,7 @@ def delete_plat_operator(operator, auth, url):
         # print ("User does not exist")
         return 409
     f_url = url + "/imcrs/plat/operator/" + str(oper_id)
-    response = requests.delete(f_url, auth=auth, headers=headers)
+    response = requests.delete(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 204:
             # print("Operator: " + operator +

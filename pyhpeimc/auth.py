@@ -14,7 +14,8 @@ import json
 import requests
 from requests.auth import HTTPDigestAuth
 
-from pyhpeimc.auth import HEADERS
+HEADERS = {'Accept': 'application/json', 'Content-Type':
+           'application/json', 'Accept-encoding': 'application/json'}
 
 
 class IMCAuth(requests.auth.HTTPDigestAuth):
