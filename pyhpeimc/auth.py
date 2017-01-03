@@ -64,8 +64,7 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
         try:
             response = requests.get(f_url, auth=auth, headers=HEADERS, verify=False)
             if response.status_code != 200:  # checks for valid IMC credentials
-                print("Error:\n" + "Error: \n You're credentials are invalid. Please "
-                                             "try again\n\n")
+                print("Error:\n" + "Error: \n You're credentials are invalid. Please try again\n\n")
                 set_imc_creds()
             return response.status_code
         except requests.exceptions.RequestException as error:
@@ -124,10 +123,7 @@ def set_imc_creds(h_url=None, imc_server=None, imc_port=None, imc_user=None, imc
         set_imc_creds()
 
 
-
-"""
-This section contains misc helper functions as needed.
-"""
+# This section contains misc helper functions as needed.
 
 
 def print_to_file(object_name):
@@ -140,10 +136,10 @@ def print_to_file(object_name):
     """
     with open('pyoutput.txt', 'w') as filehandler:
         output = None
-        if type(object_name) is list:
+        if isinstance(object_name, list):
             output = json.dumps(object, indent=4)
-        if type(object_name) is dict:
+        if isinstance(object_name, dict):
             output = json.dumps(object, indent=4)
-        if type(object_name) is str:
+        if isinstance(object_name, str):
             output = object_name
         filehandler.write(output)
