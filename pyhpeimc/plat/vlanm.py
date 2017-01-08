@@ -335,7 +335,8 @@ def delete_hybrid_interface(ifindex, auth, url, devip=None, devid=None):
     >>> delete_hybrid_interface('9', auth.creds, auth.url, devip='10.101.0.221')
     409
 
-    >>> add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url, devip='10.101.0.221')
+    >>> add_hybrid = add_hybrid_interface('9', '1', '10', '1', auth.creds, auth.url,
+                                           devip='10.101.0.221')
 
     >>> delete_hybrid = delete_hybrid_interface('9', auth.creds, auth.url, devip='10.101.0.221')
 
@@ -385,15 +386,18 @@ def set_access_interface_pvid(ifindex, pvid, auth, url, devip=None, devid=None):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> set_access_int_vlan = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip='10.101.0.221')
+    >>> set_access_int_vlan = set_access_interface_pvid('9', '1', auth.creds, auth.url,
+                                                        devip='10.101.0.221')
 
-    >>> set_access_int_vlan = set_access_interface_pvid('9', '10', auth.creds, auth.url, devip='10.101.0.221')
+    >>> set_access_int_vlan = set_access_interface_pvid('9', '10', auth.creds, auth.url,
+                                                        devip='10.101.0.221')
 
     >>> assert type(set_access_int_vlan) is int
 
     >>> assert set_access_int_vlan == 204
 
-    >>> set_access_int_vlan = set_access_interface_pvid('9', '1', auth.creds, auth.url, devip='10.101.0.221')
+    >>> set_access_int_vlan = set_access_interface_pvid('9', '1', auth.creds, auth.url,
+                                                        devip='10.101.0.221')
 
     """
     if devip is not None:
@@ -432,7 +436,8 @@ def get_access_interface_vlan(ifindex, accessinterfacelist):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> access_interface_list = get_device_access_interfaces(auth.creds, auth.url, devip='10.101.0.221')
+    >>> access_interface_list = get_device_access_interfaces(auth.creds, auth.url,
+                                                             devip='10.101.0.221')
 
     >>> get_access_interface_vlan('4', access_interface_list, auth.creds, auth.url)
     '1'
@@ -481,7 +486,7 @@ def create_dev_vlan(vlanid, vlan_name, auth, url, devid=None, devip=None):
         devid = get_dev_details(devip, auth, url)['id']
     create_dev_vlan_url = "/imcrs/vlan?devId=" + str(devid)
     f_url = url + create_dev_vlan_url
-    payload = '''{ "vlanId": "''' + str(vlanid) + '''", "vlanName" : "''' + str(vlan_name) + '''"}'''
+    payload = '''{"vlanId":"%s", "vlanName":"%s"}''' % (str(vlanid), vlan_name)
     response = requests.post(f_url, data=payload, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 201:

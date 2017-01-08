@@ -1,4 +1,3 @@
-# coding=utf-8
 # author: @netmanchris
 # -*- coding: utf-8 -*-
 """
