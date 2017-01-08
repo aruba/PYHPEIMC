@@ -72,6 +72,7 @@ class TestCreate_cfg_segment(TestCase):
 
 class TestGet_template_id(TestCase):
     def test_get_template_id(self):
+        delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
         filecontent = ("""sample file content""")
         create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
         file_id = get_template_id('CW7SNMP.cfg', auth.creds, auth.url)
@@ -105,13 +106,15 @@ class TestDelete_cfg_template(TestCase):
 
 class TestGet_template_contents(TestCase):
     def test_get_template_details_type(self):
+        delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
         filecontent = ("""sample file content""")
         create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
         template_contents = get_template_details('CW7SNMP.cfg', auth.creds, auth.url)
         self.assertIs(type(template_contents), dict)
-        delete_cfg_template_result = delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
+        delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
 
     def test_get_template_details_content(self):
+        delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
         filecontent = ("""sample file content""")
         create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
         template_contents = get_template_details('CW7SNMP.cfg', auth.creds, auth.url)
@@ -131,7 +134,7 @@ class TestGet_template_contents(TestCase):
         self.assertIn('syncType', template_contents)
         self.assertIn('confFilePath', template_contents)
         self.assertEqual(filecontent, template_contents['content'])
-        delete_cfg_template_result = delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
+        delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
 
 
 

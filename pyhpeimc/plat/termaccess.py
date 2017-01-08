@@ -632,7 +632,7 @@ def get_scope_id(network_address, auth, url):
         if int(parent_scope['id']) > 0:
             if "assignedIpScope" in parent_scope:
                 child_scope = parent_scope['assignedIpScope']
-                if isinstance(child_scope,dict):
+                if isinstance(child_scope, dict):
                     child_scope = [child_scope]
                 for scope in child_scope:
                     if ipaddress.ip_address(scope['startIp']) == netaddr[1] \
