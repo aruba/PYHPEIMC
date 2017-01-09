@@ -117,7 +117,10 @@ def get_custom_view_details(name, auth, url):
         if response.status_code == 200:
             current_devices = (json.loads(response.text))
             if 'device' in current_devices:
-                return current_devices['device']
+                if isinstance(current_devices['device'], dict):
+                    return [current_devices['device']]
+                else:
+                    return current_devices['device']
             else:
                 return []
     except requests.exceptions.RequestException as error:

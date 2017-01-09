@@ -449,7 +449,6 @@ def get_access_interface_vlan(ifindex, accessinterfacelist):
             return "Not an Access Port"
 
 
-# TODO add abstraction to use IP address of device and not
 def create_dev_vlan(vlanid, vlan_name, auth, url, devid=None, devip=None):
     """
     function takes devid and vlanid vlan_name of specific device and 802.1q VLAN tag
@@ -541,7 +540,3 @@ def delete_dev_vlans(vlanid, auth, url, devid=None, devip=None):
             return response.status_code
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + " delete_dev_vlans: An Error has occured"
-
-
-# This section contains functions which operate at the interface level
-
