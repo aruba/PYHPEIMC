@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
+# -*- coding: utf-8 -*-
+"""
+This module contains functions for working with the system configuration
+capabilities of the HPE IMC NMS platform using the RESTful API
 
+"""
 
 
 # This section imports required libraries
 import json
+
 import requests
 
-
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
-
-#auth = None
+from pyhpeimc.auth import HEADERS
 
 
-"""
-This section contains functions which operate at the system level
-"""
+# This section contains functions which operate at the system level
 
 
 def get_system_vendors(auth, url):
@@ -44,17 +45,14 @@ def get_system_vendors(auth, url):
 
 
     """
-    get_system_vendors_url = '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false&total=false'
-    f_url = url + get_system_vendors_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + '/imcrs/plat/res/vendor?start=0&size=10000&orderBy=id&desc=false&total=false'
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_vendors = (json.loads(r.text))
+        if response.status_code == 200:
+            system_vendors = (json.loads(response.text))
             return system_vendors['deviceVendor']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 def get_system_category(auth, url):
@@ -82,28 +80,26 @@ def get_system_category(auth, url):
 
 
     """
-    get_system_category_url = '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false&total=false'
-    f_url = url + get_system_category_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + '/imcrs/plat/res/category?start=0&size=10000&orderBy=id&desc=false&total=false'
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_category = (json.loads(r.text))
+        if response.status_code == 200:
+            system_category = (json.loads(response.text))
             return system_category['deviceCategory']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 def get_system_device_models(auth, url):
-    """Takes string no input to issue RESTUL call to HP IMC\n
-:rtype: list
+    """Takes string no input to issue RESTUL call to HP IMC
 
       :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
       :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
       :return: list of dictionaries where each dictionary represents a single device model
+
+      :rtype: list
 
 
       >>> from pyhpeimc.auth import *
@@ -119,21 +115,18 @@ def get_system_device_models(auth, url):
       >>> assert 'virtualDeviceName' in device_models[0]
 
     """
-    get_system_device_model_url = '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc=false&total=false'
-    f_url = url + get_system_device_model_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + '/imcrs/plat/res/model?start=0&size=10000&orderBy=id&desc=false&total=false'
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_device_model = (json.loads(r.text))
+        if response.status_code == 200:
+            system_device_model = (json.loads(response.text))
             return system_device_model['deviceModel']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_details: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_details: An Error has occured"
 
 
 def get_system_series(auth, url):
-    """Takes string no input to issue RESTUL call to HP IMC\n
+    """Takes no input to issue RESTUL call to HP IMC
 
       :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
@@ -155,17 +148,13 @@ def get_system_series(auth, url):
 
       >>> assert 'name' in series[0]
 
-
-
     """
-    get_system_series_url = '/imcrs/plat/res/series?managedOnly=false&start=0&size=10000&orderBy=id&desc=false&total=false'
-    f_url = url + get_system_series_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + '/imcrs/plat/res/series?managedOnly=false&start=0&size=10000&orderBy=id&desc' \
+                   '=false&total=false'
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            system_series = (json.loads(r.text))
+        if response.status_code == 200:
+            system_series = (json.loads(response.text))
             return system_series['deviceSeries']
-    except requests.exceptions.RequestException as e:
-        return "Error:\n" + str(e) + " get_dev_series: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_series: An Error has occured"

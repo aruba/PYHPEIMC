@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
+# -*- coding: utf-8 -*-
+"""
+This module contains functions for working with the netassets capabilities
+of the HPE IMC NMS platform using the RESTful API
 
-
+"""
 
 # This section imports required libraries
-import requests
 import json
+
+import requests
+
+from pyhpeimc.auth import HEADERS
+
 from pyhpeimc.plat.device import get_dev_details
-
-
-
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
 
 
 def get_dev_asset_details(ipaddress, auth, url):
@@ -23,7 +27,8 @@ def get_dev_asset_details(ipaddress, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: object of type list containing the device asset details, with each asset contained in a dictionary
+    :return: object of type list containing the device asset details, with each asset contained
+    in a dictionary
 
     :rtype: list
 
@@ -40,29 +45,28 @@ def get_dev_asset_details(ipaddress, auth, url):
     >>> assert 'name' in single_asset[0]
 
     """
-    ipaddress = get_dev_details(ipaddress, auth,url)
-    if type(ipaddress) is dict:
+    ipaddress = get_dev_details(ipaddress, auth, url)
+    if isinstance(ipaddress, dict):
         ipaddress = ipaddress['ip']
     else:
-        print ("Asset Doens't Exist")
+        print("Asset Doesn't Exist")
         return 403
-    get_dev_asset_url = "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
-    f_url = url + get_dev_asset_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + "/imcrs/netasset/asset?assetDevice.ip=" + str(ipaddress)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_asset_info = (json.loads(r.text))
+        if response.status_code == 200:
+            dev_asset_info = (json.loads(response.text))
             if len(dev_asset_info) > 0:
                 dev_asset_info = dev_asset_info['netAsset']
-            if type(dev_asset_info) == dict:
+            if isinstance(dev_asset_info, dict):
                 dev_asset_info = [dev_asset_info]
-            if type(dev_asset_info) == list:
-                dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') == ipaddress]
+            if isinstance(dev_asset_info, list):
+                dev_asset_info[:] = [dev for dev in dev_asset_info if dev.get('deviceIp') ==
+                                     ipaddress]
             return dev_asset_info
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_dev_asset_details: An Error has occured'
+
 
 def get_dev_asset_details_all(auth, url):
     """Takes no input to fetch device assett details from HP IMC RESTFUL API
@@ -88,17 +92,11 @@ def get_dev_asset_details_all(auth, url):
     >>> assert 'asset' in all_assets[0]
 
     """
-    get_dev_asset_details_all_url = "/imcrs/netasset/asset?start=0&size=15000"
-    f_url = url + get_dev_asset_details_all_url
-    # creates the URL using the payload variable as the contents
-    r = requests.get(f_url, auth=auth, headers=HEADERS)
-    # r.status_code
+    f_url = url + "/imcrs/netasset/asset?start=0&size=15000"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            dev_asset_info = (json.loads(r.text))['netAsset']
+        if response.status_code == 200:
+            dev_asset_info = (json.loads(response.text))['netAsset']
             return dev_asset_info
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + ' get_dev_asset_details: An Error has occured'
-
-
-
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_dev_asset_details: An Error has occured'

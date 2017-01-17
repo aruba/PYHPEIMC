@@ -44,12 +44,18 @@
   <h1>Source code for pyhpeimc.plat.vrm</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># author: @netmanchris</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions for working with the Virtual Resource Manager</span>
+<span class="sd">capabilities of the HPE IMC NMS platform using the RESTful API</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
 
 
 
 <span class="c1"># This section imports required libraries</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">requests</span>
+<span class="c1">#import json</span>
+<span class="c1">#import requests</span>
 <span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
 
 
@@ -109,7 +115,6 @@
     <span class="n">hostId</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">hostip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">get_vm_host_info_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/vrm/host?hostId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">hostId</span><span class="p">)</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_vm_host_info_url</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span>
                      <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
     <span class="c1"># print(r.status_code)</span>
@@ -166,7 +171,6 @@
     <span class="n">hostId</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">hostip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">get_vm_host_vnic_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/vrm/host/vnic?hostDevId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">hostId</span><span class="p">)</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_vm_host_vnic_url</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span>
                      <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
     <span class="c1"># print(r.status_code)</span>
@@ -184,7 +188,7 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takes hostId as input to RESTFUL call to HP IMC</span>
 
-<span class="sd">    :param hostId: int or string of HostId of Hypervisor host</span>
+<span class="sd">    :param hostip: string of ipv4 address of Hypervisor host</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
@@ -233,7 +237,6 @@
     <span class="n">hostId</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">hostip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">get_host_info_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/vrm/host/vm?hostId=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">hostId</span><span class="p">)</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_host_info_url</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span>
                      <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
     <span class="k">try</span><span class="p">:</span>
@@ -277,7 +280,7 @@
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

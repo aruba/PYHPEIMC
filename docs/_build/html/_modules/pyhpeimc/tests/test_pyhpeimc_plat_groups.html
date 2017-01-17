@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.tests.test_pyhpeimc_plat_groups &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.tests.test_pyhpeimc_plat_groups</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is used for testing the functions within the pyhpeimc.plat.groups module.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.tests.test_machine</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.groups</span> <span class="k">import</span> <span class="o">*</span>
+
+
+<span class="c1">#TODO Remarked out failing test</span>
+<div class="viewcode-block" id="TestGet_custom_views"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestGet_custom_views">[docs]</a><span class="k">class</span> <span class="nc">TestGet_custom_views</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_custom_views.test_get_custom_views_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestGet_custom_views.test_get_custom_views_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_custom_views_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">all_views</span> <span class="o">=</span> <span class="n">get_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">all_views</span><span class="p">),</span> <span class="nb">list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_custom_views.test_get_custom_views_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestGet_custom_views.test_get_custom_views_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_custom_views_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">all_views</span> <span class="o">=</span> <span class="n">get_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">all_views</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="p">(</span><span class="mi">6</span> <span class="ow">or</span> <span class="mi">7</span><span class="p">))</span>
+        <span class="c1">#self.assertIn(&#39;upLevelSymbolId&#39;, all_views[0])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;autoAddDevType&#39;</span><span class="p">,</span> <span class="n">all_views</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;symbolId&#39;</span><span class="p">,</span> <span class="n">all_views</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;runStatus&#39;</span><span class="p">,</span> <span class="n">all_views</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;statusImgSrc&#39;</span><span class="p">,</span> <span class="n">all_views</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">all_views</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;statusDesc&#39;</span><span class="p">,</span> <span class="n">all_views</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TestGet_custom_views.test_get_custom_views_doesnt_exist"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestGet_custom_views.test_get_custom_views_doesnt_exist">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_custom_views_doesnt_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">all_views</span> <span class="o">=</span> <span class="n">get_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">non_existant_view</span> <span class="o">=</span> <span class="n">get_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;&#39;&#39;Doesn&#39;t Exist&#39;&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">non_existant_view</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestGet_custom_views_details"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestGet_custom_views_details">[docs]</a><span class="k">class</span> <span class="nc">TestGet_custom_views_details</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_custom_views_details.test_get_custom_views_details_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestGet_custom_views_details.test_get_custom_views_details_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_custom_views_details_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">view_details</span> <span class="o">=</span> <span class="n">get_custom_view_details</span><span class="p">(</span><span class="s1">&#39;My Network View&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">view_details</span><span class="p">),</span> <span class="nb">list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_custom_views_details.test_get_custom_views_details_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestGet_custom_views_details.test_get_custom_views_details_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_custom_views_details_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">view_details</span> <span class="o">=</span> <span class="n">get_custom_view_details</span><span class="p">(</span><span class="s1">&#39;My Network View&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">14</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;link&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;ip&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;categoryId&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;devCategoryImgSrc&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;topoIconName&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;location&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;mask&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;contact&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;sysDescription&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;sysName&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;sysOid&#39;</span><span class="p">,</span> <span class="n">view_details</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="TestGet_custom_views_details.test_get_custom_views_details_doesnt_exist"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestGet_custom_views_details.test_get_custom_views_details_doesnt_exist">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_custom_views_details_doesnt_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">non_existant_view</span> <span class="o">=</span> <span class="n">get_custom_view_details</span><span class="p">(</span><span class="s1">&#39;Doesnt Exist&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">non_existant_view</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestCreate_custom_views"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestCreate_custom_views">[docs]</a><span class="k">class</span> <span class="nc">TestCreate_custom_views</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCreate_custom_views.test_create_custom_view"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestCreate_custom_views.test_create_custom_view">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_custom_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span>
+        <span class="n">new_view</span> <span class="o">=</span> <span class="n">create_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">new_view</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+        <span class="n">view_1</span> <span class="o">=</span> <span class="n">get_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">view_1</span><span class="p">),</span><span class="nb">list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">view_1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span><span class="s1">&#39;L1 View&#39;</span> <span class="p">)</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCreate_custom_views.test_create_custom_view_already_exists"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestCreate_custom_views.test_create_custom_view_already_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_custom_view_already_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">new_view</span> <span class="o">=</span> <span class="n">create_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="n">new_view</span> <span class="o">=</span> <span class="n">create_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">new_view</span><span class="p">,</span> <span class="mi">409</span><span class="p">)</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCreate_custom_views.test_create_child_custom_view"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestCreate_custom_views.test_create_child_custom_view">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_child_custom_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L2 View&quot;</span><span class="p">)</span>
+        <span class="n">create_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="n">child_view</span> <span class="o">=</span> <span class="n">create_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L2 View&#39;</span><span class="p">,</span> <span class="n">upperview</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">child_view</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+        <span class="n">view_1</span> <span class="o">=</span> <span class="n">get_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L2 View&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">view_1</span><span class="p">),</span> <span class="nb">list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">view_1</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;name&#39;</span><span class="p">],</span> <span class="s1">&#39;L2 View&#39;</span><span class="p">)</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L2 View&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestDelete_delete_views_details"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestDelete_delete_views_details">[docs]</a><span class="k">class</span> <span class="nc">TestDelete_delete_views_details</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestDelete_delete_views_details.test_delete_custom_view"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestDelete_delete_views_details.test_delete_custom_view">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_custom_view</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">create_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="n">delete_view</span> <span class="o">=</span> <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">delete_view</span><span class="p">,</span> <span class="mi">204</span><span class="p">)</span>
+        <span class="n">view_1</span> <span class="o">=</span> <span class="n">get_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">view_1</span><span class="p">,</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestDelete_delete_views_details.test_delete_custom_view_doesnt_exists"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestDelete_delete_views_details.test_delete_custom_view_doesnt_exists">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_custom_view_doesnt_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">delete_view</span> <span class="o">=</span> <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span>
+        <span class="n">delete_view</span> <span class="o">=</span> <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">delete_view</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestAdd_devs_custom_views"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestAdd_devs_custom_views">[docs]</a><span class="k">class</span> <span class="nc">TestAdd_devs_custom_views</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestAdd_devs_custom_views.test_add_devs_custom_views"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_groups.html#pyhpeimc.tests.test_pyhpeimc_plat_groups.TestAdd_devs_custom_views.test_add_devs_custom_views">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_devs_custom_views</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span>
+        <span class="n">create_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
+        <span class="n">dev_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">get_dev_details</span><span class="p">(</span><span class="s1">&#39;10.101.0.221&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="s1">&#39;10.101.0.1&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="s1">&#39;10.101.0.51&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]]</span>
+        <span class="n">add_devs</span> <span class="o">=</span> <span class="n">add_devs_custom_views</span><span class="p">(</span><span class="s1">&#39;L1 View&#39;</span><span class="p">,</span> <span class="n">dev_list</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">add_devs</span><span class="p">,</span> <span class="mi">204</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">add_devs</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="n">view_details</span> <span class="o">=</span> <span class="n">get_custom_view_details</span><span class="p">(</span><span class="s1">&#39;L1 View&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">view_details</span> <span class="o">=</span> <span class="n">get_custom_view_details</span><span class="p">(</span><span class="s1">&#39;L1 View&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">view_details</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">view_dev_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dev</span> <span class="ow">in</span> <span class="n">view_details</span><span class="p">:</span>
+            <span class="n">view_dev_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dev</span><span class="p">[</span><span class="s1">&#39;ip&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;192.168.1.221&#39;</span><span class="p">,</span> <span class="n">view_dev_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;10.101.0.1&#39;</span><span class="p">,</span> <span class="n">view_dev_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;10.101.0.51&#39;</span><span class="p">,</span> <span class="n">view_dev_list</span><span class="p">)</span>
+        <span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;L1 View&quot;</span><span class="p">)</span></div></div>
+
+
+
+
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

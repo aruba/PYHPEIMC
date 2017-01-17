@@ -45,6 +45,8 @@
             
   <div class="section" id="module-pyhpeimc.plat.vrm">
 <span id="pyhpeimc-plat-vrm-module"></span><h1>pyhpeimc.plat.vrm module<a class="headerlink" href="#module-pyhpeimc.plat.vrm" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions for working with the Virtual Resource Manager
+capabilities of the HPE IMC NMS platform using the RESTful API</p>
 <dl class="function">
 <dt id="pyhpeimc.plat.vrm.get_host_vms">
 <code class="descclassname">pyhpeimc.plat.vrm.</code><code class="descname">get_host_vms</code><span class="sig-paren">(</span><em>hostip</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/vrm.html#get_host_vms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.vrm.get_host_vms" title="Permalink to this definition">¶</a></dt>
@@ -54,7 +56,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>hostId</strong> &#8211; int or string of HostId of Hypervisor host</li>
+<li><strong>hostip</strong> &#8211; string of ipv4 address of Hypervisor host</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
 </ul>
@@ -299,7 +301,7 @@
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

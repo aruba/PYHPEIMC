@@ -44,26 +44,28 @@
   <h1>Source code for pyhpeimc.plat.alarms</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># author: @netmanchris</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions for working with the alarms capabilities</span>
+<span class="sd">of the HPE IMC NMS platform using the RESTful API</span>
 
-
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c1"># This section imports required libraries</span>
-<span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.device</span> <span class="k">import</span> <span class="o">*</span>
 
 <span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
-    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
+           <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
 
 
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
-    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
-
-<div class="viewcode-block" id="get_dev_alarms"><a class="viewcode-back" href="../../../pyhpeimc.plat.alarms.html#pyhpeimc.plat.alarms.get_dev_alarms">[docs]</a><span class="k">def</span> <span class="nf">get_dev_alarms</span><span class="p">(</span><span class="n">devId</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="get_dev_alarms"><a class="viewcode-back" href="../../../pyhpeimc.plat.alarms.html#pyhpeimc.plat.alarms.get_dev_alarms">[docs]</a><span class="k">def</span> <span class="nf">get_dev_alarms</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takes the devId of a specific device and issues a RESTFUL call to get the current alarms for the target</span>
 <span class="sd">    device.</span>
 
-<span class="sd">    :param devId: int or str value of the target device</span>
+<span class="sd">    :param devid: int or str value of the target device</span>
+
+<span class="sd">    :param devip: str of ipv4 address of the target device</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
@@ -79,20 +81,19 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; dev_alarms = get_dev_alarms(&#39;10&#39;, auth.creds, auth.url)</span>
-
-<span class="sd">    &gt;&gt;&gt; type(dev_alarms)</span>
-<span class="sd">    &lt;class &#39;list&#39;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; dev_alarms = get_dev_alarms(auth.creds, auth.url, devip=&#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert &#39;ackStatus&#39; in dev_alarms[0]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># checks to see if the imc credentials are already available</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">get_dev_alarm_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/fault/alarm?operatorName=admin&amp;deviceId=&quot;</span> <span class="o">+</span> \
-                        <span class="nb">str</span><span class="p">(</span><span class="n">devId</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;desc=false&quot;</span>
+                        <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;desc=false&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_dev_alarm_url</span>
     <span class="c1"># creates the URL using the payload variable as the contents</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
             <span class="n">dev_alarm</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
@@ -109,8 +110,6 @@
 
 <span class="sd">    :param username OpeatorName, String type. Required. Default Value &quot;admin&quot;. Checks the operator</span>
 <span class="sd">     has the privileges to view the Real-Time Alarms.</span>
-
-<span class="sd">    :param devId: int or str value of the target device</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
@@ -129,14 +128,14 @@
 
 <span class="sd">    &gt;&gt;&gt; real_time_alarm = get_realtime_alarm(&#39;admin&#39;, auth.creds, auth.url)</span>
 
-<span class="sd">    &gt;&gt;&gt; type(real_time_alarm)</span>
-<span class="sd">    &lt;class &#39;list&#39;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; assert type(real_time_alarm) is list</span>
+
 <span class="sd">    &gt;&gt;&gt; assert &#39;faultDesc&#39; in real_time_alarm[0]</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">get_realtime_alarm_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/fault/faultRealTime?operatorName=&quot;</span> <span class="o">+</span> <span class="n">username</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_realtime_alarm_url</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">realtime_alarm_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">realtime_alarm_list</span><span class="p">[</span><span class="s1">&#39;faultRealTime&#39;</span><span class="p">][</span><span class="s1">&#39;faultRealTimeList&#39;</span><span class="p">]</span>
@@ -149,8 +148,6 @@
 
 <span class="sd">    :param username OpeatorName, String type. Required. Default Value &quot;admin&quot;. Checks the operator</span>
 <span class="sd">     has the privileges to view the Real-Time Alarms.</span>
-
-<span class="sd">    :param devId: int or str value of the target device</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
@@ -169,221 +166,15 @@
 
 <span class="sd">    &gt;&gt;&gt; all_alarms = get_alarms(&#39;admin&#39;, auth.creds, auth.url)</span>
 
-<span class="sd">    &gt;&gt;&gt; type(all_alarms)</span>
-<span class="sd">    &lt;class &#39;list&#39;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; assert (type(all_alarms)) is list</span>
+
 <span class="sd">    &gt;&gt;&gt; assert &#39;ackStatus&#39; in all_alarms[0]</span>
 
-
-<span class="sd">    [{&#39;OID&#39;: &#39;1.3.6.1.4.1.11.2.14.11.15.2.75.5.3.1.6.7&#39;,</span>
-<span class="sd">  &#39;ackStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackStatusDesc&#39;: &#39;Unacknowledged&#39;,</span>
-<span class="sd">  &#39;ackTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;ackUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;alarmCategory&#39;: &#39;1001&#39;,</span>
-<span class="sd">  &#39;alarmCategoryDesc&#39;: &#39;Wireless Device Alarm&#39;,</span>
-<span class="sd">  &#39;alarmDesc&#39;: &#39;The device(MAC Address:   F4 B7 E2 95 A0 CD) is detected to be flooding the network. Attack Frame Type: Probe Request.&#39;,</span>
-<span class="sd">  &#39;alarmDetail&#39;: &#39;http://10.101.0.203:8080/imcrs/fault/alarm/187616&#39;,</span>
-<span class="sd">  &#39;alarmLevel&#39;: &#39;3&#39;,</span>
-<span class="sd">  &#39;alarmLevelDesc&#39;: &#39;Minor&#39;,</span>
-<span class="sd">  &#39;deviceId&#39;: &#39;31&#39;,</span>
-<span class="sd">  &#39;deviceIp&#39;: &#39;10.10.10.5&#39;,</span>
-<span class="sd">  &#39;deviceName&#39;: &#39;HP830_WSC&#39;,</span>
-<span class="sd">  &#39;faultTime&#39;: &#39;1469471298&#39;,</span>
-<span class="sd">  &#39;faultTimeDesc&#39;: &#39;2016-07-25 14:28:18&#39;,</span>
-<span class="sd">  &#39;holdInfo&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;id&#39;: &#39;187616&#39;,</span>
-<span class="sd">  &#39;originalType&#39;: &#39;1&#39;,</span>
-<span class="sd">  &#39;originalTypeDesc&#39;: &#39;Trap&#39;,</span>
-<span class="sd">  &#39;paras&#39;: &#39;*Attack MAC=  F4 B7 E2 95 A0 CD;Attack Frame Type=Probe Request&#39;,</span>
-<span class="sd">  &#39;parentId&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatusDesc&#39;: &#39;Unrecovered&#39;,</span>
-<span class="sd">  &#39;recTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;recUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;remark&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;somState&#39;: &#39;0&#39;},</span>
-<span class="sd"> {&#39;OID&#39;: &#39;1.3.6.1.4.1.25506.4.2.2.2.6.1&#39;,</span>
-<span class="sd">  &#39;ackStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackStatusDesc&#39;: &#39;Unacknowledged&#39;,</span>
-<span class="sd">  &#39;ackTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;ackUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;alarmCategory&#39;: &#39;15&#39;,</span>
-<span class="sd">  &#39;alarmCategoryDesc&#39;: &#39;Other Alarms from NMS&#39;,</span>
-<span class="sd">  &#39;alarmDesc&#39;: &#39;iMC alarm system has received 100 alarms about the event (hh3cPeriodicalTrap) of device ADP_Initial_Config(10.20.10.10) from 2016-07-25 12:56:01 to 2016-07-25 14:36:01.&#39;,</span>
-<span class="sd">  &#39;alarmDetail&#39;: &#39;http://10.101.0.203:8080/imcrs/fault/alarm/187625&#39;,</span>
-<span class="sd">  &#39;alarmLevel&#39;: &#39;4&#39;,</span>
-<span class="sd">  &#39;alarmLevelDesc&#39;: &#39;Warning&#39;,</span>
-<span class="sd">  &#39;deviceId&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;deviceIp&#39;: &#39;127.0.0.1&#39;,</span>
-<span class="sd">  &#39;deviceName&#39;: &#39;NMS&#39;,</span>
-<span class="sd">  &#39;faultTime&#39;: &#39;1469471761&#39;,</span>
-<span class="sd">  &#39;faultTimeDesc&#39;: &#39;2016-07-25 14:36:01&#39;,</span>
-<span class="sd">  &#39;id&#39;: &#39;187625&#39;,</span>
-<span class="sd">  &#39;originalType&#39;: &#39;3&#39;,</span>
-<span class="sd">  &#39;originalTypeDesc&#39;: &#39;iMC&#39;,</span>
-<span class="sd">  &#39;paras&#39;: &#39;Start Time=2016-07-25 12:56:01;Stop Time=2016-07-25 14:36:01;Times=100;*Repeat Event Name=hh3cPeriodicalTrap;*Device IP=10.20.10.10;Device Name=ADP_Initial_Config&#39;,</span>
-<span class="sd">  &#39;parentId&#39;: &#39;173953&#39;,</span>
-<span class="sd">  &#39;recStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatusDesc&#39;: &#39;Unrecovered&#39;,</span>
-<span class="sd">  &#39;recTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;recUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;remark&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;somState&#39;: &#39;0&#39;},</span>
-<span class="sd"> {&#39;OID&#39;: &#39;1.3.6.1.4.1.25506.4.2.2.2.6.1&#39;,</span>
-<span class="sd">  &#39;ackStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackStatusDesc&#39;: &#39;Unacknowledged&#39;,</span>
-<span class="sd">  &#39;ackTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;ackUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;alarmCategory&#39;: &#39;15&#39;,</span>
-<span class="sd">  &#39;alarmCategoryDesc&#39;: &#39;Other Alarms from NMS&#39;,</span>
-<span class="sd">  &#39;alarmDesc&#39;: &#39;iMC alarm system has received 100 alarms about the event (Some ambient device interferes) of device HP830_WSC(10.10.10.5) from 2016-07-25 14:07:06 to 2016-07-25 14:40:21.&#39;,</span>
-<span class="sd">  &#39;alarmDetail&#39;: &#39;http://10.101.0.203:8080/imcrs/fault/alarm/187626&#39;,</span>
-<span class="sd">  &#39;alarmLevel&#39;: &#39;4&#39;,</span>
-<span class="sd">  &#39;alarmLevelDesc&#39;: &#39;Warning&#39;,</span>
-<span class="sd">  &#39;deviceId&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;deviceIp&#39;: &#39;127.0.0.1&#39;,</span>
-<span class="sd">  &#39;deviceName&#39;: &#39;NMS&#39;,</span>
-<span class="sd">  &#39;faultTime&#39;: &#39;1469472021&#39;,</span>
-<span class="sd">  &#39;faultTimeDesc&#39;: &#39;2016-07-25 14:40:21&#39;,</span>
-<span class="sd">  &#39;id&#39;: &#39;187626&#39;,</span>
-<span class="sd">  &#39;originalType&#39;: &#39;3&#39;,</span>
-<span class="sd">  &#39;originalTypeDesc&#39;: &#39;iMC&#39;,</span>
-<span class="sd">  &#39;paras&#39;: &#39;Start Time=2016-07-25 14:07:06;Stop Time=2016-07-25 14:40:21;Times=100;*Repeat Event Name=Some ambient device interferes;*Device IP=10.10.10.5;Device Name=HP830_WSC&#39;,</span>
-<span class="sd">  &#39;parentId&#39;: &#39;173953&#39;,</span>
-<span class="sd">  &#39;recStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatusDesc&#39;: &#39;Unrecovered&#39;,</span>
-<span class="sd">  &#39;recTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;recUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;remark&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;somState&#39;: &#39;0&#39;},</span>
-<span class="sd"> {&#39;OID&#39;: &#39;1.3.6.1.4.1.25506.4.2.3.2.6.11&#39;,</span>
-<span class="sd">  &#39;ackStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackStatusDesc&#39;: &#39;Unacknowledged&#39;,</span>
-<span class="sd">  &#39;ackTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;ackUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;alarmCategory&#39;: &#39;9&#39;,</span>
-<span class="sd">  &#39;alarmCategoryDesc&#39;: &#39;Traffic Analysis and Audit Alarm&#39;,</span>
-<span class="sd">  &#39;alarmDesc&#39;: &#39;The in direction of interface GigabitEthernet1/0/23 on device 192.168.1.221 at 2016-07-25 14:32:00 is greater than the baseline(2.87 Mbps).&#39;,</span>
-<span class="sd">  &#39;alarmDetail&#39;: &#39;http://10.101.0.203:8080/imcrs/fault/alarm/187631&#39;,</span>
-<span class="sd">  &#39;alarmLevel&#39;: &#39;2&#39;,</span>
-<span class="sd">  &#39;alarmLevelDesc&#39;: &#39;Major&#39;,</span>
-<span class="sd">  &#39;deviceId&#39;: &#39;67&#39;,</span>
-<span class="sd">  &#39;deviceIp&#39;: &#39;10.101.0.203&#39;,</span>
-<span class="sd">  &#39;deviceName&#39;: &#39;HPEIMC72WIN2K12R2&#39;,</span>
-<span class="sd">  &#39;faultTime&#39;: &#39;1469472140&#39;,</span>
-<span class="sd">  &#39;faultTimeDesc&#39;: &#39;2016-07-25 14:42:20&#39;,</span>
-<span class="sd">  &#39;holdInfo&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;id&#39;: &#39;187631&#39;,</span>
-<span class="sd">  &#39;originalType&#39;: &#39;3&#39;,</span>
-<span class="sd">  &#39;originalTypeDesc&#39;: &#39;iMC&#39;,</span>
-<span class="sd">  &#39;paras&#39;: &#39;*UNBA Server Name=NMS;*UNBA Server IP=127.0.0.1;*Alarm Object Name=The in direction of interface GigabitEthernet1/0/23 on device 192.168.1.221;Alarm Occur Time=2016-07-25 14:32:00;Current Flow Speed=48.38 Mbps;Alarm Severity=2;Threshold Speed=2.87 Mbps;Device IP=192.168.1.221;Interface Index=23;Interface Name=GigabitEthernet1/0/23;Flow Direction=1&#39;,</span>
-<span class="sd">  &#39;parentId&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatusDesc&#39;: &#39;Unrecovered&#39;,</span>
-<span class="sd">  &#39;recTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;recUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;remark&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;somState&#39;: &#39;0&#39;},</span>
-<span class="sd"> {&#39;OID&#39;: &#39;1.3.6.1.4.1.25506.4.2.3.2.6.11&#39;,</span>
-<span class="sd">  &#39;ackStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackStatusDesc&#39;: &#39;Unacknowledged&#39;,</span>
-<span class="sd">  &#39;ackTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;ackUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;alarmCategory&#39;: &#39;9&#39;,</span>
-<span class="sd">  &#39;alarmCategoryDesc&#39;: &#39;Traffic Analysis and Audit Alarm&#39;,</span>
-<span class="sd">  &#39;alarmDesc&#39;: &#39;The out direction of interface GigabitEthernet1/0/2 on device 192.168.1.221 at 2016-07-25 14:32:00 is greater than the baseline(1.78 Mbps).&#39;,</span>
-<span class="sd">  &#39;alarmDetail&#39;: &#39;http://10.101.0.203:8080/imcrs/fault/alarm/187632&#39;,</span>
-<span class="sd">  &#39;alarmLevel&#39;: &#39;2&#39;,</span>
-<span class="sd">  &#39;alarmLevelDesc&#39;: &#39;Major&#39;,</span>
-<span class="sd">  &#39;deviceId&#39;: &#39;67&#39;,</span>
-<span class="sd">  &#39;deviceIp&#39;: &#39;10.101.0.203&#39;,</span>
-<span class="sd">  &#39;deviceName&#39;: &#39;HPEIMC72WIN2K12R2&#39;,</span>
-<span class="sd">  &#39;faultTime&#39;: &#39;1469472140&#39;,</span>
-<span class="sd">  &#39;faultTimeDesc&#39;: &#39;2016-07-25 14:42:20&#39;,</span>
-<span class="sd">  &#39;holdInfo&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;id&#39;: &#39;187632&#39;,</span>
-<span class="sd">  &#39;originalType&#39;: &#39;3&#39;,</span>
-<span class="sd">  &#39;originalTypeDesc&#39;: &#39;iMC&#39;,</span>
-<span class="sd">  &#39;paras&#39;: &#39;*UNBA Server Name=NMS;*UNBA Server IP=127.0.0.1;*Alarm Object Name=The out direction of interface GigabitEthernet1/0/2 on device 192.168.1.221;Alarm Occur Time=2016-07-25 14:32:00;Current Flow Speed=48.79 Mbps;Alarm Severity=2;Threshold Speed=1.78 Mbps;Device IP=192.168.1.221;Interface Index=2;Interface Name=GigabitEthernet1/0/2;Flow Direction=0&#39;,</span>
-<span class="sd">  &#39;parentId&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatusDesc&#39;: &#39;Unrecovered&#39;,</span>
-<span class="sd">  &#39;recTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;recUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;remark&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;somState&#39;: &#39;0&#39;},</span>
-<span class="sd"> {&#39;OID&#39;: &#39;1.3.6.1.4.1.25506.4.2.2.2.6.1&#39;,</span>
-<span class="sd">  &#39;ackStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackStatusDesc&#39;: &#39;Unacknowledged&#39;,</span>
-<span class="sd">  &#39;ackTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;ackUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;alarmCategory&#39;: &#39;15&#39;,</span>
-<span class="sd">  &#39;alarmCategoryDesc&#39;: &#39;Other Alarms from NMS&#39;,</span>
-<span class="sd">  &#39;alarmDesc&#39;: &#39;iMC alarm system has received 100 alarms about the event (Some ambient AP interferes) of device HP830_WSC(10.10.10.5) from 2016-07-25 14:14:00 to 2016-07-25 14:47:55.&#39;,</span>
-<span class="sd">  &#39;alarmDetail&#39;: &#39;http://10.101.0.203:8080/imcrs/fault/alarm/187637&#39;,</span>
-<span class="sd">  &#39;alarmLevel&#39;: &#39;4&#39;,</span>
-<span class="sd">  &#39;alarmLevelDesc&#39;: &#39;Warning&#39;,</span>
-<span class="sd">  &#39;deviceId&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;deviceIp&#39;: &#39;127.0.0.1&#39;,</span>
-<span class="sd">  &#39;deviceName&#39;: &#39;NMS&#39;,</span>
-<span class="sd">  &#39;faultTime&#39;: &#39;1469472475&#39;,</span>
-<span class="sd">  &#39;faultTimeDesc&#39;: &#39;2016-07-25 14:47:55&#39;,</span>
-<span class="sd">  &#39;id&#39;: &#39;187637&#39;,</span>
-<span class="sd">  &#39;originalType&#39;: &#39;3&#39;,</span>
-<span class="sd">  &#39;originalTypeDesc&#39;: &#39;iMC&#39;,</span>
-<span class="sd">  &#39;paras&#39;: &#39;Start Time=2016-07-25 14:14:00;Stop Time=2016-07-25 14:47:55;Times=100;*Repeat Event Name=Some ambient AP interferes;*Device IP=10.10.10.5;Device Name=HP830_WSC&#39;,</span>
-<span class="sd">  &#39;parentId&#39;: &#39;173953&#39;,</span>
-<span class="sd">  &#39;recStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatusDesc&#39;: &#39;Unrecovered&#39;,</span>
-<span class="sd">  &#39;recTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;recUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;remark&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;somState&#39;: &#39;0&#39;},</span>
-<span class="sd"> {&#39;OID&#39;: &#39;1.3.6.1.4.1.25506.4.2.2.2.6.1&#39;,</span>
-<span class="sd">  &#39;ackStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackStatusDesc&#39;: &#39;Unacknowledged&#39;,</span>
-<span class="sd">  &#39;ackTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;ackTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;ackUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;alarmCategory&#39;: &#39;15&#39;,</span>
-<span class="sd">  &#39;alarmCategoryDesc&#39;: &#39;Other Alarms from NMS&#39;,</span>
-<span class="sd">  &#39;alarmDesc&#39;: &#39;iMC alarm system has received 100 alarms about the event (Some ambient device interferes) of device HP830_WSC(10.10.10.5) from 2016-07-25 14:40:21 to 2016-07-25 15:15:50.&#39;,</span>
-<span class="sd">  &#39;alarmDetail&#39;: &#39;http://10.101.0.203:8080/imcrs/fault/alarm/187654&#39;,</span>
-<span class="sd">  &#39;alarmLevel&#39;: &#39;4&#39;,</span>
-<span class="sd">  &#39;alarmLevelDesc&#39;: &#39;Warning&#39;,</span>
-<span class="sd">  &#39;deviceId&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;deviceIp&#39;: &#39;127.0.0.1&#39;,</span>
-<span class="sd">  &#39;deviceName&#39;: &#39;NMS&#39;,</span>
-<span class="sd">  &#39;faultTime&#39;: &#39;1469474150&#39;,</span>
-<span class="sd">  &#39;faultTimeDesc&#39;: &#39;2016-07-25 15:15:50&#39;,</span>
-<span class="sd">  &#39;id&#39;: &#39;187654&#39;,</span>
-<span class="sd">  &#39;originalType&#39;: &#39;3&#39;,</span>
-<span class="sd">  &#39;originalTypeDesc&#39;: &#39;iMC&#39;,</span>
-<span class="sd">  &#39;paras&#39;: &#39;Start Time=2016-07-25 14:40:21;Stop Time=2016-07-25 15:15:50;Times=100;*Repeat Event Name=Some ambient device interferes;*Device IP=10.10.10.5;Device Name=HP830_WSC&#39;,</span>
-<span class="sd">  &#39;parentId&#39;: &#39;173953&#39;,</span>
-<span class="sd">  &#39;recStatus&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recStatusDesc&#39;: &#39;Unrecovered&#39;,</span>
-<span class="sd">  &#39;recTime&#39;: &#39;0&#39;,</span>
-<span class="sd">  &#39;recTimeDesc&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;recUserName&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;remark&#39;: &#39;&#39;,</span>
-<span class="sd">  &#39;somState&#39;: &#39;0&#39;}]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">get_alarms_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/fault/alarm?operatorName=&quot;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> <span class="s2">&quot;&amp;recStatus=0&amp;ackStatus=0&amp;timeRange=0&amp;size=50&amp;desc=true&quot;</span>
+    <span class="n">get_alarms_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/fault/alarm?operatorName=&quot;</span> <span class="o">+</span> <span class="n">username</span> <span class="o">+</span> \
+                     <span class="s2">&quot;&amp;recStatus=0&amp;ackStatus=0&amp;timeRange=0&amp;size=50&amp;desc=true&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_alarms_url</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
     <span class="c1"># r.status_code</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
@@ -427,7 +218,7 @@
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

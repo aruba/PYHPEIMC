@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyhpeimc.tests.test_pyhpeimc_plat_icc &#8212; PYHPEIMC  documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for pyhpeimc.tests.test_pyhpeimc_plat_icc</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module is used for testing the functions within the pyhpeimc.plat.icc module.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">TestCase</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.tests.test_machine</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">pyhpeimc.plat.icc</span> <span class="k">import</span> <span class="o">*</span>
+
+<span class="c1">#TODO remarked out failing test</span>
+<div class="viewcode-block" id="TestGet_cfg_template"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_cfg_template">[docs]</a><span class="k">class</span> <span class="nc">TestGet_cfg_template</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_cfg_template.test_get_cfg_template_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_cfg_template.test_get_cfg_template_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_cfg_template_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">config_templates</span> <span class="o">=</span> <span class="n">get_cfg_template</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">config_templates</span><span class="p">),</span> <span class="nb">list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_cfg_template.test_get_cfg_template_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_cfg_template.test_get_cfg_template_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_cfg_template_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">config_templates</span> <span class="o">=</span> <span class="n">get_cfg_template</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">13</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;syncType&#39;</span><span class="p">,</span><span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileDesc&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileName&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;createBy&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;cfgFileParent&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileId&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;appliedDevices&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;defaultConfFile&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFilePath&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;modifyAt&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;createAt&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;defaultConfFileDesc&#39;</span><span class="p">,</span> <span class="n">config_templates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TestGet_cfg_template.test_get_cfg_template_folder_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_cfg_template.test_get_cfg_template_folder_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_cfg_template_folder_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">config_templates_folder</span> <span class="o">=</span> <span class="n">get_cfg_template</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s1">&#39;ADP_Configs&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">config_templates_folder</span><span class="p">),</span> <span class="nb">list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_cfg_template.test_get_cfg_templates_folder_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_cfg_template.test_get_cfg_templates_folder_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_cfg_templates_folder_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">config_templates_folder</span> <span class="o">=</span> <span class="n">get_cfg_template</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s1">&#39;ADP_Configs&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mi">13</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;syncType&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileDesc&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileName&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;createBy&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;cfgFileParent&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileId&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;appliedDevices&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;defaultConfFile&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFilePath&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="c1">#self.assertIn(&#39;modifyAt&#39;, config_templates_folder[0])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;createAt&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;defaultConfFileDesc&#39;</span><span class="p">,</span> <span class="n">config_templates_folder</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="TestGet_cfg_template.test_get_cfg_templates_no_folder"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_cfg_template.test_get_cfg_templates_no_folder">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_cfg_templates_no_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">config_template_no_folder</span> <span class="o">=</span> <span class="n">get_cfg_template</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">folder</span><span class="o">=</span><span class="s1">&#39;Doesnt_Exist&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">config_template_no_folder</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestCreate_cfg_segment"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestCreate_cfg_segment">[docs]</a><span class="k">class</span> <span class="nc">TestCreate_cfg_segment</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestCreate_cfg_segment.test_create_cfg_segment_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestCreate_cfg_segment.test_create_cfg_segment_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_cfg_segment_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">config_templates</span> <span class="o">=</span> <span class="n">get_cfg_template</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">config_templates</span><span class="p">),</span> <span class="nb">list</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestCreate_cfg_segment.test_create_cfg_segment_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestCreate_cfg_segment.test_create_cfg_segment_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_create_cfg_segment_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">delete_cfg_template</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+            <span class="n">filecontent</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&quot;&quot;sample file content&quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="n">create_new_file</span> <span class="o">=</span> <span class="n">create_cfg_segment</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">filecontent</span><span class="p">,</span> <span class="s1">&#39;My New Template&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">create_new_file</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">create_new_file</span><span class="p">,</span> <span class="mi">201</span><span class="p">)</span>
+            <span class="n">delete_cfg_template</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="TestGet_template_id"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_template_id">[docs]</a><span class="k">class</span> <span class="nc">TestGet_template_id</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_template_id.test_get_template_id"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_template_id.test_get_template_id">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_template_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">filecontent</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&quot;&quot;sample file content&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">create_new_file</span> <span class="o">=</span> <span class="n">create_cfg_segment</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">filecontent</span><span class="p">,</span> <span class="s1">&#39;My New Template&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">file_id</span> <span class="o">=</span> <span class="n">get_template_id</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">file_id</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="n">delete_cfg_template</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_template_id.test_get_template_id_doesnt_exist"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_template_id.test_get_template_id_doesnt_exist">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_template_id_doesnt_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">file_id</span> <span class="o">=</span> <span class="n">get_template_id</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">file_id</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">file_id</span><span class="p">,</span> <span class="s1">&#39;template not found&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TestGet_folder_id"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_folder_id">[docs]</a><span class="k">class</span> <span class="nc">TestGet_folder_id</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_folder_id.test_get_folder_id"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_folder_id.test_get_folder_id">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_folder_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">default_folder_id</span> <span class="o">=</span> <span class="n">get_folder_id</span><span class="p">(</span><span class="s1">&#39;Default Folder&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">default_folder_id</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TestGet_folder_id.test_get_folder_id_doesnt_exist"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_folder_id.test_get_folder_id_doesnt_exist">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_folder_id_doesnt_exist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">doesntexist_folder</span> <span class="o">=</span> <span class="n">get_folder_id</span><span class="p">(</span><span class="s1">&#39;Doesnt Exist Folder&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">doesntexist_folder</span><span class="p">),</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">doesntexist_folder</span><span class="p">,</span> <span class="s1">&#39;Folder not found&#39;</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="TestDelete_cfg_template"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestDelete_cfg_template">[docs]</a><span class="k">class</span> <span class="nc">TestDelete_cfg_template</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestDelete_cfg_template.test_delete_cfg_template"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestDelete_cfg_template.test_delete_cfg_template">[docs]</a>    <span class="k">def</span> <span class="nf">test_delete_cfg_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">filecontent</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&quot;&quot;sample file content&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">create_new_file</span> <span class="o">=</span> <span class="n">create_cfg_segment</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">filecontent</span><span class="p">,</span> <span class="s1">&#39;My New Template&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">delete_cfg_template_result</span> <span class="o">=</span> <span class="n">delete_cfg_template</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">delete_cfg_template_result</span><span class="p">),</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="n">delete_cfg_template_result</span><span class="p">,</span> <span class="mi">204</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="TestGet_template_contents"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_template_contents">[docs]</a><span class="k">class</span> <span class="nc">TestGet_template_contents</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+<div class="viewcode-block" id="TestGet_template_contents.test_get_template_details_type"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_template_contents.test_get_template_details_type">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_template_details_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">filecontent</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&quot;&quot;sample file content&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">create_new_file</span> <span class="o">=</span> <span class="n">create_cfg_segment</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">filecontent</span><span class="p">,</span> <span class="s1">&#39;My New Template&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">template_contents</span> <span class="o">=</span> <span class="n">get_template_details</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">template_contents</span><span class="p">),</span> <span class="nb">dict</span><span class="p">)</span>
+        <span class="n">delete_cfg_template_result</span> <span class="o">=</span> <span class="n">delete_cfg_template</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TestGet_template_contents.test_get_template_details_content"><a class="viewcode-back" href="../../../pyhpeimc.tests.test_pyhpeimc_plat_icc.html#pyhpeimc.tests.test_pyhpeimc_plat_icc.TestGet_template_contents.test_get_template_details_content">[docs]</a>    <span class="k">def</span> <span class="nf">test_get_template_details_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">filecontent</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;&quot;&quot;sample file content&quot;&quot;&quot;</span><span class="p">)</span>
+        <span class="n">create_new_file</span> <span class="o">=</span> <span class="n">create_cfg_segment</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">filecontent</span><span class="p">,</span> <span class="s1">&#39;My New Template&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">template_contents</span> <span class="o">=</span> <span class="n">get_template_details</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIs</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">template_contents</span><span class="p">),</span> <span class="mi">14</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileName&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileTypeDesc&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;cfgFileParent&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileDesc&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;createBy&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;appliedDevices&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileType&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;defaultConfFile&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;createAt&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFileId&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;defaultConfFileDesc&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;syncType&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="s1">&#39;confFilePath&#39;</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">filecontent</span><span class="p">,</span> <span class="n">template_contents</span><span class="p">[</span><span class="s1">&#39;content&#39;</span><span class="p">])</span>
+        <span class="n">delete_cfg_template_result</span> <span class="o">=</span> <span class="n">delete_cfg_template</span><span class="p">(</span><span class="s1">&#39;CW7SNMP.cfg&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span></div></div>
+
+
+
+
+
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, HPE.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

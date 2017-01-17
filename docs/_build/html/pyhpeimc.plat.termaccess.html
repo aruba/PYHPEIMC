@@ -45,20 +45,34 @@
             
   <div class="section" id="module-pyhpeimc.plat.termaccess">
 <span id="pyhpeimc-plat-termaccess-module"></span><h1>pyhpeimc.plat.termaccess module<a class="headerlink" href="#module-pyhpeimc.plat.termaccess" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions for working with the terminal access
+capabilities, including IP Address management of the HPE IMC NMS
+platform using the RESTful API</p>
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.add_child_ip_scope">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_child_ip_scope</code><span class="sig-paren">(</span><em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em>, <em>scopeid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_child_ip_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_child_ip_scope" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_child_ip_scope</code><span class="sig-paren">(</span><em>name</em>, <em>description</em>, <em>auth</em>, <em>url</em>, <em>startIp=None</em>, <em>endIp=None</em>, <em>parent_scopeid=None</em>, <em>network_address=None</em>, <em>parent_network_address=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_child_ip_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_child_ip_scope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
 in the HPE IMC base platform</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>startIp</strong> &#8211; str Start of IP address scope ex. &#8216;10.101.0.1&#8217;</li>
 <li><strong>endIp</strong> &#8211; str End of IP address scope ex. &#8216;10.101.0.254&#8217;</li>
 <li><strong>name</strong> &#8211; str Name of the owner of this IP scope  ex. &#8216;admin&#8217;</li>
 <li><strong>description</strong> &#8211; str description of the Ip scope</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>:param parent_scopeid</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
 </ul>
@@ -131,7 +145,7 @@ as 10.50.0.0/24</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.add_ip_scope">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_ip_scope</code><span class="sig-paren">(</span><em>startIp</em>, <em>endIp</em>, <em>name</em>, <em>description</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_ip_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_ip_scope" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_ip_scope</code><span class="sig-paren">(</span><em>name</em>, <em>description</em>, <em>auth</em>, <em>url</em>, <em>startIp=None</em>, <em>endIp=None</em>, <em>network_address=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_ip_scope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_ip_scope" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function takes input of four strings Start Ip, endIp, name, and description to add new Ip Scope to terminal access
 in the HPE IMC base platform</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -191,7 +205,7 @@ in the HPE IMC base platform</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.add_scope_ip">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_scope_ip</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>name</em>, <em>description</em>, <em>scopeid</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_scope_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_scope_ip" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">add_scope_ip</code><span class="sig-paren">(</span><em>ipaddress</em>, <em>name</em>, <em>description</em>, <em>auth</em>, <em>url</em>, <em>scopeid=None</em>, <em>network_address=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#add_scope_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.add_scope_ip" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function to add new host IP address allocation to existing scope ID</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -324,7 +338,7 @@ as 10.50.0.0/24</p>
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_ip_mac_arp_list">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_mac_arp_list</code><span class="sig-paren">(</span><em>devId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_mac_arp_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_mac_arp_list" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_mac_arp_list</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>devId=None</em>, <em>devip=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_mac_arp_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_mac_arp_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>function takes devid of specific device and issues a RESTFUL call to get the IP/MAC/ARP list from the target device.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -354,7 +368,10 @@ as 10.50.0.0/24</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_mac_list</span> <span class="o">=</span> <span class="n">get_ip_mac_arp_list</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_mac_list</span> <span class="o">=</span> <span class="n">get_ip_mac_arp_list</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devId</span><span class="o">=</span><span class="s1">&#39;10&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_mac_list</span> <span class="o">=</span> <span class="n">get_ip_mac_arp_list</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="s1">&#39;10.101.0.221&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">ip_mac_list</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span>
@@ -411,7 +428,7 @@ optional scopeId parameter is included, this will automatically return only the 
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_ip_scope_detail">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope_detail</code><span class="sig-paren">(</span><em>scopeId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_scope_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope_detail" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope_detail</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>scopeId=None</em>, <em>network_address=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_scope_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope_detail" title="Permalink to this definition">¶</a></dt>
 <dd><p>function requires no inputs and returns all IP address scopes currently configured on the HPE IMC server. If the
 optional scopeId parameter is included, this will automatically return only the desired scope id.
 :param scopeId: integer of the desired scope id ( optional )</p>
@@ -442,7 +459,7 @@ optional scopeId parameter is included, this will automatically return only the 
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_scope_detail</span> <span class="o">=</span> <span class="n">get_ip_scope_detail</span><span class="p">(</span><span class="s1">&#39;45&#39;</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ip_scope_detail</span> <span class="o">=</span> <span class="n">get_ip_scope_detail</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">scopeId</span> <span class="o">=</span> <span class="s1">&#39;45&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">ip_scope_detail</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span>
@@ -455,7 +472,7 @@ optional scopeId parameter is included, this will automatically return only the 
 
 <dl class="function">
 <dt id="pyhpeimc.plat.termaccess.get_ip_scope_hosts">
-<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope_hosts</code><span class="sig-paren">(</span><em>scopeId</em>, <em>auth</em>, <em>url</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_scope_hosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope_hosts" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.termaccess.</code><code class="descname">get_ip_scope_hosts</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>scopeId=None</em>, <em>network_address=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/termaccess.html#get_ip_scope_hosts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.termaccess.get_ip_scope_hosts" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function requires input of scope ID and returns list of allocated IP address for the specified scope</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -712,7 +729,7 @@ as 10.50.0.0/24</p>
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

@@ -44,25 +44,29 @@
   <h1>Source code for pyhpeimc.plat.device</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># author: @netmanchris</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions for working with the device capabilities</span>
+<span class="sd">of the HPE IMC NMS platform using the RESTful API</span>
 
-
+<span class="sd">&quot;&quot;&quot;</span>
 
 <span class="c1"># This section imports required libraries</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-
 <span class="n">HEADERS</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Accept&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span>
-    <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
-
-<span class="c1">#auth = None</span>
-
+           <span class="s1">&#39;application/json&#39;</span><span class="p">,</span> <span class="s1">&#39;Accept-encoding&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This section contains functions which operate at the system level</span>
+<span class="sd">This whole section has been moved to pyhpeimc.plat.system - functions left here for legacy.</span>
+<span class="sd">Intention is to remove by version 1.0.60 or greater. Please modify any scripts using functions</span>
+<span class="sd">in this section to use the new functions in the new module</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
+<span class="c1"># TODO Delete function when version =&gt; 1.60</span>
 <div class="viewcode-block" id="get_system_vendors"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_system_vendors">[docs]</a><span class="k">def</span> <span class="nf">get_system_vendors</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes string no input to issue RESTUL call to HP IMC\n</span>
 
@@ -101,6 +105,7 @@
         <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
 
 
+<span class="c1"># TODO Delete function when version =&gt; 1.60</span>
 <div class="viewcode-block" id="get_system_category"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_system_category">[docs]</a><span class="k">def</span> <span class="nf">get_system_category</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes string no input to issue RESTUL call to HP IMC\n</span>
 
@@ -139,6 +144,7 @@
         <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
 
 
+<span class="c1"># TODO Delete function when version =&gt; 1.60</span>
 <div class="viewcode-block" id="get_system_device_models"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_system_device_models">[docs]</a><span class="k">def</span> <span class="nf">get_system_device_models</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes string no input to issue RESTUL call to HP IMC\n</span>
 
@@ -176,6 +182,7 @@
         <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
 
 
+<span class="c1"># TODO Delete function when version =&gt; 1.60</span>
 <div class="viewcode-block" id="get_system_series"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_system_series">[docs]</a><span class="k">def</span> <span class="nf">get_system_series</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes string no input to issue RESTUL call to HP IMC\n</span>
 
@@ -214,11 +221,13 @@
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_series: An Error has occured&quot;</span></div>
 
+
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This section contains functions which operate at the device level.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="get_all_devs"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_all_devs">[docs]</a><span class="k">def</span> <span class="nf">get_all_devs</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">network_address</span><span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="get_all_devs"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_all_devs">[docs]</a><span class="k">def</span> <span class="nf">get_all_devs</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">network_address</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Takes string input of IP address to issue RESTUL call to HP IMC\n</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
@@ -246,14 +255,14 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="n">network_address</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">network_address</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">get_all_devs_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device?resPrivilegeFilter=false&amp;ip=&quot;</span> <span class="o">+</span> \
-                          <span class="nb">str</span><span class="p">(</span><span class="n">network_address</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;start=0&amp;size=1000&amp;orderBy=id&amp;desc=false&amp;total=false&quot;</span>
+                           <span class="nb">str</span><span class="p">(</span><span class="n">network_address</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;start=0&amp;size=1000&amp;orderBy=id&amp;desc=false&amp;total=false&quot;</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">get_all_devs_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device?resPrivilegeFilter=false&amp;start=0&amp;size=1000&amp;orderBy=id&amp;desc=false&amp;total=false&amp;exact=false&quot;</span>
 
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_all_devs_url</span>
-        <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
     <span class="c1"># r.status_code</span>
     <span class="k">try</span><span class="p">:</span>
@@ -265,7 +274,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">dev_details</span><span class="p">[</span><span class="s1">&#39;device&#39;</span><span class="p">]</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
 
 
 <div class="viewcode-block" id="get_dev_details"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_details">[docs]</a><span class="k">def</span> <span class="nf">get_dev_details</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
@@ -304,7 +313,7 @@
     <span class="n">get_dev_details_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device?resPrivilegeFilter=false&amp;ip=&quot;</span> <span class="o">+</span> \
                           <span class="nb">str</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;&amp;start=0&amp;size=1000&amp;orderBy=id&amp;desc=false&amp;total=false&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_dev_details_url</span>
-        <span class="c1"># creates the URL using the payload variable as the contents</span>
+    <span class="c1"># creates the URL using the payload variable as the contents</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
     <span class="c1"># r.status_code</span>
     <span class="k">try</span><span class="p">:</span>
@@ -321,14 +330,16 @@
             <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">dev_details</span><span class="p">[</span><span class="s1">&#39;device&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">dev_details</span><span class="p">[</span><span class="s1">&#39;device&#39;</span><span class="p">]</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_details: An Error has occured&quot;</span></div>
 
 
-<div class="viewcode-block" id="get_dev_interface"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_interface">[docs]</a><span class="k">def</span> <span class="nf">get_dev_interface</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="get_dev_interface"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_interface">[docs]</a><span class="k">def</span> <span class="nf">get_dev_interface</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function takes devid as input to RESTFUL call to HP IMC platform and returns list of device interfaces</span>
 
-<span class="sd">    :param devid: requires devid as the only input</span>
+<span class="sd">    :param devid: optional devid as the input</span>
+
+<span class="sd">    :param devip: optional devip as input</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
@@ -345,14 +356,17 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; dev_interfaces = get_dev_interface(&#39;15&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; dev_interfaces = get_dev_interface(auth.creds, auth.url, devid=&#39;15&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; dev_interfaces = get_dev_interface(auth.creds, auth.url, devip=&#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(dev_interfaces) is list</span>
 
 <span class="sd">    &gt;&gt;&gt; assert &#39;ifAlias&#39; in dev_interfaces[0]</span>
 
 <span class="sd">   &quot;&quot;&quot;</span>
-
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">get_dev_interface_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> \
                             <span class="s2">&quot;/interface?start=0&amp;size=1000&amp;desc=false&amp;total=false&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_dev_interface_url</span>
@@ -364,15 +378,17 @@
             <span class="n">int_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))[</span><span class="s1">&#39;interface&#39;</span><span class="p">]</span>
             <span class="k">return</span> <span class="n">int_list</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_interface: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_interface: An Error has occured&quot;</span></div>
 
 
-<div class="viewcode-block" id="get_dev_run_config"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_run_config">[docs]</a><span class="k">def</span> <span class="nf">get_dev_run_config</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="get_dev_run_config"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_run_config">[docs]</a><span class="k">def</span> <span class="nf">get_dev_run_config</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takes the devId of a specific device and issues a RESTFUL call to get the most current running config</span>
 <span class="sd">    file as known by the HP IMC Base Platform ICC module for the target device.</span>
 
 <span class="sd">    :param devid:  int or str value of the target device</span>
+
+<span class="sd">    :param devip: str of ipv4 address of the target device</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
@@ -390,12 +406,16 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; run_config = get_dev_run_config(&#39;10&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; run_config = get_dev_run_config(auth.creds, auth.url, devid=&#39;10&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; run_config = get_dev_run_config(auth.creds, auth.url, devip=&#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(run_config) is str</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># checks to see if the imc credentials are already available</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">get_dev_run_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/icc/deviceCfg/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/currentRun&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_dev_run_url</span>
     <span class="c1"># creates the URL using the payload variable as the contents</span>
@@ -403,25 +423,26 @@
     <span class="c1"># print (r.status_code)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">run_conf</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
-                <span class="k">return</span> <span class="n">run_conf</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s2">&quot;This features is no supported on this device&quot;</span>
+            <span class="n">run_conf</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">run_conf</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;This features is no supported on this device&quot;</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_run_config: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_run_config: An Error has occured&quot;</span></div>
 
 
-<div class="viewcode-block" id="get_dev_start_config"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_start_config">[docs]</a><span class="k">def</span> <span class="nf">get_dev_start_config</span><span class="p">(</span><span class="n">devId</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="get_dev_start_config"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_start_config">[docs]</a><span class="k">def</span> <span class="nf">get_dev_start_config</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takes the devId of a specific device and issues a RESTFUL call to get the most current startup config</span>
 <span class="sd">    file as known by the HP IMC Base Platform ICC module for the target device.</span>
 
-<span class="sd">    :param devId:  int or str value of the target device</span>
-
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
 <span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :param devid:  optional int or str value of the target device</span>
+
+<span class="sd">    :param devip:  optional ipv4 address of the target device</span>
 
 <span class="sd">    :return: str which contains the entire content of the target device startup configuration. If the device is not</span>
 <span class="sd">    currently supported in the HP IMC Base Platform ICC module, this call returns a string of &quot;This feature is not</span>
@@ -435,34 +456,39 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; start_config = get_dev_start_config(&#39;10&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; start_config = get_dev_start_config(auth.creds, auth.url, devId=&#39;10&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; start_config = get_dev_start_config(auth.creds, auth.url, devip=&#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(start_config) is str</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># checks to see if the imc credentials are already available</span>
-    <span class="n">get_dev_run_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/icc/deviceCfg/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devId</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/currentStart&quot;</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="n">get_dev_run_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/icc/deviceCfg/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/currentStart&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_dev_run_url</span>
     <span class="c1"># creates the URL using the payload variable as the contents</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">start_conf</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
-                <span class="k">return</span> <span class="n">start_conf</span>
-            <span class="k">except</span><span class="p">:</span>
-                <span class="k">return</span> <span class="s2">&quot;Start Conf not supported on this device&quot;</span>
+            <span class="n">start_conf</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))[</span><span class="s1">&#39;content&#39;</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">start_conf</span>
+        <span class="k">elif</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;This features is no supported on this device&quot;</span>
 
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_run_config: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_start_config: An Error has occured&quot;</span></div>
 
 
-<div class="viewcode-block" id="get_dev_mac_learn"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_mac_learn">[docs]</a><span class="k">def</span> <span class="nf">get_dev_mac_learn</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="get_dev_mac_learn"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_dev_mac_learn">[docs]</a><span class="k">def</span> <span class="nf">get_dev_mac_learn</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takes devid of specific device and issues a RESTFUL call to gather the current IP-MAC learning entries on</span>
 <span class="sd">    the target device.</span>
 
 <span class="sd">    :param devid: int value of the target device</span>
+
+<span class="sd">    :param devip: ipv4 address of the target device</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
@@ -478,35 +504,47 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; dev_mac_learn = get_dev_mac_learn(&#39;10&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; dev_mac_learn = get_dev_mac_learn( auth.creds, auth.url, devid=&#39;10&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; dev_mac_learn = get_dev_mac_learn( auth.creds, auth.url, devip=&#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(dev_mac_learn) is list</span>
 
 <span class="sd">    &gt;&gt;&gt; assert &#39;deviceId&#39; in dev_mac_learn[0]</span>
 
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">get_dev_mac_learn_url</span><span class="o">=</span><span class="s1">&#39;/imcrs/res/access/ipMacLearn/&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span>
-    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span><span class="o">+</span><span class="n">get_dev_mac_learn_url</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="n">get_dev_mac_learn_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/res/access/ipMacLearn/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span>
+    <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_dev_mac_learn_url</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">mac_learn_query</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="n">mac_learn_query</span> <span class="o">=</span> <span class="p">[]</span>
                 <span class="k">return</span> <span class="n">mac_learn_query</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">mac_learn_query</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))[</span><span class="s1">&#39;ipMacLearnResult&#39;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">mac_learn_query</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+                    <span class="n">mac_learn_query</span> <span class="o">=</span> <span class="p">[</span><span class="n">mac_learn_query</span><span class="p">]</span>
                 <span class="k">return</span> <span class="n">mac_learn_query</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_mac_learn: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_dev_mac_learn: An Error has occured&quot;</span></div>
 
 
-<div class="viewcode-block" id="run_dev_cmd"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.run_dev_cmd">[docs]</a><span class="k">def</span> <span class="nf">run_dev_cmd</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">cmd_list</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="run_dev_cmd"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.run_dev_cmd">[docs]</a><span class="k">def</span> <span class="nf">run_dev_cmd</span><span class="p">(</span><span class="n">cmd_list</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Function takes devid of target device and a sequential list of strings which define the specific commands to be run</span>
 <span class="sd">    on the target device and returns a str object containing the output of the commands.</span>
 <span class="sd">    :param devid: int devid of the target device</span>
 
 <span class="sd">    :param cmd_list: list of strings</span>
+
+<span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
+
+<span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :param devip: str of ipv4 address of the target device</span>
 
 <span class="sd">    :return: str containing the response of the commands</span>
 
@@ -518,7 +556,9 @@
 
 <span class="sd">    &gt;&gt;&gt; cmd_list = [&#39;display version&#39;]</span>
 
-<span class="sd">    &gt;&gt;&gt; cmd_output = run_dev_cmd(&#39;10&#39;, cmd_list, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; cmd_output = run_dev_cmd( cmd_list, auth.creds, auth.url, devid =&#39;10&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; cmd_output = run_dev_cmd( cmd_list, auth.creds, auth.url, devip=&#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(cmd_output) is dict</span>
 
@@ -527,13 +567,15 @@
 <span class="sd">    &gt;&gt;&gt; assert &#39;success&#39; in cmd_output</span>
 
 
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">run_dev_cmd_url</span> <span class="o">=</span> <span class="s1">&#39;/imcrs/icc/confFile/executeCmd&#39;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">run_dev_cmd_url</span>
     <span class="n">cmd_list</span> <span class="o">=</span> <span class="n">_make_cmd_list</span><span class="p">(</span><span class="n">cmd_list</span><span class="p">)</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{ &quot;deviceId&quot; : &quot;&#39;&#39;&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;&quot;,</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;{ &quot;deviceId&quot; : &quot;&#39;&#39;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;&quot;,</span>
 <span class="s1">                   &quot;cmdlist&quot; : { &quot;cmd&quot; :</span>
-<span class="s1">                   [&#39;&#39;&#39;</span><span class="o">+</span> <span class="n">cmd_list</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;]</span>
+<span class="s1">                   [&#39;&#39;&#39;</span> <span class="o">+</span> <span class="n">cmd_list</span> <span class="o">+</span> <span class="s1">&#39;&#39;&#39;]</span>
 
 <span class="s1">                   }</span>
 <span class="s1">                   }&#39;&#39;&#39;</span>
@@ -545,22 +587,25 @@
             <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
 
 
-
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">This section contains functions which operate at the interface level</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="get_all_interface_details"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_all_interface_details">[docs]</a><span class="k">def</span> <span class="nf">get_all_interface_details</span><span class="p">(</span><span class="n">devId</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+
+<div class="viewcode-block" id="get_all_interface_details"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_all_interface_details">[docs]</a><span class="k">def</span> <span class="nf">get_all_interface_details</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takes the devId of a specific device and the ifindex value assigned to a specific interface</span>
 <span class="sd">    and issues a RESTFUL call to get the interface details</span>
 <span class="sd">    file as known by the HP IMC Base Platform ICC module for the target device.</span>
 
-<span class="sd">    :param devId:  int or str value of the devId of the target device</span>
-
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
 <span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :param devid:  int or str value of the devId of the target device</span>
+
+<span class="sd">    :param devip: ipv4 address of the target device</span>
+
 
 <span class="sd">    :return: list of dict objects which contains the details of all interfaces on the target device</span>
 
@@ -572,7 +617,9 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; all_interface_details = get_all_interface_details(&#39;10&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; all_interface_details = get_all_interface_details( auth.creds, auth.url, devId=&#39;10&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; all_interface_details = get_all_interface_details( auth.creds, auth.url, devip=&#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(all_interface_details) is list</span>
 
@@ -580,10 +627,11 @@
 
 
 <span class="sd">     &quot;&quot;&quot;</span>
-
-    <span class="n">get_all_interface_details_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devId</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/interface/?start=0&amp;size=1000&amp;desc=false&amp;total=false&quot;</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="n">get_all_interface_details_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/interface/?start=0&amp;size=1000&amp;desc=false&amp;total=false&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_all_interface_details_url</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="c1"># creates the URL using the payload variable as the contents</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
     <span class="c1"># r.status_code</span>
@@ -592,22 +640,24 @@
             <span class="n">dev_details</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">dev_details</span><span class="p">[</span><span class="s1">&#39;interface&#39;</span><span class="p">]</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_interface_details: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_all_interface_details: An Error has occured&quot;</span></div>
 
 
-<div class="viewcode-block" id="get_interface_details"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_interface_details">[docs]</a><span class="k">def</span> <span class="nf">get_interface_details</span><span class="p">(</span><span class="n">devId</span><span class="p">,</span> <span class="n">ifIndex</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="get_interface_details"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.get_interface_details">[docs]</a><span class="k">def</span> <span class="nf">get_interface_details</span><span class="p">(</span><span class="n">ifindex</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takes the devId of a specific device and the ifindex value assigned to a specific interface</span>
 <span class="sd">    and issues a RESTFUL call to get the interface details</span>
 <span class="sd">    file as known by the HP IMC Base Platform ICC module for the target device.</span>
 
-<span class="sd">    :param devId:  int or str value of the devId of the target device</span>
-
-<span class="sd">    :param ifIndex: int or str value of the ifIndex of the target interface</span>
+<span class="sd">    :param ifindex: int or str value of the ifIndex of the target interface</span>
 
 <span class="sd">    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class</span>
 
 <span class="sd">    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</span>
+
+<span class="sd">    :param devid:  int or str value of the devId of the target device</span>
+
+<span class="sd">    :param devip: str of ipv4 address of the target device</span>
 
 <span class="sd">    :return: dict which contains the details of the target interface&quot;</span>
 
@@ -619,7 +669,9 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; interface_details = get_interface_details(&#39;10&#39;, &#39;1&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; interface_details = get_interface_details(&#39;1&#39;, auth.creds, auth.url, devId = &#39;10&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; interface_details = get_interface_details(&#39;1&#39;, auth.creds, auth.url, devip = &#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(interface_details) is dict</span>
 
@@ -627,9 +679,10 @@
 
 
 <span class="sd">     &quot;&quot;&quot;</span>
-    <span class="n">get_interface_details_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devId</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/interface/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ifIndex</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
+    <span class="n">get_interface_details_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/interface/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ifindex</span><span class="p">)</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">get_interface_details_url</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="c1"># creates the URL using the payload variable as the contents</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>
     <span class="c1"># r.status_code</span>
@@ -638,14 +691,16 @@
             <span class="n">dev_details</span> <span class="o">=</span> <span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">text</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">dev_details</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_interface_details: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; get_interface_details: An Error has occured&quot;</span></div>
 
 
-<div class="viewcode-block" id="set_interface_down"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.set_interface_down">[docs]</a><span class="k">def</span> <span class="nf">set_interface_down</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifindex</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="set_interface_down"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.set_interface_down">[docs]</a><span class="k">def</span> <span class="nf">set_interface_down</span><span class="p">(</span><span class="n">ifindex</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takest devid and ifindex of specific device and interface and issues a RESTFUL call to &quot; shut&quot; the specifie</span>
 <span class="sd">    d interface on the target device.</span>
 <span class="sd">    :param devid: int or str value of the target device</span>
+
+<span class="sd">    :param devip: ipv4 address of the target devices</span>
 
 <span class="sd">    :param ifindex: int or str value of the target interface</span>
 
@@ -663,13 +718,24 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; int_down_response = set_interface_down(&#39;10&#39;, &#39;9&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; int_up_response = set_inteface_up(&#39;9&#39;, auth.creds, auth.url, devip = &#39;10.101.0.221&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; int_down_response = set_interface_down( &#39;9&#39;, auth.creds, auth.url, devid = &#39;10&#39;)</span>
+<span class="sd">    204</span>
+
+<span class="sd">    &gt;&gt;&gt; int_up_response = set_inteface_up(&#39;9&#39;, auth.creds, auth.url, devip = &#39;10.101.0.221&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; int_down_response = set_interface_down( &#39;9&#39;, auth.creds, auth.url, devip = &#39;10.101.0.221&#39;)</span>
 <span class="sd">    204</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(int_down_response) is int</span>
 
 <span class="sd">    &gt;&gt;&gt; assert int_down_response is 204</span>
+
+<span class="sd">    &gt;&gt;&gt; int_up_response = set_inteface_up(&#39;9&#39;, auth.creds, auth.url, devip = &#39;10.101.0.221&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">set_int_down_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/interface/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ifindex</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/down&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">set_int_down_url</span>
     <span class="k">try</span><span class="p">:</span>
@@ -679,15 +745,17 @@
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; set_inteface_down: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; set_inteface_down: An Error has occured&quot;</span></div>
 
 
-<div class="viewcode-block" id="set_inteface_up"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.set_inteface_up">[docs]</a><span class="k">def</span> <span class="nf">set_inteface_up</span><span class="p">(</span><span class="n">devid</span><span class="p">,</span> <span class="n">ifindex</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+<div class="viewcode-block" id="set_inteface_up"><a class="viewcode-back" href="../../../pyhpeimc.plat.device.html#pyhpeimc.plat.device.set_inteface_up">[docs]</a><span class="k">def</span> <span class="nf">set_inteface_up</span><span class="p">(</span><span class="n">ifindex</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">devid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">devip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    function takest devid and ifindex of specific device and interface and issues a RESTFUL call to &quot;undo shut&quot; the spec</span>
 <span class="sd">    ified interface on the target device.</span>
 
 <span class="sd">    :param devid: int or str value of the target device</span>
+
+<span class="sd">    :param devip: ipv4 address of the target devices</span>
 
 <span class="sd">    :param ifindex: int or str value of the target interface</span>
 
@@ -705,33 +773,43 @@
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; int_up_response = set_inteface_up(&#39;10&#39;, &#39;9&#39;, auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; int_down_response = set_interface_down( &#39;9&#39;, auth.creds, auth.url, devid = &#39;10&#39;)</span>
+<span class="sd">    204</span>
+
+<span class="sd">    &gt;&gt;&gt; int_up_response = set_inteface_up( &#39;9&#39;, auth.creds, auth.url, devid = &#39;10&#39;)</span>
+
+<span class="sd">    &gt;&gt;&gt; int_down_response = set_interface_down( &#39;9&#39;, auth.creds, auth.url, devid = &#39;10&#39;)</span>
+<span class="sd">    204</span>
+
+<span class="sd">    &gt;&gt;&gt; int_up_response = set_inteface_up(&#39;9&#39;, auth.creds, auth.url, devip = &#39;10.101.0.221&#39;)</span>
 
 <span class="sd">    &gt;&gt;&gt; assert type(int_up_response) is int</span>
 
 <span class="sd">    &gt;&gt;&gt; assert int_up_response is 204</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">devip</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">devid</span> <span class="o">=</span> <span class="n">get_dev_details</span><span class="p">(</span><span class="n">devip</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">)[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
     <span class="n">set_int_up_url</span> <span class="o">=</span> <span class="s2">&quot;/imcrs/plat/res/device/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">devid</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/interface/&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">ifindex</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/up&quot;</span>
     <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">set_int_up_url</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span>
-                     <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
+                         <span class="n">headers</span><span class="o">=</span><span class="n">HEADERS</span><span class="p">)</span>  <span class="c1"># creates the URL using the payload variable as the contents</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">204</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; set_inteface_up: An Error has occured&quot;</span></div>
+        <span class="k">return</span> <span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; set_inteface_up: An Error has occured&quot;</span></div>
 
 
 <span class="k">def</span> <span class="nf">_make_cmd_list</span><span class="p">(</span><span class="n">cmd_list</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Helper function to easily create the proper json formated string from a list of strs</span>
 <span class="sd">    :param cmd_list: list of strings</span>
 <span class="sd">    :return: str json formatted</span>
-<span class="sd">    &#39;&#39;&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">cmd_list</span><span class="p">:</span>
-         <span class="n">cmd</span><span class="o">=</span> <span class="n">cmd</span><span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s1">&#39;&quot;,&#39;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span> <span class="o">+</span> <span class="s1">&#39;&quot;&#39;</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="s1">&#39;&quot;,&#39;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">cmd</span>
 </pre></div>
@@ -767,7 +845,7 @@
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

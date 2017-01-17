@@ -1,16 +1,18 @@
-#!/usr/bin/env python3
 # author: @netmanchris
+# -*- coding: utf-8 -*-
+"""
+This module contains functions for working with the access point information
+capabilities of the HPE IMC WSM Module using the RESTful API
 
-
+"""
 
 # This section imports required libraries
 import json
+
 import requests
 
+from pyhpeimc.auth import HEADERS
 
-
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
 
 def get_ap_info_all(auth, url):
     """
@@ -19,7 +21,8 @@ def get_ap_info_all(auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents a single wireless access point which has been
+    :return: list of dictionaries where each element of the list represents a single wireless
+    access point which has been
     discovered in the HPE IMC WSM module
 
     :rtype: list
@@ -75,18 +78,15 @@ def get_ap_info_all(auth, url):
     >>> assert 'sysName' in all_ap_info[0]
 
     """
-    get_ap_info_all_url = "/imcrs/wlan/apInfo/queryApBasicInfo"
-    f_url = url + get_ap_info_all_url
-    payload = None
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    f_url = url + "/imcrs/wlan/apInfo/queryApBasicInfo"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)['apBasicInfo']
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_ap_info_all: An Error has occured"
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)['apBasicInfo']
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ap_info_all: An Error has occured"
+
 
 def get_ap_info(ipaddress, auth, url):
     """
@@ -155,15 +155,10 @@ def get_ap_info(ipaddress, auth, url):
     """
     get_ap_info_url = "/imcrs/wlan/apInfo/queryApBasicInfoByCondition?ipAddress=" + str(ipaddress)
     f_url = url + get_ap_info_url
-    payload = None
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)['apBasicInfo']
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_ap_info_all: An Error has occured"
-
-
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)['apBasicInfo']
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_ap_info_all: An Error has occured"

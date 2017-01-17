@@ -44,12 +44,17 @@
   <h1>Source code for pyhpeimc.auth</h1><div class="highlight"><pre>
 <span></span><span class="ch">#!/usr/bin/env python3</span>
 <span class="c1"># author: @netmanchris</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains functions for authenticating to the HPE IMC NMS platform</span>
+<span class="sd">using the RESTful API</span>
 
+<span class="sd">&quot;&quot;&quot;</span>
 
 
 <span class="c1"># This section imports required libraries</span>
-<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">requests.auth</span> <span class="k">import</span> <span class="n">HTTPDigestAuth</span>
 
 
@@ -100,22 +105,22 @@
         <span class="n">f_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">auth_url</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f_url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># checks for valid IMC credentials</span>
+                <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;Error: </span><span class="se">\n</span><span class="s2"> You&#39;re credentials are invalid. Please try again</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">set_imc_creds</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
     <span class="c1"># checks for reqeusts exceptions</span>
         <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">The IMC server address is invalid. Please try again&#39;</span><span class="p">)</span>
-            <span class="n">set_imc_creds</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>  <span class="c1"># checks for valid IMC credentials</span>
-            <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span><span class="s2">&quot;Error: </span><span class="se">\n</span><span class="s2"> You&#39;re credentials are invalid. Please try again</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
-            <span class="n">set_imc_creds</span><span class="p">()</span></div></div>
+            <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Error:</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">The IMC server address is invalid. Please try again&#39;</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="test_imc_creds"><a class="viewcode-back" href="../../pyhpeimc.auth.html#pyhpeimc.auth.test_imc_creds">[docs]</a><span class="k">def</span> <span class="nf">test_imc_creds</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
+
+<div class="viewcode-block" id="check_imc_creds"><a class="viewcode-back" href="../../pyhpeimc.auth.html#pyhpeimc.auth.check_imc_creds">[docs]</a><span class="k">def</span> <span class="nf">check_imc_creds</span><span class="p">(</span><span class="n">auth</span><span class="p">,</span> <span class="n">url</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Function takes input of auth class object auth object and URL and returns a BOOL of TRUE if the authentication was successful.</span>
 
 <span class="sd">    &gt;&gt;&gt; auth = IMCAuth(&quot;http://&quot;, &quot;10.101.0.203&quot;, &quot;8080&quot;, &quot;admin&quot;, &quot;admin&quot;)</span>
 
-<span class="sd">    &gt;&gt;&gt; test_imc_creds(auth.creds, auth.url)</span>
+<span class="sd">    &gt;&gt;&gt; check_imc_creds(auth.creds, auth.url)</span>
 <span class="sd">    True</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -220,7 +225,7 @@
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

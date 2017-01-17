@@ -1,16 +1,19 @@
-#!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
+# -*- coding: utf-8 -*-
+"""
+This module contains functions for working with the client information
+capabilities of the HPE IMC WSM Module using the RESTful API
 
-
+"""
 
 # This section imports required libraries
 import json
+
 import requests
 
+from pyhpeimc.auth import HEADERS
 
-
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
 
 def get_client_info_all(auth, url):
     """
@@ -20,8 +23,8 @@ def get_client_info_all(auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents one client as discovered by the HPE IMC
-    Wireless Services Management module.
+    :return: list of dictionaries where each element of the list represents one client as
+    discovered by the HPE IMC Wireless Services Management module.
 
     :rtype: list
 
@@ -67,21 +70,15 @@ def get_client_info_all(auth, url):
 
     >>> assert 'userName' in all_client_info[0]
 
-
-
     """
-    get_client_info_all_url = "/imcrs/wlan/clientInfo/queryAllClientBasicInfo"
-    f_url = url + get_client_info_all_url
-    payload = None
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    f_url = url +  "/imcrs/wlan/clientInfo/queryAllClientBasicInfo"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)['clientBasicInfo']
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_client_info_all: An Error has occured"
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)['clientBasicInfo']
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_client_info_all: An Error has occured"
 
 
 def get_client_online_history_all(auth, url):
@@ -91,8 +88,8 @@ def get_client_online_history_all(auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents one client as discovered by the HPE IMC
-    Wireless Services Management module.
+    :return: list of dictionaries where each element of the list represents one client as
+    discovered by the HPE IMC Wireless Services Management module.
 
     :rtype: list
 
@@ -151,15 +148,11 @@ def get_client_online_history_all(auth, url):
     >>> assert 'userName' in online_client_info[0]
 
     """
-    get_client_online_history_all_url = "/imcrs/wlan/clientInfo/queryClientOnlineHistoryInfo"
-    f_url = url + get_client_online_history_all_url
-    payload = None
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    f_url = url + "/imcrs/wlan/clientInfo/queryClientOnlineHistoryInfo"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)['clientOnlineHistoryInfo']
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_client_online_history_all: An Error has occured"
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)['clientOnlineHistoryInfo']
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_client_online_history_all: An Error has occured"

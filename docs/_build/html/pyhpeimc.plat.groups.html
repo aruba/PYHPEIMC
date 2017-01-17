@@ -45,6 +45,8 @@
             
   <div class="section" id="module-pyhpeimc.plat.groups">
 <span id="pyhpeimc-plat-groups-module"></span><h1>pyhpeimc.plat.groups module<a class="headerlink" href="#module-pyhpeimc.plat.groups" title="Permalink to this headline">¶</a></h1>
+<p>This module contains functions for working with the groups capabilities
+of the HPE IMC NMS platform using the RESTful API</p>
 <dl class="data">
 <dt id="pyhpeimc.plat.groups.HEADERS">
 <code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">HEADERS</code><em class="property"> = {'Content-Type': 'application/json', 'Accept': 'application/json', 'Accept-encoding': 'application/json'}</em><a class="headerlink" href="#pyhpeimc.plat.groups.HEADERS" title="Permalink to this definition">¶</a></dt>
@@ -63,6 +65,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>custom_view_name</strong> &#8211; str of the target custom view name</li>
 <li><strong>dev_list</strong> &#8211; list containing the devID of all devices to be contained in this custom view.</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
@@ -80,9 +83,6 @@
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.auth</span> <span class="k">import</span> <span class="o">*</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pyhpeimc.plat.groups</span> <span class="k">import</span> <span class="o">*</span>
-</pre></div>
-</div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">auth</span> <span class="o">=</span> <span class="n">IMCAuth</span><span class="p">(</span><span class="s2">&quot;http://&quot;</span><span class="p">,</span> <span class="s2">&quot;10.101.0.203&quot;</span><span class="p">,</span> <span class="s2">&quot;8080&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;admin&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -98,9 +98,10 @@ will return only the specified view.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>name</strong> &#8211; string containg the name of the desired custom view</li>
 <li><strong>auth</strong> &#8211; requests auth object #usually auth.creds from auth pyhpeimc.auth.class</li>
 <li><strong>url</strong> &#8211; base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass</li>
+<li><strong>name</strong> &#8211; string containg the name of the desired custom view</li>
+<li><strong>upperview</strong> &#8211; str contraining the name of the desired parent custom view</li>
 </ul>
 </td>
 </tr>
@@ -187,7 +188,7 @@ IMC.
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">view_1</span> <span class="o">=</span><span class="n">get_custom_views</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;L1 View&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">view_1</span> <span class="o">==</span> <span class="kc">None</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">view_1</span> <span class="ow">is</span> <span class="kc">None</span>
 </pre></div>
 </div>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">delete_custom_view</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;L2 View&quot;</span><span class="p">)</span>
@@ -197,7 +198,7 @@ IMC.
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">view_2</span> <span class="o">=</span><span class="n">get_custom_views</span><span class="p">(</span> <span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;L2 View&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">view_2</span> <span class="o">==</span> <span class="kc">None</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">view_2</span> <span class="ow">is</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -249,7 +250,7 @@ argument will return only the specified view.
 
 <dl class="function">
 <dt id="pyhpeimc.plat.groups.get_custom_views">
-<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">get_custom_views</code><span class="sig-paren">(</span><em>auth: object</em>, <em>url: object</em>, <em>name: object = None</em>, <em>headers: object = {'Content-Type': 'application/json'</em>, <em>'Accept': 'application/json'</em>, <em>'Accept-encoding': 'application/json'}</em><span class="sig-paren">)</span> &rarr; object<a class="reference internal" href="_modules/pyhpeimc/plat/groups.html#get_custom_views"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.groups.get_custom_views" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyhpeimc.plat.groups.</code><code class="descname">get_custom_views</code><span class="sig-paren">(</span><em>auth</em>, <em>url</em>, <em>name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyhpeimc/plat/groups.html#get_custom_views"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyhpeimc.plat.groups.get_custom_views" title="Permalink to this definition">¶</a></dt>
 <dd><p>function requires no input and returns a list of dictionaries of custom views from an HPE IMC. Optional name
 argument will return only the specified view.
 :param name: str containing the name of the desired custom view</p>
@@ -293,7 +294,7 @@ argument will return only the specified view.
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">non_existant_view</span> <span class="o">=</span> <span class="n">get_custom_views</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">creds</span><span class="p">,</span> <span class="n">auth</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;&#39;Doesn&#39;t Exist&#39;&#39;&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">non_existant_view</span> <span class="o">==</span> <span class="kc">None</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">non_existant_view</span> <span class="ow">is</span> <span class="kc">None</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -336,7 +337,7 @@ argument will return only the specified view.
       &copy;2016, HPE.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.5.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
       
     </div>

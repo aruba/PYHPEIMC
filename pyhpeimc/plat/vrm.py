@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
+# coding=utf-8
 # author: @netmanchris
-
+# -*- coding: utf-8 -*-
+"""
+This module contains functions for working with the Virtual Resource Manager
+capabilities of the HPE IMC NMS platform using the RESTful API
+"""
 
 
 # This section imports required libraries
+
 import json
+
 import requests
-from pyhpeimc.plat.device import *
 
-
-HEADERS = {'Accept': 'application/json', 'Content-Type':
-    'application/json', 'Accept-encoding': 'application/json'}
-
-
+from pyhpeimc.auth import HEADERS
+from pyhpeimc.plat.device import get_dev_details
 
 
 def get_vm_host_info(hostip, auth, url):
@@ -62,22 +65,19 @@ def get_vm_host_info(hostip, auth, url):
     >>> assert 'vendor' in host_info
 
     """
-    hostId = get_dev_details(hostip, auth, url)['id']
-    get_vm_host_info_url = "/imcrs/vrm/host?hostId=" + str(hostId)
-    f_url = url + get_vm_host_info_url
-    payload = None
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    hostid = get_dev_details(hostip, auth, url)['id']
+    f_url = url + "/imcrs/vrm/host?hostId=" + str(hostid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)
-        elif r.status_code == 204:
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)
+        elif response.status_code == 204:
             print("Device is not a supported Hypervisor")
             return "Device is not a supported Hypervisor"
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_vm_host_info: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_vm_host_info: An Error has occured"
+
 
 def get_vm_host_vnic(hostip, auth, url):
     """
@@ -89,7 +89,8 @@ def get_vm_host_vnic(hostip, auth, url):
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents a single NIC on the target host
+    :return: list of dictionaries where each element of the list represents a single NIC on the
+    target host
 
     :rtype: list
 
@@ -119,35 +120,32 @@ def get_vm_host_vnic(hostip, auth, url):
 
 
     """
-    hostId = get_dev_details(hostip, auth, url)['id']
-    get_vm_host_vnic_url = "/imcrs/vrm/host/vnic?hostDevId=" + str(hostId)
-    f_url = url + get_vm_host_vnic_url
-    payload = None
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
-    # print(r.status_code)
+    hostid = get_dev_details(hostip, auth, url)['id']
+    f_url = url + "/imcrs/vrm/host/vnic?hostDevId=" + str(hostid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(r.text) > 0:
-                return json.loads(r.text)['Nic']
-        elif r.status_code == 204:
+        if response.status_code == 200:
+            if len(response.text) > 0:
+                return json.loads(response.text)['Nic']
+        elif response.status_code == 204:
             print("Device is not a supported Hypervisor")
             return "Device is not a supported Hypervisor"
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_vm_host_info: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_vm_host_info: An Error has occured"
+
 
 def get_host_vms(hostip, auth, url):
     """
     function takes hostId as input to RESTFUL call to HP IMC
 
-    :param hostId: int or string of HostId of Hypervisor host
+    :param hostip: string of ipv4 address of Hypervisor host
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
 
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
 
-    :return: list of dictionaries where each element of the list represents a single virtual machine which is currently
-    located on the target host.
+    :return: list of dictionaries where each element of the list represents a single virtual
+    machine which is currently located on the target host.
 
     :rtype: list
 
@@ -186,17 +184,14 @@ def get_host_vms(hostip, auth, url):
     >>> assert 'vmTools' in host_vms[0]
 
     """
-    hostId = get_dev_details(hostip, auth, url)['id']
-    get_host_info_url = "/imcrs/vrm/host/vm?hostId=" + str(hostId)
-    f_url = url + get_host_info_url
-    payload = None
-    r = requests.get(f_url, auth=auth,
-                     headers=HEADERS)  # creates the URL using the payload variable as the contents
+    hostid = get_dev_details(hostip, auth, url)['id']
+    f_url = url + "/imcrs/vrm/host/vm?hostId=" + str(hostid)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
-        if r.status_code == 200:
-            if len(json.loads(r.text)) > 1:
-                return json.loads(r.text)['vmDevice']
+        if response.status_code == 200:
+            if len(json.loads(response.text)) > 1:
+                return json.loads(response.text)['vmDevice']
             else:
                 return "Device is not a supported Hypervisor"
-    except requests.exceptions.RequestException as e:
-            return "Error:\n" + str(e) + " get_host_vms: An Error has occured"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_host_vms: An Error has occured"
