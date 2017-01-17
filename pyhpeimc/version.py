@@ -19,6 +19,6 @@ def version():
     :rtype str
 
     >>> version()
-    1.0.36
+    1.0.37
     """
-    print('1.0.36')
+    print('1.0.37')

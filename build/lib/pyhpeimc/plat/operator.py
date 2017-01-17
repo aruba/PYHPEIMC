@@ -49,33 +49,35 @@ def create_operator(operator, auth, url,headers=HEADERS):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>>  operator = '''{ "fullName" : "test administrator"   ,
-             "sessionTimeout" : "30",
-             "password" :  "password",
-             "operatorGroupId" : "1",
-             "name" : "testadmin",
-             "desc" : "test admin account",
-             "defaultAcl" : "",
-             "authType"  : "0"}'''
+    >>> operator = '''{ "fullName" : "test administrator", "sessionTimeout" : "30","password" :  "password","operatorGroupId" : "1","name" : "testadmin","desc" : "test admin account","defaultAcl" : "","authType"  : "0"}'''
 
     >>> operator = json.loads(operator)
 
-    >>> create_operator(operator, auth.creds, auth.url)
-    Operator Successfully Created
+    >>> delete_if_exists = delete_plat_operator('testadmin', auth.creds, auth.url)
+
+    >>> new_operator = create_operator(operator, auth.creds, auth.url)
+
+    >>> assert type(new_operator) is int
+
+    >>> assert new_operator == 201
+
+    >>> fail_operator_create = create_operator(operator, auth.creds, auth.url)
+
+    >>> assert type(fail_operator_create) is int
+
+    >>> assert fail_operator_create == 409
 
     """
     create_operator_url = '/imcrs/plat/operator'
     f_url = url + create_operator_url
-    print (f_url)
     payload = json.dumps(operator, indent=4)
     # creates the URL using the payload variable as the contents
     r = requests.post(f_url, data=payload, auth=auth, headers=headers)
     try:
         if r.status_code == 409:
-            print("Operator Already Exists")
+            #print("Operator Already Exists")
             return r.status_code
         elif r.status_code == 201:
-            print("Operator Successfully Created")
             return r.status_code
     except requests.exceptions.RequestException as e:
             return "Error:\n" + str(e) + ' create_operator: An Error has occured'
@@ -104,9 +106,17 @@ def set_operator_password(operator, password, auth, url,headers=HEADERS):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> set_operator_password('testadmin', 'newpassword', auth.creds, auth.url)
-    Operator:testadmin password was successfully changed
-    204
+    >>> operator = '''{ "fullName" : "test administrator", "sessionTimeout" : "30","password" :  "password","operatorGroupId" : "1","name" : "testadmin","desc" : "test admin account","defaultAcl" : "","authType"  : "0"}'''
+
+    >>> operator = json.loads(operator)
+
+    >>> new_operator = create_operator(operator, auth.creds, auth.url)
+
+    >>> set_new_password = set_operator_password('testadmin', 'newpassword', auth.creds, auth.url)
+
+    >>> assert type(set_new_password) is int
+
+    >>> assert set_new_password == 204
 
        """
     if operator == None:
@@ -129,8 +139,8 @@ def set_operator_password(operator, password, auth, url,headers=HEADERS):
     r = requests.put(f_url, data=payload, auth=auth, headers=headers)
     try:
         if r.status_code == 204:
-            print("\n Operator:" + operator +
-                  " password was successfully changed")
+            #print("Operator:" + operator +
+                 # " password was successfully changed")
             return r.status_code
     except requests.exceptions.RequestException as e:
         return "Error:\n" + str(e) + ' set_operator_password: An Error has occured'
@@ -154,7 +164,11 @@ def get_plat_operator(auth, url,headers=HEADERS):
 
     >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
-    >>> get_plat_operator(auth.creds, auth.url)
+    >>> plat_operators = get_plat_operator(auth.creds, auth.url)
+
+    >>> assert type(plat_operators) is list
+
+    >>> assert 'name' in plat_operators[0]
 
     '''
     get_operator_url = '/imcrs/plat/operator?start=0&size=1000&orderBy=id&desc=false&total=false'
@@ -186,27 +200,43 @@ def delete_plat_operator(operator,auth, url, headers=HEADERS):
 
     :rtype: int
 
-    >>> delete_plat_operator('testadmin', auth.creds, auth.url)
-    Operator: testadmin was successfully deleted
-    204
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.operator import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> success_delete_operator = delete_plat_operator('testadmin', auth.creds, auth.url)
+
+    >>> assert type(success_delete_operator) is int
+
+    >>> assert success_delete_operator == 204
+
+    >>> fail_delete_operator = delete_plat_operator('testadmin', auth.creds, auth.url)
+
+    >>> assert type(fail_delete_operator) is int
+
+    >>> assert fail_delete_operator == 409
+
     """
-    #oper_id = None
     plat_oper_list = get_plat_operator(auth, url)
     for i in plat_oper_list:
         if operator == i['name']:
             oper_id = i['id']
+        else:
+            oper_id = None
     if oper_id == None:
-        return("\n User does not exist")
+        #print ("User does not exist")
+        return 409
     delete_plat_operator_url = "/imcrs/plat/operator/"
     f_url = url + delete_plat_operator_url + str(oper_id)
     r = requests.delete(f_url, auth=auth, headers=headers)
     try:
         if r.status_code == 204:
-            print("\n Operator: " + operator +
-                  " was successfully deleted")
+            #print("Operator: " + operator +
+                #  " was successfully deleted")
             return r.status_code
     except requests.exceptions.RequestException as e:
-        print ("Error:\n" + str(e) + ' delete_plat_operator: An Error has occured')
         return "Error:\n" + str(e) + ' delete_plat_operator: An Error has occured'
 
 

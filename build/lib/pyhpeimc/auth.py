@@ -18,10 +18,10 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
     This class handles authentication against the HPE IMC API and uses the Requests API. IMCAuth derives from
     requests.auth.HTTPDigestAuth.
 
-    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+    >>> auth = IMCAuth("http://", "10.101.0.204", "8080", "admin", "admin")
 
     >>> auth.password
-    admin
+    'admin'
 
     """
 
@@ -67,6 +67,14 @@ class IMCAuth(requests.auth.HTTPDigestAuth):
 
 
 def test_imc_creds(auth, url):
+    """Function takes input of auth class object auth object and URL and returns a BOOL of TRUE if the authentication was successful.
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> test_imc_creds(auth.creds, auth.url)
+    True
+
+    """
     test_url = '/imcrs'
     f_url = url + test_url
     try:

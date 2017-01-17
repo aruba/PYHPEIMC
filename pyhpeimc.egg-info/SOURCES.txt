@@ -21,6 +21,7 @@ pyhpeimc/plat/icc.py
 pyhpeimc/plat/netassets.py
 pyhpeimc/plat/operator.py
 pyhpeimc/plat/perf.py
+pyhpeimc/plat/system.py
 pyhpeimc/plat/termaccess.py
 pyhpeimc/plat/vlanm.py
 pyhpeimc/plat/vrm.py
