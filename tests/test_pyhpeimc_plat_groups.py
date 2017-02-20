@@ -117,7 +117,7 @@ class TestAdd_devs_custom_views(TestCase):
 
     def tearDown(self):
         delete_custom_view(auth.creds, auth.url, name="L1 View")
-        pass
+
 
     def test_add_devs_custom_viewsType(self):
         dev_list = [get_dev_details(CW5_Switch, auth.creds, auth.url)['id']]

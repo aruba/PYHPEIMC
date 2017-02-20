@@ -13,11 +13,12 @@ from test_machine import auth
 class TestGet_system_vendors(TestCase):
     def test_get_system_vendors_type(self):
         vendors = get_system_vendors(auth.creds, auth.url)
-        self.assertIs(type(vendors),list)
+        self.assertIs(type(vendors), list)
+
     def test_get_system_vendors_content(self):
         vendors = get_system_vendors(auth.creds, auth.url)
         self.assertIs(len(vendors[0]), 8)
-        self.assertIn('link',vendors[0])
+        self.assertIn('link', vendors[0])
         self.assertIn('preDefined', vendors[0])
         self.assertIn('name', vendors[0])
         self.assertIn('contact', vendors[0])
@@ -26,7 +27,8 @@ class TestGet_system_vendors(TestCase):
         self.assertIn('description', vendors[0])
         self.assertIn('phone', vendors[0])
 
-#get_system_category
+
+# get_system_category
 class TestGet_system_category(TestCase):
     def testGet_system_category_type(self):
         categories = get_system_category(auth.creds, auth.url)
@@ -46,10 +48,7 @@ class TestGet_system_category(TestCase):
         self.assertIn('priority', categories[0])
 
 
-
-
-
-#get_system_device_models
+# get_system_device_models
 class TestGet_system_device_models(TestCase):
     def test_get_system_device_models_type(self):
         device_models = get_system_device_models(auth.creds, auth.url)
@@ -74,8 +73,7 @@ class TestGet_system_device_models(TestCase):
         self.assertIn('applicationName', device_models[0])
 
 
-
-#get_system_series
+# get_system_series
 class TestGet_system_series(TestCase):
     def test_get_system_series_type(self):
         series = get_system_series(auth.creds, auth.url)
@@ -90,4 +88,39 @@ class TestGet_system_series(TestCase):
         self.assertIn('id', series[0])
         self.assertIn('vendorId', series[0])
         self.assertIn('description', series[0])
+
+
+# Section deals with device authentication templates. Get and Set functions available apply to
+# IMC 7.3 and later
+
+class TestGet_Telnet_Template(TestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_get_telnet_template_type(self):
+        template = get_telnet_template(auth.creds, auth.url)
+        self.assertIs(type(template), list)
+
+    def test_get_telnet_template_content(self):
+        template = get_telnet_template(auth.creds, auth.url)
+        self.assertIn('id', template[0])
+        self.assertIn('type', template[0])
+        self.assertIn('name', template[0])
+        self.assertIn('authType', template[0])
+        self.assertIn('userName', template[0])
+        self.assertIn('userPassword', template[0])
+        self.assertIn('superPassword', template[0])
+        self.assertIn('authTypeStr', template[0])
+        self.assertIn('timeout', template[0])
+        self.assertIn('retries', template[0])
+        self.assertIn('port', template[0])
+        self.assertIn('version', template[0])
+        self.assertIn('creator', template[0])
+        self.assertIn('accessType', template[0])
+        self.assertIn('operatorGroupStr', template[0])
+        self.assertIn('link', template[0])
+
 

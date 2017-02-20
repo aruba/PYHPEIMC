@@ -158,3 +158,49 @@ def get_system_series(auth, url):
             return system_series['deviceSeries']
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + " get_dev_series: An Error has occured"
+
+# This section deals with manipulating system authentication credentials
+
+# Telnet Templates
+
+def create_telnet_template(auth, url, ):
+    pass
+
+def get_telnet_template(auth, url, template_name=None):
+    """
+    Takes no input, or template_name as input to issue RESTUL call to HP IMC
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param template_name: str value of template name
+
+    :return list object containing one or more dictionaries where each dictionary represents one
+    telnet template
+
+    :rtype list
+
+    """
+    f_url = url + "/imcrs/plat/res/telnet?start=0&size=10000&desc=false&total=false"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
+    try:
+        if response.status_code == 200:
+            telnet_templates = (json.loads(response.text))
+            if template_name is None:
+                return telnet_templates['telnetParamTemplate']
+            else:
+                for template in telnet_templates['telnetParamTemplate']:
+                    if template['name'] == template_name:
+                        return [template]
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_telnet_templates: An Error has occured"
+
+
+def modify_telnet_template(auth, url):
+    pass
+
+
+def delete_telnet_template(auth, url):
+    pass
+

@@ -6,7 +6,7 @@ tests associated with that specific vendor will automatically be skipped."""
 
 from pyhpeimc.auth import *
 
-auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+auth = IMCAuth("http://", "10.101.0.204", "8080", "admin", "admin")
 
 # Tests will use the following IP addresses for specific tests
 
