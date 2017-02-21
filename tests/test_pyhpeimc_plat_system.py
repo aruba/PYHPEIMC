@@ -101,10 +101,15 @@ class TestGet_Telnet_Template(TestCase):
         pass
 
     def test_get_telnet_template_type(self):
+        """Test to ensure that the return of get_telnet_template is a list"""
         template = get_telnet_template(auth.creds, auth.url)
         self.assertIs(type(template), list)
 
     def test_get_telnet_template_content(self):
+        """
+        Test to ensure the attributes of the get_telnet_template are consistent between versions
+        :return:
+        """
         template = get_telnet_template(auth.creds, auth.url)
         self.assertIn('id', template[0])
         self.assertIn('type', template[0])
@@ -123,4 +128,111 @@ class TestGet_Telnet_Template(TestCase):
         self.assertIn('operatorGroupStr', template[0])
         self.assertIn('link', template[0])
 
+
+    def test_get_exist_template(self):
+        """
+        test to ensure get existing template returns proper object
+        """
+        template = get_telnet_template(auth.creds, auth.url, template_name="default")
+        self.assertEqual(template[0]['name'], 'default')
+        self.assertEqual(template[0]['port'], '23')
+        self.assertEqual(template[0]['creator'], 'admin')
+
+
+    def test_fail_non_exist_template(self):
+        """
+        test to ensure get non-existing template returns proper object
+        """
+        template = get_telnet_template(auth.creds, auth.url, template_name="not_there")
+        self.assertEqual(template, 404)
+
+
+class TestCreateTelnetTemplate(TestCase):
+    """
+    Class to test create_telnet_template functions
+    """
+
+    def setUp(self):
+        pass
+
+
+    def tearDown(self):
+        pass
+
+    def test_create_telnet_template(self):
+        template = {
+            "type": "0",
+            "name": "User_with_Enable",
+            "authType": "3",
+            "userName": "",
+            "userPassword": "password",
+            "superPassword": "password",
+            "authTypeStr": "Password + Super/Manager Password (No Operator)",
+            "timeout": "4",
+            "retries": "1",
+            "port": "23",
+            "version": "1",
+            "creator": "admin",
+            "accessType": "1",
+            "operatorGroupStr": ""
+            }
+        output = create_telnet_template(auth.creds, auth.url, template)
+        self.assertEqual(output, 201)
+
+    def test_fail_create_existing_tempalte(self):
+        """
+        Test to ensure can't create the same telnet template twice
+        :return: integer of 404
+        rtype int
+        """
+        template = {
+            "type": "0",
+            "name": "User_with_Enable",
+            "authType": "3",
+            "userName": "",
+            "userPassword": "password",
+            "superPassword": "password",
+            "authTypeStr": "Password + Super/Manager Password (No Operator)",
+            "timeout": "4",
+            "retries": "1",
+            "port": "23",
+            "version": "1",
+            "creator": "admin",
+            "accessType": "1",
+            "operatorGroupStr": ""
+        }
+        output = create_telnet_template(auth.creds, auth.url, template)
+        output = create_telnet_template(auth.creds, auth.url, template)
+        self.assertEqual(output, 404)
+
+class TestDeleteTelnetTemplate(TestCase):
+    """
+    Tests for delete_telnet_template function
+    """
+
+    def setUp(self):
+        template = {
+            "type": "0",
+            "name": "User_with_Enable",
+            "authType": "3",
+            "userName": "",
+            "userPassword": "password",
+            "superPassword": "password",
+            "authTypeStr": "Password + Super/Manager Password (No Operator)",
+            "timeout": "4",
+            "retries": "1",
+            "port": "23",
+            "version": "1",
+            "creator": "admin",
+            "accessType": "1",
+            "operatorGroupStr": ""
+        }
+        output = create_telnet_template(auth.creds, auth.url, template)
+
+    def tearDown(self):
+        delete_telnet_template(auth.creds, auth.url, "User_with_Enable")
+
+    def test_delete_existing_template(self):
+        output = delete_telnet_template(auth.creds, auth.url, "User_with_Enable")
+        self.assertEqual(output, 204)
 

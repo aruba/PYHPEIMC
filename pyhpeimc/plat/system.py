@@ -163,8 +163,40 @@ def get_system_series(auth, url):
 
 # Telnet Templates
 
-def create_telnet_template(auth, url, ):
-    pass
+def create_telnet_template(auth, url, telnet_template ):
+    """
+    Function takes input of a dictionry containing the required key/value pair for the creation
+    of a telnet template.
+
+    :param auth:
+    :param url:
+    :param telnet_template:
+    :return: int value of HTTP response code 201 for proper creation or 404 for failed creation
+    :rtype int
+
+    Sample of proper KV pairs. Please see documetation for valid values for different fields.
+
+    telnet template = {"type": "0",
+    "name": "User_with_Enable",
+    "authType": "3",
+    "userName": "",
+    "userPassword": "password",
+    "superPassword": "password",
+    "authTypeStr": "Password + Super/Manager Password (No Operator)",
+    "timeout": "4",
+    "retries": "1",
+    "port": "23",
+    "version": "1",
+    "creator": "admin",
+    "accessType": "1",
+    "operatorGroupStr": ""}
+    """
+    f_url = url + "/imcrs/plat/res/telnet/add"
+    response = requests.post(f_url, data = json.dumps(telnet_template), auth=auth, headers=HEADERS)
+    try:
+        return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " create_telnet_template: An Error has occured"
 
 def get_telnet_template(auth, url, template_name=None):
     """
@@ -189,10 +221,12 @@ def get_telnet_template(auth, url, template_name=None):
             telnet_templates = (json.loads(response.text))
             if template_name is None:
                 return telnet_templates['telnetParamTemplate']
-            else:
+            elif template_name is not None:
                 for template in telnet_templates['telnetParamTemplate']:
                     if template['name'] == template_name:
                         return [template]
+                    else:
+                        return 404
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + " get_telnet_templates: An Error has occured"
 
@@ -201,6 +235,30 @@ def modify_telnet_template(auth, url):
     pass
 
 
-def delete_telnet_template(auth, url):
-    pass
+def delete_telnet_template(auth, url, template_name):
+    """
+    Takes template_name as input to issue RESTUL call to HP IMC
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param template_name: str value of template name
+    :return:
+    """
+    try:
+
+        telnet_templates = get_telnet_template(auth, url)
+        template_id = None
+        for template in telnet_templates:
+            if template['name'] == template_name:
+                template_id = template['id']
+        f_url = url + "/imcrs/plat/res/telnet/%s/delete" % template_id
+        print (f_url)
+        response = requests.delete(f_url, auth=auth, headers=HEADERS)
+        return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_telnet_templates: An Error has occured"
+
+
 
