@@ -1,0 +1,6 @@
+type,name,authType,userName,userPassword,superPassword,authTypeStr,timeout,retries,port,version,creator,accessType,operatorGroupStr
+0,default,5,,,,No Username + No Password,4,1,23,1,admin,1,
+0,Comware,1,admin,password,,Username + Password,4,1,23,1,admin,1,
+0,User_with_Enable,3,,password,password,Password + Super/Manager Password (No Operator),4,1,23,1,admin,1,
+0,Cisco_Telnet,4,admin,cisco,password,Username + Password + Super/Manager Password,4,1,23,1,admin,1,
+0,Test_1,1,popo@system,password,,Username + Password,4,1,23,1,admin,1,
