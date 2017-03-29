@@ -65,8 +65,11 @@ def get_cfg_template(auth, url, folder=None):
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
-            cfg_template_list = (json.loads(response.text))
-            return cfg_template_list['confFile']
+            cfg_template_list = (json.loads(response.text))['confFile']
+            if isinstance(cfg_template_list, list):
+                return cfg_template_list
+            elif isinstance(cfg_template_list, dict):
+                return [cfg_template_list]
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + " get_cfg_template: An Error has occured"
 

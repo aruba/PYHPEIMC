@@ -157,7 +157,7 @@ class TestCreateTelnetTemplate(TestCase):
 
 
     def tearDown(self):
-        pass
+        delete_telnet_template(auth.creds, auth.url, "User_with_Enable")
 
     def test_create_telnet_template(self):
         template = {
@@ -230,7 +230,7 @@ class TestDeleteTelnetTemplate(TestCase):
         output = create_telnet_template(auth.creds, auth.url, template)
 
     def tearDown(self):
-        delete_telnet_template(auth.creds, auth.url, "User_with_Enable")
+        pass
 
     def test_delete_existing_template(self):
         output = delete_telnet_template(auth.creds, auth.url, "User_with_Enable")
