@@ -8,6 +8,8 @@ from pyhpeimc.auth import *
 
 auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
 
+
+
 # Tests will use the following IP addresses for specific tests
 
 
@@ -27,7 +29,7 @@ vlan_name = 'Test_Vlan'
 # Switches
 CW3_Switch = '10.101.0.227'
 CW5_Switch = '10.101.0.221'
-CW7_Switch = '10.20.10.10'
+CW7_Switch = None
 Cisco_Switch = None
 Juniper_Switch = None
 Arista_Switch = '10.101.0.249'
