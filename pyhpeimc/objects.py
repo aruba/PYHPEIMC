@@ -10,6 +10,7 @@ rely on various other functions from within this library.
 """
 
 # This section imports required libraries
+from pyhpeimc.plat.device import *
 from pyhpeimc.plat.alarms import *
 from pyhpeimc.plat.netassets import *
 from pyhpeimc.plat.termaccess import *
@@ -92,19 +93,19 @@ class IMCDev:
         self.name = get_dev_details(ip_address, auth, url)['sysName']
         self.status = get_dev_details(ip_address, auth, url)['statusDesc']
         self.devid = get_dev_details(ip_address, auth, url)['id']
-        self.interfacelist = get_dev_interface(self.devid, auth, url)
-        self.numinterface = len(get_dev_interface(self.devid, auth, url))
-        self.vlans = get_dev_vlans(self.devid, auth, url)
-        self.accessinterfaces = get_device_access_interfaces(self.devid, auth, url)
-        self.trunkinterfaces = get_trunk_interfaces(self.devid, auth, url)
-        self.alarm = get_dev_alarms(self.devid, auth, url)
-        self.numalarm = len(get_dev_alarms(self.devid, auth, url))
+        self.interfacelist = get_all_interface_details(auth, url, devip=self.ip)
+        self.numinterface = len(get_all_interface_details(auth, url, devip=self.ip))
+        self.vlans = get_dev_vlans(auth, url, devid=None, devip=self.ip)
+        self.accessinterfaces = get_device_access_interfaces(auth, url, devip=self.ip)
+        self.trunkinterfaces = get_trunk_interfaces(auth, url, devip = self.ip)
+        self.alarm = get_dev_alarms(auth, url, devip = self.ip)
+        self.numalarm = len(get_dev_alarms(auth, url, devip= self.ip))
         self.assets = get_dev_asset_details(self.ip, auth, url)
         self.serials = [({'name': asset['name'], 'serialNum': asset['serialNum']}) for asset in
                          self.assets]
-        self.runconfig = get_dev_run_config(self.devid, auth, url)
-        self.startconfig = get_dev_start_config(self.devid, auth, url)
-        self.ipmacarp = get_ip_mac_arp_list(self.devid, auth, url)
+        self.runconfig = get_dev_run_config(auth, url, devip = self.ip)
+        self.startconfig = get_dev_start_config(auth, url, devip = self.ip)
+        self.ipmacarp = get_ip_mac_arp_list(auth, url, devip = self.ip)
 
     def getvlans(self):
         """
@@ -157,20 +158,19 @@ class IMCInterface:
         self.url = url
         self.ip = get_dev_details(ip_address, self.auth, self.url)['ip']
         self.devid = get_dev_details(ip_address, self.auth, self.url)['id']
-        self.ifIndex = get_interface_details(self.devid, ifindex, self.auth, self.url)['ifIndex']
-        self.macaddress = get_interface_details(self.devid, ifindex, self.auth, self.url)[
+        self.ifIndex = get_interface_details(ifindex, self.auth, self.url, devip= self.ip)['ifIndex']
+        self.macaddress = get_interface_details(ifindex, self.auth, self.url, devip= self.ip)[
             'phyAddress']
-        self.status = get_interface_details(self.devid, ifindex, self.auth, self.url)['statusDesc']
-        self.adminstatus = get_interface_details(self.devid, ifindex, self.auth, self.url)[
+        self.status = get_interface_details(ifindex, self.auth, self.url, devip= self.ip)['statusDesc']
+        self.adminstatus = get_interface_details(ifindex, self.auth, self.url, devip= self.ip)[
             'adminStatusDesc']
-        self.name = get_interface_details(self.devid, ifindex, self.auth, self.url)['ifDescription']
-        self.description = get_interface_details(self.devid, ifindex, self.auth, self.url)[
+        self.name = get_interface_details(ifindex, self.auth, self.url, devip= self.ip)['ifDescription']
+        self.description = get_interface_details(ifindex, self.auth, self.url, devip= self.ip)[
             'ifAlias']
-        self.mtu = get_interface_details(self.devid, ifindex, self.auth, self.url)['mtu']
-        self.speed = get_interface_details(self.devid, ifindex, self.auth, self.url)['ifspeed']
-        self.accessinterfaces = get_device_access_interfaces(self.devid, self.auth, self.url)
-        self.pvid = get_access_interface_vlan(self.ifIndex, self.accessinterfaces, self.auth,
-                                               self.url)
+        self.mtu = get_interface_details(ifindex, self.auth, self.url, devip= self.ip)['mtu']
+        self.speed = get_interface_details(ifindex, self.auth, self.url, devip= self.ip)['ifspeed']
+        self.accessinterfaces = get_device_access_interfaces(self.auth, self.url, devip = self.ip)
+        self.pvid = get_access_interface_vlan(self.ifIndex, self.accessinterfaces)
 
 
 # TODO refactor deallocateIp method for human consumption
