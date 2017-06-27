@@ -50,3 +50,4 @@ What's Changed:
 1.0.37 - refactored nose test and continued pep8 compatibility
 1.0.38 - Added Telnet Template CRUD operations, Added Alarm Ack and Recover and Get Alarm details
  capabilties
+1.0.39 - Fixed pyhpeimc.objects broken class objects.
