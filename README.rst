@@ -48,3 +48,5 @@ What's Changed:
 1.0.35 - Refactored nosetests for all modules to improve coverage and stability. Modifications to functions which take devid as input too allow ipaddress directly
 1.0.36 - Added functions to vlanm for hybrid ports and access vlans. with applicable tests
 1.0.37 - refactored nose test and continued pep8 compatibility
+1.0.38 - Added Telnet Template CRUD operations, Added Alarm Ack and Recover and Get Alarm details
+ capabilties

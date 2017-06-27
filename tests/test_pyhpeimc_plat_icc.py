@@ -33,11 +33,13 @@ class TestGet_cfg_template(TestCase):
             self.assertIn('defaultConfFileDesc', config_templates[0])
 
     def test_get_cfg_template_folder_type(self):
-            config_templates_folder = get_cfg_template(auth.creds, auth.url, folder='ADP_Configs')
+            config_templates_folder = get_cfg_template(auth.creds, auth.url, folder='Default '
+                                                                                    'Folder')
             self.assertIs(type(config_templates_folder), list)
 
     def test_get_cfg_templates_folder_content(self):
-            config_templates_folder = get_cfg_template(auth.creds, auth.url, folder='ADP_Configs')
+            config_templates_folder = get_cfg_template(auth.creds, auth.url, folder='Default '
+                                                                                    'Folder')
             self.assertIs(len(config_templates_folder[0]), 13)
             self.assertIn('syncType', config_templates_folder[0])
             self.assertIn('confFileDesc', config_templates_folder[0])
@@ -58,29 +60,36 @@ class TestGet_cfg_template(TestCase):
 
 
 class TestCreate_cfg_segment(TestCase):
-    def test_create_cfg_segment_type(self):
-        config_templates = get_cfg_template(auth.creds, auth.url)
-        self.assertIs(type(config_templates), list)
 
-    def test_create_cfg_segment_content(self):
-            delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
-            filecontent = ("""sample file content""")
-            create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
-            self.assertIs(type(create_new_file), int)
-            self.assertIs(create_new_file, 201)
-            delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
+    def setUp(self):
+        pass
+
+
+    def tearDown(self):
+        delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
+
+    def test_create_cfg_segment_type(self):
+        filecontent = ("""sample file content""")
+        create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template',
+                                             auth.creds, auth.url)
+        self.assertIs(type(create_new_file), int)
+
+
 
 class TestGet_template_id(TestCase):
-    def test_get_template_id(self):
-        delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
+    def setUp(self):
         filecontent = ("""sample file content""")
-        create_new_file = create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
-        file_id = get_template_id('CW7SNMP.cfg', auth.creds, auth.url)
-        self.assertIs(type(file_id), int)
+        create_cfg_segment('CW7SNMP.cfg', filecontent, 'My New Template', auth.creds, auth.url)
+
+    def tearDown(self):
         delete_cfg_template('CW7SNMP.cfg', auth.creds, auth.url)
 
-    def test_get_template_id_doesnt_exist(self):
+    def test_get_template_id(self):
         file_id = get_template_id('CW7SNMP.cfg', auth.creds, auth.url)
+        self.assertIs(type(file_id), int)
+
+    def test_get_template_id_doesnt_exist(self):
+        file_id = get_template_id('Notthere.cfg', auth.creds, auth.url)
         self.assertIs(type(file_id), str)
         self.assertEqual(file_id, 'template not found')
 

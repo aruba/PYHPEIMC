@@ -136,3 +136,62 @@ def get_alarms(username, auth, url):
             return alarm_list['alarm']
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + ' get_alarms: An Error has occured'
+
+def get_alarm_details(alarm_id, auth, url):
+    """
+    function to take str input of alarm_id, issues a REST call to the IMC REST interface and
+    returns a dictionary object which contains the  details of a specific alarm.
+    :param alarm_id: str number which represents the internal ID of a specific alarm
+    :param auth:
+    :param url:
+    :return:
+    """
+    f_url = url + "/imcrs/fault/alarm/" + str(alarm_id)
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
+    try:
+        alarm_details = json.loads(response.text)
+        return alarm_details
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_alarm_details: An Error has occured'
+
+
+def acknowledge_alarm(alarm_id, auth, url):
+    """
+    Function tasks input of str of alarm ID and sends to REST API. Function will acknowledge
+    designated alarm in the IMC alarm database.
+    :param alarm_id: str of alarm ID
+    param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+    :return: integer HTTP response code
+
+    :rtype int
+    """
+    f_url = url + "/imcrs/fault/alarm/acknowledge/"+str(alarm_id)
+    response = requests.put(f_url, auth=auth, headers=HEADERS)
+    try:
+        return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + ' get_alarms: An Error has occured'
+
+
+def recover_alarm(alarm_id, auth, url):
+    """
+    Function tasks input of str of alarm ID and sends to REST API. Function will acknowledge
+    designated alarm in the IMC alarm database.
+    :param alarm_id: str of alarm ID
+    param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+    :return: integer HTTP response code
+
+    :rtype int
+    """
+    f_url = url + "/imcrs/fault/alarm/recover/" + str(alarm_id)
+    response = requests.put(f_url, auth=auth, headers=HEADERS)
+    try:
+        return response.status_code
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + 'recover_alarm: An Error has occured'
+
+
