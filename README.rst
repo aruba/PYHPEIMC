@@ -51,3 +51,4 @@ What's Changed:
 1.0.38 - Added Telnet Template CRUD operations, Added Alarm Ack and Recover and Get Alarm details
  capabilties
 1.0.39 - Fixed pyhpeimc.objects broken class objects.
+1.0.40 - Fixed getvlan() addvlan() and delvlan() methods on pyhpeimc.objects IMCDev class
