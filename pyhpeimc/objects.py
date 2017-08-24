@@ -112,32 +112,28 @@ class IMCDev:
         Function operates on the IMCDev object and updates the vlans attribute
         :return:
         """
-        self.vlans = get_dev_vlans(self.devid, self.auth, self.url)
+        self.vlans = get_dev_vlans( self.auth, self.url, devid=self.devid)
 
-    def addvlan(self, vlanid, vlan_name, auth, url):
+    def addvlan(self, vlanid, vlan_name):
         """
         Function operates on the IMCDev object. Takes input of vlanid (1-4094), str of vlan_name,
         auth and url to execute the create_dev_vlan method on the IMCDev object. Device must be
         supported in the HPE IMC Platform VLAN Manager module.
         :param vlanid: str of VLANId ( valid 1-4094 )
         :param vlan_name: str of vlan_name
-        :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
-        :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
         :return:
         """
-        create_dev_vlan(self.devid, vlanid, vlan_name, auth, url)
+        create_dev_vlan( vlanid, vlan_name, self.auth, self.url, devid = self.devid)
 
-    def delvlan(self, vlanid, auth, url):
+    def delvlan(self, vlanid):
         """
         Function operates on the IMCDev object. Takes input of vlanid (1-4094),
         auth and url to execute the delete_dev_vlans method on the IMCDev object. Device must be
         supported in the HPE IMC Platform VLAN Manager module.
         :param vlanid: str of VLANId ( valid 1-4094 )
-        :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
-        :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
         :return:
         """
-        delete_dev_vlans(self.devid, vlanid, auth, url)
+        delete_dev_vlans( vlanid, self.auth, self.url, devid = self.devid)
 
     def getipmacarp(self):
         """
