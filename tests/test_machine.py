@@ -28,7 +28,9 @@ vlan_name = 'Test_Vlan'
 
 # Switches
 CW3_Switch = '10.101.0.227'
+CW3_Interface = '9'
 CW5_Switch = '10.101.0.221'
+CW5_Interface = '9'
 CW7_Switch = None
 Cisco_Switch = None
 Juniper_Switch = None
