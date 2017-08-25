@@ -52,3 +52,4 @@ What's Changed:
  capabilties
 1.0.39 - Fixed pyhpeimc.objects broken class objects.
 1.0.40 - Fixed getvlan() addvlan() and delvlan() methods on pyhpeimc.objects IMCDev class
+1.0.41 - Bugfixes for pyhpeimc.objects classes. Adding additional tests.

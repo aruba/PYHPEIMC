@@ -140,7 +140,7 @@ class IMCDev:
         Function operates on the IMCDev object and updates the ipmacarp attribute
         :return:
         """
-        self.ipmacarp = get_ip_mac_arp_list(self.devid, self.auth, self.url)
+        self.ipmacarp = get_ip_mac_arp_list(self.auth, self.url, devid = self.devid)
 
 
 class IMCInterface:
@@ -168,6 +168,26 @@ class IMCInterface:
         self.accessinterfaces = get_device_access_interfaces(self.auth, self.url, devip = self.ip)
         self.pvid = get_access_interface_vlan(self.ifIndex, self.accessinterfaces)
 
+    def down(self):
+        """
+        Function operates on the IMCInterface object and configures the interface into an
+        administratively down state and refreshes contents of self.adminstatus
+        :return:
+        """
+        set_interface_down(self.ifIndex, self.auth, self.url, devip=self.ip)
+        self.adminstatus = get_interface_details(self.ifIndex, self.auth, self.url, devip=self.ip)[
+            'adminStatusDesc']
+
+    def up(self):
+        """
+                Function operates on the IMCInterface object and configures the interface into an
+                administratively up state and refreshes contents of self.adminstatus
+                :return:
+                """
+        set_interface_up(self.ifIndex, self.auth, self.url, devip=self.ip)
+        self.adminstatus = get_interface_details(self.ifIndex, self.auth, self.url, devip=self.ip)[
+            'adminStatusDesc']
+
 
 # TODO refactor deallocateIp method for human consumption
 # TODO Add real_time_locate functionality to nextfreeip method to search IP address before offering
@@ -175,7 +195,7 @@ class IMCInterface:
 class IPScope:
     """
         Class instantiates an object to gather and manipulate attributes and methods of a IP
-        scope as configured in the HPE IMC Platform Terminal Access module.
+        scope as configured in the HPE IMC Platform Terminal Access module. Note: IPScope must already exist.
         """
 
     def __init__(self, netaddr, auth, url):
@@ -199,16 +219,16 @@ class IPScope:
         :param description: str of a description of the target host ip record
         :return:
         """
-        add_scope_ip(hostipaddress, name, description, self.id, self.auth, self.url)
+        add_scope_ip(hostipaddress, name, description, self.auth, self.url, scopeid=self.id)
 
-    def deallocate_ip(self, hostid):
+    def deallocate_ip(self, hostipaddress):
         """
-        Object method takes in input of hostid,removes them from the parent ip scope.
+        Object method takes in input of hostip address,removes them from the parent ip scope.
         :param hostid: str of the hostid of  the target host ip record
 
         :return:
         """
-        remove_scope_ip(hostid, self.auth, self.url)
+        delete_host_from_segment(hostipaddress, self.netaddr, self.auth, self.url)
 
     def gethosts(self):
         """
