@@ -49,7 +49,7 @@ MSM = None
 CiscoWireless = None
 
 # Hypervisor
-ESX = None #'10.101.0.6'
+ESX = '10.101.0.6'
 HyperV = None
 
 # Set to True if you wish to test the set_interface_up and set_interface_down functions in

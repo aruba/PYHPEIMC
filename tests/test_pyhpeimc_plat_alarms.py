@@ -28,7 +28,6 @@ class TestGetDevAlarms(TestCase):
 
     def test_get_dev_alarms_content(self):
         dev_alarms = get_dev_alarms(auth.creds, auth.url, devip='10.101.0.231')
-        self.assertIs(len(dev_alarms[0]), 30)
         self.assertIn('ackStatus', dev_alarms[0])
         self.assertIn('recTimeDesc', dev_alarms[0])
         self.assertIn('originalTypeDesc', dev_alarms[0])
@@ -68,7 +67,7 @@ class TestGetRealtimeAlarm(TestCase):
 
     def test_get_realtime_alarm_content(self):
         real_time_alarm = get_realtime_alarm('admin', auth.creds, auth.url)
-        self.assertIs(len(real_time_alarm[0]), 7)
+        #self.assertIs(len(real_time_alarm[0]), 7)
         self.assertIn('faultTime', real_time_alarm[0])
         self.assertIn('userAckUserName', real_time_alarm[0])
         self.assertIn('id', real_time_alarm[0])
