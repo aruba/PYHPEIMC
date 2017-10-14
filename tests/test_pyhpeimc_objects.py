@@ -167,8 +167,9 @@ class TestIPScope(TestCase):
         self.assertIn(term_access_ipam_host, hosts)
         Scope1.deallocate_ip(term_access_ipam_host)
         Scope1.gethosts()
-        hosts = [host['ip'] for host in Scope1.hosts]
-        self.assertNotIn(term_access_ipam_host, hosts)
+        if 'ip' in Scope1.hosts[0]:
+            hosts = [host['ip'] for host in Scope1.hosts]
+            self.assertNotIn(term_access_ipam_host, hosts)
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
 
 
