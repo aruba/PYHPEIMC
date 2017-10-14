@@ -220,10 +220,14 @@ def get_telnet_template(auth, url, template_name=None):
         if response.status_code == 200:
             telnet_templates = (json.loads(response.text))
             template = None
+            if type(telnet_templates['telnetParamTemplate']) is dict:
+                my_templates = [telnet_templates['telnetParamTemplate']]
+                telnet_templates['telnetParamTemplate'] = my_templates
             if template_name is None:
                 return telnet_templates['telnetParamTemplate']
             elif template_name is not None:
                 for telnet_template in telnet_templates['telnetParamTemplate']:
+
                     if telnet_template['name'] == template_name:
                         template = [telnet_template]
                 print (type(template))
