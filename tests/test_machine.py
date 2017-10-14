@@ -27,14 +27,14 @@ vlanid = '500'
 vlan_name = 'Test_Vlan'
 
 # Switches
-CW3_Switch = '10.101.0.227'
+CW3_Switch = None #'10.101.0.227'
 CW3_Interface = '9'
 CW5_Switch = '10.101.0.221'
 CW5_Interface = '9'
 CW7_Switch = None
 Cisco_Switch = None
 Juniper_Switch = None
-Arista_Switch = '10.101.0.249'
+Arista_Switch = None #'10.101.0.249'
 ArubaOS_Switch = None
 
 # Routers
@@ -43,11 +43,11 @@ CW5_Router = None
 Juniper_Router = None
 
 # Servers
-Windows_Server = '10.101.0.20'
-Linux_Server = '10.101.0.51'
+Windows_Server = None # '10.101.0.20'
+Linux_Server = None #'10.101.0.51'
 
 # Wireless
-CW5_Wireless = '10.101.0.231'
+CW5_Wireless = None #'10.101.0.231'
 Aruba = None
 MSM = None
 CiscoWireless = None
