@@ -3094,7 +3094,7 @@ class TestSet_inteface_up_CW3_Switch(TestCase):
             raise SkipTest
         if CW3_Switch is None:
             raise SkipTest
-        set_interface_down('9', auth.creds, auth.url, devip=CW3_Switch)
+        set_interface_down(CW3_Interface, auth.creds, auth.url, devip=CW3_Switch)
         int_up_response = set_inteface_up('1', auth.creds, auth.url, devip=CW3_Switch)
         self.assertIs(type(int_up_response), int)
         self.assertIs(int_up_response, 204)
@@ -3107,8 +3107,8 @@ class TestSet_inteface_up_CW5_Switch(TestCase):
             raise SkipTest
         if CW5_Switch is None:
             raise SkipTest
-        set_interface_down('9', auth.creds, auth.url, devip=CW5_Switch)
-        int_up_response = set_inteface_up('9', auth.creds, auth.url, devip=CW5_Switch)
+        set_interface_down(CW5_Interface, auth.creds, auth.url, devip=CW5_Switch)
+        int_up_response = set_inteface_up(CW5_Interface, auth.creds, auth.url, devip=CW5_Switch)
         self.assertIs(type(int_up_response), int)
         self.assertIs(int_up_response, 204)
 
