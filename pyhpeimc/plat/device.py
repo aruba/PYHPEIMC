@@ -367,6 +367,53 @@ def get_dev_run_config(auth, url, devid=None, devip=None):
         return "Error:\n" + str(error) + " get_dev_run_config: An Error has occured"
 
 
+def get_dev_latest_run_config(auth, url, devid=None, devip=None):
+    """
+    function takes the devId of a specific device and issues a RESTFUL call to get the most
+    current existing backup of the running config file as known by the HP IMC Base Platform ICC module for the target
+    device.
+
+    :param devid:  int or str value of the target device
+
+    :param devip: str of ipv4 address of the target device
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :return: str which contains the entire content of the target device running configuration.
+    If the device is not currently supported in the HP IMC Base Platform ICC module, this call
+    returns a string of "This feature is not supported on this device"
+
+    :rtype: str
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.device import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> run_config = get_dev_run_config(auth.creds, auth.url, devid='10')
+
+    >>> run_config = get_dev_run_config(auth.creds, auth.url, devip='10.101.0.221')
+
+    >>> assert type(run_config) is str
+
+    """
+    if devip is not None:
+        devid = get_dev_details(devip, auth, url)['id']
+    f_url = url + "/imcrs/icc/deviceCfg/" + str(devid) + "/latestRun"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
+    try:
+        if response.status_code == 200:
+            run_conf = (json.loads(response.text))['content']
+            return run_conf
+        elif response.status_code == 404:
+            return "This features is no supported on this device"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_run_config: An Error has occured"
+
+
 def get_dev_start_config(auth, url, devid=None, devip=None):
     """
     function takes the devId of a specific device and issues a RESTFUL call to get the most
@@ -403,6 +450,53 @@ def get_dev_start_config(auth, url, devid=None, devip=None):
     if devip is not None:
         devid = get_dev_details(devip, auth, url)['id']
     f_url = url + "/imcrs/icc/deviceCfg/" + str(devid) + "/currentStart"
+    response = requests.get(f_url, auth=auth, headers=HEADERS)
+    try:
+        if response.status_code == 200:
+            start_conf = (json.loads(response.text))['content']
+            return start_conf
+        elif response.status_code == 404:
+            return "This features is no supported on this device"
+    except requests.exceptions.RequestException as error:
+        return "Error:\n" + str(error) + " get_dev_start_config: An Error has occured"
+
+
+def get_dev_latest_start_config(auth, url, devid=None, devip=None):
+    """
+    function takes the devId of a specific device and issues a RESTFUL call to get the most
+    current startup config  file as known by the HP IMC Base Platform ICC module for the target
+    device.
+
+    :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
+
+    :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
+
+    :param devid:  optional int or str value of the target device
+
+    :param devip:  optional ipv4 address of the target device
+
+    :return: str which contains the entire content of the target device startup configuration.
+    If the device is not currently supported in the HP IMC Base Platform ICC module, this call
+    returns a string of "This feature is not supported on this device"
+
+    :retype: str
+
+    >>> from pyhpeimc.auth import *
+
+    >>> from pyhpeimc.plat.device import *
+
+    >>> auth = IMCAuth("http://", "10.101.0.203", "8080", "admin", "admin")
+
+    >>> start_config = get_dev_start_config(auth.creds, auth.url, devId='10')
+
+    >>> start_config = get_dev_start_config(auth.creds, auth.url, devip='10.101.0.221')
+
+    >>> assert type(start_config) is str
+
+    """
+    if devip is not None:
+        devid = get_dev_details(devip, auth, url)['id']
+    f_url = url + "/imcrs/icc/deviceCfg/" + str(devid) + "/latestStart"
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:

@@ -104,8 +104,8 @@ class IMCDev:
         self.assets = get_dev_asset_details(self.ip, auth, url)
         self.serials = [({'name': asset['name'], 'serialNum': asset['serialNum']}) for asset in
                          self.assets]
-        self.runconfig = get_dev_run_config(auth, url, devip = self.ip)
-        self.startconfig = get_dev_start_config(auth, url, devip = self.ip)
+        self.runconfig = get_dev_latest_run_config(auth, url, devip = self.ip)
+        self.startconfig = get_dev_latest_start_config(auth, url, devip = self.ip)
         self.ipmacarp = get_ip_mac_arp_list(auth, url, devip = self.ip)
 
     def getvlans(self):
