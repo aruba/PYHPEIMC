@@ -85,16 +85,17 @@ class IMCDev:
         """
         self.auth = auth
         self.url = url
-        self.ip = get_dev_details(ip_address, auth, url)['ip']
-        self.description = get_dev_details(ip_address, auth, url)['sysDescription']
-        self.location = get_dev_details(ip_address, auth, url)['location']
-        self.contact = get_dev_details(ip_address, auth, url)['contact']
-        self.type = get_dev_details(ip_address, auth, url)['typeName']
-        self.name = get_dev_details(ip_address, auth, url)['sysName']
-        self.status = get_dev_details(ip_address, auth, url)['statusDesc']
-        self.devid = get_dev_details(ip_address, auth, url)['id']
+        self.dev_details = get_dev_details(ip_address, auth, url)
+        self.ip = self.dev_details['ip']
+        self.description = self.dev_details['sysDescription']
+        self.location = self.dev_details['location']
+        self.contact = self.dev_details['contact']
+        self.type = self.dev_details['typeName']
+        self.name = self.dev_details['sysName']
+        self.status = self.dev_details['statusDesc']
+        self.devid = self.dev_details['id']
         self.interfacelist = get_all_interface_details(auth, url, devip=self.ip)
-        self.numinterface = len(get_all_interface_details(auth, url, devip=self.ip))
+        self.numinterface = len(self.interfacelist)
         self.vlans = get_dev_vlans(auth, url, devid=None, devip=self.ip)
         self.accessinterfaces = get_device_access_interfaces(auth, url, devip=self.ip)
         self.trunkinterfaces = get_trunk_interfaces(auth, url, devip = self.ip)
