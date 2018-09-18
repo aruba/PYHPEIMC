@@ -535,7 +535,7 @@ def get_ip_scope_hosts(auth, url, scopeid=None, network_address=None):
         if response.status_code == 200:
             ipscopelist = (json.loads(response.text))
             if ipscopelist == {}:
-                return ipscopelist
+                return [ipscopelist]
             else:
                 ipscopelist = ipscopelist['assignedIpInfo']
             if isinstance(ipscopelist, dict):
@@ -689,8 +689,9 @@ def get_host_id(host_address, network_address, auth, url):
     all_scope_hosts = get_ip_scope_hosts(auth, url, scopeid=scope_id)
     if len(all_scope_hosts) == 0:
         return "Host Doesn't Exist"
-    for host in all_scope_hosts:
-        if host['ip'] == host_address:
-            return host['id']
-        else:
-            return "Host Doesn't Exist"
+    if 'ip' in all_scope_hosts[0]:
+        for host in all_scope_hosts:
+            if host['ip'] == host_address:
+                return host['id']
+    else:
+        return "Host Doesn't Exist"

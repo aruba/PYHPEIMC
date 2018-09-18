@@ -67,11 +67,11 @@ class Test_Get_ap_info(TestCase):
             except:
                 continue
         ap = get_ap_info(ip, auth.creds, auth.url)
-        self.assertIs(len(ap), 20)
+        #self.assertIs(len(ap), 20)
         self.assertIn('ipAddress', ap)
         self.assertIn('ssids', ap)
         self.assertIn('isFit', ap)
-        self.assertIn('locationList', ap)
+        #self.assertIn('locationList', ap)
         self.assertIn('onlineClientCount', ap)
         self.assertIn('hardwareVersion', ap)
         self.assertIn('label', ap)

@@ -519,7 +519,7 @@ class Test_Get_scope_id(TestCase):
     def test_get_scope_id(self):
         new_scope = add_ip_scope('cyoung', 'test group', auth.creds, auth.url,
                                  network_address=term_access_ipam_network_scope)
-        scope_id = get_scope_id('10.50.0.0/16', auth.creds, auth.url)
+        scope_id = get_scope_id(term_access_ipam_network_scope, auth.creds, auth.url)
         self.assertIs(type(int(scope_id)), int)
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
 
@@ -530,13 +530,14 @@ class Test_Get_scope_id(TestCase):
         child_scope = add_child_ip_scope('csyoung', 'test child scope', auth.creds, auth.url,
                                          network_address=term_access_ipam_child_scope,
                                          parent_network_address=term_access_ipam_network_scope)
-        scope_id = get_scope_id('10.50.0.0/16', auth.creds, auth.url)
+        scope_id = get_scope_id(term_access_ipam_network_scope, auth.creds, auth.url)
         self.assertIs(type(int(scope_id)), int)
         delete_ip_scope(term_access_ipam_network_scope, auth.creds, auth.url)
 
 
     def test_get_scope_id_doesnt_exist(self):
-        scope_id = get_scope_id('10.50.0.0/16', auth.creds, auth.url)
+
+        scope_id = get_scope_id(term_access_ipam_network_scope, auth.creds, auth.url)
         self.assertIs(type((scope_id)), str)
         self.assertEqual(scope_id, "Scope Doesn't Exist")
 
