@@ -167,18 +167,18 @@ def get_system_series(auth, url):
 
 # This section contains functions which operate at the device level.
 
+def add_new_dev(auth,url, network_address):
+    pass
 
-def get_all_devs(auth, url, network_address=None):
+
+def get_all_devs(auth, url, network_address=None, category=None):
     """Takes string input of IP address to issue RESTUL call to HP IMC\n
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
-
     :param url: base url of IMC RS interface #usually auth.url from pyhpeimc.auth.authclass
-
-    :param network_address= str IPv4 Network Address
-
+    :param network_address: str IPv4 Network Address
+    :param category: str or int corresponding to device category (0=router, 1=switches, see API docs for other examples)
     :return: dictionary of device details
-
     :rtype: dict
 
     >>> from pyhpeimc.auth import *
@@ -198,6 +198,8 @@ def get_all_devs(auth, url, network_address=None):
         get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
                            str(network_address) + \
                            "&start=0&size=1000&orderBy=id&desc=false&total=false"
+    elif category is not None:
+        get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&category="+str(category)+"&start=0&size=1000&orderBy=id&desc=false&total=false&exact=false"
     else:
         get_all_devs_url = ("/imcrs/plat/res/device?resPrivilegeFilter=false&start=0"
                             "&size=1000&orderBy=id&desc=false&total=false&exact=false")

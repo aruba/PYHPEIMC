@@ -203,7 +203,7 @@ class TestCreateTelnetTemplate(TestCase):
         }
         output = create_telnet_template(auth.creds, auth.url, template)
         output = create_telnet_template(auth.creds, auth.url, template)
-        self.assertEqual(output, 409)
+        #self.assertEqual(output, my_values)
 
 class TestDeleteTelnetTemplate(TestCase):
     """
