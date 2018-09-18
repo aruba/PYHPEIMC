@@ -153,8 +153,15 @@ class IMCInterface:
     def __init__(self, ip_address, ifindex, auth, url):
         self.auth = auth
         self.url = url
-        self.ip = get_dev_details(ip_address, self.auth, self.url)['ip']
-        self.devid = get_dev_details(ip_address, self.auth, self.url)['id']
+        self.dev_details = get_dev_details(ip_address, auth, url)
+        self.ip = self.dev_details['ip']
+        self.devid = self.dev_details['id']
+        self.description = self.dev_details['sysDescription']
+        self.location = self.dev_details['location']
+        self.contact = self.dev_details['contact']
+        self.type = self.dev_details['typeName']
+        self.name = self.dev_details['sysName']
+        self.status = self.dev_details['statusDesc']
         self.interface_details = get_interface_details(ifindex, self.auth, self.url, devip=self.ip)
         self.ifIndex = self.interface_details['ifIndex']
         self.macaddress = self.interface_details[
