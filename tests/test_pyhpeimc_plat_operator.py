@@ -57,7 +57,7 @@ class TestGet_plat_operator(TestCase):
 
     def test_get_plat_operator_content(self):
         plat_operators = get_plat_operator(auth.creds, auth.url)
-        self.assertIs(len(plat_operators[0]), 9)
+        self.assertIs(len(plat_operators[0]), 12)
         self.assertIn('name',plat_operators[0])
         self.assertIn('defaultManagedDefinedView', plat_operators[0])
         self.assertIn('id', plat_operators[0])

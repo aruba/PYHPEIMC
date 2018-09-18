@@ -58,7 +58,7 @@ class TestGet_perf_task(TestCase):
 
         new_perf_task = add_perf_task(new_task, auth.creds, auth.url)
         task_details = get_perf_task("Test_Task", auth.creds, auth.url)
-        self.assertIs(len(task_details), 24)
+        self.assertIs(len(task_details), 25)
         self.assertIn('alarmTwoTimes', task_details)
         self.assertIn('taskName', task_details)
         self.assertIn('alarmTwoMode', task_details)
