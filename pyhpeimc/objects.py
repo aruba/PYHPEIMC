@@ -100,7 +100,7 @@ class IMCDev:
         self.accessinterfaces = get_device_access_interfaces(auth, url, devip=self.ip)
         self.trunkinterfaces = get_trunk_interfaces(auth, url, devip = self.ip)
         self.alarm = get_dev_alarms(auth, url, devip = self.ip)
-        self.numalarm = len(get_dev_alarms(auth, url, devip= self.ip))
+        self.numalarm = len(self.alarm)
         self.assets = get_dev_asset_details(self.ip, auth, url)
         self.serials = [({'name': asset['name'], 'serialNum': asset['serialNum']}) for asset in
                          self.assets]
