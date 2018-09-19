@@ -171,7 +171,7 @@ def add_new_dev(auth,url, network_address):
     pass
 
 
-def get_all_devs(auth, url, network_address=None, category=None):
+def get_all_devs(auth, url, network_address=None, category=None, label=None):
     """Takes string input of IP address to issue RESTUL call to HP IMC\n
 
     :param auth: requests auth object #usually auth.creds from auth pyhpeimc.auth.class
@@ -194,17 +194,22 @@ def get_all_devs(auth, url, network_address=None, category=None):
     >>> assert 'sysName' in dev_list[0]
 
     """
-    if network_address is not None:
-        get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&ip=" + \
-                           str(network_address) + \
-                           "&start=0&size=1000&orderBy=id&desc=false&total=false"
-    elif category is not None:
-        get_all_devs_url = "/imcrs/plat/res/device?resPrivilegeFilter=false&category="+str(category)+"&start=0&size=1000&orderBy=id&desc=false&total=false&exact=false"
+    base_url = "/imcrs/plat/res/device?resPrivilegeFilter=false"
+    end_url = "&start=0&size=1000&orderBy=id&desc=false&total=false"
+    if network_address:
+        network_address = "&ip=" + str(network_address)
     else:
-        get_all_devs_url = ("/imcrs/plat/res/device?resPrivilegeFilter=false&start=0"
-                            "&size=1000&orderBy=id&desc=false&total=false&exact=false")
-
-    f_url = url + get_all_devs_url
+        network_address = ''
+    if label:
+        label = "&label=" + str(label)
+    else:
+        label = ''
+    if category:
+        category = "&category" + category
+    else:
+        category = ''
+    f_url = url + base_url + str(network_address) + str(label) + str(category) + end_url
+    print(f_url)
     response = requests.get(f_url, auth=auth, headers=HEADERS)
     try:
         if response.status_code == 200:
@@ -212,6 +217,8 @@ def get_all_devs(auth, url, network_address=None, category=None):
             if len(dev_details) == 0:
                 print("Device not found")
                 return "Device not found"
+            elif type(dev_details['device']) is dict:
+                return [dev_details['device']]
             else:
                 return dev_details['device']
     except requests.exceptions.RequestException as error:
