@@ -167,6 +167,8 @@ def get_device_access_interfaces(auth, url, devid=None, devip=None):
     try:
         if response.status_code == 200:
             dev_access_interfaces = (json.loads(response.text))
+            if type(dev_access_interfaces['accessIf']) is dict:
+                return [dev_access_interfaces['accessIf']]
             if len(dev_access_interfaces) == 2:
                 return dev_access_interfaces['accessIf']
             else:
@@ -174,6 +176,7 @@ def get_device_access_interfaces(auth, url, devid=None, devip=None):
                 return dev_access_interfaces['accessIf']
     except requests.exceptions.RequestException as error:
         return "Error:\n" + str(error) + " get_device_access_interfaces: An Error has occured"
+
 
 
 # Section for Hybrid Interfaces - Applies to Comware Devices only
